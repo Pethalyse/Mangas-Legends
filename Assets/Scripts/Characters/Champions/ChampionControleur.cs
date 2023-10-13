@@ -55,6 +55,8 @@ public class ChampionControleur : StatsManager
     [SerializeField] private GameObject shop;
     protected Mouvements _mouvements;
     protected Animations animations;
+    [SerializeField] protected GameObject IndicatorRange;
+    private GameObject IR;
 
     //GUI
     [Header("GUI")]
@@ -210,6 +212,14 @@ public class ChampionControleur : StatsManager
         {
             UI_Shop.showShop(false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            AfficherRangeQClick();
+            if (Input.GetMouseButtonDown(0)) { QClickAttack(); }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q) && IR) { DesafficherRangeQClick(); }
 
     }
 
@@ -417,6 +427,45 @@ public class ChampionControleur : StatsManager
     {
         isAttack = true;
         inBattle = true;
+    }
+
+    private void AfficherRangeQClick()
+    {
+        if (!IR)
+        {
+            foreach (Transform transform in IndicatorRange.transform)
+            {
+                transform.localScale = new Vector3(range * 2, range * 2, range * 2);
+            }
+            IR = Instantiate(IndicatorRange, gameObject.transform);
+        }
+    }
+
+    private void DesafficherRangeQClick()
+    {
+        Destroy(IR);
+        IR = null;
+    }
+
+    private Transform QClickAttack()
+    {
+        float closestDistance = Mathf.Infinity;
+        Transform closestObject = null;
+        Vector3 currentPosition = transform.position;
+
+        //foreach (GameObject obj in objects)
+        //{
+        //    float distance = Vector3.Distance(currentPosition, obj.transform.position);
+
+        //    if (distance < closestDistance && distance <= radius)
+        //    {
+        //        closestDistance = distance;
+        //        closestObject = obj.transform;
+        //    }
+        //}
+        DesafficherRangeQClick();
+        return closestObject;
+
     }
 
     //Coroutines
