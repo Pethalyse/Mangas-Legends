@@ -1,0 +1,89 @@
+using Photon.Pun;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
+public class MinionSpawner : MonoBehaviourPun
+{
+    public float minionMoveSpeed;
+    public float minionCanonMoveSpeed;
+
+    public GameObject minionPrefab;
+    public GameObject minionCanonPrefab;
+    public Transform[] spawnsPoints;
+    public float spawnInterval = 20f;
+    public int minionsPerWave = 6;
+    public int wavesUntilMinionCanon = 3;
+    private int waveCount = 0;
+
+    public float delayBetweenMinions;
+
+    private void Start()
+    {
+        StartCoroutine(SpawnMinions());
+    }
+
+    private IEnumerator SpawnMinions()
+    {
+        while(true)
+        {
+            waveCount++;
+
+            if(waveCount % wavesUntilMinionCanon == 0 )
+            {
+                for(int i=0; i < minionsPerWave/2; i++)
+                {
+                    spawnRegularMinion();
+                    yield return new WaitForSeconds(delayBetweenMinions);
+                }
+
+                spawnMinionCanon();
+                yield return new WaitForSeconds(delayBetweenMinions);
+
+                for (int i = minionsPerWave/2; i < minionsPerWave-1; i++)
+                {
+                    spawnRegularMinion();
+                    yield return new WaitForSeconds(delayBetweenMinions);
+                }
+
+                spawnRegularMinion();
+                yield return new WaitForSeconds(spawnInterval - delayBetweenMinions * (minionsPerWave - 1) - delayBetweenMinions);
+            }
+            else
+            {
+                for (int i = 0; i < minionsPerWave; i++)
+                {
+                    spawnRegularMinion();
+                    yield return new WaitForSeconds(delayBetweenMinions);
+                }
+                yield return new WaitForSeconds(spawnInterval - delayBetweenMinions * minionsPerWave);
+            }
+        }
+    }
+
+    private void spawnRegularMinion()
+    {
+        if (!PhotonNetwork.IsMasterClient) { return; }
+        Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
+        GameObject minion = PhotonNetwork.InstantiateRoomObject(Path.Combine("Minions/", minionPrefab.name), spawnPoint.position, spawnPoint.rotation);
+        minion.transform.parent = gameObject.transform;
+
+        NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
+        minionAgent.speed = minionCanonMoveSpeed;
+    }
+
+    private void spawnMinionCanon()
+    {
+        if (!PhotonNetwork.IsMasterClient) { return; }
+        Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
+        GameObject minion = PhotonNetwork.InstantiateRoomObject(Path.Combine("Minions/", minionCanonPrefab.name), spawnPoint.position, spawnPoint.rotation);
+        minion.transform.parent = gameObject.transform;
+
+        NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
+        minionAgent.speed = minionMoveSpeed;
+    }
+}

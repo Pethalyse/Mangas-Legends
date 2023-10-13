@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f4f91c2ef3609468f1384a28d68065, type: 3}
+  m_Name: Sceptre de la lune
+  m_EditorClassIdentifier: 
+  nom: Sceptre de la lune
+  description: 
+  icone: {fileID: 21300000, guid: 0676ba3b229cf0845841bbc490faed59, type: 3}
+  onHitEffect: 0
+  vie: 150
+  ad: 0
+  lethality: 0
+  peneArmor: 0
+  ap: 80
+  peneMagic: 0
+  critChance: 0
+  critDamage: 0
+  armor: 0
+  magicRes: 0
+  aSpd: 0
+  mana: 350
+  regenMana: 0
+  bonusHeal: 0
+  cdr: 10
+  ms: 0
+  lifeSteal: 0
+  prix: 3100
+  unique: 1
+  composents: []
+  passifs:
+  - {fileID: 11400000, guid: d6fe2eff42603b3449e2ba00e916442c, type: 2}
+  actifs:
+  - {fileID: 11400000, guid: 9778a0dd9bb307b48a113861c24f7bd2, type: 2}
