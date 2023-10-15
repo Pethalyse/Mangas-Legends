@@ -1118,6 +1118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d504bdefe5845c04bbe7922b7fb95a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: 0
   level: 0
   vie: 0
   vieMax: 560
@@ -1165,6 +1166,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 6327669390950672526}
   gui: {fileID: 0}
   shop: {fileID: 0}
+  IndicatorRange: {fileID: 0}
   levelText: {fileID: 9199061558757788388}
   vieSlider: {fileID: 6562719201520012988}
   manaSlider: {fileID: 2804826389473752385}

@@ -229,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625cfc47a9d7df145bc94643da387d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: 0
   level: 0
   vie: 0
   vieMax: 473
@@ -263,6 +264,3 @@ MonoBehaviour:
   goldsOnDeath: 20
   slow: 0
   cantBeCC: 0
-  team:
-    Name: Blue
-    Code: 0
