@@ -435,6 +435,7 @@ public class ChampionControleur : StatsManager
         //        closestObject = obj.transform;
         //    }
         //}
+        
         DesafficherRangeQClick();
         return closestObject;
 
