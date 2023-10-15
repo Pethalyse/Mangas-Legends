@@ -16,6 +16,8 @@ public class SpawnPlayers : MonoBehaviourPun
 
     public PhotonView pw;
 
+    private GameObject tp;
+
 
     private void Start()
     {
@@ -23,15 +25,15 @@ public class SpawnPlayers : MonoBehaviourPun
         {
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Code == 0)
             {
-                GameObject tp = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown", playerPrefab.name), blueSpawns.ToArray()[b].transform.position, Quaternion.identity);
-                tp.GetComponent<TeamManager>().Team = Teams.Bleu;
+                tp = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown", playerPrefab.name), blueSpawns.ToArray()[b].transform.position, Quaternion.identity);
+                pw.RPC("initTheTeam", RpcTarget.All, Teams.Bleu);
                 pw.RPC("supprSpawn", RpcTarget.All, 0);
             }
 
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Code == 1)
             {
-                GameObject tp = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown", playerPrefab.name), redSpawns.ToArray()[r].transform.position, Quaternion.identity);
-                tp.GetComponent<TeamManager>().Team = Teams.Rouge;
+                tp = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown", playerPrefab.name), redSpawns.ToArray()[r].transform.position, Quaternion.identity);
+                pw.RPC("initTheTeam", RpcTarget.All, Teams.Rouge);
                 pw.RPC("supprSpawn", RpcTarget.All, 1);
             }
         }
@@ -54,5 +56,11 @@ public class SpawnPlayers : MonoBehaviourPun
 
         
 
+    }
+
+    [PunRPC]
+    internal void initTheTeam(Teams t)
+    {
+        tp.GetComponent<TeamManager>().Team = t;
     }
 }
