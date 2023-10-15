@@ -164,7 +164,7 @@ abstract public class StatsManager : TeamManager, IPunObservable
     //takeDamage
     public void TakeDamage(float damage, int ratioDamage, GameObject lastWhoHit)
     {
-        if (!photonView.IsMine) { return; }
+        //if (!photonView.IsMine) { return; }
 
         float dmg = 0;
         switch (ratioDamage)
@@ -272,7 +272,7 @@ abstract public class StatsManager : TeamManager, IPunObservable
     //heal
     public void TakeHeal(float heal)
     {
-        if (!photonView.IsMine) { return; }
+        //if (!photonView.IsMine) { return; }
 
         var healing = Mathf.Round(heal); //arrondi du heal
         vie += healing;

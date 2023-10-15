@@ -68,6 +68,7 @@ MonoBehaviour:
   - setMinionDestinantion
   - setMinionDestination
   - RPC_targetToNull
+  - initTheTeam
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
