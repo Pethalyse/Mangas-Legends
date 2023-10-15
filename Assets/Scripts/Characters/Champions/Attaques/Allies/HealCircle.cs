@@ -44,7 +44,7 @@ public class HealCircle : BuffAllies
         {
             if (TeamManager.the2InSameTeam(send, other.gameObject))
             {
-                other.gameObject.GetComponent<StatsManager>()?.TakeHeal(getValue());
+                other.gameObject.GetComponent<StatsManager>()?.RPC_TakeHeal(getValue());
                 alreadyTouch.Add(other);
             }
         }

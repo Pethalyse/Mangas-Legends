@@ -28,7 +28,7 @@ public class FromSky : AbilityControleur
                 var sm = other.gameObject.GetComponent<StatsManager>();
                 if (sm)
                 {
-                    sm.TakeDamage(getValue(), ratioDamage, send);
+                    sm.RPC_TakeDamage(getValue(), ratioDamage, send.GetPhotonView().ViewID);
 
                     if (sm)
                     {

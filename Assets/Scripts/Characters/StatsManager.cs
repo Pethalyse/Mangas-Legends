@@ -161,10 +161,16 @@ abstract public class StatsManager : TeamManager, IPunObservable
         }
     }
 
-    //takeDamage
-    public void TakeDamage(float damage, int ratioDamage, GameObject lastWhoHit)
+    public void RPC_TakeDamage(float damage, int ratioDamage, int id)
     {
-        //if (!photonView.IsMine) { return; }
+        photonView.RPC("TakeDamage", RpcTarget.All, damage, ratioDamage, id);
+    }
+
+    //takeDamage
+    [PunRPC]
+    public void TakeDamage(float damage, int ratioDamage, int id)
+    {
+        if (!photonView.IsMine) { return; }
 
         float dmg = 0;
         switch (ratioDamage)
@@ -255,24 +261,31 @@ abstract public class StatsManager : TeamManager, IPunObservable
 
         vie -= dmg;
         vie = Mathf.Clamp(vie, 0, vieMax);
-        Death(lastWhoHit);
+        Death(id);
         //Debug.Log(gameObject.name + ", à pris des dégats : " + vie);
     }
 
-    private void Death(GameObject lastWhoHit)
+    private void Death(int id)
     {
         if (vie < 1)
         {
-            lastWhoHit.GetComponent<ChampionControleur>()?.targetToNull();
-            lastWhoHit.GetComponent<ChampionControleur>()?.GiveGolds(goldsOnDeath);
+            GameObject lastWhoHit = PhotonView.Find(id).gameObject;
+            lastWhoHit.GetComponent<ChampionControleur>()?.RPC_targetToNull();
+            lastWhoHit.GetComponent<ChampionControleur>()?.RPC_GiveGolds(goldsOnDeath);
             PhotonNetwork.Destroy(gameObject);
         }
     }
 
+    public void RPC_TakeHeal(float heal)
+    {
+        photonView.RPC("TakeHeal", RpcTarget.All, heal);
+    }
+
     //heal
+    [PunRPC]
     public void TakeHeal(float heal)
     {
-        //if (!photonView.IsMine) { return; }
+        if (!photonView.IsMine) { return; }
 
         var healing = Mathf.Round(heal); //arrondi du heal
         vie += healing;
@@ -280,7 +293,13 @@ abstract public class StatsManager : TeamManager, IPunObservable
         Debug.Log(gameObject.name + ", à été heal : " + vie);
     }
 
+    public void RPC_SetSlow(int pourcentage, float time)
+    {
+        photonView.RPC("SetSlow", RpcTarget.All, pourcentage, time);
+    }
+
     //Slow
+    [PunRPC]
     public void SetSlow(int pourcentage, float time)
     {
         if(!photonView.IsMine) { return ; }

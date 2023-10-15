@@ -69,6 +69,11 @@ MonoBehaviour:
   - setMinionDestination
   - RPC_targetToNull
   - initTheTeam
+  - GiveGolds
+  - SetSlow
+  - TakeDamage
+  - TakeHeal
+  - targetToNull
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

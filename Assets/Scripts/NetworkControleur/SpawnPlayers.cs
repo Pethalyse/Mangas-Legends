@@ -26,14 +26,14 @@ public class SpawnPlayers : MonoBehaviourPun
             if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Code == 0)
             {
                 tp = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown", playerPrefab.name), blueSpawns.ToArray()[b].transform.position, Quaternion.identity);
-                pw.RPC("initTheTeam", RpcTarget.All, Teams.Bleu);
+                pw.RPC("initTheTeam", RpcTarget.AllBuffered, Teams.Bleu);
                 pw.RPC("supprSpawn", RpcTarget.All, 0);
             }
 
             else if (PhotonNetwork.LocalPlayer.GetPhotonTeam().Code == 1)
             {
                 tp = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown", playerPrefab.name), redSpawns.ToArray()[r].transform.position, Quaternion.identity);
-                pw.RPC("initTheTeam", RpcTarget.All, Teams.Rouge);
+                pw.RPC("initTheTeam", RpcTarget.AllBuffered, Teams.Rouge);
                 pw.RPC("supprSpawn", RpcTarget.All, 1);
             }
         }

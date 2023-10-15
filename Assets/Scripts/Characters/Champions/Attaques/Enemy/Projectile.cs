@@ -31,7 +31,7 @@ public class Projectile: AbilityControleur
 
         if (other.transform == target)
         {
-            target.gameObject.GetComponent<StatsManager>()?.TakeDamage(getValue(), ratioDamage, send);
+            target.gameObject.GetComponent<StatsManager>()?.RPC_TakeDamage(getValue(), ratioDamage, send.GetPhotonView().ViewID);
             if (target)
             {
                 send.GetComponent<ChampionControleur>()?.ActiveOnHitPassifsItem(target.gameObject.GetComponent<StatsManager>());

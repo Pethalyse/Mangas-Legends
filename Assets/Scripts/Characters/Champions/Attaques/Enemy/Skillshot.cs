@@ -38,7 +38,7 @@ public class Skillshot : AbilityControleur
                 var sm = other.gameObject.GetComponent<StatsManager>();
                 if (sm)
                 {
-                    sm.TakeDamage(getValue(), ratioDamage, send);
+                    sm.RPC_TakeDamage(getValue(), ratioDamage, send.GetPhotonView().ViewID);
 
                     if (sm)
                     {
@@ -48,7 +48,7 @@ public class Skillshot : AbilityControleur
                         {
                             if (canSlow)
                             {
-                                sm.SetSlow(slowPourcent, slowTime);
+                                sm.RPC_SetSlow(slowPourcent, slowTime);
                             }
                         }
                     }

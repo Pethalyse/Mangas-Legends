@@ -31,7 +31,7 @@ public class MinionAIAttack : StatsManager
 
     private void Attack(StatsManager statsManager)
     {
-        statsManager.TakeDamage(ad, 0, gameObject);
+        statsManager.TakeDamage(ad, 0, photonView.ViewID);
         StartCoroutine(StartCD());
     }
 

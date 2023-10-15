@@ -77,9 +77,6 @@ public class ChampionControleur : StatsManager
 
     //Setters Getters
     //MOUVEMETNS
-    public void targetToNull() { photonView.RPC("RPC_targetToNull", RpcTarget.All); }
-    [PunRPC]
-    public void RPC_targetToNull() { target = null; }
     public float getAutoRange() { return range; }
     public Transform getTarget() { return target; }
     public void setTarget(Transform target) { this.target = target; }
@@ -94,6 +91,15 @@ public class ChampionControleur : StatsManager
     //ITEMS
     public int getGolds() { return goldsOnStock; }
     public List<Item> getItems() { return items; }
+
+    public void RPC_targetToNull() { photonView.RPC("targetToNull", RpcTarget.All); }
+
+    [PunRPC]
+    public void targetToNull() 
+    { 
+        if (!photonView.IsMine) { return; } 
+        target = null; 
+    }
 
     new protected void Awake()
     {
@@ -191,7 +197,7 @@ public class ChampionControleur : StatsManager
         if (Input.GetMouseButtonDown(2))
         {
             Leveling();
-            TakeDamage(400, 0, gameObject);
+            TakeDamage(400, 0, photonView.ViewID);
             GiveGolds(3100);
         }
 
@@ -273,8 +279,15 @@ public class ChampionControleur : StatsManager
     }
 
     //ITEMS
+    public void RPC_GiveGolds(int goldsGive)
+    {
+        photonView.RPC("GiveGolds", RpcTarget.All, goldsGive);
+    }
+
+    [PunRPC]
     public void GiveGolds(int goldsGive)
     {
+        if (!photonView.IsMine) { return; }
         goldsOnStock += goldsGive;
     }
 
@@ -353,7 +366,6 @@ public class ChampionControleur : StatsManager
     
     private void ActualiserStatsSelonItemsNegatif(Item item)
     {
-        Debug.Log("ok");
         //flats
         vieMax -= item.vie;
         vie -= item.vie;
@@ -474,7 +486,6 @@ public class ChampionControleur : StatsManager
             stream.SendNext(nbDeath);
             stream.SendNext(nbAssist);
             stream.SendNext(nbMinions);
-            Debug.Log("à acrit");
         }
         else
         {
@@ -482,7 +493,6 @@ public class ChampionControleur : StatsManager
             nbDeath = (int)stream.ReceiveNext();
             nbAssist = (int)stream.ReceiveNext();
             nbMinions = (int)stream.ReceiveNext();
-            Debug.Log("est ecrit");
         }
     }
 
