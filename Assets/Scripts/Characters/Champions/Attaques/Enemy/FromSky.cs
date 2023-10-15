@@ -1,5 +1,6 @@
 ﻿using static UnityEngine.UI.Image;
 using UnityEngine;
+using Photon.Pun;
 
 public class FromSky : AbilityControleur
 {
@@ -18,10 +19,11 @@ public class FromSky : AbilityControleur
 
     private void OnTriggerEnter(Collider other)
     {
+        if (player == null || !player.IsLocal) { return; }
 
         if (!alreadyTouch.Contains(other))
         {
-            if (!inSameTeam(other.gameObject))
+            if (!TeamManager.the2InSameTeam(send, other.gameObject))
             {
                 var sm = other.gameObject.GetComponent<StatsManager>();
                 if (sm)

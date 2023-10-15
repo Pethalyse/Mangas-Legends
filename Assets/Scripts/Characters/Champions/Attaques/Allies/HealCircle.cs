@@ -39,9 +39,10 @@ public class HealCircle : BuffAllies
 
     private void OnTriggerStay(Collider other)
     {
+        if (player == null || !player.IsLocal) { return; }
         if (!alreadyTouch.Contains(other))
         {
-            if (inSameTeam(other.gameObject))
+            if (TeamManager.the2InSameTeam(send, other.gameObject))
             {
                 other.gameObject.GetComponent<StatsManager>()?.TakeHeal(getValue());
                 alreadyTouch.Add(other);

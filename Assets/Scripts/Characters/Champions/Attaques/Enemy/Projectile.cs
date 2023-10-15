@@ -26,6 +26,7 @@ public class Projectile: AbilityControleur
 
     private void OnTriggerEnter(Collider other)
     {
+        if (player == null || !player.IsLocal) { return; }
         if (target == null) return;
 
         if (other.transform == target)
