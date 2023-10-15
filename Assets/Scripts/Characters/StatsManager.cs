@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-abstract public class StatsManager : MonoBehaviourPun, IPunObservable
+abstract public class StatsManager : TeamManager, IPunObservable
 {
     //stats
     [Header("Stats")]

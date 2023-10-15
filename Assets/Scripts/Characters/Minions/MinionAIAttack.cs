@@ -6,21 +6,9 @@ public class MinionAIAttack : StatsManager
 {
     bool canAttck = true;
 
-    [Header("team")]
-    public PhotonTeam team;
-
     new private void Start()
     {
         base.Start();
-
-        if(team.Code == 0)
-        {
-            team.Name = "Blue";
-        }
-        else if(team.Code == 1)
-        {
-            team.Name = "Red";
-        }
     }
 
     new private void Update()

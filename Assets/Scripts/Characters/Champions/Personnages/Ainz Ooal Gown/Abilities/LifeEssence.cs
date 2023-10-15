@@ -55,6 +55,7 @@ public class LifeEssence : Ability
         GameObject lifeEssence = Instantiate(abilityVisuel, gameObject.transform);
         HealCircle principalClass = lifeEssence.GetComponent<HealCircle>();
         principalClass.player = championControleur.photonView.Owner;
+        principalClass.send = gameObject;
         principalClass.duration = duration3;
         principalClass.reference = gameObject;
         var heal = getValueWithRatios();

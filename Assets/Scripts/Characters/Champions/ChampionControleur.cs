@@ -75,9 +75,6 @@ public class ChampionControleur : StatsManager
     //inBattle
     protected bool inBattle = false;
 
-    //Photon
-    private int team;
-
     //Setters Getters
     //MOUVEMETNS
     public void targetToNull() { photonView.RPC("RPC_targetToNull", RpcTarget.All); }
@@ -93,10 +90,6 @@ public class ChampionControleur : StatsManager
     public bool getIsAttack() { return isAttack; }
     public void setCanAuto(bool v) { canAuto = v; }
     public bool getCanAuto() { return canAuto; }
-
-    //TEAM
-    public int getTeam() { return team; }
-    public void setTeam(int team) { this.team = team; }
 
     //ITEMS
     public int getGolds() { return goldsOnStock; }
@@ -213,35 +206,14 @@ public class ChampionControleur : StatsManager
             UI_Shop.showShop(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             AfficherRangeQClick();
             if (Input.GetMouseButtonDown(0)) { QClickAttack(); }
         }
 
-        if (Input.GetKeyUp(KeyCode.Q) && IR) { DesafficherRangeQClick(); }
+        if (Input.GetKeyUp(KeyCode.A) && IR) { DesafficherRangeQClick(); }
 
-    }
-
-    public bool inSameTeam(GameObject hit)
-    {
-        PhotonTeam team = TargetTeam(hit);
-
-        if (team == null) { return false; }
-
-        return team.Equals(photonView.Owner.GetPhotonTeam());
-    }
-
-    private PhotonTeam TargetTeam(GameObject hit)
-    {
-        PhotonTeam team;
-        team = hit.GetComponent<MinionAIAttack>()?.team;
-        if (team == null)
-        {
-            team = hit.GetPhotonView().Owner.GetPhotonTeam();
-        }
-
-        return team;
     }
 
     //FONCTIONS STATISTIQUES
