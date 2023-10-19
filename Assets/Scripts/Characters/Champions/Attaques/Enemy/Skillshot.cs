@@ -1,8 +1,3 @@
-using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Skillshot : AbilityControleur
@@ -30,25 +25,27 @@ public class Skillshot : AbilityControleur
 
     private void OnTriggerEnter(Collider other)
     {
-        if (player == null || !player.IsLocal) { return; }
+        if (send != GameManager.GetLocalPlayer()) { return; }
         if (!alreadyTouch.Contains(other))
         {
-            if (!TeamManager.the2InSameTeam(send, other.gameObject))
+            if (!send.inSameTeam(other.gameObject))
             {
-                var sm = other.gameObject.GetComponent<StatsManager>();
-                if (sm)
+                StatsManager sm = GameManager.GetFromAll(other.name);
+                ChampionControleur cc = GameManager.GetPlayer(send.name);
+
+                if (sm && cc)
                 {
-                    sm.RPC_TakeDamage(getValue(), ratioDamage, send.GetPhotonView().ViewID);
+                    sm.CmdTakeDamage(getValue(), ratioDamage, 0);
 
                     if (sm)
                     {
-                        send.GetComponent<ChampionControleur>()?.ActiveOnHitPassifsItem(sm);
+                        cc.ActiveOnHitPassifsItem(sm);
 
                         if (sm)
                         {
                             if (canSlow)
                             {
-                                sm.RPC_SetSlow(slowPourcent, slowTime);
+                                sm.CmdSetSlow(slowPourcent, slowTime);
                             }
                         }
                     }

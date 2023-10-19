@@ -1,4 +1,4 @@
-using Photon.Pun.UtilityScripts;
+using Mirror;
 using System.Collections;
 using UnityEngine;
 
@@ -9,6 +9,8 @@ public class MinionAIAttack : StatsManager
     new private void Start()
     {
         base.Start();
+
+        GameManager.RegisterObjet(GetComponent<NetworkIdentity>().netId.ToString(), this);
     }
 
     new private void Update()
@@ -21,7 +23,7 @@ public class MinionAIAttack : StatsManager
         if (!canAttck) { return; }
         if (gameObject.transform.position == stoppingPosition)
         {
-            StatsManager sm = currentTarget.gameObject?.GetComponent<StatsManager>();
+            StatsManager sm = GameManager.GetFromAll(currentTarget.name);
             if (sm)
             {
                 Attack(sm);
@@ -31,7 +33,7 @@ public class MinionAIAttack : StatsManager
 
     private void Attack(StatsManager statsManager)
     {
-        statsManager.TakeDamage(ad, 0, photonView.ViewID);
+        statsManager.CmdTakeDamage(ad, 0, 0);
         StartCoroutine(StartCD());
     }
 

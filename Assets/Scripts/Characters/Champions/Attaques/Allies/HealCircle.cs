@@ -1,8 +1,6 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class HealCircle : BuffAllies
 {
@@ -39,12 +37,14 @@ public class HealCircle : BuffAllies
 
     private void OnTriggerStay(Collider other)
     {
-        if (player == null || !player.IsLocal) { return; }
+        if(send != GameManager.GetLocalPlayer()) { return; }
         if (!alreadyTouch.Contains(other))
         {
-            if (TeamManager.the2InSameTeam(send, other.gameObject))
+            if (send.inSameTeam(other.gameObject))
             {
-                other.gameObject.GetComponent<StatsManager>()?.RPC_TakeHeal(getValue());
+                ChampionControleur sm = GameManager.GetPlayer(other.name);
+                if (!sm) { return; }
+                sm.CmdTakeHeal(getValue());
                 alreadyTouch.Add(other);
             }
         }

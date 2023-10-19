@@ -1,10 +1,10 @@
-using Photon.Pun;
-using System.Collections;
+using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shop : MonoBehaviourPun
+public class Shop : MonoBehaviour
 {
+    public static Shop instance;
     public ChampionControleur player;
     public List<Item> items = new List<Item>();
     public List<Item> itemsMages = new List<Item>();
@@ -14,21 +14,23 @@ public class Shop : MonoBehaviourPun
     public List<Item> itemsSupports = new List<Item>();
     public List<Item> itemsTanks = new List<Item>();
 
+    private void Start()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
     private void Update()
     {
         if (!player)
         {
-            foreach(GameObject go in GameObject.FindGameObjectsWithTag("Player"))
-            {
-                if(go.GetPhotonView().IsMine)
-                {
-                    player = go.GetComponent<ChampionControleur>();
-                }
-            }
+            player = GameManager.GetLocalPlayer();
         }
     }
 
-    public bool AcheterObjet(Item objet)
+    public void AcheterObjet(Item objet)
     {
         int prix = objet.getPrix();
         foreach (Item i in objet.composents)
@@ -49,7 +51,8 @@ public class Shop : MonoBehaviourPun
                 }
             }
         }
-        return player.AddItem(objet, prix);
+        
+        player.CmdAddItem(objet, prix);
     }
 
     public static void TrierParPrixCroissant(List<Item> items)

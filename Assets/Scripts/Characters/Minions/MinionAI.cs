@@ -1,9 +1,8 @@
-using Photon.Pun;
-using System;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MinionAI : MonoBehaviourPun
+public class MinionAI : NetworkBehaviour
 {
 
     private NavMeshAgent agent;
@@ -21,17 +20,14 @@ public class MinionAI : MonoBehaviourPun
     {
         agent = GetComponent<NavMeshAgent>();
         attack = GetComponent<MinionAIAttack>();
-        if (photonView.IsMine)
-        {
-            FindAndSetTarget();
-        }
-        
+
+        if (!isServer) { return; }
+        FindAndSetTarget();
     }
 
     void Update()
     {
-        if(!photonView.IsMine) { return; }
-
+        if(!isServer) { return; }
         timeSinceLastTargetSwitch += Time.deltaTime;
 
         if(timeSinceLastTargetSwitch >= targetSwitchInterval)

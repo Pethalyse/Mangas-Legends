@@ -1,13 +1,11 @@
-using Photon.Pun;
-using System;
+using Mirror;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public class MinionSpawner : MonoBehaviourPun
+public class MinionSpawner : NetworkBehaviour
 {
     public float minionMoveSpeed;
     public float minionCanonMoveSpeed;
@@ -29,13 +27,13 @@ public class MinionSpawner : MonoBehaviourPun
 
     private IEnumerator SpawnMinions()
     {
-        while(true)
+        while (true)
         {
             waveCount++;
 
-            if(waveCount % wavesUntilMinionCanon == 0 )
+            if (waveCount % wavesUntilMinionCanon == 0)
             {
-                for(int i=0; i < minionsPerWave/2; i++)
+                for (int i = 0; i < minionsPerWave / 2; i++)
                 {
                     spawnRegularMinion();
                     yield return new WaitForSeconds(delayBetweenMinions);
@@ -44,7 +42,7 @@ public class MinionSpawner : MonoBehaviourPun
                 spawnMinionCanon();
                 yield return new WaitForSeconds(delayBetweenMinions);
 
-                for (int i = minionsPerWave/2; i < minionsPerWave-1; i++)
+                for (int i = minionsPerWave / 2; i < minionsPerWave - 1; i++)
                 {
                     spawnRegularMinion();
                     yield return new WaitForSeconds(delayBetweenMinions);
@@ -67,9 +65,10 @@ public class MinionSpawner : MonoBehaviourPun
 
     private void spawnRegularMinion()
     {
-        if (!PhotonNetwork.IsMasterClient) { return; }
+        if (!isServer) { return; }
         Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
-        GameObject minion = PhotonNetwork.InstantiateRoomObject(Path.Combine("Minions/", minionPrefab.name), spawnPoint.position, spawnPoint.rotation);
+        GameObject minion = Instantiate(minionPrefab, spawnPoint.position, spawnPoint.rotation);
+        NetworkServer.Spawn(minion);
         minion.transform.parent = gameObject.transform;
 
         NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
@@ -78,9 +77,10 @@ public class MinionSpawner : MonoBehaviourPun
 
     private void spawnMinionCanon()
     {
-        if (!PhotonNetwork.IsMasterClient) { return; }
+        if (!isServer) { return; }
         Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
-        GameObject minion = PhotonNetwork.InstantiateRoomObject(Path.Combine("Minions/", minionCanonPrefab.name), spawnPoint.position, spawnPoint.rotation);
+        GameObject minion = Instantiate(minionCanonPrefab, spawnPoint.position, spawnPoint.rotation);
+        NetworkServer.Spawn(minion);
         minion.transform.parent = gameObject.transform;
 
         NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();

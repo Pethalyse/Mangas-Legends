@@ -1,12 +1,9 @@
 
 using UnityEngine;
-using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using System.Collections.Generic;
-using System;
 using TMPro;
 using UnityEngine.UI;
-using UnityEngine.Rendering.PostProcessing;
+using Mirror;
 
 public class ChampionControleur : StatsManager
 {
@@ -92,41 +89,32 @@ public class ChampionControleur : StatsManager
     public int getGolds() { return goldsOnStock; }
     public List<Item> getItems() { return items; }
 
-    public void RPC_targetToNull() { photonView.RPC("targetToNull", RpcTarget.All); }
-
-    [PunRPC]
-    public void targetToNull() 
-    { 
-        if (!photonView.IsMine) { return; } 
-        target = null; 
-    }
+    public void RpcTargetToNull() { target = null; }
 
     new protected void Awake()
     {
         base.Awake();
         _mouvements = gameObject.GetComponent<Mouvements>();
         animations = GetComponent<Animations>();
-        if(photonView.IsMine)
-        {
-            gui = GameObject.Find("2D GUI").GetComponent<GUIControleur>();
-            shop = GameObject.Find("Shop");
-            shop.SetActive(false);
-        }
 
         //gameObject.tag = "Player";
     }
 
     new void Start()
     {
+        if (isLocalPlayer)
+        {
+            gui = GUIControleur.instance;
+            shop = Shop.instance.gameObject;
+            shop.SetActive(false);
+        }
+
         base.Start();
 
         level = 0;
         goldsOnStock = 0;
 
-        gameObject.tag = "Player";
-        gameObject.layer = LayerMask.NameToLayer("Characters");
-
-        if (photonView.IsMine)
+        if (isLocalPlayer)
         {
             Leveling();
         }
@@ -134,8 +122,8 @@ public class ChampionControleur : StatsManager
 
     // Update is called once per frame
     new protected void Update()
-    { 
-        if (photonView.IsMine)
+    {
+        if (isLocalPlayer)
         {
             base.Update();
             Inputs();
@@ -149,9 +137,9 @@ public class ChampionControleur : StatsManager
     private void LateUpdate()
     {
         updateGUI();
-        if (photonView.IsMine)
+        if (isLocalPlayer)
         {
-            gui.miseAJour(this);
+            gui.MiseAJour(this);
         }
     }
 
@@ -181,7 +169,7 @@ public class ChampionControleur : StatsManager
                 if (Vector3.Distance(transform.position, hit.collider.transform.position) <= range && canAuto) // && Time.time > nextAttackTime
                 {
                     aaHit = hit.collider.transform;
-                    photonView.RPC("autoAttaque", RpcTarget.All);
+                    
                 }
             }
 
@@ -190,20 +178,19 @@ public class ChampionControleur : StatsManager
         {
             _mouvements.lookAt(target.position);
             aaHit = target.transform;
-            photonView.RPC("autoAttaque", RpcTarget.All);
+            CmdAutoAttaque();
 
         }
 
         if (Input.GetMouseButtonDown(2))
         {
             Leveling();
-            TakeDamage(400, 0, photonView.ViewID);
+            CmdTakeDamage(400, 0, 0);
             GiveGolds(3100);
         }
 
-
-        if (Input.GetKeyDown(KeyCode.P))
-        { 
+        if (Input.GetButtonDown("Shop"))
+        {
             UI_Shop.showShop(!UI_Shop.self.activeSelf);
         }
 
@@ -212,7 +199,7 @@ public class ChampionControleur : StatsManager
             UI_Shop.showShop(false);
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetButtonDown("QClick"))
         {
             AfficherRangeQClick();
             if (Input.GetMouseButtonDown(0)) { QClickAttack(); }
@@ -279,19 +266,20 @@ public class ChampionControleur : StatsManager
     }
 
     //ITEMS
-    public void RPC_GiveGolds(int goldsGive)
-    {
-        photonView.RPC("GiveGolds", RpcTarget.All, goldsGive);
-    }
-
-    [PunRPC]
+    [Client]
     public void GiveGolds(int goldsGive)
     {
-        if (!photonView.IsMine) { return; }
         goldsOnStock += goldsGive;
     }
 
-    public bool AddItem(Item add, int prix)
+    [Command]
+    public void CmdAddItem(Item add, int prix)
+    {
+        RpcAddItem(add, prix);
+    }
+
+    [ClientRpc]
+    private void RpcAddItem(Item add, int prix)
     {
         if(prix <= goldsOnStock && items.Count < nbMaxItems)
         {
@@ -320,23 +308,18 @@ public class ChampionControleur : StatsManager
 
             items.Add(add);
             ActualiserStatsSelonItemsPositif(add);
-            return true;
         }
 
-        return false;
     }
 
-    public bool SellItem(Item remove)
+    public void SellItem(Item remove)
     {
         if (items.Contains(remove))
         {
             goldsOnStock += Mathf.RoundToInt(remove.prix * 0.7f);
             items.Remove(remove);
             ActualiserStatsSelonItemsNegatif(remove);
-            return true;
         }
-
-        return false;
     }
 
     private void ActualiserStatsSelonItemsPositif(Item item)
@@ -405,9 +388,15 @@ public class ChampionControleur : StatsManager
         }
     }
 
+    [Command]
+    private void CmdAutoAttaque()
+    {
+        RpcAutoAttaque();
+    }
+
     //ATTAQUES
-    [PunRPC]
-    virtual protected void autoAttaque() 
+    [ClientRpc]
+    virtual protected void RpcAutoAttaque() 
     {
         isAttack = true;
         inBattle = true;
@@ -475,25 +464,5 @@ public class ChampionControleur : StatsManager
     virtual public void ability2() { }
     virtual public void ability3() { }
     virtual public void ability4() { }
-
-    //SYNCR SERVEUR
-    public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        base.OnPhotonSerializeView(stream, info);
-        if (stream.IsWriting)
-        {
-            stream.SendNext(nbKills);
-            stream.SendNext(nbDeath);
-            stream.SendNext(nbAssist);
-            stream.SendNext(nbMinions);
-        }
-        else
-        {
-            nbKills = (int)stream.ReceiveNext();
-            nbDeath = (int)stream.ReceiveNext();
-            nbAssist = (int)stream.ReceiveNext();
-            nbMinions = (int)stream.ReceiveNext();
-        }
-    }
 
 }

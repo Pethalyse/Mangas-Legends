@@ -1,11 +1,8 @@
-﻿using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
+﻿using Mirror;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
-public class AbilityControleur: MonoBehaviourPun
+public class AbilityControleur: MonoBehaviour
 {
     //Values
     private float value;
@@ -23,8 +20,6 @@ public class AbilityControleur: MonoBehaviourPun
     public int slowPourcent;
     public float slowTime;
 
-    //Player
-    public Player player;
-    public GameObject send;
+    public ChampionControleur send;
 
 }

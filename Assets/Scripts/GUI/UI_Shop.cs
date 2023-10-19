@@ -313,8 +313,6 @@ public class UI_Shop : MonoBehaviour
     //acheter item
     public void AcheterObjet(Item objet)
     {
-        if (!shop.AcheterObjet(objet)) { return; }
-
         if (objet.unique)
         {
             resetTransform(conteneurComposents);

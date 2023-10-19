@@ -1,7 +1,7 @@
-using Photon.Pun;
+using Mirror;
 using UnityEngine;
 
-public class TeamManager : MonoBehaviourPun
+public class TeamManager : NetworkBehaviour
 {
     [Header("Team")]
     [SerializeField] Teams team;

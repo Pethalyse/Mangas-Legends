@@ -1,8 +1,5 @@
-using Photon.Pun;
-using System.Collections;
+using Mirror;
 using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,11 +12,12 @@ public class PenetrateUp : Ability
     [SerializeField] private float maxRange = 22.5f;
     [SerializeField] private float speed = 5f;
 
+
     new void Awake()
     {
         base.Awake();
 
-        if (championControleur.photonView.IsMine)
+        if (isLocalPlayer)
         {
             abilityImageIcon = GameObject.Find("Ability 4 Icon").GetComponent<Image>();
             abilityImageIconCD = GameObject.Find("Ability 4 Icon CD").GetComponent<Image>();
@@ -28,6 +26,19 @@ public class PenetrateUp : Ability
             canvasIndicator = GameObject.Find("Indicator4").GetComponent<Image>();
         }
 
+    }
+
+    new void Start()
+    {
+        List<Behaviour> b = GUIControleur.instance.GetAbGui(4);
+
+        abilityImageIcon = (Image)b[0];
+        abilityImageIconCD = (Image)b[1];
+        abilityText = (Text)b[2];
+
+        base.Start();
+
+        key = "Ab4";
     }
 
     new void Update()
@@ -57,9 +68,9 @@ public class PenetrateUp : Ability
             canvasIndicator.transform.position = new Vector3(canvasIndicator.transform.position.x, 0.1f, canvasIndicator.transform.position.z);
 
 
-            if (Input.GetKeyUp(key))
+            if (Input.GetButtonUp(key))
             {
-                championControleur.photonView.RPC("launchPenetrateUp", RpcTarget.All, new Vector3(hit.point.x, 30, hit.point.z));
+                CmdLaunchPenetrateUp(new Vector3(hit.point.x, 30, hit.point.z));
                 activeCD();
                 Cursor.visible = true;
             }
@@ -67,8 +78,14 @@ public class PenetrateUp : Ability
 
     }
 
-    [PunRPC]
-    protected void launchPenetrateUp(Vector3 pos)
+    [Command]
+    protected void CmdLaunchPenetrateUp(Vector3 pos)
+    {
+        RpcLaunchPenetrateUp(pos);
+    }
+
+    [ClientRpc]
+    protected void RpcLaunchPenetrateUp(Vector3 pos)
     {
         launchAbility(pos);
     }
@@ -77,8 +94,7 @@ public class PenetrateUp : Ability
     {
         GameObject penetrateUp = Instantiate(abilityVisuel, pos, gameObject.transform.rotation);
         FromSky principalClass = penetrateUp.GetComponent<FromSky>();
-        principalClass.send = gameObject;
-        principalClass.player = championControleur.photonView.Owner;
+        principalClass.send = championControleur;
         principalClass.speed = speed;
         principalClass.ratioDamage = ratioDamage;
         principalClass.setValue(getValueWithRatios());

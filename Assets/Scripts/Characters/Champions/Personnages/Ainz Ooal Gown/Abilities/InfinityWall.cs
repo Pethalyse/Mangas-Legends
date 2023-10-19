@@ -1,8 +1,5 @@
-using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using System.Collections;
+using Mirror;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +14,7 @@ public class InfinityWall : Ability
     {
         base.Awake();
 
-        if (championControleur.photonView.IsMine)
+        if (isLocalPlayer)
         {
             abilityImageIcon = GameObject.Find("Ability 2 Icon").GetComponent<Image>();
             abilityImageIconCD = GameObject.Find("Ability 2 Icon CD").GetComponent<Image>();
@@ -25,6 +22,19 @@ public class InfinityWall : Ability
             canvas = GameObject.Find("Ability2IndicatorCanvas").GetComponent<Canvas>();
         }
 
+    }
+
+    new void Start()
+    {
+        List<Behaviour> b = GUIControleur.instance.GetAbGui(2);
+
+        abilityImageIcon = (Image)b[0];
+        abilityImageIconCD = (Image)b[1];
+        abilityText = (Text)b[2];
+
+        base.Start();
+
+        key = "Ab2";
     }
 
     new void Update()
@@ -38,13 +48,13 @@ public class InfinityWall : Ability
         if (canvas.enabled)
         {
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Characters")) && (Input.GetMouseButtonUp(0) || Input.GetKeyUp(key)))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Characters")) && (Input.GetMouseButtonUp(0) || Input.GetButtonUp(key)))
             {
-                if(!championControleur.inSameTeam(hit.collider.gameObject)) { return; }
-                
+                if (!championControleur.inSameTeam(hit.collider.gameObject)) { return; }
+
                 if (Vector3.Distance(transform.position, hit.collider.transform.position) <= maxRange)
                 {
-                    championControleur.photonView.RPC("launchInfinityWall", RpcTarget.All, hit.collider.GetComponent<ChampionControleur>().photonView.ViewID);
+                    CmdlaunchInfinityWall(hit.collider.gameObject);
                     activeCD();
                 }
                 else
@@ -60,13 +70,13 @@ public class InfinityWall : Ability
                 if (Vector3.Distance(transform.position, championControleur.getTarget().transform.position) <= maxRange)
                 {
 
-                    championControleur.photonView.RPC("launchInfinityWall", RpcTarget.All, championControleur.getTarget().GetComponent<ChampionControleur>().photonView.ViewID);
+                    CmdlaunchInfinityWall(championControleur.getTarget().gameObject);
                     activeCD();
-                    championControleur.targetToNull();
+                    championControleur.RpcTargetToNull();
                 }
             }
 
-            if (Input.GetKeyUp(key) && (!championControleur.getTarget() || !championControleur.inSameTeam(championControleur.getTarget().gameObject)))
+            if (Input.GetButtonUp(key) && (!championControleur.getTarget() || !championControleur.inSameTeam(championControleur.getTarget().gameObject)))
             {
                 canvas.enabled = false;
                 Cursor.visible = true;
@@ -74,17 +84,18 @@ public class InfinityWall : Ability
         }
     }
 
-    [PunRPC]
-    protected void launchInfinityWall(int target)
-    { 
-        launchAbility(PhotonView.Find(target).gameObject);
+    [Command]
+    private void CmdlaunchInfinityWall(GameObject target)
+    {
+        RpcLaunchInfinityWall(target);
     }
 
-    private void launchAbility(GameObject target) 
+    [ClientRpc]
+    private void RpcLaunchInfinityWall(GameObject target)
     {
         ShieldAP sa = target.AddComponent<ShieldAP>();
         sa.setAntiCC();
-        sa.setShield((int) Mathf.Round(getValueWithRatios()));
+        sa.setShield((int)Mathf.Round(getValueWithRatios()));
         sa.setTime(duration);
     }
 

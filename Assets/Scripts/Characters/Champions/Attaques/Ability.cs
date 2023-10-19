@@ -1,13 +1,8 @@
-using Photon.Pun.UtilityScripts;
-using Photon.Realtime;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Ability : MonoBehaviour
+public class Ability : NetworkBehaviour
 {
 
     [Header("GUI")]
@@ -21,9 +16,6 @@ public class Ability : MonoBehaviour
 
     [Header("Visuel")]
     [SerializeField] protected GameObject abilityVisuel;
-
-    [Header("Key")]
-    [SerializeField] protected KeyCode key;
 
     [Header("CD")]
     [SerializeField] private float abilityCD;
@@ -49,15 +41,17 @@ public class Ability : MonoBehaviour
     protected RaycastHit hit;
     protected Ray ray;
 
+    protected string key;
+
     protected void Awake()
     {
         championControleur = GetComponent<ChampionControleur>();
         mouvements = GetComponent<Mouvements>();
     }
 
-    void Start()
+    protected void Start()
     {
-        if (championControleur.photonView.IsMine)
+        if (isLocalPlayer)
         {
             abilityImageIconCD.fillAmount = 0;
             abilityText.text = "";
@@ -70,7 +64,7 @@ public class Ability : MonoBehaviour
 
     virtual protected void Update()
     {
-        if (championControleur.photonView.IsMine)
+        if (isLocalPlayer)
         {
             if (canvas)
             {
@@ -88,7 +82,8 @@ public class Ability : MonoBehaviour
 
     private void input()
     {
-        if (Input.GetKeyDown(key) && !isAbilityCD)
+        if (key == "") { return; }
+        if (Input.GetButtonDown(key) && !isAbilityCD)
         {
             canvas.enabled = true;
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013034739929463873}
   - component: {fileID: 8149642763717291940}
+  - component: {fileID: -1883852970134716457}
   m_Layer: 0
   m_Name: Minion Spawner Red
   m_TagString: Untagged
@@ -44,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4240a4d971ed4bb419ebb1ddfcc32c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   minionMoveSpeed: 1
   minionCanonMoveSpeed: 1
   minionPrefab: {fileID: 8238566504118316089, guid: bbf56545553ca094ea461fef46b42376, type: 3}
@@ -54,3 +58,20 @@ MonoBehaviour:
   minionsPerWave: 6
   wavesUntilMinionCanon: 3
   delayBetweenMinions: 1
+--- !u!114 &-1883852970134716457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2592952257800420326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 432383295
+  serverOnly: 1
+  visible: 0
+  hasSpawned: 0

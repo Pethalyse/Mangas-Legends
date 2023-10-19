@@ -10,8 +10,8 @@ abstract public class ItemInteraction : ItemsInteractionsBase, IItemsIteractions
 }
 
 // Grandes Soeurs // 
-abstract public class Passif : ItemInteraction { }
-abstract public class Actif : ItemInteraction { }
+public class Passif : ItemInteraction { }
+public class Actif : ItemInteraction { }
 
 // Petites Soeurs //
 

@@ -1,9 +1,9 @@
-using Photon.Pun;
+using Mirror;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-abstract public class StatsManager : TeamManager, IPunObservable
+abstract public class StatsManager : TeamManager
 {
     //stats
     [Header("Stats")]
@@ -111,7 +111,6 @@ abstract public class StatsManager : TeamManager, IPunObservable
 
     protected void Update()
     {
-        if(!photonView.IsMine) { return; }
     }
 
     protected void Start()
@@ -130,10 +129,8 @@ abstract public class StatsManager : TeamManager, IPunObservable
         range = rangeBase;
         attackSpeed = attackSpeedBase;
 
-        if (photonView.IsMine)
-        {
-            InvokeRepeating("updateNbLoop", 0f, 1f);
-        }
+        InvokeRepeating("updateNbLoop", 0f, 1f);
+
     }
 
     public void updateNbLoop() { nbLoop++; }
@@ -161,17 +158,16 @@ abstract public class StatsManager : TeamManager, IPunObservable
         }
     }
 
-    public void RPC_TakeDamage(float damage, int ratioDamage, int id)
+    [Command]
+    public void CmdTakeDamage(float damage, int ratioDamage, int id)
     {
-        photonView.RPC("TakeDamage", RpcTarget.All, damage, ratioDamage, id);
+        RpcTakeDamage(damage, ratioDamage, id);
     }
 
     //takeDamage
-    [PunRPC]
-    public void TakeDamage(float damage, int ratioDamage, int id)
+    [ClientRpc]
+    private void RpcTakeDamage(float damage, int ratioDamage, int id)
     {
-        if (!photonView.IsMine) { return; }
-
         float dmg = 0;
         switch (ratioDamage)
         {
@@ -269,41 +265,52 @@ abstract public class StatsManager : TeamManager, IPunObservable
     {
         if (vie < 1)
         {
-            GameObject lastWhoHit = PhotonView.Find(id).gameObject;
-            lastWhoHit.GetComponent<ChampionControleur>()?.RPC_targetToNull();
-            lastWhoHit.GetComponent<ChampionControleur>()?.RPC_GiveGolds(goldsOnDeath);
-            PhotonNetwork.Destroy(gameObject);
+            //GameObject lastWhoHit = PhotonView.Find(id).gameObject;
+            //ChampionControleur cc = lastWhoHit.GetComponent<ChampionControleur>();
+            //if (cc)
+            //{
+            //    cc.RPC_targetToNull();
+            //    cc.RPC_GiveGolds(goldsOnDeath);
+            //    if (this is MinionAIAttack)
+            //    {
+            //        cc.NbMinions += 1;
+            //    }
+            //    else if (this is ChampionControleur)
+            //    {
+            //        cc.NbKills += 1;
+            //    }
+            //}
+
+            Debug.Log("mort");
         }
     }
 
-    public void RPC_TakeHeal(float heal)
+    [Command]
+    public void CmdTakeHeal(float heal)
     {
-        photonView.RPC("TakeHeal", RpcTarget.All, heal);
+        RpcTakeHeal(heal);
     }
 
     //heal
-    [PunRPC]
-    public void TakeHeal(float heal)
+    [ClientRpc]
+    private void RpcTakeHeal(float heal)
     {
-        if (!photonView.IsMine) { return; }
-
         var healing = Mathf.Round(heal); //arrondi du heal
         vie += healing;
         vie = Mathf.Clamp(vie, 0, vieMax);
         Debug.Log(gameObject.name + ", à été heal : " + vie);
     }
 
-    public void RPC_SetSlow(int pourcentage, float time)
+    [Command]
+    public void CmdSetSlow(int pourcentage, float time)
     {
-        photonView.RPC("SetSlow", RpcTarget.All, pourcentage, time);
+        RpcSetSlow(pourcentage, time);
     }
 
     //Slow
-    [PunRPC]
-    public void SetSlow(int pourcentage, float time)
+    [ClientRpc]
+    private void RpcSetSlow(int pourcentage, float time)
     {
-        if(!photonView.IsMine) { return ; }
-
         StartCoroutine(slowTime(pourcentage, time));
     }
 
@@ -317,70 +324,5 @@ abstract public class StatsManager : TeamManager, IPunObservable
         yield return new WaitForSeconds(time);
 
         moveSpeed += variation;
-    }
-
-    //SYNCR SERVEUR
-    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if(stream.IsWriting)
-        {
-            stream.SendNext(level);
-
-            stream.SendNext(vie);
-            stream.SendNext(vieMax);
-            stream.SendNext(mana);
-            stream.SendNext(manaMax);
-
-            stream.SendNext(ad);
-            stream.SendNext(ap);
-            stream.SendNext(ar);
-            stream.SendNext(mr);
-
-            stream.SendNext(critChance);
-            stream.SendNext(critDamage);
-
-            stream.SendNext(attackSpeed);
-            stream.SendNext(range);
-
-            stream.SendNext(slow);
-            stream.SendNext(moveSpeed);
-
-            stream.SendNext(cantBeCC);
-
-            stream.SendNext(nbLoop);
-
-            //stream.SendNext(transform.position);
-            //stream.SendNext(transform.rotation);
-        }
-        else
-        {
-            level = (int)stream.ReceiveNext();
-
-            vie = (float)stream.ReceiveNext();
-            vieMax = (float)stream.ReceiveNext();
-            mana = (float)stream.ReceiveNext();
-            manaMax = (float)stream.ReceiveNext();
-
-            ad = (float)stream.ReceiveNext();
-            ap = (float)stream.ReceiveNext();
-            ar = (float)stream.ReceiveNext();
-            mr = (float)stream.ReceiveNext();
-
-            critChance = (int)stream.ReceiveNext();
-            critDamage = (int)stream.ReceiveNext();
-
-            attackSpeed = (float)stream.ReceiveNext();
-            range = (float)stream.ReceiveNext();
-
-            slow = (int)stream.ReceiveNext();
-            moveSpeed = (float)stream.ReceiveNext();
-
-            cantBeCC = (bool)stream.ReceiveNext();
-
-            nbLoop = (int)stream.ReceiveNext();
-
-            //transform.position = (Vector3)stream.ReceiveNext();
-            //transform.rotation = (Quaternion)stream.ReceiveNext();
-        }
     }
 }

@@ -1,6 +1,3 @@
-using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControleurFollow : MonoBehaviour
@@ -25,26 +22,21 @@ public class CameraControleurFollow : MonoBehaviour
     {
         if (!target)
         {
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
+            if (!GameManager.GetLocalPlayer()) { return; }
+            target = GameManager.GetLocalPlayer().transform;
+            if (!target) { return; }
+            offset = new Vector3(0, Mathf.Abs(transform.position.y - target.position.y), 0);
+        }
+        else
+        {
+            if (Input.GetButtonDown("DelockCam")) // Change le verrouillage de la caméra lorsque la touche "Y" est enfoncée.
             {
-                if (go.GetPhotonView().IsMine)
-                {
-                    target = go.transform;
-                    offset = new Vector3(0, Mathf.Abs(transform.position.y - target.position.y), 0);
-                    break;
-                }
+                isLock = !isLock;
             }
 
-            if (!target) { Debug.Log("no target"); }
+            screenWidth = Screen.width;
+            screenHeight = Screen.height;
         }
-
-        if (Input.GetKeyDown(KeyCode.Y)) // Change le verrouillage de la caméra lorsque la touche "Y" est enfoncée.
-        {
-            isLock = !isLock;
-        }
-
-        screenWidth = Screen.width;
-        screenHeight = Screen.height;
     }
 
     private void LateUpdate()

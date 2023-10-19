@@ -1,13 +1,9 @@
-using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_Inventory : MonoBehaviourPun
+public class UI_Inventory : MonoBehaviour
 {
 
     public GameObject itemPrefab;
@@ -21,13 +17,7 @@ public class UI_Inventory : MonoBehaviourPun
     {
         if (!player)
         {
-            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Player"))
-            {
-                if (go.GetPhotonView().IsMine)
-                {
-                    player = go.GetComponent<ChampionControleur>();
-                }
-            }
+            player = GameManager.GetLocalPlayer();
         }
         else
         {

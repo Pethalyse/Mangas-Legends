@@ -942,8 +942,8 @@ GameObject:
   - component: {fileID: 6723113175759665288}
   - component: {fileID: 4582352276223014606}
   - component: {fileID: 6691631799431738305}
-  - component: {fileID: 8433222745132713166}
   - component: {fileID: 7212019110876238419}
+  - component: {fileID: 8433222745132713166}
   - component: {fileID: 1313712971777920833}
   - component: {fileID: 2166174778300144675}
   - component: {fileID: 3385179418149523303}
@@ -951,9 +951,9 @@ GameObject:
   - component: {fileID: 6685869251453544800}
   - component: {fileID: 6902819819448596041}
   - component: {fileID: 956112818726727723}
-  - component: {fileID: 1692436345534508363}
-  - component: {fileID: 8476923259540545388}
-  - component: {fileID: 4419621342843682960}
+  - component: {fileID: -2335151919851194620}
+  - component: {fileID: 8825812402115267974}
+  - component: {fileID: 4929160554978874740}
   m_Layer: 3
   m_Name: AinzOoalGownPrefab
   m_TagString: Player
@@ -1056,19 +1056,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8433222745132713166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993855553567581807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e3818c387336642ba93eeec2c61346, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotateSpeedMovement: 0.05
 --- !u!95 &7212019110876238419
 Animator:
   serializedVersion: 7
@@ -1091,6 +1078,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8433222745132713166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993855553567581807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e3818c387336642ba93eeec2c61346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeedMovement: 0.05
 --- !u!114 &1313712971777920833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d504bdefe5845c04bbe7922b7fb95a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   team: 0
   level: 0
   vie: 0
@@ -1186,6 +1189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963e0da5c4c941642b2f13afb02773d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   abilityTexture: {fileID: 21300000, guid: c70d8f7422c945c4aafb0a4bd5cf28d8, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
@@ -1211,6 +1217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233a243fae6e44442bd5bfc58e80f575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   abilityTexture: {fileID: 21300000, guid: 2d29eeca510852048993fcb295a3c480, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
@@ -1243,6 +1252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7771dfaf1b72e504bbbb2ef8399d5d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   abilityTexture: {fileID: 21300000, guid: 789bb49f54c90e341906fe4218f802f7, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
@@ -1273,6 +1285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19037c12072ccf4d9ec05b3696d680c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   abilityTexture: {fileID: 21300000, guid: e34c78ba54238c543b4c1398d54abf19, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
@@ -1302,6 +1317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3167a50b98fdbe4c8b25a96e79e4f4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   abilityTexture: {fileID: 21300000, guid: 14b9ef01db0585b479e8f8c626b0ca1f, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
@@ -1321,7 +1339,7 @@ MonoBehaviour:
   canvasIndicator: {fileID: 5863731132218966470}
   maxRange: 22.5
   speed: 30
---- !u!114 &1692436345534508363
+--- !u!114 &-2335151919851194620
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1330,23 +1348,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1993855553567581807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: acfe1b9062b4dbd49982f7e3f0506971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 1
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2166174778300144675}
-  - {fileID: 8476923259540545388}
-  - {fileID: 4419621342843682960}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &8476923259540545388
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  componentsToDisable: []
+--- !u!114 &8825812402115267974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1355,25 +1364,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1993855553567581807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 1
-    SynchronizeType: 1
-    Name: Speed
-  - Type: 4
-    SynchronizeType: 1
-    Name: isAttack
-  - Type: 1
-    SynchronizeType: 1
-    Name: AttackSpeed
-  m_SynchronizeLayers:
-  - SynchronizeType: 0
-    LayerIndex: 0
---- !u!114 &4419621342843682960
+  sceneId: 0
+  _assetId: 3842114507
+  serverOnly: 0
+  visible: 0
+  hasSpawned: 0
+--- !u!114 &4929160554978874740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1382,13 +1381,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 1993855553567581807}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 4517688237236013683}
+  clientAuthority: 0
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 3
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
 --- !u!1 &2121879483641093903
 GameObject:
   m_ObjectHideFlags: 0

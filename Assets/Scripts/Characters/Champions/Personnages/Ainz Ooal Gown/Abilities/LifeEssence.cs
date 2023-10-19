@@ -1,8 +1,5 @@
-using Photon.Pun;
-using System.Collections;
+using Mirror;
 using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +12,7 @@ public class LifeEssence : Ability
     {
         base.Awake();
 
-        if (championControleur.photonView.IsMine)
+        if (isLocalPlayer)
         {
             abilityImageIcon = GameObject.Find("Ability 3 Icon").GetComponent<Image>();
             abilityImageIconCD = GameObject.Find("Ability 3 Icon CD").GetComponent<Image>();
@@ -24,6 +21,19 @@ public class LifeEssence : Ability
         }
 
 
+    }
+
+    new void Start()
+    {
+        List<Behaviour> b = GUIControleur.instance.GetAbGui(3);
+
+        abilityImageIcon = (Image)b[0];
+        abilityImageIconCD = (Image)b[1];
+        abilityText = (Text)b[2];
+
+        base.Start();
+
+        key = "Ab3";
     }
 
     new void Update()
@@ -36,16 +46,22 @@ public class LifeEssence : Ability
     {
         if (canvas.enabled)
         {
-            if (Input.GetKeyUp(key))
+            if (Input.GetButtonUp(key))
             {
-                championControleur.photonView.RPC("launchLifeEssence", RpcTarget.All);
+                CmdLaunchLifeEssence();
                 activeCD();
             }
         }
     }
 
-    [PunRPC]
-    protected void launchLifeEssence()
+    [Command]
+    protected void CmdLaunchLifeEssence()
+    {
+        RpcLaunchLifeEssence();
+    }
+
+    [ClientRpc]
+    private void RpcLaunchLifeEssence()
     {
         launchAbility();
     }
@@ -54,8 +70,7 @@ public class LifeEssence : Ability
     {
         GameObject lifeEssence = Instantiate(abilityVisuel, gameObject.transform);
         HealCircle principalClass = lifeEssence.GetComponent<HealCircle>();
-        principalClass.player = championControleur.photonView.Owner;
-        principalClass.send = gameObject;
+        principalClass.send = championControleur;
         principalClass.duration = duration3;
         principalClass.reference = gameObject;
         var heal = getValueWithRatios();

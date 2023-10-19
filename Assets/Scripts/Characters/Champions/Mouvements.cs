@@ -1,8 +1,7 @@
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mouvements : MonoBehaviourPun
+public class Mouvements : MonoBehaviour
 {
     //stats mouvements
     [SerializeField] float rotateSpeedMovement = 0.05f;
@@ -36,7 +35,6 @@ public class Mouvements : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (championControleur.photonView.IsMine)
         {
             navigation.speed = championControleur.getMoveSpeed();
             if (!championControleur.getIsAttack())
@@ -56,7 +54,7 @@ public class Mouvements : MonoBehaviourPun
         if(Input.GetKeyDown(KeyCode.S))
         {
             moveToPosition(transform.position);
-            championControleur.targetToNull();
+            championControleur.RpcTargetToNull();
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -94,7 +92,7 @@ public class Mouvements : MonoBehaviourPun
         championControleur.setCanAuto(true);
 
         //target null
-        championControleur.targetToNull();
+        championControleur.RpcTargetToNull();
 
         //move
         navigation.SetDestination(position);

@@ -1,5 +1,5 @@
-using Photon.Pun;
-using System.IO;
+using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +17,7 @@ public class MantleOfChaos : Ability
     {
         base.Awake();
 
-        if (championControleur.photonView.IsMine)
+        if (isLocalPlayer)
         {
 
             abilityImageIcon = GameObject.Find("Ability 1 Icon").GetComponent<Image>();
@@ -26,6 +26,19 @@ public class MantleOfChaos : Ability
             canvas = GameObject.Find("Ability1IndicatorCanvas").GetComponent<Canvas>();
         }
 
+    }
+
+    new void Start()
+    {
+        List<Behaviour> b = GUIControleur.instance.GetAbGui(1);
+
+        abilityImageIcon = (Image)b[0];
+        abilityImageIconCD = (Image)b[1];
+        abilityText = (Text)b[2];
+
+        base.Start();
+
+        key = "Ab1";
     }
 
     new void Update()
@@ -49,17 +62,23 @@ public class MantleOfChaos : Ability
             ab1Canvas.eulerAngles = new Vector3(0, ab1Canvas.eulerAngles.y, ab1Canvas.eulerAngles.z);
             canvas.transform.rotation = Quaternion.Lerp(ab1Canvas, canvas.transform.rotation, 0);
 
-            if (Input.GetKeyUp(key))
+            if (Input.GetButtonUp(key))
             {
                 mouvements.moveToPosition(transform.position);
-                championControleur.photonView.RPC("launchMantleOfChaos", RpcTarget.All, position);
+                CmdLaunchMantleOfChaos(position);
                 activeCD();
             }
         }
     }
 
-    [PunRPC]
-    protected void launchMantleOfChaos(Vector3 pos)
+    [Command]
+    private void CmdLaunchMantleOfChaos(Vector3 pos)
+    {
+        RpcLaunchMantleOfChaos(pos);
+    }
+
+    [ClientRpc]
+    private void RpcLaunchMantleOfChaos(Vector3 pos)
     {
         mouvements.lookAt(pos);
         launchAbility();
@@ -69,8 +88,7 @@ public class MantleOfChaos : Ability
     {
         GameObject mantleOfChaos = Instantiate(abilityVisuel, spawnPoint.transform.position, spawnPoint.transform.rotation);
         Skillshot principalClass = mantleOfChaos.GetComponent<Skillshot>();
-        principalClass.send = gameObject;
-        principalClass.player = championControleur.photonView.Owner;
+        principalClass.send = championControleur;
         principalClass.speed = speed;
         principalClass.firstHit = false;
         principalClass.origin = spawnPoint.transform.position;
@@ -81,19 +99,20 @@ public class MantleOfChaos : Ability
         principalClass.ratioDamage = ratioDamage;
         principalClass.setValue(getValueWithRatios());
 
-        //if (principalClass != null)
-        //{
-        //    var damage = getValueWithRatios();
 
-        //    if (Random.Range(0, 101) <= championControleur.getCritChance())
-        //    {
-        //        principalClass.setValue(damage * (championControleur.getCritDamage() / 100f));
-        //    }
-        //    else
-        //    {
-        //        principalClass.setValue(damage);
-        //    }
-        //}
+        if (principalClass != null)
+        {
+            var damage = getValueWithRatios();
+
+            if (Random.Range(0, 101) <= championControleur.getCritChance())
+            {
+                principalClass.setValue(damage * (championControleur.getCritDamage() / 100f));
+            }
+            else
+            {
+                principalClass.setValue(damage);
+            }
+        }
     }
 
 

@@ -1,13 +1,10 @@
 
 using UnityEngine;
-using Photon.Pun;
-using System.IO;
 
 public class AinzOoalGownControleur : ChampionControleur
 {
 
     //PASSIF => REECRITURE DU REGENERATION MANA
-    [PunRPC]
     protected override void regenerationMana()
     {
         if (Time.time >= nextRegenManaTime)
@@ -35,17 +32,15 @@ public class AinzOoalGownControleur : ChampionControleur
         }
     }
 
-    [PunRPC]
-    override protected void autoAttaque()
+    override protected void RpcAutoAttaque()
     {
-        base.autoAttaque();
+        base.RpcAutoAttaque();
         AutoAttaque();
 
     }
 
     private void aaCreation()
-    {
-        if(photonView.IsMine)
+    {    
         {
             if (aaHit == null)
             {
@@ -57,35 +52,34 @@ public class AinzOoalGownControleur : ChampionControleur
         
     }
 
-    [PunRPC]
     protected void aaInit(GameObject hit)
     {
         if (aaHit != null)
         {
-            GameObject bouleDeFeu = PhotonNetwork.Instantiate(Path.Combine("Champion/AinzOoalGown/Abilities", aaVisuel.name), spawnPoint.transform.position, spawnPoint.transform.rotation);
-            Projectile principalClass = bouleDeFeu.GetComponent<Projectile>();
+            //GameObject bouleDeFeu = (Path.Combine("Champion/AinzOoalGown/Abilities", aaVisuel.name), spawnPoint.transform.position, spawnPoint.transform.rotation);
+            //Projectile principalClass = bouleDeFeu.GetComponent<Projectile>();
 
-            if (principalClass != null)
-            {
-                if (Random.Range(0, 101) <= critChance)
-                {
-                    principalClass.setValue(ad * (critDamage / 100f));
-                }
-                else
-                {
-                    principalClass.setValue(ad);
-                }
+            //if (principalClass != null)
+            //{
+            //    if (Random.Range(0, 101) <= critChance)
+            //    {
+            //        principalClass.setValue(ad * (critDamage / 100f));
+            //    }
+            //    else
+            //    {
+            //        principalClass.setValue(ad);
+            //    }
 
-                principalClass.send = gameObject;
-                principalClass.player = photonView.Owner;
-                principalClass.setTarget(hit.transform);
-            }
+            //    principalClass.send = gameObject;
+            //    principalClass.player = photonView.Owner;
+            //    principalClass.setTarget(hit.transform);
+            //}
 
-            aaHit = null;
+            //aaHit = null;
 
-            //nextAttackTime = Time.time + attackInterval;
-            canAuto = true;
-            //isAttack = false;
+            ////nextAttackTime = Time.time + attackInterval;
+            //canAuto = true;
+            ////isAttack = false;
         }
     }
 }

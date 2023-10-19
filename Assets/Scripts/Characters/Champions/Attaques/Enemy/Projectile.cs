@@ -1,6 +1,4 @@
-﻿using Photon.Pun;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Projectile: AbilityControleur
@@ -26,18 +24,21 @@ public class Projectile: AbilityControleur
 
     private void OnTriggerEnter(Collider other)
     {
-        if (player == null || !player.IsLocal) { return; }
+        if (send != GameManager.GetLocalPlayer()) { return; }
         if (target == null) return;
 
         if (other.transform == target)
         {
-            target.gameObject.GetComponent<StatsManager>()?.RPC_TakeDamage(getValue(), ratioDamage, send.GetPhotonView().ViewID);
+            StatsManager sm = GameManager.GetFromAll(other.name);
+            ChampionControleur cc = GameManager.GetPlayer(send.name);
+            if (!sm || !cc) return;
+            sm.CmdTakeDamage(getValue(), ratioDamage, 0);
             if (target)
             {
-                send.GetComponent<ChampionControleur>()?.ActiveOnHitPassifsItem(target.gameObject.GetComponent<StatsManager>());
+                cc.ActiveOnHitPassifsItem(sm);
             }
                 
-            PhotonNetwork.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 
