@@ -1,7 +1,8 @@
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mouvements : MonoBehaviour
+public class Mouvements : NetworkBehaviour
 {
     //stats mouvements
     [SerializeField] float rotateSpeedMovement = 0.05f;
@@ -14,6 +15,7 @@ public class Mouvements : MonoBehaviour
     private ChampionControleur championControleur;
     private Animations animationControleur;
 
+    [Client]
     private void Awake()
     {
         navigation = GetComponent<NavMeshAgent>();
@@ -27,14 +29,10 @@ public class Mouvements : MonoBehaviour
         animationControleur = GetComponent<Animations>();
     }
 
-    private void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    [Client]
     void Update()
     {
+        if(isLocalPlayer)
         {
             navigation.speed = championControleur.getMoveSpeed();
             if (!championControleur.getIsAttack())
@@ -43,11 +41,9 @@ public class Mouvements : MonoBehaviour
             }
             move();
         }
-
-
-
     }
 
+    [Client]
     public void move()
     {
 
@@ -85,6 +81,7 @@ public class Mouvements : MonoBehaviour
         }
     }
 
+    [Client]
     public void moveToPosition(Vector3 position)
     {
         //attack gestion
@@ -110,6 +107,7 @@ public class Mouvements : MonoBehaviour
         }
     }
 
+    [Client]
     public void moveToObject(GameObject obj, float range)
     {
         navigation.SetDestination(obj.transform.position);
@@ -118,6 +116,7 @@ public class Mouvements : MonoBehaviour
         lookAt(obj.transform.position);
     }
 
+    [Client]
     public void lookAt(Vector3 look)
     {
         Quaternion rotationLookAt = Quaternion.LookRotation(look - transform.position);

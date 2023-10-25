@@ -321,6 +321,8 @@ public class UI_Shop : MonoBehaviour
         {
             initComposents(itemPrincipalClick);
         }
+
+        shop.AcheterObjet(objet);
     }
 
     //Tries

@@ -158,20 +158,20 @@ abstract public class StatsManager : TeamManager
         }
     }
 
-    [Command]
-    public void CmdTakeDamage(float damage, int ratioDamage, int id)
+    [Command(requiresAuthority = false)]
+    public void CmdTakeDamage(float damage, RatioDamage ratioDamage)
     {
-        RpcTakeDamage(damage, ratioDamage, id);
+        RpcTakeDamage(damage, ratioDamage);
     }
 
     //takeDamage
     [ClientRpc]
-    private void RpcTakeDamage(float damage, int ratioDamage, int id)
+    private void RpcTakeDamage(float damage, RatioDamage ratioDamage)
     {
         float dmg = 0;
         switch (ratioDamage)
         {
-            case 0:
+            case RatioDamage.AD:
                 {
                     dmg = Mathf.Round(damage * (100 / (100 + ar)));//calcule des degats selon l'armor
                     foreach (ShieldAD sad in GetComponents<ShieldAD>())
@@ -199,7 +199,7 @@ abstract public class StatsManager : TeamManager
 
                     break;
                 }
-            case 1:
+            case RatioDamage.AP:
                 {
                     dmg = Mathf.Round(damage * (100 / (100 + mr))); //calcule des degats selon la magic resist
                     foreach (ShieldAP sap in GetComponents<ShieldAP>())
@@ -257,11 +257,11 @@ abstract public class StatsManager : TeamManager
 
         vie -= dmg;
         vie = Mathf.Clamp(vie, 0, vieMax);
-        Death(id);
+        Death();
         //Debug.Log(gameObject.name + ", à pris des dégats : " + vie);
     }
 
-    private void Death(int id)
+    private void Death()
     {
         if (vie < 1)
         {

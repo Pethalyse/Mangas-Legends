@@ -32,7 +32,7 @@ public class Projectile: AbilityControleur
             StatsManager sm = GameManager.GetFromAll(other.name);
             ChampionControleur cc = GameManager.GetPlayer(send.name);
             if (!sm || !cc) return;
-            sm.CmdTakeDamage(getValue(), ratioDamage, 0);
+            sm.CmdTakeDamage(getValue(), ratioDamage);
             if (target)
             {
                 cc.ActiveOnHitPassifsItem(sm);

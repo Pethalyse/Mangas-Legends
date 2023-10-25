@@ -32,54 +32,45 @@ public class AinzOoalGownControleur : ChampionControleur
         }
     }
 
-    override protected void RpcAutoAttaque()
-    {
-        base.RpcAutoAttaque();
-        AutoAttaque();
-
-    }
-
     private void aaCreation()
-    {    
+    {   
+
+        if (aaHit == null)
         {
-            if (aaHit == null)
-            {
-                animations.stopAaAnimation();
-                return;
-            }
-            aaInit(aaHit.gameObject);
+            animations.stopAaAnimation();
+            return;
         }
+        aaInit(aaHit.gameObject);
         
     }
 
     protected void aaInit(GameObject hit)
     {
-        if (aaHit != null)
+        if (aaHit != null && isLocalPlayer)
         {
-            //GameObject bouleDeFeu = (Path.Combine("Champion/AinzOoalGown/Abilities", aaVisuel.name), spawnPoint.transform.position, spawnPoint.transform.rotation);
-            //Projectile principalClass = bouleDeFeu.GetComponent<Projectile>();
+            GameObject bouleDeFeu = Instantiate(aaVisuel, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            Projectile principalClass = bouleDeFeu.GetComponent<Projectile>();
 
-            //if (principalClass != null)
-            //{
-            //    if (Random.Range(0, 101) <= critChance)
-            //    {
-            //        principalClass.setValue(ad * (critDamage / 100f));
-            //    }
-            //    else
-            //    {
-            //        principalClass.setValue(ad);
-            //    }
+            if (principalClass != null)
+            {
+                if (Random.Range(0, 101) <= critChance)
+                {
+                    principalClass.setValue(ad * (critDamage / 100f));
+                }
+                else
+                {
+                    principalClass.setValue(ad);
+                }
 
-            //    principalClass.send = gameObject;
-            //    principalClass.player = photonView.Owner;
-            //    principalClass.setTarget(hit.transform);
-            //}
+                principalClass.send = this;
+                principalClass.setTarget(hit.transform);
+            }
 
-            //aaHit = null;
+            aaHit = null;
 
-            ////nextAttackTime = Time.time + attackInterval;
-            //canAuto = true;
-            ////isAttack = false;
+            //nextAttackTime = Time.time + attackInterval;
+            canAuto = true;
+            //isAttack = false;
         }
     }
 }

@@ -1,4 +1,6 @@
+using AYellowpaper.SerializedCollections;
 using Mirror;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,8 +26,10 @@ public class Ability : NetworkBehaviour
 
     [Header("Values")]
     [SerializeField] private int baseValueAbility;
-    [SerializeField] private int[] ratiosAbility;
-    [SerializeField] protected int ratioDamage;
+    [SerializeField]
+    [SerializedDictionary("RatioDamage", "Value")] 
+    private SerializedDictionary<RatioDamage, int> ratiosAbility;
+    [SerializeField] protected RatioDamage ratioDamage;
 
     //components
     [Header("Components")]
@@ -156,7 +160,7 @@ public class Ability : NetworkBehaviour
 
     protected float getValueWithRatios()
     {
-        return baseValueAbility + championControleur.getAD() * ratiosAbility[0] /100 + championControleur.getAP() * ratiosAbility[1]/100;
+        return baseValueAbility + championControleur.getAD() * ratiosAbility[RatioDamage.AD] /100 + championControleur.getAP() * ratiosAbility[RatioDamage.AP]/100;
     }
 
 }

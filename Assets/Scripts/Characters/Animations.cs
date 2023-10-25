@@ -3,10 +3,6 @@ using UnityEngine.AI;
 
 public class Animations : MonoBehaviour
 {
-    [SerializeField] private Avatar avatarRun;
-    [SerializeField] private Avatar avatarIdle;
-    protected Avatar avatarAA;
-
     protected Animator animator;
 
     private void Awake()
@@ -16,11 +12,7 @@ public class Animations : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
-        if (animator != null)
-        {
-            animator.avatar = avatarIdle;
-        }
-        else
+        if (animator == null)
         {
             Debug.Log(gameObject.name + ": Animator missing");
         }
@@ -28,30 +20,14 @@ public class Animations : MonoBehaviour
 
     public void runAnimation(NavMeshAgent agent, float motionSmoothTime)
     {
-        if(avatarRun != null)
-        {
-            animator.avatar = avatarRun;
-            float speed = agent.velocity.magnitude / agent.speed;
-            animator.SetFloat("Speed", speed, motionSmoothTime, Time.deltaTime);
-        }
-        else
-        {
-            Debug.Log(gameObject.name + ": Avatar Run missing");
-        }
+        float speed = agent.velocity.magnitude / agent.speed;
+        animator.SetFloat("Speed", speed, motionSmoothTime, Time.deltaTime);
         
     }
 
     public void startAaAnimation()
     {
-        if (avatarAA != null)
-        {
-            animator.avatar = avatarAA;
-            animator.SetBool("isAttack", true);
-        }
-        else
-        {
-            Debug.Log(gameObject.name + ": Avatar AA missing");
-        }
+        animator.SetBool("isAttack", true);
     }
 
     public void stopAaAnimation()

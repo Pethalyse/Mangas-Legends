@@ -16,15 +16,20 @@ public class MinionAI : NetworkBehaviour
 
     private float timeSinceLastTargetSwitch = 0f;
 
+    [Server]
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         attack = GetComponent<MinionAIAttack>();
 
-        if (!isServer) { return; }
-        FindAndSetTarget();
+        if (isServer) 
+        {
+            FindAndSetTarget();
+        }
+        
     }
 
+    [Server]
     void Update()
     {
         if(!isServer) { return; }
@@ -48,6 +53,7 @@ public class MinionAI : NetworkBehaviour
         }
     }
 
+    [Server]
     private void CheckAndSwitchTargets()
     {
         GameObject[] enemyMinions = GameObject.FindGameObjectsWithTag(enemyMinionTag);
@@ -64,6 +70,7 @@ public class MinionAI : NetworkBehaviour
         }
     }
 
+    [Server]
     private void FindAndSetTarget()
     {
         GameObject[] enemyMinions = GameObject.FindGameObjectsWithTag(enemyMinionTag);
@@ -80,6 +87,7 @@ public class MinionAI : NetworkBehaviour
         }
     }
 
+    [Server]
     private Transform GetClosestObject(GameObject[] objects)
     {
         float closestDistance = Mathf.Infinity;
@@ -100,6 +108,7 @@ public class MinionAI : NetworkBehaviour
         return closestObject;
     }
 
+    [Server]
     private Transform GetClosestObjectInRadius(GameObject[] objects, float radius)
     {
         float closestDistance = Mathf.Infinity;

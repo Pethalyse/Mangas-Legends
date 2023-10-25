@@ -91,6 +91,7 @@ public class ChampionControleur : StatsManager
 
     public void RpcTargetToNull() { target = null; }
 
+    [Client]
     new protected void Awake()
     {
         base.Awake();
@@ -100,6 +101,7 @@ public class ChampionControleur : StatsManager
         //gameObject.tag = "Player";
     }
 
+    [Client]
     new void Start()
     {
         if (isLocalPlayer)
@@ -107,20 +109,19 @@ public class ChampionControleur : StatsManager
             gui = GUIControleur.instance;
             shop = Shop.instance.gameObject;
             shop.SetActive(false);
-        }
 
-        base.Start();
 
-        level = 0;
-        goldsOnStock = 0;
+            base.Start();
 
-        if (isLocalPlayer)
-        {
+            level = 0;
+            goldsOnStock = 0;
+
             Leveling();
         }
     }
 
     // Update is called once per frame
+    [Client]
     new protected void Update()
     {
         if (isLocalPlayer)
@@ -134,15 +135,17 @@ public class ChampionControleur : StatsManager
         }
     }
 
+    [Client]
     private void LateUpdate()
     {
-        updateGUI();
         if (isLocalPlayer)
         {
+            updateGUI();
             gui.MiseAJour(this);
         }
     }
 
+    [Client]
     private void updateGUI()
     {
         levelText.text = level.ToString();
@@ -152,6 +155,7 @@ public class ChampionControleur : StatsManager
         manaSlider.value = mana;
     }
 
+    [Client]
     //FONCTIONS USUELLES
     private void Inputs()
     {
@@ -169,7 +173,7 @@ public class ChampionControleur : StatsManager
                 if (Vector3.Distance(transform.position, hit.collider.transform.position) <= range && canAuto) // && Time.time > nextAttackTime
                 {
                     aaHit = hit.collider.transform;
-                    
+                    CmdAutoAttaque();
                 }
             }
 
@@ -185,7 +189,7 @@ public class ChampionControleur : StatsManager
         if (Input.GetMouseButtonDown(2))
         {
             Leveling();
-            CmdTakeDamage(400, 0, 0);
+            CmdTakeDamage(400, 0);
             GiveGolds(3100);
         }
 
@@ -209,6 +213,7 @@ public class ChampionControleur : StatsManager
 
     }
 
+    [Client]
     //FONCTIONS STATISTIQUES
     virtual protected void regenerationVie()
     {
@@ -238,6 +243,7 @@ public class ChampionControleur : StatsManager
         }
     }
 
+    [Client]
     virtual protected void regenerationMana()
     {
         if (Time.time >= nextRegenManaTime)
@@ -272,47 +278,72 @@ public class ChampionControleur : StatsManager
         goldsOnStock += goldsGive;
     }
 
-    [Command]
-    public void CmdAddItem(Item add, int prix)
+    [Client]
+    public void AddItem(Item add, int prix)
     {
-        RpcAddItem(add, prix);
-    }
-
-    [ClientRpc]
-    private void RpcAddItem(Item add, int prix)
-    {
-        if(prix <= goldsOnStock && items.Count < nbMaxItems)
+        if (prix <= goldsOnStock)
         {
-            goldsOnStock -= prix;
-
-            foreach(Item item in add.composents)
+            bool t = true;
+            if (items.Count >= nbMaxItems)
             {
-                if (items.Contains(item))
+                t = false;
+                foreach (Item item in add.composents)
                 {
-                    items.Remove(item);
-                    ActualiserStatsSelonItemsNegatif(item);
-                }
-                else
-                {
-                    foreach (Item i in item.composents)
+                    if (items.Contains(item))
                     {
-                        if (items.Contains(i))
+                        t = true;
+                        break;
+                    }
+                    else
+                    {
+                        foreach (Item item2 in item.composents)
                         {
-                            items.Remove(i);
-                            ActualiserStatsSelonItemsNegatif(i);
+                            if (items.Contains(item))
+                            {
+                                t = true;
+                                break;
+                            }
                         }
+
+                        if (t) { break; }
                     }
                 }
-
             }
+            
+            if (t)
+            {
+                goldsOnStock -= prix;
 
-            items.Add(add);
-            ActualiserStatsSelonItemsPositif(add);
+                foreach (Item item in add.composents)
+                {
+                    if (items.Contains(item))
+                    {
+                        items.Remove(item);
+                        ActualiserStatsSelonItemsNegatif(item);
+                    }
+                    else
+                    {
+                        foreach (Item i in item.composents)
+                        {
+                            if (items.Contains(i))
+                            {
+                                items.Remove(i);
+                                ActualiserStatsSelonItemsNegatif(i);
+                            }
+                        }
+                    }
+
+                }
+
+                items.Add(add);
+                ActualiserStatsSelonItemsPositif(add);
+            }
         }
 
     }
 
-    public void SellItem(Item remove)
+    [Client]
+    private void SellItem(Item remove)
     {
         if (items.Contains(remove))
         {
@@ -322,6 +353,7 @@ public class ChampionControleur : StatsManager
         }
     }
 
+    [Client]
     private void ActualiserStatsSelonItemsPositif(Item item)
     {
         //flats
@@ -345,8 +377,9 @@ public class ChampionControleur : StatsManager
         attackSpeed += attackSpeedBase * item.aSpd / 100;
         manaRegenBase += manaRegenBase * item.regenMana / 100;
         moveSpeed += moveSpeedBase * item.ms / 100;
-    }    
-    
+    }
+
+    [Client]
     private void ActualiserStatsSelonItemsNegatif(Item item)
     {
         //flats
@@ -372,6 +405,7 @@ public class ChampionControleur : StatsManager
         moveSpeed -= moveSpeedBase * item.ms / 100;
     }
 
+    [Client]
     //PASSIFS
     public void ActiveOnHitPassifsItem(StatsManager target)
     {
@@ -400,6 +434,7 @@ public class ChampionControleur : StatsManager
     {
         isAttack = true;
         inBattle = true;
+        AutoAttaque();
     }
 
     private void AfficherRangeQClick()

@@ -10,7 +10,7 @@ public class AbilityControleur: MonoBehaviour
     public void setValue(float value) { this.value = value; }
 
     //Ratio
-    public int ratioDamage;
+    public RatioDamage ratioDamage;
 
     //Tags
     protected List<Collider> alreadyTouch = new List<Collider>();

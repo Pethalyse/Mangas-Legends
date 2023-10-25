@@ -20,11 +20,14 @@ public class MinionSpawner : NetworkBehaviour
 
     public float delayBetweenMinions;
 
+    [Server]
     private void Start()
     {
+        if(!isServer) { return; }
         StartCoroutine(SpawnMinions());
     }
 
+    [Server]
     private IEnumerator SpawnMinions()
     {
         while (true)
@@ -63,27 +66,33 @@ public class MinionSpawner : NetworkBehaviour
         }
     }
 
+    [Server]
     private void spawnRegularMinion()
     {
-        if (!isServer) { return; }
-        Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
-        GameObject minion = Instantiate(minionPrefab, spawnPoint.position, spawnPoint.rotation);
-        NetworkServer.Spawn(minion);
-        minion.transform.parent = gameObject.transform;
+        if (isServer)
+        {
+            Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
+            GameObject minion = Instantiate(minionPrefab, spawnPoint.position, spawnPoint.rotation);
+            NetworkServer.Spawn(minion);
+            minion.transform.parent = gameObject.transform;
 
-        NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
-        minionAgent.speed = minionCanonMoveSpeed;
+            NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
+            minionAgent.speed = minionCanonMoveSpeed;
+        }
     }
 
+    [Server]
     private void spawnMinionCanon()
     {
-        if (!isServer) { return; }
-        Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
-        GameObject minion = Instantiate(minionCanonPrefab, spawnPoint.position, spawnPoint.rotation);
-        NetworkServer.Spawn(minion);
-        minion.transform.parent = gameObject.transform;
+        if (isServer)
+        {
+            Transform spawnPoint = spawnsPoints[Random.Range(0, spawnsPoints.Length)];
+            GameObject minion = Instantiate(minionCanonPrefab, spawnPoint.position, spawnPoint.rotation);
+            NetworkServer.Spawn(minion);
+            minion.transform.parent = gameObject.transform;
 
-        NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
-        minionAgent.speed = minionMoveSpeed;
+            NavMeshAgent minionAgent = minion.GetComponent<NavMeshAgent>();
+            minionAgent.speed = minionMoveSpeed;
+        }
     }
 }

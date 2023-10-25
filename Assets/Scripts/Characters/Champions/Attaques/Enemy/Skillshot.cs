@@ -35,7 +35,7 @@ public class Skillshot : AbilityControleur
 
                 if (sm && cc)
                 {
-                    sm.CmdTakeDamage(getValue(), ratioDamage, 0);
+                    sm.CmdTakeDamage(getValue(), ratioDamage);
 
                     if (sm)
                     {

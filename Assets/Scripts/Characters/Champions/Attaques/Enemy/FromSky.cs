@@ -27,7 +27,7 @@ public class FromSky : AbilityControleur
                 ChampionControleur cc = GameManager.GetPlayer(send.name);
                 if (sm && cc)
                 {
-                    sm.CmdTakeDamage(getValue(), ratioDamage, 0);
+                    sm.CmdTakeDamage(getValue(), ratioDamage);
                     if (!sm) { return; }
                     cc.ActiveOnHitPassifsItem(sm);
                     alreadyTouch.Add(other);

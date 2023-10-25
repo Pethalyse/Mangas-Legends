@@ -52,7 +52,7 @@ public class Shop : MonoBehaviour
             }
         }
         
-        player.CmdAddItem(objet, prix);
+        player.AddItem(objet, prix);
     }
 
     public static void TrierParPrixCroissant(List<Item> items)

@@ -1065,8 +1065,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993855553567581807}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d3e83546fe36029408fc9aea6464d965, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 22a6e631aa1be1348b3d58eee431ebc7, type: 3}
+  m_Controller: {fileID: 9100000, guid: 1429707f23a50c043bb0d2daa3e4ded0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1090,6 +1090,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e3818c387336642ba93eeec2c61346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   rotateSpeedMovement: 0.05
 --- !u!114 &1313712971777920833
 MonoBehaviour:
@@ -1103,9 +1106,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71b8debdb983e84289fed12720f1274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarRun: {fileID: 9000000, guid: 20c2a09475ec6214ca08e235003d30df, type: 3}
-  avatarIdle: {fileID: 9000000, guid: f79e0612ab67f3e40a46c2a761302927, type: 3}
-  mageAvatarAA: {fileID: 9000000, guid: 2e288ab15d6f22443bc2f00b9c80c110, type: 3}
 --- !u!114 &2166174778300144675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1164,7 +1164,7 @@ MonoBehaviour:
   cdr: 0
   goldsOnStock: 0
   items: []
-  aaVisuel: {fileID: 2215248372763379463, guid: 9c2fbeec39ac0d84580b45896429b374, type: 3}
+  aaVisuel: {fileID: 2215248372763379463, guid: e752defb129ec4141b68ccdad0d5f922, type: 3}
   isAttack: 0
   spawnPoint: {fileID: 6327669390950672526}
   gui: {fileID: 0}
@@ -1192,17 +1192,17 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  abilityTexture: {fileID: 21300000, guid: c70d8f7422c945c4aafb0a4bd5cf28d8, type: 3}
+  abilityTexture: {fileID: 21300000, guid: c47d185dafc7ad241b29da5d9a812789, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
   abilityText: {fileID: 0}
   canvas: {fileID: 0}
   abilityVisuel: {fileID: 0}
-  key: 0
   abilityCD: 0
   baseValueAbility: 0
-  ratiosAbility: 
-  ratioDamage: 0
+  ratiosAbility:
+    _serializedList: []
+  ratioDamage: 1
   spawnPoint: {fileID: 0}
   abilities: []
 --- !u!114 &3407095095820678078
@@ -1220,16 +1220,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  abilityTexture: {fileID: 21300000, guid: 2d29eeca510852048993fcb295a3c480, type: 3}
+  abilityTexture: {fileID: 21300000, guid: 02d4df4a49072094a92ee5129e1b1c90, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
   abilityText: {fileID: 0}
   canvas: {fileID: 7536735987344611082}
-  abilityVisuel: {fileID: 6761920530404741973, guid: 5c4b8c7d0272dea48b103ff767b440fb, type: 3}
-  key: 113
+  abilityVisuel: {fileID: 6761920530404741973, guid: 7e481c52d7bb655468c83065697aa928, type: 3}
   abilityCD: 7
   baseValueAbility: 80
-  ratiosAbility: 0000000078000000
+  ratiosAbility:
+    _serializedList:
+    - Key: 0
+      Value: 0
+    - Key: 1
+      Value: 120
   ratioDamage: 1
   spawnPoint: {fileID: 6327669390950672526}
   abilities:
@@ -1255,16 +1259,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  abilityTexture: {fileID: 21300000, guid: 789bb49f54c90e341906fe4218f802f7, type: 3}
+  abilityTexture: {fileID: 21300000, guid: b0b1c230a51cbe14a8c3ff46187d251a, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
   abilityText: {fileID: 0}
   canvas: {fileID: 7058237968713886380}
   abilityVisuel: {fileID: 0}
-  key: 119
   abilityCD: 20
   baseValueAbility: 60
-  ratiosAbility: 000000001e000000
+  ratiosAbility:
+    _serializedList:
+    - Key: 0
+      Value: 0
+    - Key: 1
+      Value: 30
   ratioDamage: 1
   spawnPoint: {fileID: 0}
   abilities:
@@ -1288,16 +1296,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  abilityTexture: {fileID: 21300000, guid: e34c78ba54238c543b4c1398d54abf19, type: 3}
+  abilityTexture: {fileID: 21300000, guid: 1af401edb116c0b4caba1510c2f7b85b, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
   abilityText: {fileID: 0}
   canvas: {fileID: 3846524125217116263}
-  abilityVisuel: {fileID: 6473950605848434687, guid: f99f036ec61b84644962db813ddf9a5d, type: 3}
-  key: 101
+  abilityVisuel: {fileID: 6473950605848434687, guid: e70f24d57fe6f92408bdc91e0d2c985a, type: 3}
   abilityCD: 12
   baseValueAbility: 50
-  ratiosAbility: 000000003c000000
+  ratiosAbility:
+    _serializedList:
+    - Key: 0
+      Value: 0
+    - Key: 1
+      Value: 60
   ratioDamage: 1
   spawnPoint: {fileID: 0}
   abilities:
@@ -1320,16 +1332,20 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  abilityTexture: {fileID: 21300000, guid: 14b9ef01db0585b479e8f8c626b0ca1f, type: 3}
+  abilityTexture: {fileID: 21300000, guid: a5a37ffddaac82c4b9054d1ab6b94b5f, type: 3}
   abilityImageIcon: {fileID: 0}
   abilityImageIconCD: {fileID: 0}
   abilityText: {fileID: 0}
   canvas: {fileID: 2927315232522653027}
-  abilityVisuel: {fileID: 7852595833273147085, guid: f5645fb5a03286549984e6d16c532ede, type: 3}
-  key: 114
+  abilityVisuel: {fileID: 7852595833273147085, guid: c617fc19caaff614c910081fbcb07eee, type: 3}
   abilityCD: 100
   baseValueAbility: 100
-  ratiosAbility: 0000000050000000
+  ratiosAbility:
+    _serializedList:
+    - Key: 0
+      Value: 0
+    - Key: 1
+      Value: 100
   ratioDamage: 1
   spawnPoint: {fileID: 0}
   abilities:
