@@ -50,6 +50,7 @@ public class ChampionControleur : StatsManager
     [SerializeField] protected GameObject spawnPoint;
     [SerializeField] private GUIControleur gui;
     [SerializeField] private GameObject shop;
+    [SerializeField] private GameObject scoreboard;
     protected Mouvements _mouvements;
     protected Animations animations;
     [SerializeField] protected GameObject IndicatorRange;
@@ -60,10 +61,10 @@ public class ChampionControleur : StatsManager
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Slider vieSlider;
     [SerializeField] private Slider manaSlider;
-    [SerializeField] private int nbKills = 0;
-    [SerializeField] private int nbDeath = 0;
-    [SerializeField] private int nbAssist = 0;
-    [SerializeField] private int nbMinions = 0;
+    [SyncVar][SerializeField] private int nbKills = 0;
+    [SyncVar][SerializeField] private int nbDeath = 0;
+    [SyncVar][SerializeField] private int nbAssist = 0;
+    [SyncVar][SerializeField] private int nbMinions = 0;
     public int NbKills { get => nbKills; set => nbKills = value; }
     public int NbDeath { get => nbDeath; set => nbDeath = value; }
     public int NbAssist { get => nbAssist; set => nbAssist = value; }
@@ -110,6 +111,8 @@ public class ChampionControleur : StatsManager
             shop = Shop.instance.gameObject;
             shop.SetActive(false);
 
+            scoreboard = ScoreboardControleur.instance.gameObject;
+            scoreboard.SetActive(false);
 
             base.Start();
 
@@ -138,9 +141,9 @@ public class ChampionControleur : StatsManager
     [Client]
     private void LateUpdate()
     {
+        updateGUI();
         if (isLocalPlayer)
         {
-            updateGUI();
             gui.MiseAJour(this);
         }
     }
@@ -159,7 +162,7 @@ public class ChampionControleur : StatsManager
     //FONCTIONS USUELLES
     private void Inputs()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
             Ray ray;
             RaycastHit hit;
@@ -211,6 +214,14 @@ public class ChampionControleur : StatsManager
 
         if (Input.GetKeyUp(KeyCode.A) && IR) { DesafficherRangeQClick(); }
 
+        if(Input.GetKey(KeyCode.Tab))
+        {
+            scoreboard.SetActive(true);
+        }
+        else if(scoreboard.activeSelf)
+        {
+            scoreboard.SetActive(false);
+        }
     }
 
     [Client]

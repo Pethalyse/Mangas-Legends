@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour
 
     public static void UnregisterPlayer(string PlayerId)
     {
-        players.Remove(PlayerId);
+        if(players.ContainsKey(PlayerId))
+            players.Remove(PlayerId);
     }
 
     public static void RegisterObjet(string netID, StatsManager sm)
@@ -48,18 +49,23 @@ public class GameManager : MonoBehaviour
     }
 
     public static void UnregisterObjet(string objetId) 
-    { 
-        objets.Remove(objetId);
+    {
+        if(objets.ContainsKey(objetId))
+            objets.Remove(objetId);
     }
 
     public static ChampionControleur GetPlayer(string name)
     {
-        return players[name];
+        if(players.ContainsKey(name))
+            return players[name];
+        return null;
     }
     
     public static StatsManager GetObjet(string name)
     {
-        return objets[name];
+        if (objets.ContainsKey(name))
+            return objets[name];
+        return null;
     }
     
     public static StatsManager GetFromAll(string name)

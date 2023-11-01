@@ -8,12 +8,12 @@ abstract public class StatsManager : TeamManager
     //stats
     [Header("Stats")]
     [Header("Level")]
-    [SerializeField] protected int level; //les stats selon le level à partir du level 2
+    [SyncVar][SerializeField] protected int level; //les stats selon le level à partir du level 2
 
     //vie
     [Header("Vie")]
-    [SerializeField] protected float vie;
-    [SerializeField] protected float vieMax;
+    [SyncVar][SerializeField] protected float vie;
+    [SyncVar][SerializeField] protected float vieMax;
     [SerializeField] protected float vieLeveling;
     [Header("VieRegen")]
     [SerializeField] protected float vieRegenBase;
@@ -23,8 +23,8 @@ abstract public class StatsManager : TeamManager
 
     //mana
     [Header("Mana")]
-    [SerializeField] protected float mana;
-    [SerializeField] protected float manaMax;
+    [SyncVar][SerializeField] protected float mana;
+    [SyncVar][SerializeField] protected float manaMax;
     [SerializeField] protected float manaLeveling;
     [Header("ManaRegen")]
     [SerializeField] protected float manaRegenBase;
@@ -86,8 +86,6 @@ abstract public class StatsManager : TeamManager
 
     private NavMeshAgent agent;
 
-    private int nbLoop = 0;
-
     //SETTER GETTER
     //GUI
     public float getVie() { return vie; }
@@ -129,11 +127,7 @@ abstract public class StatsManager : TeamManager
         range = rangeBase;
         attackSpeed = attackSpeedBase;
 
-        InvokeRepeating("updateNbLoop", 0f, 1f);
-
     }
-
-    public void updateNbLoop() { nbLoop++; }
 
     //Fonction Stats
     //Level

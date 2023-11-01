@@ -55,7 +55,7 @@ public class Shop : MonoBehaviour
         player.AddItem(objet, prix);
     }
 
-    public static void TrierParPrixCroissant(List<Item> items)
+    public static void TrierParPrixCroissant(   List<Item> items)
     {
         items.Sort((x, y) => x.getPrix().CompareTo(y.getPrix()));
     }
