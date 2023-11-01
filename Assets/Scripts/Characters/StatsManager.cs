@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 abstract public class StatsManager : TeamManager
 {
+
+    [Header("Icon")]
+    [SerializeField] private Sprite icon;
+    public Sprite Icon { get => icon;}
+
     //stats
     [Header("Stats")]
     [Header("Level")]

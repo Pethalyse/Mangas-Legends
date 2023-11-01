@@ -16,7 +16,6 @@ public class MinionAI : NetworkBehaviour
 
     private float timeSinceLastTargetSwitch = 0f;
 
-    [Server]
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -29,7 +28,6 @@ public class MinionAI : NetworkBehaviour
         
     }
 
-    [Server]
     void Update()
     {
         if(!isServer) { return; }

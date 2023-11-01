@@ -28,6 +28,8 @@ public class ScoreboardControleur : MonoBehaviour
             ChampionControleur player = GameManager.GetPlayers().ToList()[i].Value;
             Transform child = blueTeam.transform.GetChild(i);
 
+            child.GetChild(0).GetComponent<Image>().sprite = player.Icon;
+
             child.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = player.NbKills + "/" + player.NbDeath + "/" + player.NbAssist;
             child.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = player.NbMinions.ToString();
 

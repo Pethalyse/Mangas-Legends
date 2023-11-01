@@ -92,7 +92,6 @@ public class ChampionControleur : StatsManager
 
     public void RpcTargetToNull() { target = null; }
 
-    [Client]
     new protected void Awake()
     {
         base.Awake();
@@ -102,7 +101,6 @@ public class ChampionControleur : StatsManager
         //gameObject.tag = "Player";
     }
 
-    [Client]
     new void Start()
     {
         if (isLocalPlayer)
@@ -124,7 +122,6 @@ public class ChampionControleur : StatsManager
     }
 
     // Update is called once per frame
-    [Client]
     new protected void Update()
     {
         if (isLocalPlayer)
@@ -138,7 +135,6 @@ public class ChampionControleur : StatsManager
         }
     }
 
-    [Client]
     private void LateUpdate()
     {
         updateGUI();
@@ -194,6 +190,7 @@ public class ChampionControleur : StatsManager
             Leveling();
             CmdTakeDamage(400, 0);
             GiveGolds(3100);
+            NbKills++;
         }
 
         if (Input.GetButtonDown("Shop"))
