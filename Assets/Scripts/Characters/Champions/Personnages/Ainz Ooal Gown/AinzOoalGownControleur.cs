@@ -5,7 +5,7 @@ public class AinzOoalGownControleur : ChampionControleur
 {
 
     //PASSIF => REECRITURE DU REGENERATION MANA
-    protected override void regenerationMana()
+    protected override void CmdRegenerationMana()
     {
         if (Time.time >= nextRegenManaTime)
         {

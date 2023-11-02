@@ -13,7 +13,7 @@ abstract public class StatsManager : TeamManager
     //stats
     [Header("Stats")]
     [Header("Level")]
-    [SyncVar][SerializeField] protected int level; //les stats selon le level à partir du level 2
+    [SyncVar][SerializeField] protected int level = 0; //les stats selon le level à partir du level 2
 
     //vie
     [Header("Vie")]
@@ -136,7 +136,14 @@ abstract public class StatsManager : TeamManager
 
     //Fonction Stats
     //Level
-    public void Leveling()
+    [Command]
+    public void CmdLeveling()
+    {
+        RpcLeveling();
+    }
+
+    [ClientRpc]
+    private void RpcLeveling()
     {
         if (level < 18)
         {
@@ -179,7 +186,7 @@ abstract public class StatsManager : TeamManager
                         {
                             if (sad.getShield() >= dmg)
                             {
-                                sad.setShield(sad.getShield() - (int)dmg);
+                                sad.setShield(sad.getShield() - Mathf.RoundToInt(dmg));
                                 dmg = 0;
                             }
                             else
@@ -207,7 +214,7 @@ abstract public class StatsManager : TeamManager
                         {
                             if (sap.getShield() >= dmg)
                             {
-                                sap.setShield(sap.getShield() - (int)dmg);
+                                sap.setShield(sap.getShield() - Mathf.RoundToInt(dmg));
                                 dmg = 0;
                             }
                             else
@@ -238,7 +245,7 @@ abstract public class StatsManager : TeamManager
             {
                 if (sa.getShield() >= dmg)
                 {
-                    sa.setShield(sa.getShield() - (int)dmg);
+                    sa.setShield(sa.getShield() - Mathf.RoundToInt(dmg));
                     dmg = 0;
                 }
                 else

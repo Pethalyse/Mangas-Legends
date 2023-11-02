@@ -25,7 +25,7 @@ public class ChampionControleur : StatsManager
 
     //system money
     [Header("Items")]
-    [SerializeField] private int goldsOnStock;
+    [SerializeField] private int goldsOnStock = 0;
     private int nbMaxItems = 6;
     [SerializeField] private List<Item> items = new List<Item>();
 
@@ -51,7 +51,7 @@ public class ChampionControleur : StatsManager
     [SerializeField] private GUIControleur gui;
     [SerializeField] private GameObject shop;
     [SerializeField] private GameObject scoreboard;
-    protected Mouvements _mouvements;
+    protected Mouvements mouvements;
     protected Animations animations;
     [SerializeField] protected GameObject IndicatorRange;
     private GameObject IR;
@@ -95,7 +95,7 @@ public class ChampionControleur : StatsManager
     new protected void Awake()
     {
         base.Awake();
-        _mouvements = gameObject.GetComponent<Mouvements>();
+        mouvements = GetComponent<Mouvements>();
         animations = GetComponent<Animations>();
 
         //gameObject.tag = "Player";
@@ -103,6 +103,9 @@ public class ChampionControleur : StatsManager
 
     new void Start()
     {
+        base.Start();
+        CmdLeveling();
+
         if (isLocalPlayer)
         {
             gui = GUIControleur.instance;
@@ -111,13 +114,6 @@ public class ChampionControleur : StatsManager
 
             scoreboard = ScoreboardControleur.instance.gameObject;
             scoreboard.SetActive(false);
-
-            base.Start();
-
-            level = 0;
-            goldsOnStock = 0;
-
-            Leveling();
         }
     }
 
@@ -130,8 +126,8 @@ public class ChampionControleur : StatsManager
             Inputs();
             animations.changeAttackSpeed(attackSpeed);
 
-            regenerationVie();
-            regenerationMana();
+            CmdRegenerationVie();
+            CmdRegenerationMana();
         }
     }
 
@@ -167,7 +163,7 @@ public class ChampionControleur : StatsManager
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("Characters")) && !inSameTeam(hit.collider.gameObject))
             {
                 target = hit.collider.transform;
-                _mouvements.lookAt(hit.collider.transform.position);
+                mouvements.lookAt(hit.collider.transform.position);
 
                 if (Vector3.Distance(transform.position, hit.collider.transform.position) <= range && canAuto) // && Time.time > nextAttackTime
                 {
@@ -179,7 +175,7 @@ public class ChampionControleur : StatsManager
         }
         else if (target != null && Vector3.Distance(transform.position, target.position) <= range && canAuto && !inSameTeam(target.gameObject)) // && Time.time > nextAttackTime
         {
-            _mouvements.lookAt(target.position);
+            mouvements.lookAt(target.position);
             aaHit = target.transform;
             CmdAutoAttaque();
 
@@ -187,7 +183,7 @@ public class ChampionControleur : StatsManager
 
         if (Input.GetMouseButtonDown(2))
         {
-            Leveling();
+            CmdLeveling();
             CmdTakeDamage(400, 0);
             GiveGolds(3100);
             NbKills++;
@@ -221,9 +217,10 @@ public class ChampionControleur : StatsManager
         }
     }
 
-    [Client]
+
     //FONCTIONS STATISTIQUES
-    virtual protected void regenerationVie()
+    [Command]
+    virtual protected void CmdRegenerationVie()
     {
         if (Time.time >= nextRegenPvTime)
         {
@@ -251,8 +248,8 @@ public class ChampionControleur : StatsManager
         }
     }
 
-    [Client]
-    virtual protected void regenerationMana()
+    [Command]
+    virtual protected void CmdRegenerationMana()
     {
         if (Time.time >= nextRegenManaTime)
         {

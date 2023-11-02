@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControleur : MonoBehaviour
+public class CameraControleurSize : MonoBehaviour
 {
     public Camera mainCamera;
 

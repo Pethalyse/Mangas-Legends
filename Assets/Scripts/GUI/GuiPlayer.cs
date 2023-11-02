@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GuiPlayer : MonoBehaviour
 {
-    CameraControleurFollow mainCameraFollow;
+    CameraControleurMovement mainCameraFollow;
 
     private void Start()
     {
-        mainCameraFollow = Camera.main.gameObject.GetComponent<CameraControleurFollow>();
+        mainCameraFollow = Camera.main.gameObject.GetComponent<CameraControleurMovement>();
     }
     private void LateUpdate()
     {

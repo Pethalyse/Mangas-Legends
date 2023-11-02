@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraControleurFollow : MonoBehaviour
+public class CameraControleurMovement : MonoBehaviour
 {
     public Transform target; // Le transform du champion que vous souhaitez suivre.
 
