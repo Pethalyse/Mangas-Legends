@@ -160,7 +160,25 @@ public class Ability : NetworkBehaviour
 
     protected float getValueWithRatios()
     {
-        return baseValueAbility + championControleur.getAD() * ratiosAbility[RatioDamage.AD] /100 + championControleur.getAP() * ratiosAbility[RatioDamage.AP]/100;
+        return baseValueAbility + championControleur.Stats.ad.GetValue() * ratiosAbility[RatioDamage.AD] /100 + championControleur.Stats.ap.GetValue() * ratiosAbility[RatioDamage.AP]/100;
+    }
+
+    protected void setValue(AbilityControleur principalClass, bool crit = true)
+    {
+
+        var value = getValueWithRatios();
+
+        if (crit)
+        {
+            if (Random.Range(0, 101) <= championControleur.Stats.critChance.GetValue())
+            {
+                principalClass.setValue(value * (championControleur.Stats.critDamage.GetValue() / 100f));
+                return;
+            }
+            
+        }
+
+        principalClass.setValue(value);
     }
 
 }

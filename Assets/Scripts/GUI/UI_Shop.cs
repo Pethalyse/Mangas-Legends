@@ -175,7 +175,7 @@ public class UI_Shop : MonoBehaviour
     {
         iconDesc.sprite = obj.icone;
         iconDesc.color = Color.white;
-        nomDesc.text = obj.name + " - <color=#FFD700>" + obj.getPrix() + "</color> <color=#C0C0C0>(" + Mathf.RoundToInt(obj.getPrix() * 0.7f) + " • <size=10>70%</size>)</color>";
+        nomDesc.text = obj.nom + " - <color=#FFD700>" + obj.getPrix() + "</color> <color=#C0C0C0>(" + Mathf.RoundToInt(obj.getPrix() * 0.7f) + " • <size=10>70%</size>)</color>";
 
         itemDesc.text = "";
         int interactions = obj.actifs.Count + obj.passifs.Count;
@@ -208,91 +208,8 @@ public class UI_Shop : MonoBehaviour
         }
 
         statsDesc.text = "";
-        if (obj.vie > 0)
-        {
-            statsDesc.text += "vie:<color=#FFD700> " + obj.vie + "</color> ";
-        }
-
-        if(obj.ad > 0)
-        {
-            statsDesc.text += "ad:<color=#FFD700> " + obj.ad + "</color> ";
-        }
-
-        if(obj.lethality > 0)
-        {
-            statsDesc.text += "lethality:<color=#FFD700> " + obj.lethality + "</color> ";
-        }
-
-        if(obj.peneArmor > 0)
-        {
-            statsDesc.text += "peneArmor:<color=#FFD700> " + obj.peneArmor + "%</color> ";
-        }
-
-        if(obj.ap > 0)
-        {
-            statsDesc.text += "ap:<color=#FFD700> " + obj.ap + "</color> ";
-        }
-
-        if(obj.peneMagic > 0)
-        {
-            statsDesc.text += "peneMagic:<color=#FFD700> " + obj.peneMagic + "</color> ";
-        }
-
-        if(obj.mana > 0)
-        {
-            statsDesc.text += "mana:<color=#FFD700> " + obj.mana + "</color> ";
-        }
-
-        if(obj.critChance > 0)
-        {
-            statsDesc.text += "critChance:<color=#FFD700> " + obj.critChance + "%</color> ";
-        }
-
-        if(obj.critDamage > 0)
-        {
-            statsDesc.text += "critDamage:<color=#FFD700> " + obj.critDamage + "%</color> ";
-        }
-
-        if(obj.armor > 0)
-        {
-            statsDesc.text += "armor:<color=#FFD700> " + obj.armor + "</color> ";
-        }
-
-        if(obj.magicRes > 0)
-        {
-            statsDesc.text += "magicRes:<color=#FFD700> " + obj.magicRes + "</color> ";
-        }
-
-        if(obj.aSpd > 0)
-        {
-            statsDesc.text += "aSpd:<color=#FFD700> " + obj.aSpd + "%</color> ";
-        }
-
-        if(obj.regenMana > 0)
-        {
-            statsDesc.text += "regenMana:<color=#FFD700> " + obj.regenMana + "%</color> ";
-        }
-
-        if(obj.bonusHeal > 0)
-        {
-            statsDesc.text += "bonusHeal:<color=#FFD700> " + obj.bonusHeal + "%</color> ";
-        }
-
-        if(obj.cdr > 0)
-        {
-            statsDesc.text += "cdr:<color=#FFD700> " + obj.cdr + "</color> ";
-        }
-
-        if(obj.ms > 0)
-        {
-            statsDesc.text += "ms:<color=#FFD700> " + obj.ms + "%</color> ";
-        }
-
-        if(obj.lifeSteal > 0)
-        {
-            statsDesc.text += "lifeSteal:<color=#FFD700> " + obj.mana + "%</color> ";
-        }
-}
+        obj.stats.ForEach(x => statsDesc.text += x.ToString() + " ");
+    }
 
     //Selectionner le bouton
     public void selectButton(GameObject go, Item item) 

@@ -30,8 +30,8 @@ public class GUIControleur : MonoBehaviour
 
     public void MiseAJour(ChampionControleur player)
     {
-        vie.value = (float)player.getVie() / player.getVieMax();
-        mana.value = (float)player.getMana() / player.getManaMax();
+        vie.value = (float)player.Vie / player.Stats.vieMax.GetValue();
+        mana.value = (float)player.Mana / player.Stats.manaMax.GetValue();
         golds.text = player.getGolds().ToString();
         Kda.text = player.NbKills + "/" + player.NbDeath + "/" + player.NbAssist;
         minions.text = player.NbMinions.ToString();

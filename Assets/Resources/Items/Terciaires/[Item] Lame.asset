@@ -10,29 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71f4f91c2ef3609468f1384a28d68065, type: 3}
-  m_Name: "Minerai \xE9trange"
+  m_Name: '[Item] Lame'
   m_EditorClassIdentifier: 
-  nom: "Minerai \xE9trange"
-  icone: {fileID: 21300000, guid: c1069215ae020064992d013bd5c3c038, type: 3}
+  nom: Lame
+  icone: {fileID: 21300000, guid: 989cb0e8f1ebec943a80a4145676ff98, type: 3}
   onHitEffect: 0
-  vie: 0
-  ad: 30
-  lethality: 0
-  peneArmor: 0
-  ap: 0
-  peneMagic: 0
-  critChance: 0
-  critDamage: 0
-  armor: 0
-  magicRes: 0
-  aSpd: 0
-  mana: 0
-  regenMana: 0
-  bonusHeal: 0
-  cdr: 0
-  ms: 0
-  lifeSteal: 0
-  prix: 770
+  stats:
+  - stat: 1
+    valeur: 10
+  prix: 350
   unique: 0
   composents: []
   passifs: []

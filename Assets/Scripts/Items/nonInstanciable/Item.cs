@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Item", menuName = "MangaLegends/Item")]
+[CreateAssetMenu(fileName = "[Item]", menuName = "MangaLegends/Item")]
 public class Item : ScriptableObject
 {
     [Header("Texts")]
@@ -13,46 +14,8 @@ public class Item : ScriptableObject
     [Header("OnHit")]
     public bool onHitEffect = false;
 
-    [Header("Vie")]
-    public int vie;
-
-    [Header("AD")]
-    public int ad;
-    public int lethality;
-    public int peneArmor;
-
-    [Header("AP")]
-    public int ap;
-    public int peneMagic;
-
-    [Header("Crit")]
-    public int critChance;
-    public int critDamage;
-
-    [Header("Armor")]
-    public int armor;
-
-    [Header("MagicRes")]
-    public int magicRes;
-
-    [Header("AS")]
-    public int aSpd;
-
-    [Header("Mana")]
-    public int mana;
-    public int regenMana;
-
-    [Header("Support")]
-    public int bonusHeal;
-
-    [Header("CDR")]
-    public int cdr;
-
-    [Header("MS")]
-    public int ms;
-
-    [Header("Life Steal")]
-    public int lifeSteal;
+    [Header("Stat")]
+    public List<StatItem> stats = new List<StatItem>();
 
     [Header("Prix")]
     public int prix;
@@ -75,5 +38,34 @@ public class Item : ScriptableObject
         }
 
         return p;
+    }
+
+    public StatItem GetStat(Stats stat)
+    {
+        foreach(StatItem s in stats)
+        {
+            if(s.GetStat().Equals(stat)) return s;
+        }
+
+        return null;
+    }
+
+    public bool CompareStat(Stats stat, int value, int comparator)
+    {
+        if (GetStat(stat) is null)
+        {
+            return false;
+        }
+        else
+        {
+            switch (comparator)
+            {
+                case 0: return GetStat(stat).GetValue() == value;
+                case 1: return GetStat(stat).GetValue() > value;
+                case 2: return GetStat(stat).GetValue() < value;
+                default: return false;
+            }
+            
+        }
     }
 }

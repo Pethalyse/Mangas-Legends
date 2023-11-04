@@ -21,6 +21,8 @@ public class MinionAI : NetworkBehaviour
         agent = GetComponent<NavMeshAgent>();
         attack = GetComponent<MinionAIAttack>();
 
+        stopDistance = attack.Stats.range.GetValue();
+
         if (isServer) 
         {
             FindAndSetTarget();

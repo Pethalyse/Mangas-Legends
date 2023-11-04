@@ -98,21 +98,7 @@ public class MantleOfChaos : Ability
         principalClass.slowTime = slowTime;
         principalClass.ratioDamage = ratioDamage;
         principalClass.setValue(getValueWithRatios());
-
-
-        if (principalClass != null)
-        {
-            var damage = getValueWithRatios();
-
-            if (Random.Range(0, 101) <= championControleur.getCritChance())
-            {
-                principalClass.setValue(damage * (championControleur.getCritDamage() / 100f));
-            }
-            else
-            {
-                principalClass.setValue(damage);
-            }
-        }
+        setValue(principalClass);
     }
 
 

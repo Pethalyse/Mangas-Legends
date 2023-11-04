@@ -10,29 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71f4f91c2ef3609468f1384a28d68065, type: 3}
-  m_Name: "Orbe de R\xE9sistance"
+  m_Name: '[Item] Bouclier en Cuir'
   m_EditorClassIdentifier: 
-  nom: "Orbe de R\xE9sistance"
-  icone: {fileID: 21300000, guid: 4c2abd342637500429368e580de354c6, type: 3}
+  nom: Bouclier en Cuir
+  icone: {fileID: 21300000, guid: a69ed549f8157034e9234a40664b156e, type: 3}
   onHitEffect: 0
-  vie: 0
-  ad: 0
-  lethality: 0
-  peneArmor: 0
-  ap: 0
-  peneMagic: 0
-  critChance: 0
-  critDamage: 0
-  armor: 0
-  magicRes: 20
-  aSpd: 0
-  mana: 0
-  regenMana: 0
-  bonusHeal: 0
-  cdr: 0
-  ms: 0
-  lifeSteal: 0
-  prix: 400
+  stats:
+  - stat: 8
+    valeur: 15
+  prix: 300
   unique: 0
   composents: []
   passifs: []

@@ -37,7 +37,7 @@ public class MinionAIAttack : StatsManager
     [Server]
     private void Attack(StatsManager statsManager)
     {
-        statsManager.CmdTakeDamage(ad, RatioDamage.AD);
+        statsManager.CmdTakeDamage(Stats.ad.GetValue(), RatioDamage.AD);
         StartCoroutine(StartCD());
     }
 
@@ -46,7 +46,7 @@ public class MinionAIAttack : StatsManager
     {
         canAttack = false;
 
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(Stats.attackSpeed.GetValue());
 
         canAttack = true;
     }

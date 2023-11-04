@@ -196,37 +196,11 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   team: 0
+  icon: {fileID: 0}
   level: 0
+  stats: {fileID: 11400000, guid: aacb5c943506ebd45a42386dc73c72d0, type: 2}
   vie: 0
-  vieMax: 1500
-  vieLeveling: 0
-  vieRegenBase: 0
-  vieRegenLeveling: 0
   mana: 0
-  manaMax: 0
-  manaLeveling: 0
-  manaRegenBase: 0
-  manaRegenLeveling: 0
-  moveSpeedBase: 0
-  moveSpeed: 0
-  adBase: 75
-  adLeveling: 0
-  ad: 0
-  apBase: 0
-  ap: 0
-  arBase: 50
-  arLeveling: 0
-  ar: 0
-  mrBase: 20
-  mrLeveling: 0
-  mr: 0
-  critChance: 0
-  critDamage: 150
-  rangeBase: 0
-  range: 0
-  attackSpeedBase: 1
-  attackSpeedLevelingPourcent: 0
-  attackSpeed: 0
   goldsOnDeath: 60
   slow: 0
   cantBeCC: 0

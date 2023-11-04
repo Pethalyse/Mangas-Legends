@@ -10,12 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71f4f91c2ef3609468f1384a28d68065, type: 3}
-  m_Name: Sceptre de la lune
+  m_Name: '[Item] Sceptre de la lune'
   m_EditorClassIdentifier: 
   nom: Sceptre de la lune
-  description: 
   icone: {fileID: 21300000, guid: 0676ba3b229cf0845841bbc490faed59, type: 3}
   onHitEffect: 0
+  stats:
+  - stat: 0
+    valeur: 150
+  - stat: 4
+    valeur: 80
+  - stat: 11
+    valeur: 350
+  - stat: 14
+    valeur: 10
   vie: 150
   ad: 0
   lethality: 0

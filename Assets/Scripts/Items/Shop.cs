@@ -81,32 +81,32 @@ public class Shop : MonoBehaviour
 
         foreach (Item item in items)
         {
-            if (item.ap > 0)
+            if (item.CompareStat(Stats.AP, 0, 1))
             {
                 itemsMages.Add(item);
             }
 
-            if (item.ad > 0 && item.lethality == 0 && item.critChance == 0 && item.critDamage == 0)
+            if (item.CompareStat(Stats.AD, 0, 1) && item.CompareStat(Stats.Lethality, 0, 0) && item.CompareStat(Stats.CritChance, 0, 0) && item.CompareStat(Stats.CritDamage, 0, 0))
             {
                 itemsBruisers.Add(item);
             }
 
-            if (item.aSpd > 0 || item.critChance > 0 || item.critDamage > 0)
+            if (item.CompareStat(Stats.ASpd, 0, 1) || item.CompareStat(Stats.CritChance, 0, 1) || item.CompareStat(Stats.CritDamage, 0, 1))
             {
                 itemsTireurs.Add(item);
             }
 
-            if (item.lethality > 0 || item.peneArmor > 0)
+            if (item.CompareStat(Stats.Lethality, 0, 1) || item.CompareStat(Stats.PeneArmor, 0, 1))
             {
                 itemsAssassins.Add(item);
             }
 
-            if (item.bonusHeal > 0 || item.regenMana > 0)
+            if (item.CompareStat(Stats.BonusHeal, 0, 1) || item.CompareStat(Stats.RegenMana, 0, 1))
             {
                 itemsSupports.Add(item);
             }
 
-            if (item.armor > 0 || item.magicRes > 0 || (item.vie > 0 && item.ad == 0 && item.ap == 0))
+            if (item.CompareStat(Stats.Armor,0,1) || item.CompareStat(Stats.MagicRes,0,1) || (item.CompareStat(Stats.Vie,0,1) && item.CompareStat(Stats.AD,0,0) && item.CompareStat(Stats.AP,0,0)))
             {
                 itemsTanks.Add(item);
             }

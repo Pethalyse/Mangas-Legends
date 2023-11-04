@@ -7,27 +7,11 @@ using Mirror;
 
 public class ChampionControleur : StatsManager
 {
-
-    [Header("Stats Champions")]
-    [Header("Penetration")]
-    [SerializeField] private int lethality;
-    [SerializeField] private int peneArmor;
-    [SerializeField] private int peneMagic;
-
-    [Header("LideSteal")]
-    [SerializeField] private int lifeSteal;
-
-    [Header("Support")]
-    [SerializeField] private int bonusHeal;
-
-    [Header("CDR")]
-    [SerializeField] private int cdr;
-
     //system money
     [Header("Items")]
     [SerializeField] private int goldsOnStock = 0;
     private int nbMaxItems = 6;
-    [SerializeField] private List<Item> items = new List<Item>();
+    [SerializeField] private readonly SyncList<Item> items = new SyncList<Item>();
 
     //auto attaque
     [Header("Auto Attaque")]
@@ -75,10 +59,8 @@ public class ChampionControleur : StatsManager
 
     //Setters Getters
     //MOUVEMETNS
-    public float getAutoRange() { return range; }
     public Transform getTarget() { return target; }
     public void setTarget(Transform target) { this.target = target; }
-    public float getMoveSpeed() { return moveSpeed; }
 
     //ATTACKS
     public void setIsAttack(bool v) { isAttack = v; inBattle = v; }
@@ -88,7 +70,7 @@ public class ChampionControleur : StatsManager
 
     //ITEMS
     public int getGolds() { return goldsOnStock; }
-    public List<Item> getItems() { return items; }
+    public SyncList<Item> getItems() { return items; }
 
     public void RpcTargetToNull() { target = null; }
 
@@ -124,7 +106,7 @@ public class ChampionControleur : StatsManager
         {
             base.Update();
             Inputs();
-            animations.changeAttackSpeed(attackSpeed);
+            animations.changeAttackSpeed(Stats.attackSpeed.GetValue());
 
             CmdRegenerationVie();
             CmdRegenerationMana();
@@ -144,9 +126,9 @@ public class ChampionControleur : StatsManager
     private void updateGUI()
     {
         levelText.text = level.ToString();
-        vieSlider.maxValue = vieMax;
+        vieSlider.maxValue = Stats.vieMax.GetValue();
         vieSlider.value = vie;
-        manaSlider.maxValue = manaMax;
+        manaSlider.maxValue = Stats.manaMax.GetValue();
         manaSlider.value = mana;
     }
 
@@ -165,7 +147,7 @@ public class ChampionControleur : StatsManager
                 target = hit.collider.transform;
                 mouvements.lookAt(hit.collider.transform.position);
 
-                if (Vector3.Distance(transform.position, hit.collider.transform.position) <= range && canAuto) // && Time.time > nextAttackTime
+                if (Vector3.Distance(transform.position, hit.collider.transform.position) <= Stats.range.GetValue() && canAuto) // && Time.time > nextAttackTime
                 {
                     aaHit = hit.collider.transform;
                     CmdAutoAttaque();
@@ -173,7 +155,7 @@ public class ChampionControleur : StatsManager
             }
 
         }
-        else if (target != null && Vector3.Distance(transform.position, target.position) <= range && canAuto && !inSameTeam(target.gameObject)) // && Time.time > nextAttackTime
+        else if (target != null && Vector3.Distance(transform.position, target.position) <= Stats.range.GetValue() && canAuto && !inSameTeam(target.gameObject)) // && Time.time > nextAttackTime
         {
             mouvements.lookAt(target.position);
             aaHit = target.transform;
@@ -184,7 +166,7 @@ public class ChampionControleur : StatsManager
         if (Input.GetMouseButtonDown(2))
         {
             CmdLeveling();
-            CmdTakeDamage(400, 0);
+            CmdTakeDamage(100, 0);
             GiveGolds(3100);
             NbKills++;
         }
@@ -226,23 +208,20 @@ public class ChampionControleur : StatsManager
         {
             nextRegenPvTime = Time.time + 1f/100;
 
-            if (vie < vieMax)
+            if (vie < Stats.vieMax.GetValue())
             {
                 if (!inBattle)
                 {
-                    vieRegen = vieRegenBase + vieRegenLeveling * level;
-                    
+                    vie += Stats.vieRegen.GetValue()/100;
                 }
                 else
                 {
-                    vieRegen = (vieRegenBase + vieRegenLeveling * level) / 4;
+                    vie += Stats.vieRegen.GetValue()/100 / 4;
                 }
 
-                vie += vieRegen/100f;
-
-                if (vie > vieMax)
+                if (vie > Stats.vieMax.GetValue())
                 {
-                    vie = vieMax;
+                    vie = Stats.vieMax.GetValue();
                 }
             }
         }
@@ -255,22 +234,20 @@ public class ChampionControleur : StatsManager
         {
             nextRegenManaTime = Time.time + 1f / 100;
 
-            if (mana < manaMax)
+            if (mana < Stats.manaMax.GetValue())
             {
                 if (!inBattle)
                 {
-                    manaRegen = manaRegenBase + manaRegenLeveling * level;
+                    mana += Stats.manaRegen.GetValue() / 100;
                 }
                 else
                 {
-                    manaRegen = (manaRegenBase + manaRegenLeveling * level) / 4;
+                    mana += Stats.manaRegen.GetValue() / 100 / 4;
                 }
 
-                mana += manaRegen / 100f;
-
-                if (mana > manaMax)
+                if (mana > Stats.manaMax.GetValue())
                 {
-                    mana = manaMax;
+                    mana = Stats.manaMax.GetValue();
                 }
             }
         }
@@ -361,53 +338,13 @@ public class ChampionControleur : StatsManager
     [Client]
     private void ActualiserStatsSelonItemsPositif(Item item)
     {
-        //flats
-        vieMax += item.vie;
-        vie += item.vie;
-        manaMax += item.mana;
-        mana += item.mana;
-        ad += item.ad;
-        ap += item.ap;
-        ar += item.armor;
-        mr += item.magicRes;
-        critChance += item.critChance;
-        critDamage += item.critDamage;
-        bonusHeal += item.bonusHeal;
-        lethality += item.lethality;
-        peneArmor += item.peneArmor;
-        peneMagic += item.peneMagic;
-        cdr += item.cdr;
-
-        //pourcentages
-        attackSpeed += attackSpeedBase * item.aSpd / 100;
-        manaRegenBase += manaRegenBase * item.regenMana / 100;
-        moveSpeed += moveSpeedBase * item.ms / 100;
+        item.stats.ForEach(x => Stats.GetStatFromItem(x.GetStat()).AddAlteration(x.GetValue()));
     }
 
     [Client]
     private void ActualiserStatsSelonItemsNegatif(Item item)
     {
-        //flats
-        vieMax -= item.vie;
-        vie -= item.vie;
-        manaMax -= item.mana;
-        manaMax -= item.mana;
-        ad -= item.ad;
-        ap -= item.ap;
-        ar -= item.armor;
-        mr -= item.magicRes;
-        critChance -= item.critChance;
-        critDamage -= item.critDamage;
-        bonusHeal -= item.bonusHeal;
-        lethality -= item.lethality;
-        peneArmor -= item.peneArmor;
-        peneMagic -= item.peneMagic;
-        cdr += item.cdr;
-
-        //pourcentages
-        attackSpeed -= attackSpeedBase * item.aSpd / 100;
-        manaRegenBase -= manaRegenBase * item.regenMana / 100;
-        moveSpeed -= moveSpeedBase * item.ms / 100;
+        item.stats.ForEach(x => Stats.GetStatFromItem(x.GetStat()).RemoveAlteration(x.GetValue()));
     }
 
     [Client]
@@ -448,7 +385,7 @@ public class ChampionControleur : StatsManager
         {
             foreach (Transform transform in IndicatorRange.transform)
             {
-                transform.localScale = new Vector3(range * 2, range * 2, range * 2);
+                transform.localScale = new Vector3(Stats.range.GetValue() * 2, Stats.range.GetValue() * 2, Stats.range.GetValue() * 2);
             }
             IR = Instantiate(IndicatorRange, gameObject.transform);
         }

@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7521337c7673244894daac5e9779ea, type: 3}
+  m_Name: '[StatsCharacter] AinzOoalGown'
+  m_EditorClassIdentifier: 
+  vieMax:
+    baseValue: 560
+    valueLeveling: 88
+    isPercent: 0
+    alterations: []
+  vieRegen:
+    baseValue: 1
+    valueLeveling: 0.1
+    isPercent: 1
+    alterations: []
+  manaMax:
+    baseValue: 370
+    valueLeveling: 43
+    isPercent: 0
+    alterations: []
+  manaRegen:
+    baseValue: 2.3
+    valueLeveling: 0.08
+    isPercent: 1
+    alterations: []
+  moveSpeed:
+    baseValue: 3.5
+    valueLeveling: 0
+    isPercent: 1
+    alterations: []
+  ad:
+    baseValue: 48
+    valueLeveling: 3.2
+    isPercent: 0
+    alterations: []
+  ap:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  ar:
+    baseValue: 26
+    valueLeveling: 4.6
+    isPercent: 0
+    alterations: []
+  mr:
+    baseValue: 30
+    valueLeveling: 1.3
+    isPercent: 0
+    alterations: []
+  critChance:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  critDamage:
+    baseValue: 150
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  range:
+    baseValue: 5
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  attackSpeed:
+    baseValue: 0.684
+    valueLeveling: 3
+    isPercent: 1
+    alterations: []
+  lethality:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  peneArmor:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  peneMagic:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  lifeSteal:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  bonusHeal:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []
+  cdr:
+    baseValue: 0
+    valueLeveling: 0
+    isPercent: 0
+    alterations: []

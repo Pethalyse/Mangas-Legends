@@ -11,22 +11,20 @@ public class AinzOoalGownControleur : ChampionControleur
         {
             nextRegenManaTime = Time.time + 1f / 100;
 
-            if (mana < manaMax)
+            if (mana < Stats.manaMax.GetValue())
             {
                 if (!inBattle)
                 {
-                    manaRegen = manaRegenBase + manaRegenLeveling * level + manaMax * 0.01f;
+                    mana += (Stats.manaRegen.GetValue() + Stats.manaRegen.GetBaseValue() * 0.01f) / 100;
                 }
                 else
                 {
-                    manaRegen = (manaRegenBase + manaRegenLeveling * level) / 4;
+                    mana += Stats.manaRegen.GetValue() / 100 / 4;
                 }
 
-                mana += manaRegen / 100f;
-
-                if (mana > manaMax)
+                if (mana > Stats.manaMax.GetValue())
                 {
-                    mana = manaMax;
+                    mana = Stats.manaMax.GetValue();
                 }
             }
         }
@@ -53,13 +51,13 @@ public class AinzOoalGownControleur : ChampionControleur
 
             if (principalClass != null)
             {
-                if (Random.Range(0, 101) <= critChance)
+                if (Random.Range(0, 101) <= Stats.critChance.GetValue())
                 {
-                    principalClass.setValue(ad * (critDamage / 100f));
+                    principalClass.setValue(Stats.ad.GetValue() * (Stats.critDamage.GetValue() / 100f));
                 }
                 else
                 {
-                    principalClass.setValue(ad);
+                    principalClass.setValue(Stats.ad.GetValue());
                 }
 
                 principalClass.send = this;

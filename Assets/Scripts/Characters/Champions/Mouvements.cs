@@ -34,7 +34,7 @@ public class Mouvements : NetworkBehaviour
     {
         if(isLocalPlayer)
         {
-            navigation.speed = championControleur.getMoveSpeed();
+            navigation.speed = championControleur.Stats.moveSpeed.GetValue();
             if (!championControleur.getIsAttack())
             {
                 animationControleur.runAnimation(navigation, motionSmoothTime);
@@ -67,14 +67,14 @@ public class Mouvements : NetworkBehaviour
             }
             else if (!championControleur.inSameTeam(hit.collider.gameObject) && (LayerMask.GetMask("Characters") & (1 << hit.collider.gameObject.layer)) != 0)
             {
-                moveToObject(hit.collider.gameObject, championControleur.getAutoRange());
+                moveToObject(hit.collider.gameObject, championControleur.Stats.range.GetValue());
             }
 
         }
         
         if(championControleur.getTarget() != null && !championControleur.inSameTeam(championControleur.getTarget().gameObject) && (LayerMask.GetMask("Characters") & (1 << championControleur.getTarget().gameObject.layer)) != 0)
         {
-            if(Vector3.Distance(transform.position, championControleur.getTarget().position) > championControleur.getAutoRange())
+            if(Vector3.Distance(transform.position, championControleur.getTarget().position) > championControleur.Stats.range.GetValue())
             {
                 navigation.SetDestination(championControleur.getTarget().position);
             }

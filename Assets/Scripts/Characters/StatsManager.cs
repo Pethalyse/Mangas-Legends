@@ -15,71 +15,18 @@ abstract public class StatsManager : TeamManager
     [Header("Level")]
     [SyncVar][SerializeField] protected int level = 0; //les stats selon le level à partir du level 2
 
+    [SerializeField] private StatsCharacterList stats;
+    public StatsCharacterList Stats { get => stats;}
+
     //vie
-    [Header("Vie")]
     [SyncVar][SerializeField] protected float vie;
-    [SyncVar][SerializeField] protected float vieMax;
-    [SerializeField] protected float vieLeveling;
-    [Header("VieRegen")]
-    [SerializeField] protected float vieRegenBase;
-    [SerializeField] protected float vieRegenLeveling;
-    protected float vieRegen;
+    public float Vie { get => vie;}
     protected float nextRegenPvTime;
 
     //mana
-    [Header("Mana")]
     [SyncVar][SerializeField] protected float mana;
-    [SyncVar][SerializeField] protected float manaMax;
-    [SerializeField] protected float manaLeveling;
-    [Header("ManaRegen")]
-    [SerializeField] protected float manaRegenBase;
-    [SerializeField] protected float manaRegenLeveling;
-    protected float manaRegen;
+    public float Mana { get => mana;}
     protected float nextRegenManaTime;
-
-    //ms
-    [Header("MS")]
-    [SerializeField] protected float moveSpeedBase;
-    [SerializeField] protected float moveSpeed;
-
-    //AD
-    [Header("AD")]
-    [SerializeField] protected float adBase;
-    [SerializeField] protected float adLeveling;
-    [SerializeField] protected float ad;
-
-    //AP
-    [Header("AP")]
-    [SerializeField] protected float apBase;
-    [SerializeField] protected float ap;
-
-    //ARMOR
-    [Header("ARMOR")]
-    [SerializeField] protected float arBase;
-    [SerializeField] protected float arLeveling;
-    [SerializeField] protected float ar;
-
-    //MAGIC RESIST
-    [Header("Magic Resist")]
-    [SerializeField] protected float mrBase;
-    [SerializeField] protected float mrLeveling;
-    [SerializeField] protected float mr;
-
-    //CRIT
-    [Header("Critique")]
-    [SerializeField] protected int critChance = 0;
-    [SerializeField] protected int critDamage = 150;
-
-    //AA
-    [Header("Range")]
-    [SerializeField] protected float rangeBase;
-    [SerializeField] protected float range;
-
-    //AS
-    [Header("AS")]
-    [SerializeField] protected float attackSpeedBase;
-    [SerializeField] protected float attackSpeedLevelingPourcent;
-    [SerializeField] protected float attackSpeed;
 
     //GOLDS
     [Header("Golds")]
@@ -90,19 +37,6 @@ abstract public class StatsManager : TeamManager
     [SerializeField] protected bool cantBeCC;
 
     private NavMeshAgent agent;
-
-    //SETTER GETTER
-    //GUI
-    public float getVie() { return vie; }
-    public float getVieMax() { return vieMax; }
-    public float getMana() { return mana; }
-    public float getManaMax() { return manaMax; }
-
-    //STATS
-    public float getAD() { return ad; }
-    public float getAP() { return ap; }
-    public int getCritChance() { return critChance; }
-    public int getCritDamage() { return critDamage; }
 
     public void setCantBeCC(bool v) { cantBeCC = v; }
     public bool getCantBeCC() { return cantBeCC; }
@@ -118,20 +52,12 @@ abstract public class StatsManager : TeamManager
 
     protected void Start()
     {
-        mana = manaMax;
-        manaRegen = manaRegenBase;
-        vie = vieMax;
-        vieRegen = vieRegenBase;
+        stats = Instantiate(stats);
 
-        ad = adBase;
-        ap = apBase;
-        mr = mrBase;
-        ar = arBase;
+        vie = stats.vieMax.GetValue();
+        mana = stats.manaMax.GetValue();
 
-        moveSpeed = moveSpeedBase;
-        range = rangeBase;
-        attackSpeed = attackSpeedBase;
-
+        agent.speed = Stats.moveSpeed.GetValue();
     }
 
     //Fonction Stats
@@ -139,28 +65,13 @@ abstract public class StatsManager : TeamManager
     [Command]
     public void CmdLeveling()
     {
-        RpcLeveling();
-    }
-
-    [ClientRpc]
-    private void RpcLeveling()
-    {
         if (level < 18)
         {
             level++;
+            stats.LevelUp();
 
-            manaMax += manaLeveling;
-            mana += manaLeveling * level;
-            if (mana > manaMax) { mana = manaMax; }
-            vieMax += vieLeveling;
-            vie += vieLeveling * level;
-            if (vie > vieMax) { vie = vieMax; }
-
-            ad = adBase + adLeveling * level;
-            mr = mrBase + mrLeveling * level;
-            ar = arBase + arLeveling * level;
-
-            attackSpeed += attackSpeedBase * (attackSpeedLevelingPourcent / 100);
+            vie += stats.vieMax.GetValueLeveling();
+            mana += Stats.manaMax.GetValueLeveling();
         }
     }
 
@@ -179,7 +90,7 @@ abstract public class StatsManager : TeamManager
         {
             case RatioDamage.AD:
                 {
-                    dmg = Mathf.Round(damage * (100 / (100 + ar)));//calcule des degats selon l'armor
+                    dmg = Mathf.Round(damage * (100 / (100 + stats.ar.GetValue())));//calcule des degats selon l'armor
                     foreach (ShieldAD sad in GetComponents<ShieldAD>())
                     {
                         if (sad.getShield() != 0)
@@ -207,7 +118,7 @@ abstract public class StatsManager : TeamManager
                 }
             case RatioDamage.AP:
                 {
-                    dmg = Mathf.Round(damage * (100 / (100 + mr))); //calcule des degats selon la magic resist
+                    dmg = Mathf.Round(damage * (100 / (100 + stats.mr.GetValue()))); //calcule des degats selon la magic resist
                     foreach (ShieldAP sap in GetComponents<ShieldAP>())
                     {
                         if (sap.getShield() != 0)
@@ -262,7 +173,7 @@ abstract public class StatsManager : TeamManager
         }
 
         vie -= dmg;
-        vie = Mathf.Clamp(vie, 0, vieMax);
+        vie = Mathf.Clamp(vie, 0, stats.vieMax.GetValue());
         Death();
         //Debug.Log(gameObject.name + ", à pris des dégats : " + vie);
     }
@@ -303,7 +214,7 @@ abstract public class StatsManager : TeamManager
     {
         var healing = Mathf.Round(heal); //arrondi du heal
         vie += healing;
-        vie = Mathf.Clamp(vie, 0, vieMax);
+        vie = Mathf.Clamp(vie, 0, stats.vieMax.GetValue());
         Debug.Log(gameObject.name + ", à été heal : " + vie);
     }
 
@@ -323,12 +234,12 @@ abstract public class StatsManager : TeamManager
     //COROUTINE
     private IEnumerator slowTime(int pourcentage, float time)
     {
-        var variation = moveSpeedBase * pourcentage / 100;
-
-        moveSpeed -= variation;
+        stats.moveSpeed.AddAlteration(pourcentage);
+        agent.speed = stats.moveSpeed.GetValue();
 
         yield return new WaitForSeconds(time);
 
-        moveSpeed += variation;
+        stats.moveSpeed.RemoveAlteration(pourcentage);
+        agent.speed = stats.moveSpeed.GetValue();
     }
 }

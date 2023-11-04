@@ -10,29 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71f4f91c2ef3609468f1384a28d68065, type: 3}
-  m_Name: Dague
+  m_Name: '[Item] Grimoire des Arcanes'
   m_EditorClassIdentifier: 
-  nom: Dague
-  icone: {fileID: 21300000, guid: 084e04a299ad6784299dd22726a781d3, type: 3}
+  nom: Grimoire des Arcanes
+  icone: {fileID: 21300000, guid: d2ec35b67d209da44afe52532c710479, type: 3}
   onHitEffect: 0
-  vie: 0
-  ad: 0
-  lethality: 0
-  peneArmor: 0
-  ap: 0
-  peneMagic: 0
-  critChance: 0
-  critDamage: 0
-  armor: 0
-  magicRes: 0
-  aSpd: 10
-  mana: 0
-  regenMana: 0
-  bonusHeal: 0
-  cdr: 0
-  ms: 0
-  lifeSteal: 0
-  prix: 300
+  stats:
+  - stat: 4
+    valeur: 25
+  prix: 450
   unique: 0
   composents: []
   passifs: []
