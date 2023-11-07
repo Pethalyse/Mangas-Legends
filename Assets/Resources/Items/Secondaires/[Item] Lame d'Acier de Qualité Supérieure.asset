@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71f4f91c2ef3609468f1384a28d68065, type: 3}
-  m_Name: "[Item] Lame d'Acier de Qualit\xE9 Sup\xE9rieure"
+  m_Name: "[Item] Lame d'acier de qualit\xE9 sup\xE9rieure"
   m_EditorClassIdentifier: 
-  nom: "Lame d'Acier de Qualit\xE9 Sup\xE9rieure"
+  nom: "Lame d'acier de qualit\xE9 sup\xE9rieure"
   icone: {fileID: 21300000, guid: f6d1886c214abfc4ab6f09fda74df95d, type: 3}
   onHitEffect: 0
   stats:

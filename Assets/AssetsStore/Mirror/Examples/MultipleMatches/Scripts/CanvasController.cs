@@ -37,7 +37,7 @@ namespace Mirror.Examples.MultipleMatch
         /// <summary>
         /// Network Connections that have neither started nor joined a match yet
         /// </summary>
-        internal static readonly List<NetworkConnectionToClient> waitingConnections = new List<NetworkConnectionToClient>();
+        internal static readonly System.Collections.Generic.List<NetworkConnectionToClient> waitingConnections = new System.Collections.Generic.List<NetworkConnectionToClient>();
 
         /// <summary>
         /// GUID of a match the local player has created

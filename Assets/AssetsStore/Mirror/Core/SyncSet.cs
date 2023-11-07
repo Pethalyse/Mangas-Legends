@@ -32,7 +32,7 @@ namespace Mirror
         // -> changing the same slot 10x caues 10 changes.
         // -> note that this grows until next sync(!)
         // TODO Dictionary<key, change> to avoid ever growing changes / redundant changes!
-        readonly List<Change> changes = new List<Change>();
+        readonly System.Collections.Generic.List<Change> changes = new System.Collections.Generic.List<Change>();
 
         // how many changes we need to ignore
         // this is needed because when we initialize the list,
@@ -277,7 +277,7 @@ namespace Mirror
 
         void IntersectWithSet(ISet<T> otherSet)
         {
-            List<T> elements = new List<T>(objects);
+            System.Collections.Generic.List<T> elements = new System.Collections.Generic.List<T>(objects);
 
             foreach (T element in elements)
             {

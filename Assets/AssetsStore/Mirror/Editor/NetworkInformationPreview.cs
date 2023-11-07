@@ -241,7 +241,7 @@ namespace Mirror
 
         IEnumerable<NetworkIdentityInfo> GetNetworkIdentityInfo(NetworkIdentity identity)
         {
-            List<NetworkIdentityInfo> infos = new List<NetworkIdentityInfo>
+            System.Collections.Generic.List<NetworkIdentityInfo> infos = new System.Collections.Generic.List<NetworkIdentityInfo>
             {
                 GetAssetId(identity),
                 GetString("Scene ID", identity.sceneId.ToString("X"))
@@ -260,7 +260,7 @@ namespace Mirror
 
         IEnumerable<NetworkBehaviourInfo> GetNetworkBehaviorInfo(NetworkIdentity identity)
         {
-            List<NetworkBehaviourInfo> behaviourInfos = new List<NetworkBehaviourInfo>();
+            System.Collections.Generic.List<NetworkBehaviourInfo> behaviourInfos = new System.Collections.Generic.List<NetworkBehaviourInfo>();
 
             NetworkBehaviour[] behaviours = identity.GetComponents<NetworkBehaviour>();
             foreach (NetworkBehaviour behaviour in behaviours)

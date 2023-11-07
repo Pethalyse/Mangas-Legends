@@ -100,7 +100,7 @@ namespace Mirror
         public NetworkConnectionToClient connectionToClient => netIdentity.connectionToClient;
 
         // SyncLists, SyncSets, etc.
-        protected readonly List<SyncObject> syncObjects = new List<SyncObject>();
+        protected readonly System.Collections.Generic.List<SyncObject> syncObjects = new System.Collections.Generic.List<SyncObject>();
 
         // NetworkBehaviourInspector needs to know if we have SyncObjects
         internal bool HasSyncObjects() => syncObjects.Count > 0;

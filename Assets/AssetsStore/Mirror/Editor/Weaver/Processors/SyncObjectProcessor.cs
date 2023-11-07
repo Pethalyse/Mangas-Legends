@@ -10,9 +10,9 @@ namespace Mirror.Weaver
 
         // Finds SyncObjects fields in a type
         // Type should be a NetworkBehaviour
-        public static List<FieldDefinition> FindSyncObjectsFields(Writers writers, Readers readers, Logger Log, TypeDefinition td, ref bool WeavingFailed)
+        public static System.Collections.Generic.List<FieldDefinition> FindSyncObjectsFields(Writers writers, Readers readers, Logger Log, TypeDefinition td, ref bool WeavingFailed)
         {
-            List<FieldDefinition> syncObjects = new List<FieldDefinition>();
+            System.Collections.Generic.List<FieldDefinition> syncObjects = new System.Collections.Generic.List<FieldDefinition>();
 
             foreach (FieldDefinition fd in td.Fields)
             {

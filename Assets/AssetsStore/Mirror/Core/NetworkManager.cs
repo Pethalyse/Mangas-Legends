@@ -121,10 +121,10 @@ namespace Mirror
 
         /// <summary>Prefabs that can be spawned over the network need to be registered here.</summary>
         [FormerlySerializedAs("m_SpawnPrefabs"), HideInInspector]
-        public List<GameObject> spawnPrefabs = new List<GameObject>();
+        public System.Collections.Generic.List<GameObject> spawnPrefabs = new System.Collections.Generic.List<GameObject>();
 
         /// <summary>List of transforms populated by NetworkStartPositions</summary>
-        public static List<Transform> startPositions = new List<Transform>();
+        public static System.Collections.Generic.List<Transform> startPositions = new System.Collections.Generic.List<Transform>();
         public static int startPositionIndex;
 
         [Header("Snapshot Interpolation")]

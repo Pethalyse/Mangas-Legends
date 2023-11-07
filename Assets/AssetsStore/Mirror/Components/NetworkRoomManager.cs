@@ -56,7 +56,7 @@ namespace Mirror
         /// List of players that are in the Room
         /// </summary>
         [FormerlySerializedAs("m_PendingPlayers")]
-        public List<PendingPlayer> pendingPlayers = new List<PendingPlayer>();
+        public System.Collections.Generic.List<PendingPlayer> pendingPlayers = new System.Collections.Generic.List<PendingPlayer>();
 
         [Header("Diagnostics")]
         /// <summary>
@@ -71,7 +71,7 @@ namespace Mirror
         /// <para>The slotId on players is global to the game - across all players.</para>
         /// </summary>
         [Tooltip("List of Room Player objects")]
-        public List<NetworkRoomPlayer> roomSlots = new List<NetworkRoomPlayer>();
+        public System.Collections.Generic.List<NetworkRoomPlayer> roomSlots = new System.Collections.Generic.List<NetworkRoomPlayer>();
 
         public bool allPlayersReady
         {

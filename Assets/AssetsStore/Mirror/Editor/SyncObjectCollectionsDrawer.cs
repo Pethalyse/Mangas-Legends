@@ -25,12 +25,12 @@ namespace Mirror
     public class SyncObjectCollectionsDrawer
     {
         readonly UnityEngine.Object targetObject;
-        readonly List<SyncObjectCollectionField> syncObjectCollectionFields;
+        readonly System.Collections.Generic.List<SyncObjectCollectionField> syncObjectCollectionFields;
 
         public SyncObjectCollectionsDrawer(UnityEngine.Object targetObject)
         {
             this.targetObject = targetObject;
-            syncObjectCollectionFields = new List<SyncObjectCollectionField>();
+            syncObjectCollectionFields = new System.Collections.Generic.List<SyncObjectCollectionField>();
             foreach (FieldInfo field in InspectorHelper.GetAllFields(targetObject.GetType(), typeof(NetworkBehaviour)))
             {
                 // only draw SyncObjects that are IEnumerable (SyncList/Set/Dictionary)

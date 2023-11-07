@@ -1,10 +1,12 @@
 
+using Mirror;
 using UnityEngine;
 
 public class AinzOoalGownControleur : ChampionControleur
 {
 
     //PASSIF => REECRITURE DU REGENERATION MANA
+    [Command]
     protected override void CmdRegenerationMana()
     {
         if (Time.time >= nextRegenManaTime)

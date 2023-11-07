@@ -198,7 +198,7 @@ namespace Mirror.Weaver
             return td.Methods.FirstOrDefault(method => method.Name == methodName);
         }
 
-        public static List<MethodDefinition> GetMethods(this TypeDefinition td, string methodName)
+        public static System.Collections.Generic.List<MethodDefinition> GetMethods(this TypeDefinition td, string methodName)
         {
             return td.Methods.Where(method => method.Name == methodName).ToList();
         }

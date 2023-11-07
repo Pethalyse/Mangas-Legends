@@ -11,7 +11,7 @@ namespace Mirror.Examples.Basic
         public event System.Action<ushort> OnPlayerDataChanged;
 
         // Players List to manage playerNumber
-        static readonly List<Player> playersList = new List<Player>();
+        static readonly System.Collections.Generic.List<Player> playersList = new System.Collections.Generic.List<Player>();
 
         [Header("Player UI")]
         public GameObject playerUIPrefab;

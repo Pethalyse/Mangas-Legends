@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -63,16 +64,22 @@ abstract public class StatsManager : TeamManager
     //Fonction Stats
     //Level
     [Command]
-    public void CmdLeveling()
+    virtual public void CmdLeveling()
     {
         if (level < 18)
         {
             level++;
-            stats.LevelUp();
+            RpcStatsLevelUp();
 
             vie += stats.vieMax.GetValueLeveling();
             mana += Stats.manaMax.GetValueLeveling();
         }
+    }
+
+    [ClientRpc]
+    private void RpcStatsLevelUp()
+    {
+        stats.LevelUp();
     }
 
     [Command(requiresAuthority = false)]

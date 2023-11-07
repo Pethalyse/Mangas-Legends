@@ -22,16 +22,16 @@ namespace Mirror.Weaver
         Readers readers;
         Logger Log;
 
-        List<FieldDefinition> syncVars = new List<FieldDefinition>();
-        List<FieldDefinition> syncObjects = new List<FieldDefinition>();
+        System.Collections.Generic.List<FieldDefinition> syncVars = new System.Collections.Generic.List<FieldDefinition>();
+        System.Collections.Generic.List<FieldDefinition> syncObjects = new System.Collections.Generic.List<FieldDefinition>();
         // <SyncVarField,NetIdField>
         Dictionary<FieldDefinition, FieldDefinition> syncVarNetIds = new Dictionary<FieldDefinition, FieldDefinition>();
-        readonly List<CmdResult> commands = new List<CmdResult>();
-        readonly List<ClientRpcResult> clientRpcs = new List<ClientRpcResult>();
-        readonly List<MethodDefinition> targetRpcs = new List<MethodDefinition>();
-        readonly List<MethodDefinition> commandInvocationFuncs = new List<MethodDefinition>();
-        readonly List<MethodDefinition> clientRpcInvocationFuncs = new List<MethodDefinition>();
-        readonly List<MethodDefinition> targetRpcInvocationFuncs = new List<MethodDefinition>();
+        readonly System.Collections.Generic.List<CmdResult> commands = new System.Collections.Generic.List<CmdResult>();
+        readonly System.Collections.Generic.List<ClientRpcResult> clientRpcs = new System.Collections.Generic.List<ClientRpcResult>();
+        readonly System.Collections.Generic.List<MethodDefinition> targetRpcs = new System.Collections.Generic.List<MethodDefinition>();
+        readonly System.Collections.Generic.List<MethodDefinition> commandInvocationFuncs = new System.Collections.Generic.List<MethodDefinition>();
+        readonly System.Collections.Generic.List<MethodDefinition> clientRpcInvocationFuncs = new System.Collections.Generic.List<MethodDefinition>();
+        readonly System.Collections.Generic.List<MethodDefinition> targetRpcInvocationFuncs = new System.Collections.Generic.List<MethodDefinition>();
 
         readonly TypeDefinition netBehaviourSubclass;
 
@@ -923,7 +923,7 @@ namespace Mirror.Weaver
             HashSet<string> names = new HashSet<string>();
 
             // copy the list of methods because we will be adding methods in the loop
-            List<MethodDefinition> methods = new List<MethodDefinition>(netBehaviourSubclass.Methods);
+            System.Collections.Generic.List<MethodDefinition> methods = new System.Collections.Generic.List<MethodDefinition>(netBehaviourSubclass.Methods);
             // find command and RPC functions
             foreach (MethodDefinition md in methods)
             {

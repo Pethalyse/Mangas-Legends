@@ -40,7 +40,7 @@ public class ScoreboardControleur : MonoBehaviour
 
             for(int l=0; l<player.getItems().Count; l++)
             {
-                child.GetChild(2).GetChild(l).GetComponent<Image>().sprite = player.getItems()[l].icone;
+                child.GetChild(2).GetChild(l).GetComponent<Image>().sprite = player.getItems()[l].Icone;
             }
         }
     }

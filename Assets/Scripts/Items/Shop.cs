@@ -32,37 +32,37 @@ public class Shop : MonoBehaviour
 
     public void AcheterObjet(Item objet)
     {
-        int prix = objet.getPrix();
-        foreach (Item i in objet.composents)
+        int prix = objet.GetPrix();
+        foreach (Item i in objet.Composents)
         {
 
             if (player.getItems().Contains(i))
             {
-                prix -= i.getPrix();
+                prix -= i.GetPrix();
             }
             else
             {
-                foreach (Item i2 in i.composents)
+                foreach (Item i2 in i.Composents)
                 {
                     if (player.getItems().Contains(i2))
                     {
-                        prix -= i2.getPrix();
+                        prix -= i2.GetPrix();
                     }
                 }
             }
         }
         
-        player.AddItem(objet, prix);
+        player.CmdAddItem(objet.name, prix);
     }
 
     public static void TrierParPrixCroissant(   List<Item> items)
     {
-        items.Sort((x, y) => x.getPrix().CompareTo(y.getPrix()));
+        items.Sort((x, y) => x.GetPrix().CompareTo(y.GetPrix()));
     }
 
     public static void TrierParPrixDecroissant(List<Item> items)
     {
-        items.Sort((x, y) => y.getPrix().CompareTo(x.getPrix()));
+        items.Sort((x, y) => y.GetPrix().CompareTo(x.GetPrix()));
     }
 
     public void initItems()

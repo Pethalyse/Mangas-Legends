@@ -51,10 +51,10 @@ namespace Mirror
 
         // message queues
         // list so we can insert randomly (scramble)
-        List<QueuedMessage> reliableClientToServer = new List<QueuedMessage>();
-        List<QueuedMessage> reliableServerToClient = new List<QueuedMessage>();
-        List<QueuedMessage> unreliableClientToServer = new List<QueuedMessage>();
-        List<QueuedMessage> unreliableServerToClient = new List<QueuedMessage>();
+        System.Collections.Generic.List<QueuedMessage> reliableClientToServer = new System.Collections.Generic.List<QueuedMessage>();
+        System.Collections.Generic.List<QueuedMessage> reliableServerToClient = new System.Collections.Generic.List<QueuedMessage>();
+        System.Collections.Generic.List<QueuedMessage> unreliableClientToServer = new System.Collections.Generic.List<QueuedMessage>();
+        System.Collections.Generic.List<QueuedMessage> unreliableServerToClient = new System.Collections.Generic.List<QueuedMessage>();
 
         // random
         // UnityEngine.Random.value is [0, 1] with both upper and lower bounds inclusive
@@ -107,8 +107,8 @@ namespace Mirror
             ArraySegment<byte> segment,
             int channelId,
             float latency,
-            List<QueuedMessage> reliableQueue,
-            List<QueuedMessage> unreliableQueue)
+            System.Collections.Generic.List<QueuedMessage> reliableQueue,
+            System.Collections.Generic.List<QueuedMessage> unreliableQueue)
         {
             // segment is only valid after returning. copy it.
             // (allocates for now. it's only for testing anyway.)

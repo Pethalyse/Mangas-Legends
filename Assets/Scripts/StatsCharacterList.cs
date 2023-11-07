@@ -6,10 +6,10 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "[StatsCharacter]", menuName = "ML - New Character Stats", order = 1)]
 [Serializable]
+
 public class StatsCharacterList : ScriptableObject
 {
     [SerializeField]
-    [SyncVar]
     public StatCharacter vieMax, vieRegen, manaMax, manaRegen, moveSpeed, ad, ap, ar, mr, critChance, critDamage, range, attackSpeed, lethality, peneArmor, peneMagic, lifeSteal, bonusHeal, cdr;
 
     public StatCharacter GetStatFromItem(Stats stat)

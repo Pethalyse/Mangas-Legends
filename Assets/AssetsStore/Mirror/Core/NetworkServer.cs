@@ -1706,8 +1706,8 @@ namespace Mirror
         // NetworkLateUpdate called after any Update/FixedUpdate/LateUpdate
         // (we add this to the UnityEngine in NetworkLoop)
         // internal for tests
-        internal static readonly List<NetworkConnectionToClient> connectionsCopy =
-            new List<NetworkConnectionToClient>();
+        internal static readonly System.Collections.Generic.List<NetworkConnectionToClient> connectionsCopy =
+            new System.Collections.Generic.List<NetworkConnectionToClient>();
 
         static void Broadcast()
         {

@@ -298,7 +298,7 @@ namespace Mirror
         // structs may have .List<T> members which weaver needs to be able to
         // fully serialize for NetworkMessages etc.
         // note that Weaver/Writers/GenerateWriter() handles this manually.
-        public static void WriteList<T>(this NetworkWriter writer, List<T> list)
+        public static void WriteList<T>(this NetworkWriter writer, System.Collections.Generic.List<T> list)
         {
             // 'null' is encoded as '-1'
             if (list is null)

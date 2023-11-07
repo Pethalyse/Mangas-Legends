@@ -1,5 +1,7 @@
+using Mirror;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,6 +13,9 @@ public class StatCharacter
     [SerializeField] private bool isPercent;
 
     [SerializeField] private List<float> alterations = new List<float>();
+
+    public float GetBaseValue() { return baseValue; }
+    public float GetValueLeveling() { return valueLeveling; }
 
     public float GetValue()
     {
@@ -28,9 +33,6 @@ public class StatCharacter
         return value;
 
     }
-
-    public float GetBaseValue() { return  baseValue; }
-    public float GetValueLeveling() {  return valueLeveling; }
 
     public void AddAlteration(float value)
     {

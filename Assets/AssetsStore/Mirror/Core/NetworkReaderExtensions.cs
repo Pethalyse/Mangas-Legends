@@ -250,7 +250,7 @@ namespace Mirror
         // structs may have .List<T> members which weaver needs to be able to
         // fully serialize for NetworkMessages etc.
         // note that Weaver/Readers/GenerateReader() handles this manually.
-        public static List<T> ReadList<T>(this NetworkReader reader)
+        public static System.Collections.Generic.List<T> ReadList<T>(this NetworkReader reader)
         {
             int length = reader.ReadInt();
 
@@ -266,7 +266,7 @@ namespace Mirror
                 throw new EndOfStreamException($"NetworkReader attempted to allocate a List<{typeof(T)}> {length} elements, which is larger than the allowed limit of {NetworkReader.AllocationLimit}.");
             }
 
-            List<T> result = new List<T>(length);
+            System.Collections.Generic.List<T> result = new System.Collections.Generic.List<T>(length);
             for (int i = 0; i < length; i++)
             {
                 result.Add(reader.Read<T>());

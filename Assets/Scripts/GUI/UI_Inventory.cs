@@ -22,7 +22,7 @@ public class UI_Inventory : MonoBehaviour
         }
         else
         {
-            if (items.Equals(player.getItems())) { return; }
+            if (CompareList()) { return; }
             items = new List<Item>(player.getItems());
 
             foreach(Transform t in conteneurObjets.transform)
@@ -33,10 +33,10 @@ public class UI_Inventory : MonoBehaviour
             foreach (Item i in player.getItems())
             {
                 var item = Instantiate(itemPrefab, conteneurObjets);
-                item.GetComponent<Image>().sprite = i.icone;
+                item.GetComponent<Image>().sprite = i.Icone;
 
                 string textFinal = "";
-                i.stats.ForEach(x => textFinal += x.ToString() + " ");
+                i.Stats.ForEach(x => textFinal += x.ToString() + " ");
 
                 textFinal += "\n";
 
@@ -47,5 +47,17 @@ public class UI_Inventory : MonoBehaviour
                 item.GetComponentInChildren<TextMeshProUGUI>().text = textFinal;
             }
         }
+    }
+
+    private bool CompareList()
+    {
+        if (items.Count != player.getItems().Count) { return false; }
+
+        for(int i=0; i<items.Count; i++)
+        {
+            if (!items[i].Equals(player.getItems()[i])) { return false; }
+        }
+
+        return true;
     }
 }

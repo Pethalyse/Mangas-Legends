@@ -106,9 +106,9 @@ namespace Mirror.Weaver
 
         MethodDefinition FindHookMethod(TypeDefinition td, FieldDefinition syncVar, string hookFunctionName, ref bool WeavingFailed)
         {
-            List<MethodDefinition> methods = td.GetMethods(hookFunctionName);
+            System.Collections.Generic.List<MethodDefinition> methods = td.GetMethods(hookFunctionName);
 
-            List<MethodDefinition> methodsWith2Param = new List<MethodDefinition>(methods.Where(m => m.Parameters.Count == 2));
+            System.Collections.Generic.List<MethodDefinition> methodsWith2Param = new System.Collections.Generic.List<MethodDefinition>(methods.Where(m => m.Parameters.Count == 2));
 
             if (methodsWith2Param.Count == 0)
             {
@@ -417,9 +417,9 @@ namespace Mirror.Weaver
             }
         }
 
-        public (List<FieldDefinition> syncVars, Dictionary<FieldDefinition, FieldDefinition> syncVarNetIds) ProcessSyncVars(TypeDefinition td, ref bool WeavingFailed)
+        public (System.Collections.Generic.List<FieldDefinition> syncVars, Dictionary<FieldDefinition, FieldDefinition> syncVarNetIds) ProcessSyncVars(TypeDefinition td, ref bool WeavingFailed)
         {
-            List<FieldDefinition> syncVars = new List<FieldDefinition>();
+            System.Collections.Generic.List<FieldDefinition> syncVars = new System.Collections.Generic.List<FieldDefinition>();
             Dictionary<FieldDefinition, FieldDefinition> syncVarNetIds = new Dictionary<FieldDefinition, FieldDefinition>();
 
             // the mapping of dirtybits to sync-vars is implicit in the order of the fields here. this order is recorded in m_replacementProperties.

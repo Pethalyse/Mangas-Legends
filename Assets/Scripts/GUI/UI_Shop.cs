@@ -51,9 +51,9 @@ public class UI_Shop : MonoBehaviour
         {
             foreach(Item i in shop.player.getItems())
             {
-                if (i.unique)
+                if (i.Unique)
                 {
-                    if (b.GetComponentInChildren<Text>(true).text == i.nom)
+                    if (b.GetComponentInChildren<Text>(true).text == i.Nom)
                     {
                         foreach (Image img in b.GetComponentsInChildren<Image>(true))
                         {
@@ -93,34 +93,34 @@ public class UI_Shop : MonoBehaviour
         if (shop.player && !shop.player.getItems().Contains(objet))
         {
             List<Item> s = new List<Item>(shop.player.getItems());
-            foreach (Item i in objet.composents)
+            foreach (Item i in objet.Composents)
             {
                 if (s.Contains(i))
                 {
-                    prix += i.getPrix();
+                    prix += i.GetPrix();
                     s.Remove(i);
                 }
                 else
                 {
-                    foreach (Item i2 in i.composents)
+                    foreach (Item i2 in i.Composents)
                     {
                         if (s.Contains(i2))
                         {
-                            prix += i2.getPrix();
+                            prix += i2.GetPrix();
                             s.Remove(i2);
                         }
                     }
                 }
             }
         }
-        bouton.transform.Find("prix").GetComponent<TextMeshProUGUI>().text = (objet.getPrix() - prix).ToString();
-        bouton.GetComponentInChildren<Text>(true).text = objet.nom;
+        bouton.transform.Find("prix").GetComponent<TextMeshProUGUI>().text = (objet.GetPrix() - prix).ToString();
+        bouton.GetComponentInChildren<Text>(true).text = objet.Nom;
 
         foreach (Image img in bouton.GetComponentsInChildren<Image>())
         {
             if (img.name != "cadenas" && img.name != "contour")
             {
-                img.sprite = objet.icone;
+                img.sprite = objet.Icone;
             }
 
             if (img.name == "sell")
@@ -143,23 +143,23 @@ public class UI_Shop : MonoBehaviour
         b.GetComponent<Button>().onClick.AddListener(() => selectButton(b, objet));
         b.GetComponent<Button>().onClick.AddListener(() => initDescription(objet));
 
-        Shop.TrierParPrixDecroissant(objet.composents);
-        foreach (Item composent in objet.composents)
+        Shop.TrierParPrixDecroissant(objet.Composents);
+        foreach (Item composent in objet.Composents)
         {
             var b2 = CreateButton(composent, itemPrincipale.transform, boutonObjetPrefab);
             b2.GetComponent<Button>().onClick.AddListener(() => selectButton(b2, composent));
             b2.GetComponent<Button>().onClick.AddListener(() => initDescription(composent));
         }
 
-        foreach (Item composent in objet.composents)
+        foreach (Item composent in objet.Composents)
         {
             var itemSecond = Instantiate(itemComposentPrefab, conteneurComposents);
             var b3 = CreateButton(composent, itemSecond.transform, itemPrincipalPrefab);
             b3.GetComponent<Button>().onClick.AddListener(() => selectButton(b3, composent));
             b3.GetComponent<Button>().onClick.AddListener(() => initDescription(composent));
 
-            Shop.TrierParPrixDecroissant(composent.composents);
-            foreach (Item composent2 in composent.composents)
+            Shop.TrierParPrixDecroissant(composent.Composents);
+            foreach (Item composent2 in composent.Composents)
             {
                 var b4 = CreateButton(composent2, itemSecond.transform, boutonObjetPrefab);
                 b4.GetComponent<Button>().onClick.AddListener(() => selectButton(b4, composent2));
@@ -173,13 +173,13 @@ public class UI_Shop : MonoBehaviour
     //Affichage description
     public void initDescription(Item obj)
     {
-        iconDesc.sprite = obj.icone;
+        iconDesc.sprite = obj.Icone;
         iconDesc.color = Color.white;
-        nomDesc.text = obj.nom + " - <color=#FFD700>" + obj.getPrix() + "</color> <color=#C0C0C0>(" + Mathf.RoundToInt(obj.getPrix() * 0.7f) + " • <size=10>70%</size>)</color>";
+        nomDesc.text = obj.Nom + " - <color=#FFD700>" + obj.GetPrix() + "</color> <color=#C0C0C0>(" + Mathf.RoundToInt(obj.GetPrix() * 0.7f) + " • <size=10>70%</size>)</color>";
 
         itemDesc.text = "";
-        int interactions = obj.actifs.Count + obj.passifs.Count;
-        foreach (Actif pb in obj.actifs)
+        int interactions = obj.Actifs.Count + obj.Passifs.Count;
+        foreach (Actif pb in obj.Actifs)
         {
             interactions--;
             if (interactions == 0)
@@ -193,7 +193,7 @@ public class UI_Shop : MonoBehaviour
 
         }
 
-        foreach (ItemInteraction pb in obj.passifs)
+        foreach (ItemInteraction pb in obj.Passifs)
         {
             interactions--;
             if (interactions == 0)
@@ -208,7 +208,7 @@ public class UI_Shop : MonoBehaviour
         }
 
         statsDesc.text = "";
-        obj.stats.ForEach(x => statsDesc.text += x.ToString() + " ");
+        obj.Stats.ForEach(x => statsDesc.text += x.ToString() + " ");
     }
 
     //Selectionner le bouton
@@ -230,7 +230,7 @@ public class UI_Shop : MonoBehaviour
     //acheter item
     public void AcheterObjet(Item objet)
     {
-        if (objet.unique)
+        if (objet.Unique)
         {
             resetTransform(conteneurComposents);
         }

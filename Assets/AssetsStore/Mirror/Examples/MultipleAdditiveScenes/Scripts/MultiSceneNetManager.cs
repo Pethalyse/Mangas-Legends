@@ -22,7 +22,7 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         bool subscenesLoaded;
 
         // subscenes are added to this list as they're loaded
-        readonly List<Scene> subScenes = new List<Scene>();
+        readonly System.Collections.Generic.List<Scene> subScenes = new System.Collections.Generic.List<Scene>();
 
         // Sequential index used in round-robin deployment of players into instances and score positioning
         int clientIndex;

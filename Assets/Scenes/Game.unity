@@ -665,6 +665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 322756705}
+  - component: {fileID: 322756706}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -687,6 +688,48 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &322756706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322756704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de807cee65855594cb6b291f7ff8a0db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: a69ed549f8157034e9234a40664b156e, type: 3}
+  - {fileID: 21300000, guid: 29e6b230a1832dc4492d2a458810011a, type: 3}
+  - {fileID: 21300000, guid: 27ae25f7ff38f0d4f8734149e9babc61, type: 3}
+  - {fileID: 21300000, guid: 084e04a299ad6784299dd22726a781d3, type: 3}
+  - {fileID: 21300000, guid: d2ec35b67d209da44afe52532c710479, type: 3}
+  - {fileID: 21300000, guid: 989cb0e8f1ebec943a80a4145676ff98, type: 3}
+  - {fileID: 21300000, guid: f6d1886c214abfc4ab6f09fda74df95d, type: 3}
+  - {fileID: 21300000, guid: c1069215ae020064992d013bd5c3c038, type: 3}
+  - {fileID: 21300000, guid: 4c2abd342637500429368e580de354c6, type: 3}
+  - {fileID: 21300000, guid: 875d4f6a0c87d894e8767c7a2ca430f9, type: 3}
+  - {fileID: 21300000, guid: a7de695845059b1479235b341495db3c, type: 3}
+  - {fileID: 21300000, guid: 4fa5e8b38b8c1b149b4ac42ecbe2ebcc, type: 3}
+  - {fileID: 21300000, guid: 659cca2fa5ed0064b9ef4fe6015ac2e8, type: 3}
+  - {fileID: 21300000, guid: 2a69c1eb607b4cd4e8385f0d7915c666, type: 3}
+  items:
+  - {fileID: 11400000, guid: 5815fd8238a31034092996254cca770b, type: 2}
+  - {fileID: 11400000, guid: 7970950b15531f649a5394f5446b0a9f, type: 2}
+  - {fileID: 11400000, guid: cd20fd74f81a5144ab5a9f44c47a3c5f, type: 2}
+  - {fileID: 11400000, guid: 738fceeee2543214683d47ce0904474a, type: 2}
+  - {fileID: 11400000, guid: d4aa4301afbdff147ab9798c067803e0, type: 2}
+  - {fileID: 11400000, guid: 2d32cdda473b4c048be44c02b7368a8d, type: 2}
+  - {fileID: 11400000, guid: 03caefabdd1b58a418be7bb2fc3f02f1, type: 2}
+  - {fileID: 11400000, guid: 6cb5ef20747c5b2438c3e5525159c755, type: 2}
+  - {fileID: 11400000, guid: 1d75037f45f56fe4091698d521a86c65, type: 2}
+  - {fileID: 11400000, guid: 902533eca811e564f9f3531cf10f8caf, type: 2}
+  - {fileID: 11400000, guid: 1e882a89bf9420d49ae1c4ff1ee3f9ad, type: 2}
+  - {fileID: 11400000, guid: 4a5a3f430e4ee784d8ceb7046f48ad7e, type: 2}
+  - {fileID: 11400000, guid: 4e1adb9b5446a8146a4d6feaf1c53416, type: 2}
+  - {fileID: 11400000, guid: 6427ece5ca1304844bf163e198b84e60, type: 2}
 --- !u!1001 &403048943
 PrefabInstance:
   m_ObjectHideFlags: 0

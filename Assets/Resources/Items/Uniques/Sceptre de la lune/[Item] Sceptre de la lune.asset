@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: '[Item] Sceptre de la lune'
   m_EditorClassIdentifier: 
   nom: Sceptre de la lune
-  icone: {fileID: 21300000, guid: 0676ba3b229cf0845841bbc490faed59, type: 3}
+  icone: {fileID: 21300000, guid: 4fa5e8b38b8c1b149b4ac42ecbe2ebcc, type: 3}
   onHitEffect: 0
   stats:
   - stat: 0
@@ -24,23 +24,6 @@ MonoBehaviour:
     valeur: 350
   - stat: 14
     valeur: 10
-  vie: 150
-  ad: 0
-  lethality: 0
-  peneArmor: 0
-  ap: 80
-  peneMagic: 0
-  critChance: 0
-  critDamage: 0
-  armor: 0
-  magicRes: 0
-  aSpd: 0
-  mana: 350
-  regenMana: 0
-  bonusHeal: 0
-  cdr: 10
-  ms: 0
-  lifeSteal: 0
   prix: 3100
   unique: 1
   composents: []

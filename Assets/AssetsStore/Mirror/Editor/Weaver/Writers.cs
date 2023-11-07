@@ -107,7 +107,7 @@ namespace Mirror.Weaver
 
                 return GenerateCollectionWriter(variableReference, elementType, nameof(NetworkWriterExtensions.WriteArraySegment), ref WeavingFailed);
             }
-            if (variableReference.Is(typeof(List<>)))
+            if (variableReference.Is(typeof(System.Collections.Generic.List<>)))
             {
                 GenericInstanceType genericInstance = (GenericInstanceType)variableReference;
                 TypeReference elementType = genericInstance.GenericArguments[0];

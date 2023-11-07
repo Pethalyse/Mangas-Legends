@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mirror.Examples.SyncDir // ".SyncDirection" would overshadow the enum
 {
@@ -8,7 +9,7 @@ namespace Mirror.Examples.SyncDir // ".SyncDirection" would overshadow the enum
         public Color localColor = Color.white;
 
         [SyncVar] public int health;
-        readonly SyncList<int> list = new SyncList<int>();
+        readonly List<int> list = new List<int>();
 
         public override void OnStartLocalPlayer()
         {

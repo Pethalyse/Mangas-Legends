@@ -106,7 +106,7 @@ namespace Mirror.Weaver
             {
                 return GenerateArraySegmentReadFunc(variableReference, ref WeavingFailed);
             }
-            else if (variableDefinition.Is(typeof(List<>)))
+            else if (variableDefinition.Is(typeof(System.Collections.Generic.List<>)))
             {
                 GenericInstanceType genericInstance = (GenericInstanceType)variableReference;
                 TypeReference elementType = genericInstance.GenericArguments[0];

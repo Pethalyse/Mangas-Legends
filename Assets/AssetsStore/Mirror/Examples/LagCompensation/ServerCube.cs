@@ -60,7 +60,7 @@ namespace Mirror.Examples.LagCompensationDemo
 
         // hold on to snapshots for a little while before delivering
         // <deliveryTime, snapshot>
-        List<(double, Snapshot3D)> queue = new List<(double, Snapshot3D)>();
+        System.Collections.Generic.List<(double, Snapshot3D)> queue = new System.Collections.Generic.List<(double, Snapshot3D)>();
 
         // latency simulation:
         // always a fixed value + some jitter.

@@ -9,9 +9,9 @@ public class ChampionControleur : StatsManager
 {
     //system money
     [Header("Items")]
-    [SerializeField] private int goldsOnStock = 0;
+    [SyncVar][SerializeField] private int goldsOnStock = 0;
     private int nbMaxItems = 6;
-    [SerializeField] private readonly SyncList<Item> items = new SyncList<Item>();
+    [SerializeField] private List<Item> items = new List<Item>();
 
     //auto attaque
     [Header("Auto Attaque")]
@@ -70,7 +70,7 @@ public class ChampionControleur : StatsManager
 
     //ITEMS
     public int getGolds() { return goldsOnStock; }
-    public SyncList<Item> getItems() { return items; }
+    public List<Item> getItems() { return items; }
 
     public void RpcTargetToNull() { target = null; }
 
@@ -167,7 +167,7 @@ public class ChampionControleur : StatsManager
         {
             CmdLeveling();
             CmdTakeDamage(100, 0);
-            GiveGolds(3100);
+            CmdGiveGolds(3100);
             NbKills++;
         }
 
@@ -254,22 +254,25 @@ public class ChampionControleur : StatsManager
     }
 
     //ITEMS
-    [Client]
-    public void GiveGolds(int goldsGive)
+    [Command]
+    public void CmdGiveGolds(int goldsGive)
     {
         goldsOnStock += goldsGive;
     }
 
-    [Client]
-    public void AddItem(Item add, int prix)
+    [Command]
+    public void CmdAddItem(string key, int prix)
     {
+        Item add = ItemsManager.instance.GetItem(key);
+        if(add == null) { return; }
+
         if (prix <= goldsOnStock)
         {
             bool t = true;
             if (items.Count >= nbMaxItems)
             {
                 t = false;
-                foreach (Item item in add.composents)
+                foreach (Item item in add.Composents)
                 {
                     if (items.Contains(item))
                     {
@@ -278,7 +281,7 @@ public class ChampionControleur : StatsManager
                     }
                     else
                     {
-                        foreach (Item item2 in item.composents)
+                        foreach (Item item2 in item.Composents)
                         {
                             if (items.Contains(item))
                             {
@@ -291,60 +294,76 @@ public class ChampionControleur : StatsManager
                     }
                 }
             }
-            
+
             if (t)
             {
                 goldsOnStock -= prix;
 
-                foreach (Item item in add.composents)
+                foreach (Item item in add.Composents)
                 {
                     if (items.Contains(item))
                     {
-                        items.Remove(item);
-                        ActualiserStatsSelonItemsNegatif(item);
+                        RpcRemoveAddItem(item.name, false);
+                        RpcActualiserStatsSelonItemsNegatif(item.name);
                     }
                     else
                     {
-                        foreach (Item i in item.composents)
+                        foreach (Item i in item.Composents)
                         {
                             if (items.Contains(i))
                             {
-                                items.Remove(i);
-                                ActualiserStatsSelonItemsNegatif(i);
+                                RpcRemoveAddItem(i.name, false);
+                                RpcActualiserStatsSelonItemsNegatif(i.name);
                             }
                         }
                     }
-
                 }
 
-                items.Add(add);
-                ActualiserStatsSelonItemsPositif(add);
+                RpcRemoveAddItem(key, true);
+                RpcActualiserStatsSelonItemsPositif(key);
             }
         }
 
     }
 
-    [Client]
-    private void SellItem(Item remove)
+    [Command]
+    private void CmdSellItem(string name)
     {
+        Item remove = ItemsManager.instance.GetItem(name);
         if (items.Contains(remove))
         {
-            goldsOnStock += Mathf.RoundToInt(remove.prix * 0.7f);
-            items.Remove(remove);
-            ActualiserStatsSelonItemsNegatif(remove);
+            goldsOnStock += Mathf.RoundToInt(remove.Prix * 0.7f);
+            RpcRemoveAddItem(name, false);
+            RpcActualiserStatsSelonItemsNegatif(name);
         }
     }
 
-    [Client]
-    private void ActualiserStatsSelonItemsPositif(Item item)
+    [ClientRpc]
+    private void RpcRemoveAddItem(string name, bool b)
     {
-        item.stats.ForEach(x => Stats.GetStatFromItem(x.GetStat()).AddAlteration(x.GetValue()));
+        Item i = ItemsManager.instance.GetItem(name);
+        if (b)
+        {
+            items.Add(i);
+        }
+        else
+        {
+            items.Remove(i);
+        }
     }
 
-    [Client]
-    private void ActualiserStatsSelonItemsNegatif(Item item)
+    [ClientRpc]
+    private void RpcActualiserStatsSelonItemsPositif(string name)
     {
-        item.stats.ForEach(x => Stats.GetStatFromItem(x.GetStat()).RemoveAlteration(x.GetValue()));
+        Item item = ItemsManager.instance.GetItem(name);
+        item.Stats.ForEach(x => Stats.GetStatFromItem(x.GetStat()).AddAlteration(x.GetValue()));
+    }
+
+    [ClientRpc]
+    private void RpcActualiserStatsSelonItemsNegatif(string name)
+    {
+        Item item = ItemsManager.instance.GetItem(name);
+        item.Stats.ForEach(x => Stats.GetStatFromItem(x.GetStat()).RemoveAlteration(x.GetValue()));
     }
 
     [Client]
@@ -353,7 +372,7 @@ public class ChampionControleur : StatsManager
     {
         foreach(Item item in items)
         {
-            foreach(var passif in item.passifs)
+            foreach(var passif in item.Passifs)
             {
                 if(passif is OnHitPassif)
                 {
