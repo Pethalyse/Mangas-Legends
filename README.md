@@ -1,5 +1,5 @@
 # Mangas-Legends
-A Moba (Multiplayer online battle arena) inspired of League of Legends, with manga/anime characters.
+A Moba (Multiplayer online battle arena) inspired of League of Legends, with manga/anime characters. \n
 
 Features -
 
