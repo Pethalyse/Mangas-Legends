@@ -5,7 +5,7 @@
 
 * Network with Mirror  
 * Animes/Mangas characters playable  
-* Shop/Item system with an UI shop  
+* Shop/Item/Inventory system with an UI shop  
 * Base minions IA (mouvment, attack)  
 * Champion attack system  
 * Ability system with flexible abilities -  
@@ -25,7 +25,8 @@
 
 * More characters  
 * Lobby system  
-* Refactoring code  
+* Refactoring code
+* Syncr the champion's stats of player ?  
 * Game timer from the start to the end of the game  
 * All killed of each team  
 * Champ select system  
