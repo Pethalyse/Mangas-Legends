@@ -26,7 +26,7 @@
 * More characters  
 * Lobby system  
 * Refactoring code
-* Syncr the champion's stats of player ?  
+* Syncr the champion's stats of players ?  
 * Game timer from the start to the end of the game  
 * All killed of each team  
 * Champ select system  
