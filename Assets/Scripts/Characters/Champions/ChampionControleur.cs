@@ -11,6 +11,7 @@ public class ChampionControleur : StatsManager
     [Header("Items")]
     [SyncVar][SerializeField] private int goldsOnStock = 0;
     private int nbMaxItems = 6;
+    private readonly SyncList<string> itemsSync = new SyncList<string>();
     [SerializeField] private List<Item> items = new List<Item>();
 
     //auto attaque
@@ -73,6 +74,13 @@ public class ChampionControleur : StatsManager
     public List<Item> getItems() { return items; }
 
     public void RpcTargetToNull() { target = null; }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        itemsSync.Callback += OnItemsUpdated;   
+    }
 
     new protected void Awake()
     {
@@ -168,7 +176,7 @@ public class ChampionControleur : StatsManager
             CmdLeveling();
             CmdTakeDamage(100, 0);
             CmdGiveGolds(3100);
-            NbKills++;
+            CmdGetKill();
         }
 
         if (Input.GetButtonDown("Shop"))
@@ -198,6 +206,9 @@ public class ChampionControleur : StatsManager
             scoreboard.SetActive(false);
         }
     }
+
+    [Command]
+    private void CmdGetKill() { NbKills++; NbDeath++; NbAssist++; NbMinions++; }
 
 
     //FONCTIONS STATISTIQUES
@@ -303,7 +314,7 @@ public class ChampionControleur : StatsManager
                 {
                     if (items.Contains(item))
                     {
-                        RpcRemoveAddItem(item.name, false);
+                        itemsSync.Remove(item.name);
                         RpcActualiserStatsSelonItemsNegatif(item.name);
                     }
                     else
@@ -312,14 +323,14 @@ public class ChampionControleur : StatsManager
                         {
                             if (items.Contains(i))
                             {
-                                RpcRemoveAddItem(i.name, false);
+                                itemsSync.Remove(i.name);
                                 RpcActualiserStatsSelonItemsNegatif(i.name);
                             }
                         }
                     }
                 }
 
-                RpcRemoveAddItem(key, true);
+                itemsSync.Add(key);
                 RpcActualiserStatsSelonItemsPositif(key);
             }
         }
@@ -333,22 +344,24 @@ public class ChampionControleur : StatsManager
         if (items.Contains(remove))
         {
             goldsOnStock += Mathf.RoundToInt(remove.Prix * 0.7f);
-            RpcRemoveAddItem(name, false);
+            itemsSync.Remove(name);
             RpcActualiserStatsSelonItemsNegatif(name);
         }
     }
 
-    [ClientRpc]
-    private void RpcRemoveAddItem(string name, bool b)
+    void OnItemsUpdated(SyncList<string>.Operation op, int index, string oldString, string newString)
     {
-        Item i = ItemsManager.instance.GetItem(name);
-        if (b)
+        switch (op)
         {
-            items.Add(i);
-        }
-        else
-        {
-            items.Remove(i);
+            case SyncList<string>.Operation.OP_ADD: 
+
+                items.Add(ItemsManager.instance.GetItem(newString));
+                break;
+
+            case SyncList<string>.Operation.OP_REMOVEAT: 
+
+                items.Remove(ItemsManager.instance.GetItem(oldString));
+                break;
         }
     }
 
