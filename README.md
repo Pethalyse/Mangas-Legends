@@ -31,6 +31,7 @@
 * All killed of each team  
 * Champ select system  
 * Item actifs system  
-* Constellation system (a feature I imagined)  
+* Constellation system (a feature I imagined)
+* More ability type
 
 *__By Pethalyse.__*
