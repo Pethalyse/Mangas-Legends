@@ -36,4 +36,4 @@
 * Create a 3D model map
 * Create 3D model for champions
 
-*__By Pethalyse.__*
+*__By @Pethalyse.__*
