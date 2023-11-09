@@ -33,5 +33,7 @@
 * Item actifs system  
 * Constellation system (a feature I imagined)
 * More ability type
+* Create a 3D model map
+* Create 3D model for champions
 
 *__By Pethalyse.__*
