@@ -1,99 +1,38 @@
 using Mirror;
-using System;
-using System.Collections;
+using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(PvControleur))]
-abstract public class StatsManager : TeamManager
+[RequireComponent(typeof(StatsManager))]
+public class PvControleur: NetworkBehaviour
 {
-
-    [Header("Icon")]
-    [SerializeField] private Sprite icon;
-    public Sprite Icon { get => icon;}
-
-    //stats
-    [Header("Stats")]
-    [Header("Level")]
-    [SyncVar][SerializeField] protected int level = 0; //les stats selon le level à partir du level 2
-
-    [SerializeField] private StatsCharacterList stats;
-    public StatsCharacterList Stats { get => stats;}
-
-    //vie
     [SyncVar][SerializeField] protected float vie;
-    public float Vie { get => vie;}
+    public float Vie { get => vie; }
+
+    [SerializeField] bool canRegen;
     protected float nextRegenPvTime;
 
-    //mana
-    [SyncVar][SerializeField] protected float mana;
-    public float Mana { get => mana;}
-    protected float nextRegenManaTime;
-    
-    //GOLDS
-    [Header("Golds")]
-    [SerializeField] private int goldsOnDeath;
+    StatsCharacterList stats;
+    private bool inBattle;
 
-    [Header("Stats changeante")]
-    [SerializeField] protected int slow;
-    [SerializeField] protected bool cantBeCC;
+    public StatsCharacterList Stats { set => stats = value; }
 
-    private NavMeshAgent agent;
-
-    public void setCantBeCC(bool v) { cantBeCC = v; }
-    public bool getCantBeCC() { return cantBeCC; }
-
-    protected void Awake()
+    private void Update()
     {
-        agent = GetComponent<NavMeshAgent>();
-    }
+        if (!stats) { return; }
 
-    protected void Update()
-    {
-    }
-
-    protected void Start()
-    {
-        stats = Instantiate(stats);
-        GetComponent<PvControleur>().Stats = stats;
-
-        vie = stats.vieMax.GetValue();
-        mana = stats.manaMax.GetValue();
-
-        agent.speed = Stats.moveSpeed.GetValue();
-    }
-
-    //Fonction Stats
-    //Level
-    [Command]
-    virtual public void CmdLeveling()
-    {
-        if (level < 18)
+        if(canRegen)
         {
-            level++;
-            RpcStatsLevelUp();
-
-            vie += stats.vieMax.GetValueLeveling();
-            mana += Stats.manaMax.GetValueLeveling();
+            CmdRegenerationVie();
         }
-    }
-
-    [ClientRpc]
-    private void RpcStatsLevelUp()
-    {
-        stats.LevelUp();
     }
 
     [Command(requiresAuthority = false)]
     public void CmdTakeDamage(float damage, RatioDamage ratioDamage)
     {
-        RpcTakeDamage(damage, ratioDamage);
-    }
+        if (!stats) { Debug.LogWarning("Stats du controleur PV n'existe pas !"); }
 
-    //takeDamage
-    [ClientRpc]
-    private void RpcTakeDamage(float damage, RatioDamage ratioDamage)
-    {
+        //FAIRE QUE LES SHIELD ONT UN NETWORKBEHAVIOUR ET CHANGER LEURS VALEUR SUR LE SERVEUR
         float dmg = 0;
         switch (ratioDamage)
         {
@@ -187,6 +126,41 @@ abstract public class StatsManager : TeamManager
         //Debug.Log(gameObject.name + ", à pris des dégats : " + vie);
     }
 
+    [Command]
+    virtual protected void CmdRegenerationVie()
+    {
+        if (Time.time >= nextRegenPvTime)
+        {
+            nextRegenPvTime = Time.time + 1f / 100;
+
+            if (vie < stats.vieMax.GetValue())
+            {
+                if (!inBattle)
+                {
+                    vie += stats.vieRegen.GetValue() / 100;
+                }
+                else
+                {
+                    vie += stats.vieRegen.GetValue() / 100 / 4;
+                }
+
+                if (vie > stats.vieMax.GetValue())
+                {
+                    vie = stats.vieMax.GetValue();
+                }
+            }
+        }
+    }
+
+    [Command]
+    public void CmdTakeHeal(float heal)
+    {
+        vie += heal;
+        vie = Mathf.Clamp(vie, 0, stats.vieMax.GetValue());
+        Debug.Log(gameObject.name + ", à été heal : " + vie);
+    }
+
+
     private void Death()
     {
         if (vie < 1)
@@ -209,38 +183,5 @@ abstract public class StatsManager : TeamManager
 
             Debug.Log("mort");
         }
-    }
-
-    [Command]
-    public void CmdTakeHeal(float heal)
-    {
-        vie += heal;
-        vie = Mathf.Clamp(vie, 0, stats.vieMax.GetValue());
-        Debug.Log(gameObject.name + ", à été heal : " + vie);
-    }
-
-    [Command]
-    public void CmdSetSlow(int pourcentage, float time)
-    {
-        RpcSetSlow(pourcentage, time);
-    }
-
-    //Slow
-    [ClientRpc]
-    private void RpcSetSlow(int pourcentage, float time)
-    {
-        StartCoroutine(slowTime(pourcentage, time));
-    }
-
-    //COROUTINE
-    private IEnumerator slowTime(int pourcentage, float time)
-    {
-        stats.moveSpeed.AddAlteration(pourcentage);
-        agent.speed = stats.moveSpeed.GetValue();
-
-        yield return new WaitForSeconds(time);
-
-        stats.moveSpeed.RemoveAlteration(pourcentage);
-        agent.speed = stats.moveSpeed.GetValue();
     }
 }

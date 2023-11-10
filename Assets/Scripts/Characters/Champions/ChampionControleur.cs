@@ -79,7 +79,8 @@ public class ChampionControleur : StatsManager
     {
         base.OnStartClient();
 
-        itemsSync.Callback += OnItemsUpdated;   
+        itemsSync.Callback += OnItemsUpdated;
+        CmdLeveling();
     }
 
     new protected void Awake()
@@ -94,7 +95,6 @@ public class ChampionControleur : StatsManager
     new void Start()
     {
         base.Start();
-        CmdLeveling();
 
         if (isLocalPlayer)
         {
