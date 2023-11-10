@@ -4,7 +4,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(PvControleur))]
 abstract public class StatsManager : TeamManager
 {
 
@@ -29,7 +28,7 @@ abstract public class StatsManager : TeamManager
     [SyncVar][SerializeField] protected float mana;
     public float Mana { get => mana;}
     protected float nextRegenManaTime;
-    
+
     //GOLDS
     [Header("Golds")]
     [SerializeField] private int goldsOnDeath;
@@ -55,7 +54,6 @@ abstract public class StatsManager : TeamManager
     protected void Start()
     {
         stats = Instantiate(stats);
-        GetComponent<PvControleur>().Stats = stats;
 
         vie = stats.vieMax.GetValue();
         mana = stats.manaMax.GetValue();
@@ -214,7 +212,15 @@ abstract public class StatsManager : TeamManager
     [Command]
     public void CmdTakeHeal(float heal)
     {
-        vie += heal;
+        RpcTakeHeal(heal);
+    }
+
+    //heal
+    [ClientRpc]
+    private void RpcTakeHeal(float heal)
+    {
+        var healing = Mathf.Round(heal); //arrondi du heal
+        vie += healing;
         vie = Mathf.Clamp(vie, 0, stats.vieMax.GetValue());
         Debug.Log(gameObject.name + ", à été heal : " + vie);
     }
