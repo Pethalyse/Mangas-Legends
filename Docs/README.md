@@ -10,6 +10,7 @@ Cette suite de docs est la **source de vérité** du projet. Elle est tenue à j
 | [04-architecture.md](04-architecture.md) | Architecture technique Unity / C# / réseau | Claude Code à chaque changement structurel |
 | [05-conventions-code.md](05-conventions-code.md) | Règles de code obligatoires | Humain (Claude Code propose via ADR) |
 | [06-plan-refactor.md](06-plan-refactor.md) | Plan de refactor du code existant, par étapes | Claude Code à chaque étape terminée |
+| [07-regles-de-jeu.md](07-regles-de-jeu.md) | Règles du genre (LoL 2026) traduites pour MangaLegends : or, sbires, structures, jungle, sorts, quêtes | Claude Code à chaque règle codée ou changée |
 | [adr/](adr/) | Architecture Decision Records : une décision = un fichier | Claude Code + humain |
 | [journal.md](journal.md) | Journal de développement daté | Claude Code à chaque session |
 | [guides/](guides/) | Guides pas à pas : étape 1 (Unity 6 + Fusion), reprise par Claude Code connecté à Unity | Claude Code |

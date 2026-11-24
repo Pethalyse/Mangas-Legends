@@ -16,7 +16,7 @@
 
 ### 1.1 Positionnement et originalité
 
-Le jeu reprend les **conventions du genre MOBA** (trois voies, jungle, tours, sbires, objets, quatre compétences + un passif). Son contenu (champions, monstres, lieux) vient des mangas, animés et autres œuvres choisis par le propriétaire (§1.2). On ne recopie pas les éléments propres à League of Legends (noms de ses champions, objets, monstres, carte, assets, textes) : les notes de design décrivent la mécanique plutôt que « comme tel champion ».
+Le jeu reprend les **conventions du genre MOBA** (trois voies, jungle, tours, sbires, objets, quatre compétences + un passif). Son contenu (champions, monstres, lieux) vient des mangas, animés et autres œuvres choisis par le propriétaire (§1.2). **Règles et mécaniques : celles de League of Legends, version 2026** ✅ (décision du propriétaire). Elles sont détaillées dans [07-regles-de-jeu.md](07-regles-de-jeu.md), qui fait foi pour toute question de règle générale : progression, or, sbires, structures, jungle, objectifs, sorts d'invocateur, quêtes de rôle, vision. Les champions, objets, monstres et lieux sont ceux des mangas. On ne recopie ni les assets ni les textes de LoL.
 
 ### 1.2 Licences : jeu de fans privé ✅
 
@@ -40,13 +40,13 @@ Chaque joueur en choisit deux (touches D et F), dans la liste suivante, comme le
 |---|---|---|
 | Flash (`summoner.blink`) | courte téléportation vers le point visé | `DashEffect` en `Blink` |
 | Téléportation (`summoner.teleport`) | après une canalisation, téléporte vers une unité alliée | canalisation + `TeleportEffect` (destinations autorisées en données) |
-| Smite (`summoner.smite`) | dégâts aux monstres de la jungle : 600 / 1000 / 1400 | ciblage d'unité neutre + `DamageEffect` (Brut 🟡), 3 rangs |
+| Smite (`summoner.smite`) | dégâts aux monstres de la jungle : 600 / 1000 / 1400 | ciblage d'unité neutre + `DamageEffect` (Brut ✅), 3 rangs qui montent avec le compagnon du jungler |
 | Heal (`summoner.heal`) | soigne l'allié ciblé, ou à défaut l'allié le plus bas en PV dans la portée | `HealEffect` + repli `LowestHealthAllyInRange` |
 | Shield (`summoner.barrier`) | bouclier sur soi | `ShieldEffect` |
 | Fatigue (`summoner.exhaust`) | affaiblit un ennemi | `ApplyStatusEffect` |
 | Ghost (`summoner.ghost`) | vitesse de déplacement accrue | `ApplyStatusEffect` (modificateur `MoveSpeed`) |
 
-❓ À définir : ce qui fait passer Smite de 600 à 1000 puis 1400 (niveau du champion ? nombre de monstres tués ?), type de dégâts de Smite (brut proposé), effet exact de Fatigue (ralentissement, réduction de dégâts ?), destinations de la Téléportation (tours, sbires, balises ?), le Heal soigne-t-il aussi le lanceur, recharges et valeurs de chaque sort.
+Détail des effets, recharges et règles : [07-regles-de-jeu.md §8](07-regles-de-jeu.md#8-sorts-dinvocateur) (Smite §7.2). ❓ Ignite, Cleanse et Clarity existent aussi dans le genre : à ajouter ?
 
 ## 3. Contrôles 🟡
 
@@ -127,7 +127,7 @@ Règles ✅ :
 - **Récompenses** : chaque structure détruite donne de l'or.
 - **Début de partie** : les tours sont plus résistantes pendant une durée donnée.
 
-Valeurs en données ✅ : or de chaque structure (`UnitDefinition.GoldBounty`), durée et bonus de résistance des tours en début de partie, délai de réapparition de l'inhibiteur, sbire de siège et méga sbire (`GameRulesConfig`, section *Structures* et *Minion waves*). ❓ Les valeurs elles-mêmes restent à équilibrer, ainsi que le partage de l'or (destructeur seul ou toute l'équipe ?).
+Valeurs en données ✅ : or de chaque structure (`UnitDefinition.GoldBounty`), durée et bonus de résistance des tours en début de partie, délai de réapparition de l'inhibiteur, sbire de siège et méga sbire (`GameRulesConfig`, section *Structures* et *Minion waves*). Valeurs de référence (PV, plaques, or local et global, réapparition de l'inhibiteur à 5 min, condition des tours du Cœur) : [07-regles-de-jeu.md §6](07-regles-de-jeu.md#6-structures).
 
 ## 7. Unités non-joueurs 🟡
 
@@ -177,11 +177,13 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 
 ## 10. Questions ouvertes
 
-1. ~~Sorts d'invocateur ?~~ Réglé (§2.1) ; restent les détails de Smite, Fatigue, Téléportation et Heal.
+1. ~~Sorts d'invocateur ?~~ Réglé (§2.1 et 07 §8) ; reste : ajouter Ignite, Cleanse, Clarity ?
 2. ~~Ressource alternative ?~~ Réglé : mana par défaut, autre ressource seulement si la fiche du champion le précise (§5).
 3. ~~Type de dégât « chaos » ?~~ Réglé : dégâts magiques.
-4. ~~Pain, « (mana/sec) » sur Shuradô ?~~ Réglé : coût continu en mana par seconde (`AbilityDefinition.CostPerSecond`, prélevé tant que la compétence est active). ❓ À 0 mana, la compétence s'arrête-t-elle ?
+4. ~~Pain, « (mana/sec) » sur Shuradô ?~~ Réglé : coût continu en mana par seconde (`AbilityDefinition.CostPerSecond`, prélevé tant que la compétence est active). La compétence s'arrête quand le mana ne suffit plus (07 §11).
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
-7. Structures (§6.1) : valeurs à équilibrer (or, bonus de début de partie, réapparition de l'inhibiteur), partage de l'or, condition exacte pour attaquer les tours du Cœur.
+7. ~~Structures~~ Réglé par les règles du genre (07 §6).
+9. Équivalents manga : Larves du Néant, Carapateur, objets des quêtes de rôle et de la vision (bottes, objet de support, balises), cercles de champignons (07 §12).
+10. Buffs des drakes, de l'âme, de Shenron et de Zodd : ceux du genre, ou adaptés aux éléments des oiseaux légendaires ?
 8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).

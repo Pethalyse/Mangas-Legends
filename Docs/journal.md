@@ -21,6 +21,8 @@
 
 **Fait (8)** : coût continu (Pain, Shuradô) : `AbilityDefinition.CostPerSecond` par rang. DataCheck compile.
 
+**Fait (9)** : décision du propriétaire, les règles suivent League of Legends 2026. Recherche (notes 26.1, aperçu de saison, wiki) et nouveau `Docs/07-regles-de-jeu.md` (✅ vérifié 2026 / 🔁 référence à revérifier) ; questions de règles générales fermées dans le GDD ; CLAUDE.md mis à jour ; `GameRulesConfig` : rythme des vagues et réapparition de l'inhibiteur. Restent les questions propres au contenu manga (07 §12).
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.

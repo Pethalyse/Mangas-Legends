@@ -13,7 +13,7 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 1. `Docs/06-plan-refactor.md` — à quelle étape de la refonte on est, ce qui reste.
 2. `Docs/04-architecture.md` — architecture cible (assemblies, unités, compétences, réseau).
 3. `Docs/05-conventions-code.md` — règles obligatoires.
-4. Selon la tâche : `Docs/01-gdd.md`, `Docs/02-champions.md`, `Docs/03-objets.md`, `Docs/adr/`.
+4. Selon la tâche : `Docs/01-gdd.md`, `Docs/07-regles-de-jeu.md`, `Docs/02-champions.md`, `Docs/03-objets.md`, `Docs/adr/`.
 5. Les 2–3 dernières entrées de `Docs/journal.md`.
 
 ## Règles non négociables
@@ -25,7 +25,7 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 - **Pas de** `GameObject.Find`, singletons statiques, lecture d'entrées hors `PlayerInputCollector`, `new void Update()`.
 - **Pas de commentaires** sauf pour un *pourquoi* non évident ; pas de code commenté.
 - **Respect des assemblies** : Core et Data ne dépendent ni de Fusion, ni de l'UI, ni de la présentation.
-- **Contenu** : jeu de fans privé entre amis ; les personnages et monstres issus de mangas, animés et autres œuvres gardent leurs vrais noms, **ne jamais proposer de les renommer** (`Docs/01-gdd.md` §1.2). On suit les conventions du genre MOBA sans recopier les éléments propres à League of Legends (noms, objets, carte, assets, textes).
+- **Contenu** : jeu de fans privé entre amis ; les personnages et monstres issus de mangas, animés et autres œuvres gardent leurs vrais noms, **ne jamais proposer de les renommer** (`Docs/01-gdd.md` §1.2). **Règles et mécaniques = League of Legends 2026** (`Docs/07-regles-de-jeu.md`) : pour une question de règle générale, chercher la réponse là (ou dans LoL 2026) au lieu de la poser ; ne poser au propriétaire que les questions propres aux champions, objets et monstres manga. On ne recopie ni les assets ni les textes de LoL.
 - Fichiers en UTF-8.
 
 ## Mettre à jour les docs — obligatoire à chaque avancée
