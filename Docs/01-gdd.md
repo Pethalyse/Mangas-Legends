@@ -67,7 +67,8 @@ Ces mécaniques apparaissent dans plusieurs kits : elles doivent être des **sys
 | Marques / cumuls sur une cible | Gon (Pierre/Papier/Ciseaux), Kirito, Sasuke (électrisation), Tanjiro | `Mark` / `Stack` |
 | Charges de compétence | Ainz (essences), Giorno (fleurs) | `AbilityCharges` |
 | Formes / transformations qui changent le kit | Pain (6 pantins), Rimuru (monstre absorbé), Jotaro et Giorno (stand), Sung Jin-Woo (Igris) | `AbilitySet` interchangeable |
-| Invocations contrôlables | Sung Jin-Woo (Igris), Naruto (clones), Pain (chien) | `Summon` |
+| Invocations contrôlables | Sung Jin-Woo (Igris) uniquement ✅ | `Summon` |
+| Invocations purement visuelles | Naruto (clones), Pain (chien) ✅ : ce sont des animations au service d'une attaque de zone ou en ligne, pas des unités | VFX de la compétence (`Projectile` / `Area`) |
 | Bonus de terrain | Naruto (zone spéciale), Killua (jungle/rivière), Giorno (buissons), fruits du démon (perte de PV dans l'eau) | `TerrainZone` + modificateurs |
 | Liens entre champions | Gon ↔ Killua (rejoindre le rappel), Mark Evans (allié choisi en début de partie) | `ChampionSynergy` |
 | Effets globaux | Jotaro (arrêt du temps), Shanks (vision totale) | `GlobalEffect` (à traiter avec soin côté réseau) |

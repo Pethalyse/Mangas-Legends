@@ -14,7 +14,7 @@
 | Ainz Ooal Gown | Support | ✅ | 🔧 (ancien code, à refactorer) | Shield, Charges, Zone de soin |
 | Luffy | Jungle | ✅ | — | TerrainZone (eau), AA chargée, Canalisation |
 | Zoro Roronoa | ❓ | ✅ | — | Stack, Shield, Dash |
-| Naruto Uzumaki | ❓ | ✅ | — | Dash, Knockback, Summon (clones) |
+| Naruto Uzumaki | ❓ | ✅ | — | Dash, Knockback, Zone (clones = visuel) |
 | Gon Freecss | ❓ | ✅ | — | Mark ×3, Synergy (Killua) |
 | Rimuru | Jungle | ✅ | — | AbilitySet dynamique (monstre absorbé) |
 | Killua Zoldyck | ❓ | ✅ | — | Invisibilité, Synergy (Gon) |
@@ -80,8 +80,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **P** : +10 % vitesse dans une zone de carte dédiée.
 - **A — Rasengan** : fonce sur l'ennemi ; touché : ? magiques + projection ; raté : ralenti 1 s. `[7–8 s]`
 - **Z — Shurikens** : 3 shurikens en ligne fixe, ? physiques, −15 % vitesse par shuriken. `[8 s]`
-- **E — Clone** : un clone le propulse dans une direction. `[15 s]`
-- **R — Multi Rasen-Shuriken** : 2 clones combattent avec lui ; le Rasengan devient Rasen-Shuriken ciblé, ? magiques. `[90 s]`
+- **E — Clone** : dash dans une direction choisie ; le clone qui le propulse est une animation. `[15 s]`
+- **R — Multi Rasen-Shuriken** : Rasen-Shuriken lancé sur la zone visée, ? dégâts magiques en zone. Les 2 clones qui apparaissent sont une animation, pas des unités. `[90 s]`
 
 ### Gon Freecss
 - **P — Kô** : par allié mort, +? AD/armure/RM jusqu'à sa réapparition (max 4). Peut rejoindre le rappel de Killua.
@@ -185,7 +185,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 
 ### Pain — Bot (ADC)
 - **P** : jauge qui se charge (temps, attaques et compétences qui touchent ; pleine sur un kill). Pleine → passe au pantin suivant (ordre fixe de 6) ; un kill permet de choisir de rester. Hors combat, passage automatique. Changer de pantin réinitialise les recharges.
-- **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu ?), vol de 20 % des PV actuels rendus 3 s après, chien invoqué, vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
+- **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu ?), vol de 20 % des PV actuels rendus 3 s après, chien qui fonce tout droit (attaque en ligne non contrôlée, le chien est visuel), vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
 - **R** : passif — jauge pleine = changement automatique.
 - **Pas de Z** dans le PDF ❓
 
