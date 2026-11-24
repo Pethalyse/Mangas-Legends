@@ -65,6 +65,18 @@ namespace MangaLegends.Tests.EditMode
         }
 
         [Test]
+        public void ScalingValue_UsesRatioOfCurrentRank()
+        {
+            StatBlock caster = new FakeStatBaseline().With(StatType.AbilityPower, 100f).ToBlock();
+            ScalingValue value = new ScalingValue(
+                new[] { 60f, 100f, 140f },
+                new[] { new ScalingRatio(ScalingSource.CasterTotalStat, new[] { 0.5f, 0.6f, 0.7f }, StatType.AbilityPower) });
+
+            Assert.That(value.Evaluate(1, new ScalingContext(caster)), Is.EqualTo(60f + 50f).Within(0.001f));
+            Assert.That(value.Evaluate(3, new ScalingContext(caster)), Is.EqualTo(140f + 70f).Within(0.001f));
+        }
+
+        [Test]
         public void ScalingValue_ClampsRank()
         {
             ScalingValue value = new ScalingValue(new[] { 10f, 20f });

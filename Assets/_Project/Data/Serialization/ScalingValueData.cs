@@ -31,6 +31,8 @@ namespace MangaLegends.Data.Serialization
         public void Validate(string ownerId, string field, int maxRank, ValidationReport report)
         {
             report.CheckRankArray(ownerId, field, _baseByRank?.Length ?? 0, maxRank);
+            foreach (ScalingRatioData ratio in _ratios)
+                report.CheckRankArray(ownerId, field + " ratio", ratio.RankCount, maxRank);
         }
 
         [Serializable]
@@ -38,9 +40,11 @@ namespace MangaLegends.Data.Serialization
         {
             [SerializeField] private ScalingSource _source;
             [SerializeField] private StatType _stat;
-            [SerializeField] private float _ratio;
+            [SerializeField] private float[] _ratioByRank = { 0f };
 
-            public ScalingRatio ToRatio() => new ScalingRatio(_source, _ratio, _stat);
+            public int RankCount => _ratioByRank?.Length ?? 0;
+
+            public ScalingRatio ToRatio() => new ScalingRatio(_source, RankCount > 0 ? _ratioByRank : new[] { 0f }, _stat);
         }
     }
 }

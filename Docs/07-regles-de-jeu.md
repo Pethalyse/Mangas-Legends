@@ -172,6 +172,7 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 
 ## 11. Combat
 
+- Compétences : base par rang + ratios de stats (eux aussi par rang) ✅ (GDD §4.1).
 - Dégâts réduits par les résistances : `dégâts × 100 / (100 + résistance)` 🔁 (déjà dans `CombatRules`).
 - Critique : 200 % ✅.
 - Compétences à coût continu : le coût est prélevé chaque seconde. La compétence s'arrête quand la ressource ne suffit plus 🔁 (comportement standard des compétences activables).

@@ -27,6 +27,8 @@
 
 **Fait (11)** : les deux PDF de conception sont versionnés dans `Docs/sources/` (CLAUDE.md et README des docs les référencent).
 
+**Fait (12)** : formule des sorts confirmée (base par rang + ratios de stats) ; les ratios peuvent maintenant varier par rang (Core `ScalingRatio`, Data `ScalingRatioData`), test ajouté, 53 tests verts, DataCheck compile.
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.
