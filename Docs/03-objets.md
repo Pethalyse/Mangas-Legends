@@ -102,3 +102,13 @@ Les versions améliorées prennent l'id de la variante suivi de `_mk2` (ex. `ite
 | `item.den_den_mushi_watch` | Den Den Mushi de surveillance (One Piece) | balise de contrôle achetable |
 | `item.observation_haki` | Haki de l'observation (One Piece) | bijou de détection (révèle balises et unités cachées) |
 
+### 5.4 Compagnons du jungler : fées de Zelda ✅
+
+Le jungler achète une fée au départ ; elle accompagne Smite et évolue avec les monstres tués (07 §7.2). Trois variantes, comme dans le genre (choix des fées et effets par Claude) :
+
+| Id | Nom | Effet une fois évoluée | Rôle dans le genre |
+|---|---|---|---|
+| `item.fairy_navi` | Navi | bonus de vitesse en entrant dans la jungle ou la rivière, et après avoir tué un monstre | compagnon de vitesse |
+| `item.fairy_great` | Fée de la Grande Fée (fée en bouteille) | bouclier après avoir tué un monstre ou hors combat | compagnon défensif |
+| `item.fairy_tatl` | Taya | Smite et les attaques sur champion brûlent et ralentissent | compagnon offensif |
+

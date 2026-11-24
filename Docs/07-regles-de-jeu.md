@@ -106,7 +106,7 @@
 
 ### 7.2 Compagnon et Smite
 
-- Le jungler prend Smite et un **compagnon** qui grandit avec les monstres tués ✅.
+- Le jungler prend Smite et un **compagnon**, une **fée de Zelda** (Navi, fée de la Grande Fée ou Taya, [03-objets.md §5.4](03-objets.md)), qui grandit avec les monstres tués ✅.
   - Première évolution à 15 monstres ; quête terminée à 35 ✅.
   - Le compagnon inflige de 20 à 150 dégâts par seconde et soigne de 6 à 36 PV par seconde ✅.
 - **Smite** : **600 / 1 000 / 1 400** dégâts aux monstres ✅. Le palier monte avec les évolutions du compagnon 🔁. Les dégâts ignorent les résistances des monstres ✅, donc type `True`. 2 charges 🔁, recharge 90 s ✅. Une fois amélioré, Smite peut viser un champion ennemi pour des dégâts bruts et un ralentissement 🔁.
