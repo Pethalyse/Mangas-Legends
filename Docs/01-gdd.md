@@ -55,7 +55,7 @@ Fiches détaillées : [02-champions.md](02-champions.md).
 - Les valeurs notées `?` dans les PDF sont **à équilibrer** : elles deviennent des champs de données, jamais des constantes dans le code.
 
 ### 4.2 Rôles ✅ / 🟡
-Support, Jungle (mentionnés dans les PDF), plus Top, Mid, Tireur (« Range ») 🟡.
+Cinq rôles, un par position ✅ : **Top**, **Jungle**, **Mid**, **Bot** et **Support**. Le champion qui joue Bot est appelé l'**ADC** (dégâts physiques à distance) ; « ADC » désigne le type de champion, le rôle s'appelle Bot.
 
 ### 4.3 Mécaniques transverses issues des kits
 Ces mécaniques apparaissent dans plusieurs kits : elles doivent être des **systèmes génériques** réutilisables, pas du code par champion.

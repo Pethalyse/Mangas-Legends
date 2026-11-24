@@ -6,7 +6,7 @@ namespace MangaLegends.Data.Definitions
         Top,
         Jungle,
         Mid,
-        Marksman,
+        Bot,
         Support
     }
 
