@@ -46,7 +46,7 @@ Tout dans `Assets/_Project/Content/` (dossiers `Rules/`, `Items/`, `Status/`, `U
 | Sceptre de la lune | `item.moon_scepter` | Complete |
 
    Unités des stats : pourcentages en fraction (`+10 %` vitesse d'attaque → `PercentAdd 0.1` sur `AttackSpeed`, ou valeur à trancher avec l'humain ; `+15 % critique` → `Flat 0.15` sur `CritChance`).
-4. **Statuts de base** (`StatusEffectDefinition`) : `status.stun`, `status.root`, `status.silence`, `status.slow` (modificateur `MoveSpeed PercentMult` négatif), `status.knockup`. Un seul asset par statut : la durée propre à chaque compétence se règle dans `ApplyStatusEffect` (*Duration Override Seconds*).
+4. **Statuts de base** (`StatusEffectDefinition`) : `status.stun`, `status.root`, `status.silence`, `status.slow` (modificateur `MoveSpeed PercentMult` négatif), `status.knockup`. Un seul asset par statut : la durée (*Duration Override Seconds*), les cumuls et la force (*Modifier Overrides*, ex. ralentissement 20/25/30 %) propres à chaque compétence se règlent par rang dans `ApplyStatusEffect`.
 5. **Unités** : `UNIT_Minion_Melee`, `UNIT_Minion_Caster`, `UNIT_Minion_Siege` (stats à reprendre des anciens prefabs de sbires dans `Assets/Prefabs/Minions`, à lire dans l'inspecteur), `UNIT_Minion_Mega` (stats à demander à l'humain), puis les structures `UNIT_Tower_Outer`, `UNIT_Tower_Inner`, `UNIT_Tower_Base`, `UNIT_Tower_Core`, `UNIT_Inhibitor`, `UNIT_Core` (GDD §6.1, stats et or à demander). Dans `RULES_Default`, renseigner *Siege Minion* et *Mega Minion*.
 6. **Ainz** : `CHAMP_Ainz` (stats depuis `Assets/Resources/Champion/AinzOoalGown`), puis ses 5 compétences d'après `Docs/02-champions.md` :
    - A : `LaunchProjectileEffect` → projectile avec `DamageEffect` (Magical) + `ApplyStatusEffect` (slow) ;

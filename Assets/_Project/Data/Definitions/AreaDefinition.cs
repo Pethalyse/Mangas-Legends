@@ -17,13 +17,13 @@ namespace MangaLegends.Data.Definitions
     public sealed class AreaDefinition : ContentDefinition
     {
         [SerializeField] private AreaShape _shape = AreaShape.Circle;
-        [SerializeField, Min(0f)] private float _radius = 3f;
-        [SerializeField, Range(0f, 360f)] private float _angle = 90f;
-        [SerializeField, Min(0f)] private float _width = 2f;
-        [SerializeField, Min(0f)] private float _length = 5f;
-        [SerializeField, Min(0f)] private float _delaySeconds;
-        [SerializeField, Min(0f)] private float _durationSeconds;
-        [SerializeField, Min(0f)] private float _intervalSeconds;
+        [SerializeField] private RankedFloat _radius = new RankedFloat(3f);
+        [SerializeField] private RankedFloat _angle = new RankedFloat(90f);
+        [SerializeField] private RankedFloat _width = new RankedFloat(2f);
+        [SerializeField] private RankedFloat _length = new RankedFloat(5f);
+        [SerializeField] private RankedFloat _delaySeconds = new RankedFloat(0f);
+        [SerializeField] private RankedFloat _durationSeconds = new RankedFloat(0f);
+        [SerializeField] private RankedFloat _intervalSeconds = new RankedFloat(0f);
         [SerializeField] private bool _followsCaster;
         [SerializeField] private TeamFilter _affects = TeamFilter.Enemies;
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onActivate = new List<EffectDefinition>();
@@ -31,13 +31,13 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private GameObject _visualPrefab;
 
         public AreaShape Shape => _shape;
-        public float Radius => _radius;
-        public float Angle => _angle;
-        public float Width => _width;
-        public float Length => _length;
-        public float DelaySeconds => _delaySeconds;
-        public float DurationSeconds => _durationSeconds;
-        public float IntervalSeconds => _intervalSeconds;
+        public float RadiusAt(int rank) => _radius.At(rank);
+        public float AngleAt(int rank) => _angle.At(rank);
+        public float WidthAt(int rank) => _width.At(rank);
+        public float LengthAt(int rank) => _length.At(rank);
+        public float DelaySecondsAt(int rank) => _delaySeconds.At(rank);
+        public float DurationSecondsAt(int rank) => _durationSeconds.At(rank);
+        public float IntervalSecondsAt(int rank) => _intervalSeconds.At(rank);
         public bool FollowsCaster => _followsCaster;
         public TeamFilter Affects => _affects;
         public IReadOnlyList<EffectDefinition> OnActivate => _onActivate;
@@ -47,15 +47,25 @@ namespace MangaLegends.Data.Definitions
         public override void Validate(ValidationReport report)
         {
             base.Validate(report);
-            if (_onInterval.Count > 0 && _intervalSeconds <= 0f) report.Error(Id, "Interval effects need an interval.");
-            foreach (EffectDefinition effect in _onActivate) ValidateEffect(effect, report);
-            foreach (EffectDefinition effect in _onInterval) ValidateEffect(effect, report);
+            if (_onInterval.Count > 0 && _intervalSeconds.At(1) <= 0f) report.Error(Id, "Interval effects need an interval.");
+            foreach (EffectDefinition effect in _onActivate)
+                if (effect == null) report.Error(Id, "An effect entry is empty.");
+            foreach (EffectDefinition effect in _onInterval)
+                if (effect == null) report.Error(Id, "An effect entry is empty.");
         }
 
-        private void ValidateEffect(EffectDefinition effect, ValidationReport report)
+        public void ValidateForOwner(string ownerId, int maxRank, ValidationReport report)
         {
-            if (effect == null) report.Error(Id, "An effect entry is empty.");
-            else effect.Validate(Id, 1, report);
+            string field = $"Area {Id}";
+            _radius.Validate(ownerId, field + " radius", maxRank, report);
+            _angle.Validate(ownerId, field + " angle", maxRank, report);
+            _width.Validate(ownerId, field + " width", maxRank, report);
+            _length.Validate(ownerId, field + " length", maxRank, report);
+            _delaySeconds.Validate(ownerId, field + " delay", maxRank, report);
+            _durationSeconds.Validate(ownerId, field + " duration", maxRank, report);
+            _intervalSeconds.Validate(ownerId, field + " interval", maxRank, report);
+            foreach (EffectDefinition effect in _onActivate) effect?.Validate(ownerId, maxRank, report);
+            foreach (EffectDefinition effect in _onInterval) effect?.Validate(ownerId, maxRank, report);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using MangaLegends.Core.Content;
 using MangaLegends.Data.Definitions;
+using MangaLegends.Data.Serialization;
 using UnityEngine;
 
 namespace MangaLegends.Data.Effects
@@ -24,18 +25,20 @@ namespace MangaLegends.Data.Effects
     public sealed class DashEffect : EffectDefinition
     {
         [SerializeField] private DashDestination _destination = DashDestination.TowardsAimPoint;
-        [SerializeField, Min(0f)] private float _maxDistance = 4f;
-        [SerializeField, Min(0.1f)] private float _speed = 20f;
+        [SerializeField] private RankedFloat _maxDistance = new RankedFloat(4f);
+        [SerializeField] private RankedFloat _speed = new RankedFloat(20f);
         [SerializeField] private bool _passesThroughWalls;
 
         public DashDestination Destination => _destination;
-        public float MaxDistance => _maxDistance;
-        public float Speed => _speed;
+        public float MaxDistanceAt(int rank) => _maxDistance.At(rank);
+        public float SpeedAt(int rank) => _speed.At(rank);
         public bool PassesThroughWalls => _passesThroughWalls;
 
         public override void Validate(string ownerId, int maxRank, ValidationReport report)
         {
-            if (_destination != DashDestination.ToTarget && _maxDistance <= 0f) report.Error(ownerId, "Dash distance must be positive.");
+            _maxDistance.Validate(ownerId, "Dash distance", maxRank, report);
+            _speed.Validate(ownerId, "Dash speed", maxRank, report);
+            if (_destination != DashDestination.ToTarget && _maxDistance.At(1) <= 0f) report.Error(ownerId, "Dash distance must be positive.");
         }
     }
 
@@ -43,12 +46,18 @@ namespace MangaLegends.Data.Effects
     public sealed class DisplaceEffect : EffectDefinition
     {
         [SerializeField] private DisplacementKind _kind = DisplacementKind.Knockback;
-        [SerializeField, Min(0f)] private float _distance = 2f;
-        [SerializeField, Min(0f)] private float _durationSeconds = 0.5f;
+        [SerializeField] private RankedFloat _distance = new RankedFloat(2f);
+        [SerializeField] private RankedFloat _durationSeconds = new RankedFloat(0.5f);
 
         public DisplacementKind Kind => _kind;
-        public float Distance => _distance;
-        public float DurationSeconds => _durationSeconds;
+        public float DistanceAt(int rank) => _distance.At(rank);
+        public float DurationSecondsAt(int rank) => _durationSeconds.At(rank);
+
+        public override void Validate(string ownerId, int maxRank, ValidationReport report)
+        {
+            _distance.Validate(ownerId, "Displacement distance", maxRank, report);
+            _durationSeconds.Validate(ownerId, "Displacement duration", maxRank, report);
+        }
     }
 
     [Serializable]

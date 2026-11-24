@@ -71,7 +71,7 @@ Fiches détaillées : [02-champions.md](02-champions.md).
 ### 4.1 Structure d'un kit ✅
 - **P** passif, **A / Z / E** compétences de base, **R** ultime.
 - Chaque compétence a : coût, temps de recharge (entre crochets dans les PDF), portée, ciblage, effets.
-- **Valeurs des sorts** ✅ comme dans le genre : **dégâts de base par rang + ratios** sur les stats (AD, AD bonus, AP, PV max, armure…, ou PV de la cible), les ratios pouvant eux aussi changer avec le rang. Exemple : `60 / 100 / 140 (+50 / 60 / 70 % AP)`. Coût et recharge varient aussi par rang. Les fiches de [02-champions.md](02-champions.md) s'écrivent dans ce format.
+- **Valeurs des sorts** ✅ comme dans le genre : **dégâts de base par rang + ratios** sur les stats (AD, AD bonus, AP, PV max, armure…, ou PV de la cible), les ratios pouvant eux aussi changer avec le rang. Exemple : `60 / 100 / 140 (+50 / 60 / 70 % AP)`. **Toute** valeur d'un sort peut changer avec le rang (dégâts, ratios, recharge, coût, portée, taille de zone, durée et force des statuts, boucliers…) ou rester identique à tous les rangs (une seule valeur). Les fiches de [02-champions.md](02-champions.md) s'écrivent dans ce format.
 - Les valeurs notées `?` dans les PDF sont **à équilibrer** : elles deviennent des champs de données, jamais des constantes dans le code.
 
 ### 4.2 Rôles ✅ / 🟡
