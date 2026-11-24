@@ -22,11 +22,11 @@
 | Dragon ancestral (Elder) | Shenron |
 | Héraut (Herald) | Ogrest |
 | Baron | Zodd |
-| Larves du Néant (Voidgrubs) | ❓ aucun équivalent nommé |
+| Larves du Néant (Voidgrubs) | Pitou, Pufu et Youpi, les gardes royaux Fourmis-Chimères (Hunter x Hunter) ✅ |
 | Buff rouge / bleu | Totoro / Roi des profondeurs |
 | Raptors, Gromp, Loups, Krugs | Korogu, Hawk, Pompoko, Père de Rebecca |
-| Carapateur (Scuttle) | ❓ aucun équivalent nommé |
-| Objets | objets de mangas ([03-objets.md](03-objets.md)) |
+| Carapateur (Scuttle) | Magicarpe (Pokémon) ✅ |
+| Objets | objets de mangas ([03-objets.md](03-objets.md)) ; bottes, objet de support et balises au §5 de ce fichier-là ✅ |
 
 ## 2. Partie et carte
 
@@ -96,7 +96,7 @@
 |---|---|---|
 | Korogu, Pompoko, Totoro, Roi des profondeurs | 0:55 ✅ | 🔁 2:15 pour les petits camps, 5:00 pour les buffs |
 | Hawk, Père de Rebecca | 1:07 ✅ | 🔁 2:15 |
-| (équivalent du Scuttle) ❓ | 2:55 ✅ | 🔁 |
+| Magicarpe (rivière, un de chaque côté) | 2:55 ✅ | 🔁 2:30 |
 
 - Le jungler subit 50 % de dégâts des monstres non épiques ✅.
 - Tuer un monstre soigne le jungler : 90 + 20 par niveau (niveaux 1 à 9), 250 au maximum ✅.
@@ -116,7 +116,7 @@
 
 | Monstre (équivalent) | Apparition | Réapparition | Récompense |
 |---|---|---|---|
-| ❓ (Larves du Néant) | 8:00, 3 larves, une seule fois ✅ ; disparaissent à 14:45 | — | 30 or chacune au tueur, 65 XP ✅ ; bonus de dégâts aux structures 🔁 |
+| Pitou, Pufu, Youpi (Larves du Néant) | 8:00, les 3 ensemble, une seule fois ✅ ; disparaissent à 14:45 | — | 30 or chacune au tueur, 65 XP ✅ ; bonus de dégâts aux structures 🔁 |
 | Ogrest (Héraut) | 15:00 ✅ ; disparaît à 19:45 | — | 100 or au tueur ✅ ; il peut être invoqué et charge une tour (3 000 dégâts) ✅ |
 | Drakes (Sulfura, Artikodin, Électhor, Lugia) | 5:00 ✅ | 5:00 ✅ | 75 or et 160 à 400 XP ✅ ; buff d'équipe permanent selon l'élément 🔁 |
 | Âme du dragon | au 4e drake d'une équipe ✅ | — | bonus permanent selon l'élément de l'âme 🔁 |
@@ -168,8 +168,10 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 ## 10. Vision
 
 - Brouillard de guerre ; chaque unité, tour et balise révèle autour d'elle 🔁.
-- Balises : balise furtive (bijou jaune, recharge de 170 à 90 s ✅), balise de contrôle (achetable, révèle et désactive les balises 🔁), objectif rouge (Oracle, 8 s ✅).
-- Cercles de champignons (Faelights) : une balise posée dessus voit 25 % plus loin et révèle une zone pendant 45 s ✅. ❓ Équivalent visuel manga ?
+- **Insectes de Shino** (balise furtive, bijou gratuit) : recharge de 170 à 90 s ✅.
+- **Den Den Mushi de surveillance** (balise de contrôle, achetable) : révèle et désactive les balises ennemies proches 🔁.
+- **Haki de l'observation** (bijou de détection) : révèle les balises et unités cachées autour du champion pendant 8 s ✅.
+- Pas de cercles de champignons dans MangaLegends ✅ (choix du propriétaire).
 - Buissons : cachent les unités qui s'y trouvent ✅ (GDD §6).
 
 ## 11. Combat
@@ -183,22 +185,9 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 ## 12. Ce qui reste à demander
 
 Seules les questions propres à MangaLegends restent ouvertes :
-1. Équivalents manga des Larves du Néant et du Carapateur : il en faut ✅, propositions en cours (voir ci-dessous).
-2. Buffs adaptés d'Artikodin, Électhor et Lugia.
-3. Objets des quêtes de rôle et de la vision (bottes, objet de support, balises) et cercles de champignons : à choisir parmi des propositions (ci-dessous).
-
-Propositions faites au propriétaire (2026-11-24), en attente de son choix :
-
-| Rôle | Idées |
-|---|---|
-| Larves du Néant (3 petits monstres, bonus contre les structures) | Fourmis-Chimères (Hunter x Hunter), larves d'Ohmu (Nausicaä), Kikaichu (Naruto) |
-| Carapateur (monstre de rivière, vision et vitesse) | Magicarpe (Pokémon), Den Den Mushi (One Piece), Kappa (folklore, Natsume) |
-| Bottes | Équipement tridimensionnel (L'Attaque des Titans), Nuage Kinto (Dragon Ball), skate de Conan (Détective Conan) |
-| Objet de support (revenu d'or) | Carte au trésor de Nami (One Piece), licence de Hunter (Hunter x Hunter), bourse de Zeni (Dragon Ball) |
-| Balise furtive | Den Den Mushi de surveillance (One Piece), insectes de Shino (Naruto) |
-| Balise de contrôle | Byakugan (Naruto), mantra de l'observation (One Piece) |
-| Cercles de champignons | arbres de Totoro (Mon voisin Totoro), Sakura sacrés (Naruto) |
-5. Les valeurs 🔁 sont à revérifier dans le jeu actuel avant l'équilibrage final.
+1. Buffs adaptés d'Artikodin, Électhor et Lugia.
+2. Compétences absorbées par Rimuru sur les nouveaux monstres (Pitou, Pufu, Youpi, Magicarpe) : propositions dans le GDD §7.1.
+3. Les valeurs 🔁 sont à revérifier dans le jeu actuel ; Claude les ajuste lui-même à l'équilibrage (CLAUDE.md).
 
 ## Sources (consultées le 2026-11-24)
 
