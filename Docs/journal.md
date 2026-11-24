@@ -9,6 +9,8 @@
 
 **Fait (2)** : invocations précisées. Seul Sung Jin-Woo contrôle une invocation (Igris) ; les clones de Naruto (E, R) et le chien de Pain sont des animations d'attaques (dash, zone, ligne). GDD §4.3 et fiches mises à jour ; aucune donnée à changer (`SummonEffect` reste réservé aux vraies unités).
 
+**Fait (3)** : pas de type de dégâts « chaos » : ce sont des dégâts magiques (GDD §4.4 et §10, fiche d'Ainz). Le code n'a que Physical, Magical, True.
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.

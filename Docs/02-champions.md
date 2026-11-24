@@ -43,7 +43,7 @@
 | Champion | « PROJET SECRET » | « clean doc » |
 |---|---|---|
 | Ainz P | 2 % mana max/s | ?% |
-| Ainz A | dégâts magiques, slow 20 % 2 s | « dégâts du chaos », valeurs ? |
+| Ainz A | dégâts magiques, slow 20 % 2 s | dégâts magiques (« chaos » = magiques ✅), valeurs ? |
 | Ainz Z | durée 2.5 s, [17 s] | [15 s] |
 | Ainz E | 3 charges, [12 s / charge] | zone unique, [10 s] |
 | Luffy R | Gear 4 | Gear 5 |
@@ -57,7 +57,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 
 ### Ainz Ooal Gown — Support
 - **P — Bénédiction d'Albedo** : hors combat (pas de dégâts ni de compétence ennemie reçus récemment), régénère ?% du mana max par seconde.
-- **A — Mantle of Chaos** : projectile ciblé, ? dégâts, ralentit ?% pendant ? s. `[7 s]`
+- **A — Mantle of Chaos** : projectile ciblé, ? dégâts magiques, ralentit ?% pendant ? s. `[7 s]`
 - **Z — Infinity Wall** : bouclier sur un allié qui absorbe dégâts magiques **et contrôles** jusqu'à ? dégâts, expire après ? s. `[15 s]`
 - **E — Life Essence** : zone de soin ? PV/s pendant ? s (variante : 3 charges posables à longue portée). `[10 s]`
 - **R — Penetrate Up** : projectile très longue portée, dégâts de zone et −?% résistances pendant ? s. `[100 s]`

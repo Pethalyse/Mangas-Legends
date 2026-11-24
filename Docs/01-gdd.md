@@ -75,7 +75,7 @@ Ces mécaniques apparaissent dans plusieurs kits : elles doivent être des **sys
 | Dégâts bruts (ignorent les résistances) | Rimuru, Kaido, Killua | type de dégâts `True` |
 
 ### 4.4 Types de dégâts ✅
-Physique (AD), Magique (AP), Brut. Le « dégât du chaos » d'Ainz (clean doc) ❓ : nouveau type ou dégât magique renommé ?
+Physique (AD), Magique (AP), Brut ✅. Il n'y a pas d'autre type : les « dégâts du chaos » d'Ainz dans la clean doc sont des dégâts magiques.
 
 ## 5. Statistiques 🟡
 
@@ -118,7 +118,7 @@ Calcul standard : `valeurFinale = (base + bonusPlats) × (1 + somme des bonus %)
 
 1. Sorts d'invocateur : oui ou non, lesquels ?
 2. Ressource alternative au mana pour certains champions ?
-3. Type de dégât « chaos » ?
+3. ~~Type de dégât « chaos » ?~~ Réglé : dégâts magiques.
 4. Pain : « (mana/sec) » sur Shuradô veut-il dire coût continu en mana ?
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
