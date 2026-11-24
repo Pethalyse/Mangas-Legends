@@ -13,6 +13,8 @@
 
 **Fait (4)** : jeu de fans privé assumé, les noms de licences restent tels quels (GDD §1.2, plus aucune proposition de renommage) ; monstres de jungle définis (GDD §7.1) avec leur rôle et la compétence absorbée par Rimuru ; récompenses et positions en questions ouvertes. Zodd et Ogrest partagent volontairement la même compétence (peut évoluer).
 
+**Fait (5)** : structures de la carte (GDD §6.1) : 3 tours par voie, un inhibiteur par voie à l'entrée de la base, 2 tours devant le Cœur, le Cœur. Les types `Tower` et `Structure` de `UnitKind` suffisent, aucun code à changer ; règles de destruction en questions ouvertes.
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.

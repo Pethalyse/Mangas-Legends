@@ -91,12 +91,29 @@ Calcul standard : `valeurFinale = (base + bonusPlats) × (1 + somme des bonus %)
 - Brouillard de guerre, vision par unités et balises.
 - Murs destructibles temporairement (Jotaro + stand) ✅ : la navigation doit gérer des obstacles dynamiques.
 
+### 6.1 Structures de chaque équipe ✅
+
+Disposition classique du genre, par équipe :
+
+| Structure | Nombre | Emplacement |
+|---|---|---|
+| Tour | 3 par voie (9 en tout) | le long de la voie, de l'extérieur vers la base |
+| Inhibiteur | 1 par voie (3 en tout) | à l'entrée de la base, au bout de chaque voie |
+| Tour du Cœur | 2 | devant le Cœur |
+| Cœur | 1 | au centre de la base ; sa destruction termine la partie |
+
+Les noms « Inhibiteur » et « Cœur » sont provisoires 🟡. Dans les données, ce sont des `UnitDefinition` de type `Tower` (tours) et `Structure` (inhibiteur, Cœur).
+
+❓ À définir : ordre de destruction obligatoire (une structure est-elle invulnérable tant que la précédente tient ?), effet de la destruction d'un inhibiteur (sbires renforcés ?), réapparition des inhibiteurs, stats et or des structures, protection des tours en début de partie.
+
 ## 7. Unités non-joueurs 🟡
 
 | Unité | Rôle |
 |---|---|
 | Sbires | Vagues régulières sur chaque voie (mêlée, distance, siège) |
-| Tours | 2–3 par voie + base |
+| Tours | 3 par voie, plus 2 devant le Cœur ✅ (§6.1) |
+| Inhibiteurs | 1 par voie, à l'entrée de la base ✅ (§6.1) |
+| Cœur | Structure principale de chaque base ✅ (§6.1) |
 | Monstres de jungle | Normaux, gros, **épiques** ✅ (Rimuru gagne 3/10/20 AP selon la taille). Liste au §7.1. |
 
 ### 7.1 Monstres de jungle ✅
@@ -143,4 +160,5 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 4. Pain : « (mana/sec) » sur Shuradô veut-il dire coût continu en mana ?
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
-7. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).
+7. Structures : ordre de destruction, effet et réapparition des inhibiteurs, récompenses (§6.1).
+8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).
