@@ -46,6 +46,7 @@ Ne **jamais** inventer une règle de game design pour combler un trou : l'ajoute
 ## Façon de travailler
 
 - Une branche par sujet (`refactor/…`, `feat/…`, `fix/…`, `docs/…`), Conventional Commits.
+- Commits et PR **au nom du compte du propriétaire uniquement** (`Pethalyse`) : aucune mention d'outil ou d'IA, pas de `Co-Authored-By`, pas de lien de session.
 - Chaque étape laisse le projet **compilable** ; à partir de l'étape 5, une partie doit rester lançable en hôte.
 - Écrire les tests EditMode des règles Core avant ou avec le code.
 - Demander avant : supprimer du contenu de jeu (assets, scènes), changer une décision d'un ADR accepté, pousser sur `main`.
