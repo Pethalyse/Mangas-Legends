@@ -13,8 +13,9 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 1. `Docs/06-plan-refactor.md` — à quelle étape de la refonte on est, ce qui reste.
 2. `Docs/04-architecture.md` — architecture cible (assemblies, unités, compétences, réseau).
 3. `Docs/05-conventions-code.md` — règles obligatoires.
-4. Selon la tâche : `Docs/01-gdd.md`, `Docs/02-champions.md`, `Docs/03-objets.md`, `Docs/adr/`.
+4. Selon la tâche : `Docs/01-gdd.md`, `Docs/07-regles-de-jeu.md`, `Docs/02-champions.md`, `Docs/03-objets.md`, `Docs/adr/`.
 5. Les 2–3 dernières entrées de `Docs/journal.md`.
+6. En cas de doute sur un kit ou un objet : les deux PDF de conception d'origine dans `Docs/sources/` (`manga-legends-clean-doc.pdf`, la version propre, et `manga-legends-projet-secret.pdf`, le premier jet). Les docs `Docs/0x-*.md` en sont la version à jour et font foi ; une divergence se note dans `Docs/02-champions.md` §2.
 
 ## Règles non négociables
 
@@ -25,7 +26,7 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 - **Pas de** `GameObject.Find`, singletons statiques, lecture d'entrées hors `PlayerInputCollector`, `new void Update()`.
 - **Pas de commentaires** sauf pour un *pourquoi* non évident ; pas de code commenté.
 - **Respect des assemblies** : Core et Data ne dépendent ni de Fusion, ni de l'UI, ni de la présentation.
-- **Originalité** : le jeu suit les conventions du genre MOBA mais ne reprend aucun contenu d'un jeu existant (noms, objets, carte, assets, textes de League of Legends ou autre).
+- **Contenu** : jeu de fans privé entre amis ; les personnages et monstres issus de mangas, animés et autres œuvres gardent leurs vrais noms, **ne jamais proposer de les renommer** (`Docs/01-gdd.md` §1.2). **Règles et mécaniques = League of Legends 2026** (`Docs/07-regles-de-jeu.md`) : pour une question de règle générale, chercher la réponse là (ou dans LoL 2026) au lieu de la poser ; ne poser au propriétaire que les questions propres aux champions, objets et monstres manga. On ne recopie ni les assets ni les textes de LoL.
 - Fichiers en UTF-8.
 
 ## Mettre à jour les docs — obligatoire à chaque avancée
@@ -43,7 +44,9 @@ Une tâche n'est **pas terminée** tant que les docs ne reflètent pas le code. 
 | proposes de changer une convention | ADR + `Docs/05-conventions-code.md` après validation |
 | finis une session de travail | `Docs/journal.md` : nouvelle entrée en haut (fait, décisions, docs mis à jour, prochaine étape, bloquants) |
 
-Ne **jamais** inventer une règle de game design pour combler un trou : l'ajouter aux questions ouvertes du GDD et demander.
+**Équilibrage et petits détails : Claude décide** (consigne du propriétaire). Les valeurs (`?` des PDF, stats, dégâts, ratios, recharges, durées, or, PV des structures…) et les détails mineurs se choisissent sans demander de confirmation : partir de la référence LoL 2026 (`Docs/07-regles-de-jeu.md`) et d'un champion comparable, viser un jeu équilibré, puis noter la valeur choisie dans le doc concerné et dans le journal (le propriétaire peut toujours la changer).
+- **Déséquilibré exprès, à ne pas « corriger »** : l'arrêt du temps de Jotaro, la vision globale de Shanks (et toute mécanique que le propriétaire désigne comme telle). On les rend jouables techniquement, sans les affaiblir.
+- **On demande encore** : l'identité d'un kit (ce qu'une compétence fait), les nouveaux contenus manga (monstres, objets, lieux), et tout changement de règle par rapport à LoL 2026. Dans ce cas, l'ajouter aux questions ouvertes du GDD (§10) et proposer des idées.
 
 ## Façon de travailler
 

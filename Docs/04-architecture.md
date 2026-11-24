@@ -126,7 +126,7 @@ Les temps (recharges, durées) sont stockés en **ticks** (`TickTimer`), jamais 
 - `StatType` : `MaxHealth, HealthRegen, MaxMana, ManaRegen, AttackDamage, AbilityPower, Armor, MagicResist, AttackSpeed, MoveSpeed, AttackRange, CritChance, CritDamage, Lethality, ArmorPen, MagicPen, LifeSteal, HealPower, AbilityHaste`.
 - `StatModifier { StatType, ModifierKind (Flat | PercentAdd | PercentMult), float value, SourceId }` ; retrait **par source**.
 - Valeur : `(base + croissance × (niveau − 1) + Σflat) × (1 + ΣpercentAdd) × Π(1 + percentMult)`, mise en cache.
-- Unités : pourcentages en fraction (`CritChance 0.25`, `ArmorPenetration 0.3`, `PercentAdd 0.1` = +10 %), `CritDamage` en multiplicateur (`1.75`), `AttackSpeed` en attaques par seconde.
+- Unités : pourcentages en fraction (`CritChance 0.25`, `ArmorPenetration 0.3`, `PercentAdd 0.1` = +10 %), `CritDamage` en multiplicateur (`2` par défaut, 07 §11), `AttackSpeed` en attaques par seconde.
 - Implémentation : `MangaLegends.Core.Stats` (`StatBlock` implémente `IStatReader`, la base vient d'un `IStatBaseline` fourni par les données).
 - Les formules (résistances, cadence d'attaque, plafonds) sont des paramètres de `GameRulesConfig`.
 
@@ -185,7 +185,8 @@ classDiagram
     AbilityDefinition --> EffectDefinition
 ```
 
-- **Valeurs** : `ScalingValue { base[rang], ratios (AD, AP, AD bonus, PV max, PV manquants…) }`.
+- **Valeurs** : `ScalingValue { base[rang], ratios[] }`, chaque ratio = `{ source, stat, ratio[rang] }`. Valeur = base du rang + Σ ratio du rang × valeur de la source. Sources : stat totale, bonus ou de base du lanceur (AD, AP, PV, armure… : toute `StatType`), PV max / manquants / actuels de la cible, cumuls. Exemple : `60/100/140 (+50/60/70 % AP)`.
+- **Tout champ chiffré d'une compétence peut varier par rang** : `RankedFloat` / `RankedInt` (Data), 1 valeur = constante sur tous les rangs, sinon `MaxRank` valeurs. Concerné : coût, coût par seconde, recharge, temps d'incantation et de canalisation, charges, portée et indicateurs, durée, cumuls et force des statuts (`ApplyStatusEffect.ModifierOverrides`), durée des boucliers, distance et vitesse des déplacements, nombre et dispersion des projectiles, vitesse, portée, rayon et cibles max des projectiles, taille, délai, durée et intervalle des zones, nombre et durée des invocations, durée d'un changement de forme. Les projectiles et zones prennent le rang de la compétence qui les crée : leur validation de rangs se fait depuis la compétence (`ValidateForOwner`).
 - **Projectiles et zones** décrits en données (`ProjectileDefinition` : vitesse, portée, rayon, perce ou non, effets à l'impact ; `AreaDefinition` : forme, durée, intervalle, effets par intervalle).
 - **Ciblage client** = indicateur et contenu de l'input ; l'autorité revalide.
 - **Comportements spéciaux** (Pain, Rimuru, Jotaro) : petite classe `AbilityBehaviour` branchée sur la définition, qui réutilise les effets génériques et dont les paramètres restent en données.
@@ -224,12 +225,16 @@ sequenceDiagram
 Scènes : `Boot` → `MainMenu` (créer / rejoindre un salon) → `Lobby` → `ChampionSelect` → `Match` (+ carte additive) → `PostGame`.
 `MatchController` (autorité) : `WaitingForPlayers → Loading → Playing → Ended`, horloge en ticks, vagues, réapparitions, victoire. Règles dans `GameRulesConfig`.
 
+Structures (GDD §6.1) : chaque tour, inhibiteur et Cœur placé sur la carte référence la structure qui le protège ; tant qu'elle tient, l'autorité refuse les dégâts. L'inhibiteur détruit lance un `TickTimer` de réapparition (`InhibitorRespawnSeconds`) et, pendant ce temps, le générateur de vagues de la voie remplace `SiegeMinion` par `MegaMinion`. Les tours reçoivent `EarlyTowerModifiers` jusqu'à `EarlyTowerDefenseSeconds`. Vagues : première à `FirstWaveSeconds`, intervalle et fréquence du siège en paliers de temps (`TimedValue[]`, valeurs de [07 §5](07-regles-de-jeu.md#5-sbires)). Ces règles sont vérifiées par `GameRulesConfig.Validate` (appelée par `ContentRegistry.Validate`).
+
 ## 11. Données et contenu
 
 - Chaque définition a un **`id` stable** (`champion.ainz`, `ability.ainz.mantle_of_chaos`) ; le réseau transporte un **index compact** fourni par `ContentRegistry`.
 - `ContentRegistry` liste toutes les définitions et construit un `ContentIndex<T>` par type (tri par id ordinal → même index réseau sur tous les pairs) ; *MangaLegends → Content → Validate* vérifie ids, doublons, tableaux par rang, références et recettes circulaires.
 - Effets : classes `[Serializable]` dérivées de `EffectDefinition`, stockées en `[SerializeReference]` dans les compétences, projectiles, zones, statuts et objets ; l'inspecteur propose le type via `TypeSelectorAttribute`. Les effets sont des **données** : leur exécution vivra dans `Simulation` (étape 7), par un exécuteur par type d'effet.
 - Valeurs par rang : tableau de 1 valeur (constante) ou de `MaxRank` valeurs.
+- Coût : `Cost` au lancement et `CostPerSecond` tant qu'une compétence `Toggle` ou `Channel` est active (prélevé par tick par l'autorité ; ressource à 0 → la compétence s'arrête 🟡).
+- Sorts d'invocateur : `SummonerSpellDefinition` (index `ContentRegistry.SummonerSpells`) enveloppe une `AbilityDefinition` ; le nombre d'emplacements vient de `GameRulesConfig.SummonerSpellSlots`. Ils passent par le même pipeline de lancement que les compétences. `TargetingData.Fallback` gère la cible de repli (allié le plus bas en PV) et `TeleportEffect` la téléportation vers une unité alliée.
 - Économie : `ItemPricing` (Core) calcule coût total, devis d'achat (composants possédés consommés, y compris imbriqués) et revente ; l'autorité l'utilise, le client seulement pour l'affichage.
 - Noms et textes affichés dans les données (localisables plus tard).
 - Équilibrage : modifier un asset suffit ; pas de recompilation.

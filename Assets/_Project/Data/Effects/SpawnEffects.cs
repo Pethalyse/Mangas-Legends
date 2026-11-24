@@ -1,6 +1,7 @@
 using System;
 using MangaLegends.Core.Content;
 using MangaLegends.Data.Definitions;
+using MangaLegends.Data.Serialization;
 using UnityEngine;
 
 namespace MangaLegends.Data.Effects
@@ -9,16 +10,19 @@ namespace MangaLegends.Data.Effects
     public sealed class LaunchProjectileEffect : EffectDefinition
     {
         [SerializeField] private ProjectileDefinition _projectile;
-        [SerializeField, Min(1)] private int _count = 1;
-        [SerializeField, Range(0f, 180f)] private float _spreadAngle;
+        [SerializeField] private RankedInt _count = new RankedInt(1);
+        [SerializeField] private RankedFloat _spreadAngle = new RankedFloat(0f);
 
         public ProjectileDefinition Projectile => _projectile;
-        public int Count => _count;
-        public float SpreadAngle => _spreadAngle;
+        public int CountAt(int rank) => Math.Max(1, _count.At(rank));
+        public float SpreadAngleAt(int rank) => _spreadAngle.At(rank);
 
         public override void Validate(string ownerId, int maxRank, ValidationReport report)
         {
+            _count.Validate(ownerId, "Projectile count", maxRank, report);
+            _spreadAngle.Validate(ownerId, "Projectile spread", maxRank, report);
             if (_projectile == null) report.Error(ownerId, "LaunchProjectileEffect has no projectile assigned.");
+            else _projectile.ValidateForOwner(ownerId, maxRank, report);
         }
     }
 
@@ -34,6 +38,7 @@ namespace MangaLegends.Data.Effects
         public override void Validate(string ownerId, int maxRank, ValidationReport report)
         {
             if (_area == null) report.Error(ownerId, "CreateAreaEffect has no area assigned.");
+            else _area.ValidateForOwner(ownerId, maxRank, report);
         }
     }
 
@@ -41,17 +46,19 @@ namespace MangaLegends.Data.Effects
     public sealed class SummonEffect : EffectDefinition
     {
         [SerializeField] private UnitDefinition _unit;
-        [SerializeField, Min(1)] private int _count = 1;
-        [SerializeField, Min(0f)] private float _durationSeconds;
+        [SerializeField] private RankedInt _count = new RankedInt(1);
+        [SerializeField] private RankedFloat _durationSeconds = new RankedFloat(0f);
         [SerializeField] private bool _controllable;
 
         public UnitDefinition Unit => _unit;
-        public int Count => _count;
-        public float DurationSeconds => _durationSeconds;
+        public int CountAt(int rank) => Math.Max(1, _count.At(rank));
+        public float DurationSecondsAt(int rank) => _durationSeconds.At(rank);
         public bool Controllable => _controllable;
 
         public override void Validate(string ownerId, int maxRank, ValidationReport report)
         {
+            _count.Validate(ownerId, "Summon count", maxRank, report);
+            _durationSeconds.Validate(ownerId, "Summon duration", maxRank, report);
             if (_unit == null) report.Error(ownerId, "SummonEffect has no unit assigned.");
         }
     }
@@ -61,10 +68,13 @@ namespace MangaLegends.Data.Effects
     {
         [SerializeField, Min(-1)] private int _alternateSetIndex;
         [SerializeField] private bool _resetCooldowns;
-        [SerializeField, Min(0f)] private float _durationSeconds;
+        [SerializeField] private RankedFloat _durationSeconds = new RankedFloat(0f);
 
         public int AlternateSetIndex => _alternateSetIndex;
         public bool ResetCooldowns => _resetCooldowns;
-        public float DurationSeconds => _durationSeconds;
+        public float DurationSecondsAt(int rank) => _durationSeconds.At(rank);
+
+        public override void Validate(string ownerId, int maxRank, ValidationReport report) =>
+            _durationSeconds.Validate(ownerId, "Ability set duration", maxRank, report);
     }
 }

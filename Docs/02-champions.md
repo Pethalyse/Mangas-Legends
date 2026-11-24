@@ -2,7 +2,7 @@
 
 > Source : PDF « PROJET SECRET OMG » (liste complète, brouillon) et « clean doc » (version présentée, 9 champions).
 > Les valeurs `?` sont à équilibrer : elles vivent dans les données (`AbilityDefinition`), jamais dans le code.
-> `[x s]` = temps de recharge. ⚠️ Personnages sous licence : voir [01-gdd.md §1.2](01-gdd.md#12-️-risque-propriété-intellectuelle).
+> `[x s]` = temps de recharge. Jeu de fans privé : les noms des personnages sont utilisés tels quels ([01-gdd.md §1.2](01-gdd.md)).
 
 ## 1. Tableau de suivi
 
@@ -14,7 +14,7 @@
 | Ainz Ooal Gown | Support | ✅ | 🔧 (ancien code, à refactorer) | Shield, Charges, Zone de soin |
 | Luffy | Jungle | ✅ | — | TerrainZone (eau), AA chargée, Canalisation |
 | Zoro Roronoa | ❓ | ✅ | — | Stack, Shield, Dash |
-| Naruto Uzumaki | ❓ | ✅ | — | Dash, Knockback, Summon (clones) |
+| Naruto Uzumaki | ❓ | ✅ | — | Dash, Knockback, Zone (clones = visuel) |
 | Gon Freecss | ❓ | ✅ | — | Mark ×3, Synergy (Killua) |
 | Rimuru | Jungle | ✅ | — | AbilitySet dynamique (monstre absorbé) |
 | Killua Zoldyck | ❓ | ✅ | — | Invisibilité, Synergy (Gon) |
@@ -29,7 +29,7 @@
 | Jotaro | ❓ | ✅ | — | Forme (stand), GlobalEffect (arrêt du temps), mur destructible |
 | Law | Support | ✅ | — | Échange de position, téléport allié |
 | Madara | Mage | ✅ | — | Canalisation, recast |
-| Pain | Tireur | ✅ | — | 6 AbilitySets, jauge de passif |
+| Pain | Bot (ADC) | ✅ | — | 6 AbilitySets, jauge de passif |
 | Itachi | ❓ | 🟨 | — | |
 | Aizawa | ❓ | 🟨 | — | |
 | Bojji | ❓ | 🟨 | — | |
@@ -43,7 +43,7 @@
 | Champion | « PROJET SECRET » | « clean doc » |
 |---|---|---|
 | Ainz P | 2 % mana max/s | ?% |
-| Ainz A | dégâts magiques, slow 20 % 2 s | « dégâts du chaos », valeurs ? |
+| Ainz A | dégâts magiques, slow 20 % 2 s | dégâts magiques (« chaos » = magiques ✅), valeurs ? |
 | Ainz Z | durée 2.5 s, [17 s] | [15 s] |
 | Ainz E | 3 charges, [12 s / charge] | zone unique, [10 s] |
 | Luffy R | Gear 4 | Gear 5 |
@@ -57,7 +57,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 
 ### Ainz Ooal Gown — Support
 - **P — Bénédiction d'Albedo** : hors combat (pas de dégâts ni de compétence ennemie reçus récemment), régénère ?% du mana max par seconde.
-- **A — Mantle of Chaos** : projectile ciblé, ? dégâts, ralentit ?% pendant ? s. `[7 s]`
+- **A — Mantle of Chaos** : projectile ciblé, ? dégâts magiques, ralentit ?% pendant ? s. `[7 s]`
 - **Z — Infinity Wall** : bouclier sur un allié qui absorbe dégâts magiques **et contrôles** jusqu'à ? dégâts, expire après ? s. `[15 s]`
 - **E — Life Essence** : zone de soin ? PV/s pendant ? s (variante : 3 charges posables à longue portée). `[10 s]`
 - **R — Penetrate Up** : projectile très longue portée, dégâts de zone et −?% résistances pendant ? s. `[100 s]`
@@ -80,8 +80,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **P** : +10 % vitesse dans une zone de carte dédiée.
 - **A — Rasengan** : fonce sur l'ennemi ; touché : ? magiques + projection ; raté : ralenti 1 s. `[7–8 s]`
 - **Z — Shurikens** : 3 shurikens en ligne fixe, ? physiques, −15 % vitesse par shuriken. `[8 s]`
-- **E — Clone** : un clone le propulse dans une direction. `[15 s]`
-- **R — Multi Rasen-Shuriken** : 2 clones combattent avec lui ; le Rasengan devient Rasen-Shuriken ciblé, ? magiques. `[90 s]`
+- **E — Clone** : dash dans une direction choisie ; le clone qui le propulse est une animation. `[15 s]`
+- **R — Multi Rasen-Shuriken** : Rasen-Shuriken lancé sur la zone visée, ? dégâts magiques en zone. Les 2 clones qui apparaissent sont une animation, pas des unités. `[90 s]`
 
 ### Gon Freecss
 - **P — Kô** : par allié mort, +? AD/armure/RM jusqu'à sa réapparition (max 4). Peut rejoindre le rappel de Killua.
@@ -95,8 +95,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **A — Aqualame** : lame d'eau frontale, ? magiques. `[6 s]`
 - **Z — Petit slime** : petit saut directionnel. `[12 s]`
 - **E — Souffle paralysant** : ? magiques + étourdissement 1 s. `[10 s]`
-- **R — Belzébuth** `[60–90 s selon le monstre]` : estomac vide → ?–? dégâts bruts à un monstre ; s'il meurt, il est stocké. Estomac plein → se transforme et lance la compétence du monstre (souffle de feu/brûlure, souffle de glace/immobilisation 1.75 s, foudre/étourdissement 1 s, souffle aérien/projection 1 s, buff +30 % stats d'un allié 2.5 s, saut + projection, soin de groupe 30–40 % PV manquants, rayon concentré, invisibilité 5 s, buff +20 % vitesse d'attaque d'équipe, −20 % résistances, immunité aux contrôles 3 s).
-  → **Les monstres des PDF portent des noms d'autres licences : à remplacer par les monstres originaux de la carte (GDD §7).**
+- **R — Belzébuth** `[60–90 s selon le monstre]` : estomac vide → ?–? dégâts bruts à un monstre ; s'il meurt, il est stocké. Estomac plein → se transforme et lance la compétence du monstre absorbé.
+  → Correspondance monstre ↔ compétence : [01-gdd.md §7.1](01-gdd.md).
 
 ### Killua Zoldyck
 - **P — Divine Speed** : +10 % vitesse en jungle et rivière. Peut rejoindre le rappel de Gon.
@@ -183,9 +183,9 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **E — Katon** : cône de feu, ? magiques. `[6 s]`
 - **R** : météorite en zone, ? + ? par ennemi supplémentaire. `[90 s]`
 
-### Pain — Tireur
+### Pain — Bot (ADC)
 - **P** : jauge qui se charge (temps, attaques et compétences qui touchent ; pleine sur un kill). Pleine → passe au pantin suivant (ordre fixe de 6) ; un kill permet de choisir de rester. Hors combat, passage automatique. Changer de pantin réinitialise les recharges.
-- **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu ?), vol de 20 % des PV actuels rendus 3 s après, chien invoqué, vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
+- **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu en mana par seconde ✅, `CostPerSecond`), vol de 20 % des PV actuels rendus 3 s après, chien qui fonce tout droit (attaque en ligne non contrôlée, le chien est visuel), vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
 - **R** : passif — jauge pleine = changement automatique.
 - **Pas de Z** dans le PDF ❓
 

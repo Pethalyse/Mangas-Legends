@@ -17,6 +17,7 @@ namespace MangaLegends.Data.Definitions
         private ContentIndex<ProjectileDefinition> _projectiles;
         private ContentIndex<AreaDefinition> _areas;
         private ContentIndex<ItemDefinition> _items;
+        private ContentIndex<SummonerSpellDefinition> _summonerSpells;
 
         public GameRulesConfig Rules => _rules;
         public IReadOnlyList<ContentDefinition> Entries => _entries;
@@ -27,11 +28,13 @@ namespace MangaLegends.Data.Definitions
         public ContentIndex<ProjectileDefinition> Projectiles => Built(ref _projectiles);
         public ContentIndex<AreaDefinition> Areas => Built(ref _areas);
         public ContentIndex<ItemDefinition> Items => Built(ref _items);
+        public ContentIndex<SummonerSpellDefinition> SummonerSpells => Built(ref _summonerSpells);
 
         public ValidationReport Validate()
         {
             ValidationReport report = new ValidationReport();
             if (_rules == null) report.Error(name, "No GameRulesConfig assigned.");
+            else _rules.Validate(report);
             report.CheckIds(_entries);
             foreach (ContentDefinition entry in _entries)
             {
@@ -50,6 +53,7 @@ namespace MangaLegends.Data.Definitions
             _projectiles = new ContentIndex<ProjectileDefinition>(OfType<ProjectileDefinition>());
             _areas = new ContentIndex<AreaDefinition>(OfType<AreaDefinition>());
             _items = new ContentIndex<ItemDefinition>(OfType<ItemDefinition>());
+            _summonerSpells = new ContentIndex<SummonerSpellDefinition>(OfType<SummonerSpellDefinition>());
         }
 
 #if UNITY_EDITOR

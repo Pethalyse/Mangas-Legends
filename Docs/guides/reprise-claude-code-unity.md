@@ -13,7 +13,7 @@
 | 1 | Étape 1 faite par l'humain ? (Unity 6 LTS, Input System, AI Navigation, Multiplayer Play Mode, Fusion 2) | sinon, la guider avec `Docs/guides/etape-1-unity6-fusion.md` |
 | 2 | Console après import | **0 erreur de compilation** ; des « Missing Script » dans les anciennes scènes et prefabs sont normaux |
 | 3 | Assemblies `MangaLegends.Core`, `.Data`, `.Editor`, `.Tests.EditMode` | visibles, sans avertissement d'asmdef |
-| 4 | *Test Runner → EditMode → Run All* | tous verts (52 au 2026-11-24) |
+| 4 | *Test Runner → EditMode → Run All* | tous verts (53 au 2026-11-24) |
 | 5 | Les `.meta` sous `Assets/_Project` | Unity ne les a pas régénérés (GUID inchangés dans `git status`) |
 | 6 | Menu *MangaLegends → Content → Validate* | s'exécute (« No ContentRegistry asset found » tant que l'étape 2 n'est pas faite) |
 | 7 | Inspecteur d'un `AbilityDefinition` | la liste *On Cast* affiche un menu déroulant pour choisir le type d'effet (`TypeSelectorDrawer`) |
@@ -46,15 +46,16 @@ Tout dans `Assets/_Project/Content/` (dossiers `Rules/`, `Items/`, `Status/`, `U
 | Sceptre de la lune | `item.moon_scepter` | Complete |
 
    Unités des stats : pourcentages en fraction (`+10 %` vitesse d'attaque → `PercentAdd 0.1` sur `AttackSpeed`, ou valeur à trancher avec l'humain ; `+15 % critique` → `Flat 0.15` sur `CritChance`).
-4. **Statuts de base** (`StatusEffectDefinition`) : `status.stun`, `status.root`, `status.silence`, `status.slow` (modificateur `MoveSpeed PercentMult` négatif), `status.knockup`. Un seul asset par statut : la durée propre à chaque compétence se règle dans `ApplyStatusEffect` (*Duration Override Seconds*).
-5. **Unités** : `UNIT_Minion_Melee`, `UNIT_Minion_Caster`, `UNIT_Minion_Siege` (stats à reprendre des anciens prefabs de sbires dans `Assets/Prefabs/Minions`, à lire dans l'inspecteur).
+4. **Statuts de base** (`StatusEffectDefinition`) : `status.stun`, `status.root`, `status.silence`, `status.slow` (modificateur `MoveSpeed PercentMult` négatif), `status.knockup`. Un seul asset par statut : la durée (*Duration Override Seconds*), les cumuls et la force (*Modifier Overrides*, ex. ralentissement 20/25/30 %) propres à chaque compétence se règlent par rang dans `ApplyStatusEffect`.
+5. **Unités** : `UNIT_Minion_Melee`, `UNIT_Minion_Caster`, `UNIT_Minion_Siege` (stats à reprendre des anciens prefabs de sbires dans `Assets/Prefabs/Minions`, à lire dans l'inspecteur), `UNIT_Minion_Mega` (stats à choisir, référence LoL 2026), puis les structures `UNIT_Tower_Outer`, `UNIT_Tower_Inner`, `UNIT_Tower_Base`, `UNIT_Tower_Core`, `UNIT_Inhibitor`, `UNIT_Core` (stats et or : `Docs/07-regles-de-jeu.md` §6). Dans `RULES_Default`, renseigner *Siege Minion* et *Mega Minion*.
 6. **Ainz** : `CHAMP_Ainz` (stats depuis `Assets/Resources/Champion/AinzOoalGown`), puis ses 5 compétences d'après `Docs/02-champions.md` :
    - A : `LaunchProjectileEffect` → projectile avec `DamageEffect` (Magical) + `ApplyStatusEffect` (slow) ;
    - Z : `ShieldEffect` (filtre Magical, `BlocksCrowdControl`) sur un allié ;
    - E : `CreateAreaEffect` → zone avec `HealEffect` par intervalle ;
    - R : projectile longue portée → zone d'impact avec dégâts + réduction de résistances (statut avec modificateurs) ;
    - P : comportement spécial (`BehaviourId`) : régénération de mana hors combat, à coder à l'étape 7.
-   Les valeurs `?` restent à demander à l'humain : ne pas les inventer, mettre 0 et l'ajouter aux questions ouvertes du GDD.
+   Les valeurs `?` sont **à choisir par Claude** (CLAUDE.md, « Équilibrage ») : partir d'un champion comparable de LoL 2026, puis noter la valeur dans `Docs/02-champions.md` et le journal.
+6 bis. **Sorts d'invocateur** : les 10 sorts de `Docs/01-gdd.md` §2.1, chacun un `ABIL_Summoner_*` (rang 1, Smite en 3 rangs 600/1000/1400) et un `SPELL_*` qui le référence. Valeurs : 07 §8, le reste à choisir.
 7. *MangaLegends → Content → Rebuild Registry From Project*, puis *Validate* : 0 erreur.
 
 ## 3. Suite du plan

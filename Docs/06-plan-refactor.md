@@ -142,6 +142,12 @@ Champions du premier jalon (GDD §10) : Luffy, Zoro, Naruto, Kirito ; brouillard
 
 _Claude Code ajoute ici, par étape terminée : date, PR, ce qui a changé, ce qui reste._
 
+- 2026-11-24 (PR #4) : complément de l'étape 4. `GameRulesConfig` gagne les règles de structures (bonus des tours en début de partie, réapparition de l'inhibiteur) et le remplacement siège → méga sbire, avec une validation. Valeurs à 0 en attendant l'équilibrage.
+- 2026-11-24 (PR #4) : toutes les valeurs chiffrées des compétences, projectiles, zones et effets passent en `RankedFloat` / `RankedInt` ; validation des rangs des projectiles et zones depuis la compétence (corrige une fausse erreur sur les dégâts par rang d'un projectile).
+- 2026-11-24 (PR #4) : ratios par rang (`ScalingRatio.RatioAt`, `ScalingRatioData.RatioByRank`), 53 tests verts.
+- 2026-11-24 (PR #4) : règles du genre (LoL 2026) dans `07-regles-de-jeu.md` ; `GameRulesConfig` : rythme des vagues (`TimedValue`), réapparition de l'inhibiteur à 300 s par défaut.
+- 2026-11-24 (PR #4) : sorts d'invocateur en données (`SummonerSpellDefinition`, `TeleportEffect`, repli de ciblage, `SummonerSpellSlots`).
+
 ### Étape 0 — 2026-11-24
 - Dépôt nettoyé (builds, Mirror, ParrelSync, icône LoL), ancien code isolé dans `Legacy/`.
 - **Conséquences attendues à l'ouverture dans Unity** : les scènes, prefabs et assets d'objets/stats référencent des scripts déplacés → « Missing Script ». Normal : le contenu sera recréé aux étapes 4 à 7. Les valeurs des objets restent lisibles dans les `.asset` (YAML) pour la migration.

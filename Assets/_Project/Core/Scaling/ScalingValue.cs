@@ -23,7 +23,7 @@ namespace MangaLegends.Core.Scaling
         {
             int index = Math.Min(Math.Max(rank, 1), _baseByRank.Length) - 1;
             float value = _baseByRank[index];
-            foreach (ScalingRatio ratio in _ratios) value += ratio.Ratio * SourceValue(ratio, context);
+            foreach (ScalingRatio ratio in _ratios) value += ratio.RatioAt(rank) * SourceValue(ratio, context);
             return value;
         }
 

@@ -1,4 +1,6 @@
 using System;
+using MangaLegends.Core.Content;
+using MangaLegends.Data.Serialization;
 using UnityEngine;
 
 namespace MangaLegends.Data.Definitions
@@ -22,6 +24,12 @@ namespace MangaLegends.Data.Definitions
         Neutral = 1 << 3
     }
 
+    public enum TargetFallback
+    {
+        None,
+        LowestHealthAllyInRange
+    }
+
     public enum CastMode
     {
         Instant,
@@ -37,14 +45,23 @@ namespace MangaLegends.Data.Definitions
     {
         [SerializeField] private TargetingMode _mode = TargetingMode.Direction;
         [SerializeField] private TeamFilter _validTargets = TeamFilter.Enemies;
-        [SerializeField, Min(0f)] private float _range;
-        [SerializeField, Min(0f)] private float _indicatorWidth;
-        [SerializeField, Min(0f)] private float _indicatorRadius;
+        [SerializeField] private TargetFallback _fallback = TargetFallback.None;
+        [SerializeField] private RankedFloat _range = new RankedFloat(0f);
+        [SerializeField] private RankedFloat _indicatorWidth = new RankedFloat(0f);
+        [SerializeField] private RankedFloat _indicatorRadius = new RankedFloat(0f);
 
         public TargetingMode Mode => _mode;
         public TeamFilter ValidTargets => _validTargets;
-        public float Range => _range;
-        public float IndicatorWidth => _indicatorWidth;
-        public float IndicatorRadius => _indicatorRadius;
+        public TargetFallback Fallback => _fallback;
+        public float RangeAt(int rank) => _range.At(rank);
+        public float IndicatorWidthAt(int rank) => _indicatorWidth.At(rank);
+        public float IndicatorRadiusAt(int rank) => _indicatorRadius.At(rank);
+
+        public void Validate(string ownerId, int maxRank, ValidationReport report)
+        {
+            _range.Validate(ownerId, "Range", maxRank, report);
+            _indicatorWidth.Validate(ownerId, "Indicator width", maxRank, report);
+            _indicatorRadius.Validate(ownerId, "Indicator radius", maxRank, report);
+        }
     }
 }

@@ -1,5 +1,8 @@
 using MangaLegends.Core.Abilities;
+using System.Collections.Generic;
 using MangaLegends.Core.Combat;
+using MangaLegends.Core.Content;
+using MangaLegends.Data.Serialization;
 using UnityEngine;
 
 namespace MangaLegends.Data.Definitions
@@ -29,6 +32,22 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(1, 8)] private int _inventorySlots = 6;
         [SerializeField, Range(0f, 1f)] private float _sellRatio = 0.7f;
 
+        [Header("Summoner spells")]
+        [SerializeField, Range(0, 4)] private int _summonerSpellSlots = 2;
+
+        [Header("Structures")]
+        [SerializeField, Min(0f)] private float _earlyTowerDefenseSeconds;
+        [SerializeField] private List<StatModifierData> _earlyTowerModifiers = new List<StatModifierData>();
+        [SerializeField, Min(0f)] private float _inhibitorRespawnSeconds = 300f;
+
+        [Header("Minion waves")]
+        [SerializeField] private UnitDefinition _siegeMinion;
+        [SerializeField] private UnitDefinition _megaMinion;
+        [SerializeField, Min(0f)] private float _firstWaveSeconds = 30f;
+        [SerializeField] private TimedValue[] _waveIntervalSeconds = { new TimedValue(0f, 30f), new TimedValue(840f, 25f), new TimedValue(1800f, 20f) };
+        [SerializeField] private TimedValue[] _siegeEveryNWaves = { new TimedValue(0f, 3f), new TimedValue(840f, 2f), new TimedValue(1500f, 1f) };
+        [SerializeField, Min(1)] private int _firstSiegeWave = 3;
+
         public int TickRate => _tickRate;
         public float AbilityHasteScale => _abilityHasteScale;
         public float OutOfCombatSeconds => _outOfCombatSeconds;
@@ -40,9 +59,26 @@ namespace MangaLegends.Data.Definitions
         public float PassiveGoldPerSecond => _passiveGoldPerSecond;
         public int InventorySlots => _inventorySlots;
         public float SellRatio => _sellRatio;
+        public int SummonerSpellSlots => _summonerSpellSlots;
+        public float EarlyTowerDefenseSeconds => _earlyTowerDefenseSeconds;
+        public IReadOnlyList<StatModifierData> EarlyTowerModifiers => _earlyTowerModifiers;
+        public float InhibitorRespawnSeconds => _inhibitorRespawnSeconds;
+        public UnitDefinition SiegeMinion => _siegeMinion;
+        public UnitDefinition MegaMinion => _megaMinion;
+        public float FirstWaveSeconds => _firstWaveSeconds;
+        public int FirstSiegeWave => _firstSiegeWave;
+        public float WaveIntervalAt(float elapsedSeconds) => TimedValue.At(_waveIntervalSeconds, elapsedSeconds);
+        public int SiegeEveryNWavesAt(float elapsedSeconds) => System.Math.Max(1, (int)System.Math.Round(TimedValue.At(_siegeEveryNWaves, elapsedSeconds)));
 
         public CombatRules CombatRules => new CombatRules(_resistanceScale, _minimumDamage);
 
         public float RespawnSeconds(int level) => RankValues.At(_respawnSecondsByLevel, level);
+
+        public void Validate(ValidationReport report)
+        {
+            if (_siegeMinion == null) report.Warning(name, "No siege minion assigned.");
+            if (_megaMinion == null) report.Warning(name, "No mega minion assigned.");
+            if (_inhibitorRespawnSeconds <= 0f) report.Warning(name, "Inhibitor respawn time is not set.");
+        }
     }
 }
