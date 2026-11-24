@@ -79,21 +79,26 @@ Conséquence : on ne refactore pas l'ancien code fichier par fichier, on **recon
 - **Fini quand** : le projet s'ouvre sans erreur de compilation (scènes cassées acceptées).
 
 ### Étape 1 — Unity 6 LTS et SDK réseau
-- [ ] Migrer vers la dernière Unity 6 LTS ; retirer `visualscripting`, `collab-proxy`, `ide.vscode`.
-- [ ] Installer Input System, AI Navigation, Multiplayer Play Mode, Unity Test Framework.
-- [ ] Installer le SDK réseau retenu (ADR-0006), créer l'App ID, le stocker hors du repo.
-- [ ] Inventorier objets (`Resources/Items`), prefabs, animations récupérables → [03-objets.md](03-objets.md).
+Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-1-unity6-fusion.md).
+- [x] Retirer `visualscripting`, `collab-proxy`, `ide.vscode` de `Packages/manifest.json`.
+- [ ] Migrer vers la dernière Unity 6 LTS *(humain, dans l'éditeur)*.
+- [ ] Installer Input System, AI Navigation, Multiplayer Play Mode, mettre à jour Test Framework *(humain)*.
+- [ ] Créer l'app Photon Fusion 2, importer le SDK, renseigner l'App ID *(humain)*.
+- [x] Inventorier les objets (`Resources/Items`) → [03-objets.md §4](03-objets.md).
+- [ ] Inventorier prefabs et animations récupérables (à faire une fois le projet ouvert en Unity 6).
 
 ### Étape 2 — Squelette d'architecture
-- [ ] `Assets/_Project/` et assemblies de [04-architecture.md §4](04-architecture.md#4-assemblies-et-dossiers).
-- [ ] Assemblies de tests, premier test vert, commande de test en ligne de commande dans `CLAUDE.md`.
-- [ ] `GameLog`, composition root, scène `Boot`.
+- [x] `Assets/_Project/`, assembly `MangaLegends.Core` (`noEngineReferences`) ; les autres assemblies seront créées avec leur premier script (Data à l'étape 4, Simulation/Networking à l'étape 5 après import de Fusion).
+- [x] Assembly `MangaLegends.Tests.EditMode`, tests verts.
+- [x] Tests du Core lançables hors Unity : `dotnet test Tools/CoreTests/Tests` (documenté dans `CLAUDE.md`).
+- [ ] `GameLog`, composition root, scène `Boot` → déplacés à l'étape 5 (dépendent de UnityEngine et de Fusion).
 
 ### Étape 3 — Core (C# pur, testé)
-- [ ] `StatType`, `StatModifier`, `StatBlock` (retrait par source).
-- [ ] `DamageRequest`, `DamageCalculator` (résistances, pénétrations, critiques, boucliers), formules lues dans une config.
-- [ ] Logique des statuts (durée, cumul, immunités), `ScalingValue`.
-- [ ] Tests EditMode pour chacun.
+- [x] `StatType`, `StatModifier`, `StatBlock` (retrait par source, cache par stat).
+- [x] `DamageRequest`, `DamageCalculator` (résistances, pénétrations, résistance négative), `CombatRules` (formules paramétrables), `ShieldPool` (boucliers typés puis généraux).
+- [x] `StatusEffectSet` (durée en ticks, Refresh / AddStack / Independent / KeepExisting, immunité aux contrôles, restrictions par drapeaux), `ScalingValue`.
+- [x] `TickTime`, `CooldownCalculator` (hâte), `DeterministicRandom` (tirages rejouables).
+- [x] 35 tests EditMode, verts hors Unity (.NET 8, C# 9).
 
 ### Étape 4 — Données
 - [ ] `UnitDefinition`, `ChampionDefinition`, `AbilityDefinition`, `EffectDefinition` (+ sous-types), `ProjectileDefinition`, `AreaDefinition`, `StatusEffectDefinition`, `ItemDefinition`, `GameRulesConfig`, `ContentRegistry`.
@@ -140,3 +145,9 @@ _Claude Code ajoute ici, par étape terminée : date, PR, ce qui a changé, ce q
 - **Conséquences attendues à l'ouverture dans Unity** : les scènes, prefabs et assets d'objets/stats référencent des scripts déplacés → « Missing Script ». Normal : le contenu sera recréé aux étapes 4 à 7. Les valeurs des objets restent lisibles dans les `.asset` (YAML) pour la migration.
 - Non vérifié dans l'éditeur (pas d'Unity dans l'environnement de Claude) : à confirmer par l'humain à l'ouverture du projet.
 - Reste : Git LFS (voir ci-dessus).
+
+### Étapes 1 à 3 — 2026-11-24
+- Étape 1 : manifest nettoyé, inventaire des objets, guide pour l'humain. **Reste côté humain** : Unity 6 LTS, paquets, Fusion 2 (voir le guide).
+- Étapes 2–3 : Core en C# pur et ses tests (35 verts avec `dotnet test`). Les `.meta` ont été générés à la main : Unity les gardera tels quels.
+- Non vérifié dans Unity : compilation des asmdef et Test Runner à confirmer à l'ouverture.
+- Corrige les bugs B1 (bouclier qui casse n'absorbait rien) et B7 (modificateurs retirés par valeur) au niveau des règles.

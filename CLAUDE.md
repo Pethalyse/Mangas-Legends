@@ -1,6 +1,6 @@
 # CLAUDE.md — MangaLegends
 
-> À placer à la racine du repo Unity. Les docs de conception sont dans `Docs/`.
+> Les docs de conception sont dans `Docs/`.
 
 ## Le projet
 
@@ -46,6 +46,7 @@ Ne **jamais** inventer une règle de game design pour combler un trou : l'ajoute
 ## Façon de travailler
 
 - Une branche par sujet (`refactor/…`, `feat/…`, `fix/…`, `docs/…`), Conventional Commits.
+- Commits et PR **au nom du compte du propriétaire uniquement** (`Pethalyse`) : aucune mention d'outil ou d'IA, pas de `Co-Authored-By`, pas de lien de session.
 - Chaque étape laisse le projet **compilable** ; à partir de l'étape 5, une partie doit rester lançable en hôte.
 - Écrire les tests EditMode des règles Core avant ou avec le code.
 - Demander avant : supprimer du contenu de jeu (assets, scènes), changer une décision d'un ADR accepté, pousser sur `main`.
@@ -53,4 +54,6 @@ Ne **jamais** inventer une règle de game design pour combler un trou : l'ajoute
 
 ## Commandes utiles
 
-_À compléter à l'étape 2 (lancement des tests en ligne de commande, build serveur headless)._
+- Tests du Core sans Unity : `dotnet test Tools/CoreTests/Tests` (nécessite le SDK .NET 8). À lancer après toute modification de `Assets/_Project/Core` ou de ses tests.
+- Tout nouveau fichier ou dossier sous `Assets/` doit avoir son `.meta` (GUID unique) : le générer si Unity n'est pas disponible.
+- Build serveur headless : à compléter à l'étape 5.

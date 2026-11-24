@@ -3,6 +3,18 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-24 — Étapes 1 à 3 : préparation moteur et Core
+
+**Fait** : paquets inutiles retirés, objets de l'ancien prototype inventoriés, guide Unity 6 + Fusion 2 pour l'humain, assembly `MangaLegends.Core` (stats, dégâts, boucliers, statuts, mise à l'échelle, ticks, aléatoire déterministe) et 35 tests EditMode verts hors Unity.
+
+**Décisions** : commits et PR au nom de Pethalyse uniquement, sans attribution d'outil.
+
+**Docs mis à jour** : plan, architecture (§4 arborescence, §6 unités des stats, §7.1 formules), objets (§4), CLAUDE.md (commandes), guide d'étape 1.
+
+**Prochaine étape** : l'humain fait l'étape 1 dans l'éditeur ; ensuite étape 4 (données).
+
+**Bloquants** : compilation dans Unity non vérifiée.
+
 ## 2026-11-24 — Étape 0 : hygiène du dépôt
 
 **Fait** : builds retirés du suivi, Mirror/ParrelSync/icône LoL supprimés, ancien code déplacé dans `Legacy/` (UTF-8), symboles de compilation nettoyés, `.editorconfig`, `.gitattributes`, `.gitignore`, docs et `CLAUDE.md` ajoutés au repo.
