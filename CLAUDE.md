@@ -25,7 +25,7 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 - **Pas de** `GameObject.Find`, singletons statiques, lecture d'entrées hors `PlayerInputCollector`, `new void Update()`.
 - **Pas de commentaires** sauf pour un *pourquoi* non évident ; pas de code commenté.
 - **Respect des assemblies** : Core et Data ne dépendent ni de Fusion, ni de l'UI, ni de la présentation.
-- **Originalité** : le jeu suit les conventions du genre MOBA mais ne reprend aucun contenu d'un jeu existant (noms, objets, carte, assets, textes de League of Legends ou autre).
+- **Contenu** : jeu de fans privé entre amis ; les personnages et monstres issus de mangas, animés et autres œuvres gardent leurs vrais noms, **ne jamais proposer de les renommer** (`Docs/01-gdd.md` §1.2). On suit les conventions du genre MOBA sans recopier les éléments propres à League of Legends (noms, objets, carte, assets, textes).
 - Fichiers en UTF-8.
 
 ## Mettre à jour les docs — obligatoire à chaque avancée

@@ -2,7 +2,7 @@
 
 > Source : PDF « PROJET SECRET OMG » (liste complète, brouillon) et « clean doc » (version présentée, 9 champions).
 > Les valeurs `?` sont à équilibrer : elles vivent dans les données (`AbilityDefinition`), jamais dans le code.
-> `[x s]` = temps de recharge. ⚠️ Personnages sous licence : voir [01-gdd.md §1.2](01-gdd.md#12-️-risque-propriété-intellectuelle).
+> `[x s]` = temps de recharge. Jeu de fans privé : les noms des personnages sont utilisés tels quels ([01-gdd.md §1.2](01-gdd.md)).
 
 ## 1. Tableau de suivi
 
@@ -95,8 +95,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **A — Aqualame** : lame d'eau frontale, ? magiques. `[6 s]`
 - **Z — Petit slime** : petit saut directionnel. `[12 s]`
 - **E — Souffle paralysant** : ? magiques + étourdissement 1 s. `[10 s]`
-- **R — Belzébuth** `[60–90 s selon le monstre]` : estomac vide → ?–? dégâts bruts à un monstre ; s'il meurt, il est stocké. Estomac plein → se transforme et lance la compétence du monstre (souffle de feu/brûlure, souffle de glace/immobilisation 1.75 s, foudre/étourdissement 1 s, souffle aérien/projection 1 s, buff +30 % stats d'un allié 2.5 s, saut + projection, soin de groupe 30–40 % PV manquants, rayon concentré, invisibilité 5 s, buff +20 % vitesse d'attaque d'équipe, −20 % résistances, immunité aux contrôles 3 s).
-  → **Les monstres des PDF portent des noms d'autres licences : à remplacer par les monstres originaux de la carte (GDD §7).**
+- **R — Belzébuth** `[60–90 s selon le monstre]` : estomac vide → ?–? dégâts bruts à un monstre ; s'il meurt, il est stocké. Estomac plein → se transforme et lance la compétence du monstre absorbé.
+  → Correspondance monstre ↔ compétence : [01-gdd.md §7.1](01-gdd.md).
 
 ### Killua Zoldyck
 - **P — Divine Speed** : +10 % vitesse en jungle et rivière. Peut rejoindre le rappel de Gon.

@@ -16,12 +16,12 @@
 
 ### 1.1 Positionnement et originalité
 
-Le jeu reprend les **conventions du genre MOBA** (trois voies, jungle, tours, sbires, objets, quatre compétences + un passif). Ces conventions sont communes au genre. En revanche, **aucun contenu d'un autre jeu** (noms de champions, objets, monstres, cartes, assets, textes) ne doit être copié : la carte, les objets, les monstres et l'interface de MangaLegends sont conçus pour ce projet. Les références « comme tel champion de tel jeu » dans les notes de design sont remplacées par une description de la mécanique elle-même.
+Le jeu reprend les **conventions du genre MOBA** (trois voies, jungle, tours, sbires, objets, quatre compétences + un passif). Son contenu (champions, monstres, lieux) vient des mangas, animés et autres œuvres choisis par le propriétaire (§1.2). On ne recopie pas les éléments propres à League of Legends (noms de ses champions, objets, monstres, carte, assets, textes) : les notes de design décrivent la mécanique plutôt que « comme tel champion ».
 
-### 1.2 Propriété intellectuelle
+### 1.2 Licences : jeu de fans privé ✅
 
-Les champions sont des personnages existants (One Piece, Naruto, JoJo, Hunter×Hunter, Overlord, etc.). Le jeu est destiné à un **cercle d'amis** ✅ ; il ne doit pas être publié (store, page publique) sans revoir ce point.
-Conséquence technique : noms, textes, icônes et modèles d'un champion sont **des données** (ScriptableObject + Addressables), jamais en dur dans le code, pour pouvoir renommer ou remplacer un personnage sans toucher au gameplay. Voir [04-architecture.md](04-architecture.md#données).
+MangaLegends est un **jeu de fans privé**, joué uniquement entre amis et **non diffusé**. Les personnages, noms et références de mangas, d'animés et d'autres œuvres (champions, monstres de jungle, lieux) sont utilisés **tels quels, volontairement**. Le propriétaire du projet connaît les risques de licence, et c'est précisément pour ça que le jeu reste privé.
+→ **Ne pas proposer de renommer ou de remplacer** ces noms. Ils restent des données (pas en dur dans le code), uniquement pour la propreté de l'architecture.
 
 ## 2. Boucle de jeu
 
@@ -87,7 +87,7 @@ Calcul standard : `valeurFinale = (base + bonusPlats) × (1 + somme des bonus %)
 - 3 voies, jungle entre les voies, une **rivière** au centre.
 - **Points d'eau** : les champions porteurs d'un fruit du démon (Luffy, Kaido, Law) perdent des PV en les traversant ✅. La rivière et les points d'eau sont donc des zones de terrain explicites.
 - **Buissons** qui cachent les unités (Giorno y régénère) ✅.
-- **Zone spéciale** où Naruto se déplace plus vite ✅ (nom original à trouver, ne pas réutiliser un lieu d'un manga si la carte doit rester diffusable).
+- **Vallée de la Fin** : zone de la carte où Naruto se déplace plus vite ✅ (emplacement sur la carte ❓).
 - Brouillard de guerre, vision par unités et balises.
 - Murs destructibles temporairement (Jotaro + stand) ✅ : la navigation doit gérer des obstacles dynamiques.
 
@@ -97,8 +97,29 @@ Calcul standard : `valeurFinale = (base + bonusPlats) × (1 + somme des bonus %)
 |---|---|
 | Sbires | Vagues régulières sur chaque voie (mêlée, distance, siège) |
 | Tours | 2–3 par voie + base |
-| Monstres de jungle | Normaux, gros, **épiques** ✅ (Rimuru gagne 3/10/20 AP selon la taille) |
-| Monstres épiques | Liste de Rimuru (feu, glace, foudre, vent, dragon, etc.) ❓ : les noms des PDF viennent d'autres licences (Pokémon, Ghibli…). À remplacer par des monstres originaux, chacun avec une compétence absorbable par Rimuru. |
+| Monstres de jungle | Normaux, gros, **épiques** ✅ (Rimuru gagne 3/10/20 AP selon la taille). Liste au §7.1. |
+
+### 7.1 Monstres de jungle ✅
+
+Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-champions.md](02-champions.md), Rimuru).
+
+| Monstre | Rôle dans la jungle | Taille (gain d'AP de Rimuru) | Compétence absorbée par Rimuru |
+|---|---|---|---|
+| Sulfura | Dragon élémentaire de **feu** | épique (20) | grand souffle de feu, dégâts magiques + brûlure 1.5 s |
+| Artikodin | Dragon élémentaire de **glace** | épique (20) | souffle de glace, dégâts magiques + immobilisation 1.75 s |
+| Électhor | Dragon élémentaire **électrique** | épique (20) | souffle de foudre, dégâts magiques + étourdissement 1 s |
+| Lugia | Dragon élémentaire **des profondeurs** | épique (20) | très puissant souffle, dégâts magiques + projection en l'air 1 s |
+| Shenron | **Dragon ancestral** | épique (20) | +30 % à toutes les stats d'un allié pendant 2.5 s |
+| Ogrest | Monstre épique de **début de partie** (côté opposé aux dragons) | épique (20) | saut, projection des champions à l'atterrissage 1 s, faibles dégâts |
+| Zodd | Monstre épique **majeur de fin de partie** | épique (20) | saut, projection des champions à l'atterrissage 1 s, faibles dégâts ❓ (même compétence qu'Ogrest dans le PDF) |
+| Totoro | Camp de **buff rouge** | gros (10) | soigne les alliés de 30 % des PV manquants (40 % sous 40 % de PV) |
+| Roi des profondeurs | Camp de **buff bleu** | gros (10) | multitude de loupes d'eau autour de Rimuru, gros dégâts en 1.5 s |
+| Korogu | Petit camp en **groupe** (oiseaux) | normal (3) | invisibilité 5 s, rompue par une compétence |
+| Hawk | Petit camp **solitaire** (amphibien) | normal (3) | −20 % de résistances sur un ennemi |
+| Pompoko | Petit camp en **meute** (loups) | normal (3) | immunité aux contrôles pendant 3 s |
+| Père de Rebecca | Petit camp de **deux colosses** | normal (3) | ralenti, +20 % vitesse d'attaque aux alliés pendant 3 s |
+
+❓ À définir : récompenses de chaque monstre (buffs donnés, bonus d'équipe des dragons, effet du dragon ancestral, du monstre de début et de fin de partie), temps de réapparition, nombre de camps et positions sur la carte. La taille des petits camps et des buffs est déduite de leur rôle : à confirmer.
 
 ## 8. Économie et progression 🟡
 
