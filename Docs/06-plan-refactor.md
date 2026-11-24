@@ -101,9 +101,11 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 - [x] 35 tests EditMode, verts hors Unity (.NET 8, C# 9).
 
 ### Étape 4 — Données
-- [ ] `UnitDefinition`, `ChampionDefinition`, `AbilityDefinition`, `EffectDefinition` (+ sous-types), `ProjectileDefinition`, `AreaDefinition`, `StatusEffectDefinition`, `ItemDefinition`, `GameRulesConfig`, `ContentRegistry`.
-- [ ] Validateur d'éditeur.
-- [ ] Données d'Ainz, des sbires et des objets existants.
+- [x] Core : `ContentId`, `ContentIndex<T>` (index réseau trié par id, identique sur tous les pairs), `ValidationReport`, `StatBaselineTable`, `AbilitySlot`, `RankValues`, `ItemPricing` (coût total, devis d'achat avec composants possédés, revente → corrige A3/B2 côté règles).
+- [x] Assembly `MangaLegends.Data` : `UnitDefinition`, `ChampionDefinition` (+ `AbilitySet` alternatifs), `AbilityDefinition`, effets (`Damage`, `Heal`, `Shield`, `ApplyStatus`, `Dash`, `Displace`, `SwapPositions`, `LaunchProjectile`, `CreateArea`, `Summon`, `SwapAbilitySet`), `ProjectileDefinition`, `AreaDefinition`, `StatusEffectDefinition`, `ItemDefinition` (+ passifs, actif), `GameRulesConfig`, `ContentRegistry`.
+- [x] Assembly `MangaLegends.Editor` : `TypeSelectorDrawer` (choix du type d'effet dans l'inspecteur), menus *Validate* et *Rebuild Registry From Project*, validation en batchmode.
+- [x] Compilation Data + Editor vérifiée hors Unity contre des bouchons (`Tools/CoreTests/DataCheck`) ; 52 tests Core verts.
+- [ ] Créer les assets (règles, registre, objets, statuts, sbires, Ainz) **dans Unity** → [guides/reprise-claude-code-unity.md](guides/reprise-claude-code-unity.md) §2.
 
 ### Étape 5 — Prototype réseau (risques d'abord)
 - [ ] Salon Host / Join par code, spawn d'un champion par joueur.
@@ -145,6 +147,10 @@ _Claude Code ajoute ici, par étape terminée : date, PR, ce qui a changé, ce q
 - **Conséquences attendues à l'ouverture dans Unity** : les scènes, prefabs et assets d'objets/stats référencent des scripts déplacés → « Missing Script ». Normal : le contenu sera recréé aux étapes 4 à 7. Les valeurs des objets restent lisibles dans les `.asset` (YAML) pour la migration.
 - Non vérifié dans l'éditeur (pas d'Unity dans l'environnement de Claude) : à confirmer par l'humain à l'ouverture du projet.
 - Reste : Git LFS (voir ci-dessus).
+
+### Étape 4 (code) — 2026-11-24
+- Modèle de données complet et outils d'éditeur, sans assets : ceux-ci se créent dans l'éditeur (guide de reprise §2).
+- Non vérifié dans Unity : compilation réelle, rendu de l'inspecteur, sérialisation des listes `[SerializeReference]`.
 
 ### Étapes 1 à 3 — 2026-11-24
 - Étape 1 : manifest nettoyé, inventaire des objets, guide pour l'humain. **Reste côté humain** : Unity 6 LTS, paquets, Fusion 2 (voir le guide).

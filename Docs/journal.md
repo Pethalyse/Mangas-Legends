@@ -3,6 +3,18 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
+
+**Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.
+
+**Décisions** : effets en `[SerializeReference]` avec sélecteur de type ; durée de statut surchargeable par compétence ; index réseau du contenu = ordre des ids.
+
+**Docs mis à jour** : plan, architecture §11, CLAUDE.md, README des docs, guide de reprise.
+
+**Prochaine étape** : dans Unity, vérifications et création des assets (guide de reprise), puis étape 5.
+
+**Bloquants** : Unity indisponible pour l'instant chez l'humain ; étape 1 en attente.
+
 ## 2026-11-24 — Étapes 1 à 3 : préparation moteur et Core
 
 **Fait** : paquets inutiles retirés, objets de l'ancien prototype inventoriés, guide Unity 6 + Fusion 2 pour l'humain, assembly `MangaLegends.Core` (stats, dégâts, boucliers, statuts, mise à l'échelle, ticks, aléatoire déterministe) et 35 tests EditMode verts hors Unity.
