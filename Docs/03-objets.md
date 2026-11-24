@@ -1,6 +1,6 @@
 # MangaLegends — Objets
 
-> Statut : brouillon. Un seul objet est esquissé dans les PDF. Le repo contient déjà des objets en ScriptableObject (`Assets/Resources/Items/{Uniques,Secondaires,Terciaires}`) : **à inventorier lors de l'étape 1 du refactor** et à reporter ici.
+> Statut : brouillon. Un seul objet est esquissé dans les PDF ; les objets de l'ancien prototype sont inventoriés au §4 (étape 1 de la refonte, 2026-11-24).
 
 ## 1. Règles 🟡
 
@@ -31,3 +31,39 @@
   - Dague (+10 % AS, 200)
 
 ❓ Incohérence : « Dague » vaut +10 % MS dans une recette et +10 % AS dans une autre.
+
+## 4. Objets de l'ancien prototype (inventaire du 2026-11-24)
+
+Source : `Assets/Resources/Items/**.asset` (YAML lisible, scripts d'origine dans `Legacy/`). Ce sont des valeurs de départ à migrer vers `ItemDefinition` (étape 9), pas des décisions d'équilibrage.
+Le « prix recette » est le coût propre de l'objet ; le prix total ajoute celui des composants.
+
+### Tier 1 — basiques
+
+| Objet | Stats | Prix |
+|---|---|---|
+| Bouclier en cuir | +15 Armure | 300 |
+| Bracelet de précision | +15 % Critique | 600 |
+| Circuit de mana | +250 Mana | 350 |
+| Dague | +10 % Vitesse d'attaque | 300 |
+| Grimoire des arcanes | +25 AP | 450 |
+| Lame | +10 AD | 350 |
+| Minerai étrange | +30 AD | 770 |
+| Orbe de résistance | +20 Résistance magique | 400 |
+| Pierre de régénération | +50 Régénération de mana | 300 |
+| Veine de vie | +150 PV | 400 |
+
+### Tier 2 — composants
+
+| Objet | Stats | Recette | Composants | Prix total |
+|---|---|---|---|---|
+| Lame d'acier de qualité supérieure | +25 AD, +15 % Vitesse d'attaque | 150 | Lame, Lame, Dague | 1 150 |
+| Pierre magique de renforcement | +40 AD | 330 | Minerai étrange | 1 100 |
+
+### Tier 3 — complets
+
+| Objet | Stats | Recette | Composants | Effets | Prix total |
+|---|---|---|---|---|---|
+| Wado Ichimonji (unique) | +70 AD, +20 % Vitesse d'attaque, +10 % Vitesse de déplacement | 750 | Lame d'acier sup., Pierre magique de renf., Dague | passif de test (vide) | 3 300 |
+| Sceptre de la lune (unique) | +150 PV, +80 AP, +350 Mana, +10 Réduction de recharge | 3 100 | aucun | passif « Eclipse » : soins 10 % plus efficaces sous condition sur l’allié ciblé (texte tronqué, non implémenté) ; actif « Nébuleuse noire » : 126 dégâts au champion ciblé, recharge 90 s (défini mais pas relié à l'objet) | 3 100 |
+
+❓ Le PDF annonce 3 100 pour Wado Ichimonji, le prototype donne 3 300 ; la Dague y vaut +10 % vitesse d'attaque (le PDF hésite avec la vitesse de déplacement).

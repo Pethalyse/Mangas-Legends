@@ -91,11 +91,13 @@ Assets/
   _Project/
     Core/ Data/ Simulation/ Networking/ Input/ Presentation/ UI/ Editor/
     Content/      (assets de données : Champions/, Abilities/, Items/, Units/, Rules/)
+    Tests/EditMode/   (asmdef MangaLegends.Tests.EditMode)
     Art/ Audio/ Prefabs/ Scenes/ Settings/
   Photon/         (Fusion, géré par le SDK)
   Plugins/        (tiers)
-  Tests/
 Docs/
+Tools/CoreTests/  (projets .NET pour compiler et tester le Core sans Unity)
+Legacy/           (ancien code, non compilé, supprimé à l'étape 10)
 ```
 
 ## 5. Modèle d'unité
@@ -124,6 +126,8 @@ Les temps (recharges, durées) sont stockés en **ticks** (`TickTimer`), jamais 
 - `StatType` : `MaxHealth, HealthRegen, MaxMana, ManaRegen, AttackDamage, AbilityPower, Armor, MagicResist, AttackSpeed, MoveSpeed, AttackRange, CritChance, CritDamage, Lethality, ArmorPen, MagicPen, LifeSteal, HealPower, AbilityHaste`.
 - `StatModifier { StatType, ModifierKind (Flat | PercentAdd | PercentMult), float value, SourceId }` ; retrait **par source**.
 - Valeur : `(base + croissance × (niveau − 1) + Σflat) × (1 + ΣpercentAdd) × Π(1 + percentMult)`, mise en cache.
+- Unités : pourcentages en fraction (`CritChance 0.25`, `ArmorPenetration 0.3`, `PercentAdd 0.1` = +10 %), `CritDamage` en multiplicateur (`1.75`), `AttackSpeed` en attaques par seconde.
+- Implémentation : `MangaLegends.Core.Stats` (`StatBlock` implémente `IStatReader`, la base vient d'un `IStatBaseline` fourni par les données).
 - Les formules (résistances, cadence d'attaque, plafonds) sont des paramètres de `GameRulesConfig`.
 
 ## 7. Combat
@@ -133,7 +137,8 @@ Les temps (recharges, durées) sont stockés en **ticks** (`TickTimer`), jamais 
 ```
 DamageRequest { source, target, amount, DamageType (Physical|Magical|True), flags (IsAbility, IsCrit…), abilityId }
   → modificateurs de l'attaquant (pénétration, bonus conditionnels)
-  → résistance : formule de GameRulesConfig (True : ignorée)
+  → résistance effective = résistance × (1 − péné. %) − péné. fixe (létalité), jamais < 0 si elle était positive
+  → multiplicateur = S / (S + résistance), ou 2 − S / (S − résistance) si négative ; S = CombatRules.ResistanceScale (True : ignorée)
   → modificateurs du défenseur (réductions, absorptions)
   → boucliers (typés puis généraux)
   → Health.ApplyDamage → événements DamageApplied / Died (avec tick et id d'impact)

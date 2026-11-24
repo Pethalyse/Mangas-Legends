@@ -76,3 +76,7 @@ crashlytics-build.properties
 # OS
 .DS_Store
 Thumbs.db
+
+# Outils .NET hors Unity
+Tools/**/bin/
+Tools/**/obj/

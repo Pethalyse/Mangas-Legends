@@ -1,6 +1,6 @@
 # CLAUDE.md — MangaLegends
 
-> À placer à la racine du repo Unity. Les docs de conception sont dans `Docs/`.
+> Les docs de conception sont dans `Docs/`.
 
 ## Le projet
 
@@ -53,4 +53,6 @@ Ne **jamais** inventer une règle de game design pour combler un trou : l'ajoute
 
 ## Commandes utiles
 
-_À compléter à l'étape 2 (lancement des tests en ligne de commande, build serveur headless)._
+- Tests du Core sans Unity : `dotnet test Tools/CoreTests/Tests` (nécessite le SDK .NET 8). À lancer après toute modification de `Assets/_Project/Core` ou de ses tests.
+- Tout nouveau fichier ou dossier sous `Assets/` doit avoir son `.meta` (GUID unique) : le générer si Unity n'est pas disponible.
+- Build serveur headless : à compléter à l'étape 5.
