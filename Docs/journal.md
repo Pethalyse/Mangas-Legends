@@ -11,7 +11,7 @@
 
 **Fait (3)** : pas de type de dégâts « chaos » : ce sont des dégâts magiques (GDD §4.4 et §10, fiche d'Ainz). Le code n'a que Physical, Magical, True.
 
-**Fait (4)** : jeu de fans privé assumé, les noms de licences restent tels quels (GDD §1.2, plus aucune proposition de renommage) ; monstres de jungle définis (GDD §7.1) avec leur rôle et la compétence absorbée par Rimuru ; récompenses et positions en questions ouvertes.
+**Fait (4)** : jeu de fans privé assumé, les noms de licences restent tels quels (GDD §1.2, plus aucune proposition de renommage) ; monstres de jungle définis (GDD §7.1) avec leur rôle et la compétence absorbée par Rimuru ; récompenses et positions en questions ouvertes. Zodd et Ogrest partagent volontairement la même compétence (peut évoluer).
 
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 

@@ -111,7 +111,7 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 | Lugia | Dragon élémentaire **des profondeurs** | épique (20) | très puissant souffle, dégâts magiques + projection en l'air 1 s |
 | Shenron | **Dragon ancestral** | épique (20) | +30 % à toutes les stats d'un allié pendant 2.5 s |
 | Ogrest | Monstre épique de **début de partie** (côté opposé aux dragons) | épique (20) | saut, projection des champions à l'atterrissage 1 s, faibles dégâts |
-| Zodd | Monstre épique **majeur de fin de partie** | épique (20) | saut, projection des champions à l'atterrissage 1 s, faibles dégâts ❓ (même compétence qu'Ogrest dans le PDF) |
+| Zodd | Monstre épique **majeur de fin de partie** | épique (20) | saut, projection des champions à l'atterrissage 1 s, faibles dégâts (même compétence qu'Ogrest, voulu, peut évoluer) |
 | Totoro | Camp de **buff rouge** | gros (10) | soigne les alliés de 30 % des PV manquants (40 % sous 40 % de PV) |
 | Roi des profondeurs | Camp de **buff bleu** | gros (10) | multitude de loupes d'eau autour de Rimuru, gros dégâts en 1.5 s |
 | Korogu | Petit camp en **groupe** (oiseaux) | normal (3) | invisibilité 5 s, rompue par une compétence |
