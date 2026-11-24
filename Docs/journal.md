@@ -19,6 +19,8 @@
 
 **Fait (7)** : sorts d'invocateur (GDD §2.1) : `SummonerSpellDefinition`, `TeleportEffect`, `TargetingData.Fallback`, `GameRulesConfig.SummonerSpellSlots` ; ressource : mana par défaut, autre seulement si la fiche le précise (déjà `ResourceKind`). DataCheck compile.
 
+**Fait (8)** : coût continu (Pain, Shuradô) : `AbilityDefinition.CostPerSecond` par rang. DataCheck compile.
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.

@@ -180,7 +180,7 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 1. ~~Sorts d'invocateur ?~~ Réglé (§2.1) ; restent les détails de Smite, Fatigue, Téléportation et Heal.
 2. ~~Ressource alternative ?~~ Réglé : mana par défaut, autre ressource seulement si la fiche du champion le précise (§5).
 3. ~~Type de dégât « chaos » ?~~ Réglé : dégâts magiques.
-4. Pain : « (mana/sec) » sur Shuradô veut-il dire coût continu en mana ?
+4. ~~Pain, « (mana/sec) » sur Shuradô ?~~ Réglé : coût continu en mana par seconde (`AbilityDefinition.CostPerSecond`, prélevé tant que la compétence est active). ❓ À 0 mana, la compétence s'arrête-t-elle ?
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
 7. Structures (§6.1) : valeurs à équilibrer (or, bonus de début de partie, réapparition de l'inhibiteur), partage de l'or, condition exacte pour attaquer les tours du Cœur.

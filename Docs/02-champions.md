@@ -185,7 +185,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 
 ### Pain — Bot (ADC)
 - **P** : jauge qui se charge (temps, attaques et compétences qui touchent ; pleine sur un kill). Pleine → passe au pantin suivant (ordre fixe de 6) ; un kill permet de choisir de rester. Hors combat, passage automatique. Changer de pantin réinitialise les recharges.
-- **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu ?), vol de 20 % des PV actuels rendus 3 s après, chien qui fonce tout droit (attaque en ligne non contrôlée, le chien est visuel), vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
+- **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu en mana par seconde ✅, `CostPerSecond`), vol de 20 % des PV actuels rendus 3 s après, chien qui fonce tout droit (attaque en ligne non contrôlée, le chien est visuel), vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
 - **R** : passif — jauge pleine = changement automatique.
 - **Pas de Z** dans le PDF ❓
 

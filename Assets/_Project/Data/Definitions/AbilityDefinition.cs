@@ -14,6 +14,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private CastMode _castMode = CastMode.Instant;
         [SerializeField] private float[] _cooldownSeconds = { 10f };
         [SerializeField] private float[] _cost = { 0f };
+        [SerializeField] private float[] _costPerSecond = { 0f };
         [SerializeField, Min(0f)] private float _castTimeSeconds;
         [SerializeField, Min(0f)] private float _channelSeconds;
         [SerializeField, Min(1)] private int _charges = 1;
@@ -32,12 +33,14 @@ namespace MangaLegends.Data.Definitions
 
         public float CooldownAtRank(int rank) => RankValues.At(_cooldownSeconds, rank);
         public float CostAtRank(int rank) => RankValues.At(_cost, rank);
+        public float CostPerSecondAtRank(int rank) => RankValues.At(_costPerSecond, rank);
 
         public override void Validate(ValidationReport report)
         {
             base.Validate(report);
             report.CheckRankArray(Id, "Cooldown", _cooldownSeconds?.Length ?? 0, _maxRank);
             report.CheckRankArray(Id, "Cost", _cost?.Length ?? 0, _maxRank);
+            report.CheckRankArray(Id, "CostPerSecond", _costPerSecond?.Length ?? 0, _maxRank);
             if (_castMode != CastMode.Passive && _onCast.Count == 0 && string.IsNullOrEmpty(_behaviourId))
                 report.Warning(Id, "Ability has no effect and no custom behaviour.");
             foreach (EffectDefinition effect in _onCast)
