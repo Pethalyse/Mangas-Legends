@@ -162,8 +162,8 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 | Hawk | Petit camp **solitaire** (amphibien) | normal (3) | −20 % de résistances sur un ennemi |
 | Pompoko | Petit camp en **meute** (loups) | normal (3) | immunité aux contrôles pendant 3 s |
 | Père de Rebecca | Petit camp de **deux colosses** | normal (3) | ralenti, +20 % vitesse d'attaque aux alliés pendant 3 s |
-| Pitou, Pufu, Youpi | Les 3 gardes royaux Fourmis-Chimères (équivalent des Larves du Néant), en début de partie, une seule fois | normal (3) ❓ | ❓ proposition : Pitou → bond rapide sur une cible ; Pufu → écailles qui désorientent (silence court) ; Youpi → rage, gros coup en zone |
-| Magicarpe | Monstre de **rivière** (équivalent du Carapateur), donne vision et vitesse | normal (3) ❓ | ❓ proposition : « Trempette », qui ne fait rien (clin d'œil) ou un petit bond |
+| Pitou, Pufu, Youpi | Les 3 gardes royaux Fourmis-Chimères (équivalent des Larves du Néant), en début de partie, une seule fois | normal (3) | Pitou → bond rapide sur une cible ; Pufu → écailles qui désorientent (silence court) ; Youpi → rage, gros coup en zone |
+| Magicarpe | Monstre de **rivière** (équivalent du Carapateur), donne vision et vitesse | normal (3) | « Trempette » : ne fait rien (clin d'œil voulu) |
 
 ❓ À définir : récompenses de chaque monstre (buffs donnés, bonus d'équipe des dragons, effet du dragon ancestral, du monstre de début et de fin de partie), temps de réapparition, nombre de camps et positions sur la carte. La taille des petits camps et des buffs est déduite de leur rôle : à confirmer.
 
@@ -190,6 +190,6 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : **déséquilibrés exprès** ✅, on ne les affaiblit pas. Reste la question technique : comment les rendre fiables en réseau (architecture §14).
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
 7. ~~Structures~~ Réglé par les règles du genre (07 §6).
-9. ~~Équivalents manga~~ Réglé : Pitou, Pufu, Youpi, Magicarpe (§7.1), objets système dans [03-objets.md §5](03-objets.md). Reste : compétences absorbables par Rimuru sur ces 4 monstres.
+9. ~~Équivalents manga~~ Réglé : Pitou, Pufu, Youpi, Magicarpe (§7.1), objets système dans [03-objets.md §5](03-objets.md). Compétences absorbables par Rimuru validées (§7.1).
 10. Buffs adaptés d'Artikodin, Électhor et Lugia (Sulfura, Shenron et Zodd gardent ceux du genre, 07 §7.3).
 8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).

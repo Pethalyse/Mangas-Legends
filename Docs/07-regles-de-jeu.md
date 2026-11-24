@@ -186,8 +186,7 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 
 Seules les questions propres à MangaLegends restent ouvertes :
 1. Buffs adaptés d'Artikodin, Électhor et Lugia.
-2. Compétences absorbées par Rimuru sur les nouveaux monstres (Pitou, Pufu, Youpi, Magicarpe) : propositions dans le GDD §7.1.
-3. Les valeurs 🔁 sont à revérifier dans le jeu actuel ; Claude les ajuste lui-même à l'équilibrage (CLAUDE.md).
+2. Les valeurs 🔁 sont à revérifier dans le jeu actuel ; Claude les ajuste lui-même à l'équilibrage (CLAUDE.md).
 
 ## Sources (consultées le 2026-11-24)
 

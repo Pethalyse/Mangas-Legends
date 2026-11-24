@@ -35,6 +35,8 @@
 
 **Fait (15)** : choix du propriétaire : Pitou, Pufu, Youpi (larves), Magicarpe (rivière), bottes = équipement tridimensionnel en 7 versions + améliorations (03 §5.1, noms et effets choisis par Claude), carte au trésor de Nami, insectes de Shino, Den Den Mushi de surveillance, haki de l'observation ; pas de cercles de champignons. Reste : compétences absorbables par Rimuru sur les 4 nouveaux monstres.
 
+**Fait (16)** : compétences absorbées par Rimuru sur Pitou (bond), Pufu (silence court), Youpi (coup en zone) et Magicarpe (« Trempette », sans effet) validées par le propriétaire (GDD §7.1).
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.
