@@ -15,6 +15,7 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 3. `Docs/05-conventions-code.md` — règles obligatoires.
 4. Selon la tâche : `Docs/01-gdd.md`, `Docs/07-regles-de-jeu.md`, `Docs/02-champions.md`, `Docs/03-objets.md`, `Docs/adr/`.
 5. Les 2–3 dernières entrées de `Docs/journal.md`.
+6. En cas de doute sur un kit ou un objet : les deux PDF de conception d'origine dans `Docs/sources/` (`manga-legends-clean-doc.pdf`, la version propre, et `manga-legends-projet-secret.pdf`, le premier jet). Les docs `Docs/0x-*.md` en sont la version à jour et font foi ; une divergence se note dans `Docs/02-champions.md` §2.
 
 ## Règles non négociables
 

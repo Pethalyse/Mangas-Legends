@@ -25,6 +25,8 @@
 
 **Fait (10)** : réponses du propriétaire : Sulfura, Shenron et Zodd gardent les buffs du genre, les autres drakes seront adaptés ; Ignite, Cleanse et Clarity ajoutés (10 sorts) ; propositions de monstres et objets manga notées (07 §12) en attente de choix.
 
+**Fait (11)** : les deux PDF de conception sont versionnés dans `Docs/sources/` (CLAUDE.md et README des docs les référencent).
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.

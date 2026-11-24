@@ -12,6 +12,7 @@
 *.controller text merge=unityyamlmerge
 *.meta text merge=unityyamlmerge
 
+*.pdf binary
 *.png binary
 *.jpg binary
 *.jpeg binary

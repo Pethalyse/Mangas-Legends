@@ -14,6 +14,7 @@ Cette suite de docs est la **source de vérité** du projet. Elle est tenue à j
 | [adr/](adr/) | Architecture Decision Records : une décision = un fichier | Claude Code + humain |
 | [journal.md](journal.md) | Journal de développement daté | Claude Code à chaque session |
 | [guides/](guides/) | Guides pas à pas : étape 1 (Unity 6 + Fusion), reprise par Claude Code connecté à Unity | Claude Code |
+| [sources/](sources/) | Les deux PDF de conception d'origine (lecture seule, les docs ci-dessus font foi) | — |
 | [CLAUDE.md](../CLAUDE.md) | Instructions pour Claude Code (racine du repo) | Humain |
 
 ## Où vivent ces docs
