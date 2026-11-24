@@ -55,6 +55,7 @@ Tout dans `Assets/_Project/Content/` (dossiers `Rules/`, `Items/`, `Status/`, `U
    - R : projectile longue portée → zone d'impact avec dégâts + réduction de résistances (statut avec modificateurs) ;
    - P : comportement spécial (`BehaviourId`) : régénération de mana hors combat, à coder à l'étape 7.
    Les valeurs `?` restent à demander à l'humain : ne pas les inventer, mettre 0 et l'ajouter aux questions ouvertes du GDD.
+6 bis. **Sorts d'invocateur** : les 7 sorts de `Docs/01-gdd.md` §2.1, chacun un `ABIL_Summoner_*` (rang 1, Smite en 3 rangs 600/1000/1400) et un `SPELL_*` qui le référence. Valeurs inconnues à 0.
 7. *MangaLegends → Content → Rebuild Registry From Project*, puis *Validate* : 0 erreur.
 
 ## 3. Suite du plan

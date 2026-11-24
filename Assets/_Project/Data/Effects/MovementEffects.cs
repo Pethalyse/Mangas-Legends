@@ -1,5 +1,6 @@
 using System;
 using MangaLegends.Core.Content;
+using MangaLegends.Data.Definitions;
 using UnityEngine;
 
 namespace MangaLegends.Data.Effects
@@ -48,6 +49,21 @@ namespace MangaLegends.Data.Effects
         public DisplacementKind Kind => _kind;
         public float Distance => _distance;
         public float DurationSeconds => _durationSeconds;
+    }
+
+    [Serializable]
+    public sealed class TeleportEffect : EffectDefinition
+    {
+        [SerializeField] private UnitKind[] _allowedDestinations = { UnitKind.Tower, UnitKind.Minion };
+        [SerializeField, Min(0f)] private float _arrivalOffset = 1f;
+
+        public UnitKind[] AllowedDestinations => _allowedDestinations;
+        public float ArrivalOffset => _arrivalOffset;
+
+        public override void Validate(string ownerId, int maxRank, ValidationReport report)
+        {
+            if (_allowedDestinations == null || _allowedDestinations.Length == 0) report.Error(ownerId, "Teleport has no allowed destination.");
+        }
     }
 
     [Serializable]

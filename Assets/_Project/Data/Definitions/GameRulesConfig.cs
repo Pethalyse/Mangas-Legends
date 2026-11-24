@@ -32,6 +32,9 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(1, 8)] private int _inventorySlots = 6;
         [SerializeField, Range(0f, 1f)] private float _sellRatio = 0.7f;
 
+        [Header("Summoner spells")]
+        [SerializeField, Range(0, 4)] private int _summonerSpellSlots = 2;
+
         [Header("Structures")]
         [SerializeField, Min(0f)] private float _earlyTowerDefenseSeconds;
         [SerializeField] private List<StatModifierData> _earlyTowerModifiers = new List<StatModifierData>();
@@ -52,6 +55,7 @@ namespace MangaLegends.Data.Definitions
         public float PassiveGoldPerSecond => _passiveGoldPerSecond;
         public int InventorySlots => _inventorySlots;
         public float SellRatio => _sellRatio;
+        public int SummonerSpellSlots => _summonerSpellSlots;
         public float EarlyTowerDefenseSeconds => _earlyTowerDefenseSeconds;
         public IReadOnlyList<StatModifierData> EarlyTowerModifiers => _earlyTowerModifiers;
         public float InhibitorRespawnSeconds => _inhibitorRespawnSeconds;

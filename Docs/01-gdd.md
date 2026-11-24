@@ -25,12 +25,28 @@ MangaLegends est un **jeu de fans privé**, joué uniquement entre amis et **non
 
 ## 2. Boucle de jeu
 
-1. **Sélection** : chaque joueur choisit un champion (pas de doublon par équipe 🟡) et deux sorts d'invocateur ❓.
+1. **Sélection** : chaque joueur choisit un champion (pas de doublon par équipe 🟡) et deux sorts d'invocateur ✅ (§2.1).
 2. **Phase de voie** : farm des sbires et monstres → or et expérience → objets et niveaux.
 3. **Escarmouches et objectifs** : monstres épiques, tours.
 4. **Fin** : détruire la structure principale (le « Cœur » 🟡, nom à définir) de la base adverse.
 
 Durée cible d'une partie : 25–35 min 🟡.
+
+### 2.1 Sorts d'invocateur ✅
+
+Chaque joueur en choisit deux (touches D et F), dans la liste suivante, comme le veut le genre. Chaque sort est un `SummonerSpellDefinition` qui pointe vers une compétence (`AbilityDefinition`) : nom affiché, recharge, portée et valeurs sont des données.
+
+| Sort | Effet | Construction en données |
+|---|---|---|
+| Flash (`summoner.blink`) | courte téléportation vers le point visé | `DashEffect` en `Blink` |
+| Téléportation (`summoner.teleport`) | après une canalisation, téléporte vers une unité alliée | canalisation + `TeleportEffect` (destinations autorisées en données) |
+| Smite (`summoner.smite`) | dégâts aux monstres de la jungle : 600 / 1000 / 1400 | ciblage d'unité neutre + `DamageEffect` (Brut 🟡), 3 rangs |
+| Heal (`summoner.heal`) | soigne l'allié ciblé, ou à défaut l'allié le plus bas en PV dans la portée | `HealEffect` + repli `LowestHealthAllyInRange` |
+| Shield (`summoner.barrier`) | bouclier sur soi | `ShieldEffect` |
+| Fatigue (`summoner.exhaust`) | affaiblit un ennemi | `ApplyStatusEffect` |
+| Ghost (`summoner.ghost`) | vitesse de déplacement accrue | `ApplyStatusEffect` (modificateur `MoveSpeed`) |
+
+❓ À définir : ce qui fait passer Smite de 600 à 1000 puis 1400 (niveau du champion ? nombre de monstres tués ?), type de dégâts de Smite (brut proposé), effet exact de Fatigue (ralentissement, réduction de dégâts ?), destinations de la Téléportation (tours, sbires, balises ?), le Heal soigne-t-il aussi le lanceur, recharges et valeurs de chaque sort.
 
 ## 3. Contrôles 🟡
 
@@ -79,7 +95,8 @@ Physique (AD), Magique (AP), Brut ✅. Il n'y a pas d'autre type : les « dégâ
 
 ## 5. Statistiques 🟡
 
-PV, Mana (ou ressource alternative), AD, AP, Armure, Résistance magique, Vitesse d'attaque, Vitesse de déplacement, Portée, Régénération PV/Mana, Réduction de recharge, Pénétrations, Vol de vie, Chances de critique.
+PV, Mana (ou ressource alternative, voir ci-dessous), AD, AP, Armure, Résistance magique, Vitesse d'attaque, Vitesse de déplacement, Portée, Régénération PV/Mana, Réduction de recharge, Pénétrations, Vol de vie, Chances de critique.
+**Ressource** ✅ : tous les champions utilisent du **mana**, sauf mention contraire dans leur fiche ; un champion qui a une autre ressource la fait fonctionner à sa façon (`ResourceKind.Custom` + comportement propre au champion), ou n'en a aucune (`ResourceKind.None`).
 Calcul standard : `valeurFinale = (base + bonusPlats) × (1 + somme des bonus %)`. Réduction de dégâts par résistance : `dégâts × 100 / (100 + résistance)` 🟡.
 
 ## 6. Carte 🟡
@@ -160,8 +177,8 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 
 ## 10. Questions ouvertes
 
-1. Sorts d'invocateur : oui ou non, lesquels ?
-2. Ressource alternative au mana pour certains champions ?
+1. ~~Sorts d'invocateur ?~~ Réglé (§2.1) ; restent les détails de Smite, Fatigue, Téléportation et Heal.
+2. ~~Ressource alternative ?~~ Réglé : mana par défaut, autre ressource seulement si la fiche du champion le précise (§5).
 3. ~~Type de dégât « chaos » ?~~ Réglé : dégâts magiques.
 4. Pain : « (mana/sec) » sur Shuradô veut-il dire coût continu en mana ?
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
