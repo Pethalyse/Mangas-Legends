@@ -1,1 +1,28 @@
-ArtifactDB filter=lfs diff=lfs merge=lfs -text
+* text=auto eol=lf
+
+*.cs text diff=csharp
+*.md text
+*.json text
+*.asmdef text
+*.unity text merge=unityyamlmerge
+*.prefab text merge=unityyamlmerge
+*.asset text merge=unityyamlmerge
+*.mat text merge=unityyamlmerge
+*.anim text merge=unityyamlmerge
+*.controller text merge=unityyamlmerge
+*.meta text merge=unityyamlmerge
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.psd binary
+*.tga binary
+*.fbx binary
+*.obj binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+*.dll binary
+*.exe binary
