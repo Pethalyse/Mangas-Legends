@@ -8,6 +8,8 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 
 ## Avant de coder : lire
 
+0. **Première session avec l'éditeur Unity ?** Suivre d'abord `Docs/guides/reprise-claude-code-unity.md` (vérifications et assets à créer).
+
 1. `Docs/06-plan-refactor.md` — à quelle étape de la refonte on est, ce qui reste.
 2. `Docs/04-architecture.md` — architecture cible (assemblies, unités, compétences, réseau).
 3. `Docs/05-conventions-code.md` — règles obligatoires.
@@ -55,5 +57,7 @@ Ne **jamais** inventer une règle de game design pour combler un trou : l'ajoute
 ## Commandes utiles
 
 - Tests du Core sans Unity : `dotnet test Tools/CoreTests/Tests` (nécessite le SDK .NET 8). À lancer après toute modification de `Assets/_Project/Core` ou de ses tests.
+- Compilation de Data et Editor sans Unity : `dotnet build Tools/CoreTests/DataCheck` (bouchons d'API dans `Tools/CoreTests/UnityStubs`, à compléter si besoin). Avec Unity disponible, la compilation de l'éditeur fait foi.
+- Validation du contenu : menu *MangaLegends → Content → Validate*, ou `-batchmode -executeMethod MangaLegends.Editor.ContentTools.ValidateBatch`.
 - Tout nouveau fichier ou dossier sous `Assets/` doit avoir son `.meta` (GUID unique) : le générer si Unity n'est pas disponible.
 - Build serveur headless : à compléter à l'étape 5.

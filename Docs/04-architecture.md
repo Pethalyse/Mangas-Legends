@@ -227,7 +227,10 @@ Scènes : `Boot` → `MainMenu` (créer / rejoindre un salon) → `Lobby` → `C
 ## 11. Données et contenu
 
 - Chaque définition a un **`id` stable** (`champion.ainz`, `ability.ainz.mantle_of_chaos`) ; le réseau transporte un **index compact** fourni par `ContentRegistry`.
-- `ContentRegistry` liste toutes les définitions ; un validateur d'éditeur vérifie ids uniques, références non nulles, valeurs cohérentes.
+- `ContentRegistry` liste toutes les définitions et construit un `ContentIndex<T>` par type (tri par id ordinal → même index réseau sur tous les pairs) ; *MangaLegends → Content → Validate* vérifie ids, doublons, tableaux par rang, références et recettes circulaires.
+- Effets : classes `[Serializable]` dérivées de `EffectDefinition`, stockées en `[SerializeReference]` dans les compétences, projectiles, zones, statuts et objets ; l'inspecteur propose le type via `TypeSelectorAttribute`. Les effets sont des **données** : leur exécution vivra dans `Simulation` (étape 7), par un exécuteur par type d'effet.
+- Valeurs par rang : tableau de 1 valeur (constante) ou de `MaxRank` valeurs.
+- Économie : `ItemPricing` (Core) calcule coût total, devis d'achat (composants possédés consommés, y compris imbriqués) et revente ; l'autorité l'utilise, le client seulement pour l'affichage.
 - Noms et textes affichés dans les données (localisables plus tard).
 - Équilibrage : modifier un asset suffit ; pas de recompilation.
 
