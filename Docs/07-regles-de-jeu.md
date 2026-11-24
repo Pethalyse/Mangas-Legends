@@ -8,6 +8,8 @@
 > - 🔁 **référence connue** du genre, non revérifiée pour 2026 ;
 > - ❓ question propre à MangaLegends.
 >
+> Les valeurs manquantes sont **choisies par Claude** sans confirmation (CLAUDE.md, « Équilibrage »), en partant de ce document.
+>
 > Toutes les valeurs sont des **données** (`GameRulesConfig`, `UnitDefinition`, `AbilityDefinition`…). Les chiffres ci-dessous sont les valeurs par défaut à saisir, pas des constantes du code.
 
 ## 1. Correspondance des éléments

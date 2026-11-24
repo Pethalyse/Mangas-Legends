@@ -44,7 +44,9 @@ Une tâche n'est **pas terminée** tant que les docs ne reflètent pas le code. 
 | proposes de changer une convention | ADR + `Docs/05-conventions-code.md` après validation |
 | finis une session de travail | `Docs/journal.md` : nouvelle entrée en haut (fait, décisions, docs mis à jour, prochaine étape, bloquants) |
 
-Ne **jamais** inventer une règle de game design pour combler un trou : l'ajouter aux questions ouvertes du GDD et demander.
+**Équilibrage et petits détails : Claude décide** (consigne du propriétaire). Les valeurs (`?` des PDF, stats, dégâts, ratios, recharges, durées, or, PV des structures…) et les détails mineurs se choisissent sans demander de confirmation : partir de la référence LoL 2026 (`Docs/07-regles-de-jeu.md`) et d'un champion comparable, viser un jeu équilibré, puis noter la valeur choisie dans le doc concerné et dans le journal (le propriétaire peut toujours la changer).
+- **Déséquilibré exprès, à ne pas « corriger »** : l'arrêt du temps de Jotaro, la vision globale de Shanks (et toute mécanique que le propriétaire désigne comme telle). On les rend jouables techniquement, sans les affaiblir.
+- **On demande encore** : l'identité d'un kit (ce qu'une compétence fait), les nouveaux contenus manga (monstres, objets, lieux), et tout changement de règle par rapport à LoL 2026. Dans ce cas, l'ajouter aux questions ouvertes du GDD (§10) et proposer des idées.
 
 ## Façon de travailler
 

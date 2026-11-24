@@ -47,15 +47,15 @@ Tout dans `Assets/_Project/Content/` (dossiers `Rules/`, `Items/`, `Status/`, `U
 
    Unités des stats : pourcentages en fraction (`+10 %` vitesse d'attaque → `PercentAdd 0.1` sur `AttackSpeed`, ou valeur à trancher avec l'humain ; `+15 % critique` → `Flat 0.15` sur `CritChance`).
 4. **Statuts de base** (`StatusEffectDefinition`) : `status.stun`, `status.root`, `status.silence`, `status.slow` (modificateur `MoveSpeed PercentMult` négatif), `status.knockup`. Un seul asset par statut : la durée (*Duration Override Seconds*), les cumuls et la force (*Modifier Overrides*, ex. ralentissement 20/25/30 %) propres à chaque compétence se règlent par rang dans `ApplyStatusEffect`.
-5. **Unités** : `UNIT_Minion_Melee`, `UNIT_Minion_Caster`, `UNIT_Minion_Siege` (stats à reprendre des anciens prefabs de sbires dans `Assets/Prefabs/Minions`, à lire dans l'inspecteur), `UNIT_Minion_Mega` (stats à demander à l'humain), puis les structures `UNIT_Tower_Outer`, `UNIT_Tower_Inner`, `UNIT_Tower_Base`, `UNIT_Tower_Core`, `UNIT_Inhibitor`, `UNIT_Core` (GDD §6.1, stats et or à demander). Dans `RULES_Default`, renseigner *Siege Minion* et *Mega Minion*.
+5. **Unités** : `UNIT_Minion_Melee`, `UNIT_Minion_Caster`, `UNIT_Minion_Siege` (stats à reprendre des anciens prefabs de sbires dans `Assets/Prefabs/Minions`, à lire dans l'inspecteur), `UNIT_Minion_Mega` (stats à choisir, référence LoL 2026), puis les structures `UNIT_Tower_Outer`, `UNIT_Tower_Inner`, `UNIT_Tower_Base`, `UNIT_Tower_Core`, `UNIT_Inhibitor`, `UNIT_Core` (stats et or : `Docs/07-regles-de-jeu.md` §6). Dans `RULES_Default`, renseigner *Siege Minion* et *Mega Minion*.
 6. **Ainz** : `CHAMP_Ainz` (stats depuis `Assets/Resources/Champion/AinzOoalGown`), puis ses 5 compétences d'après `Docs/02-champions.md` :
    - A : `LaunchProjectileEffect` → projectile avec `DamageEffect` (Magical) + `ApplyStatusEffect` (slow) ;
    - Z : `ShieldEffect` (filtre Magical, `BlocksCrowdControl`) sur un allié ;
    - E : `CreateAreaEffect` → zone avec `HealEffect` par intervalle ;
    - R : projectile longue portée → zone d'impact avec dégâts + réduction de résistances (statut avec modificateurs) ;
    - P : comportement spécial (`BehaviourId`) : régénération de mana hors combat, à coder à l'étape 7.
-   Les valeurs `?` restent à demander à l'humain : ne pas les inventer, mettre 0 et l'ajouter aux questions ouvertes du GDD.
-6 bis. **Sorts d'invocateur** : les 10 sorts de `Docs/01-gdd.md` §2.1, chacun un `ABIL_Summoner_*` (rang 1, Smite en 3 rangs 600/1000/1400) et un `SPELL_*` qui le référence. Valeurs inconnues à 0.
+   Les valeurs `?` sont **à choisir par Claude** (CLAUDE.md, « Équilibrage ») : partir d'un champion comparable de LoL 2026, puis noter la valeur dans `Docs/02-champions.md` et le journal.
+6 bis. **Sorts d'invocateur** : les 10 sorts de `Docs/01-gdd.md` §2.1, chacun un `ABIL_Summoner_*` (rang 1, Smite en 3 rangs 600/1000/1400) et un `SPELL_*` qui le référence. Valeurs : 07 §8, le reste à choisir.
 7. *MangaLegends → Content → Rebuild Registry From Project*, puis *Validate* : 0 erreur.
 
 ## 3. Suite du plan

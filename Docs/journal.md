@@ -31,6 +31,8 @@
 
 **Fait (13)** : toute valeur chiffrée d'un sort peut varier par rang ou rester constante (`RankedFloat`, `RankedInt`, `RankedStatModifierData` pour la force des statuts). Bug corrigé : les effets des projectiles et zones étaient validés avec 1 rang, donc des dégâts par rang y auraient été signalés en erreur. DataCheck compile ; le renommage de propriétés (`XAt(rank)`) reste à vérifier dans Unity.
 
+**Fait (14)** : consigne du propriétaire, Claude choisit seul les valeurs et petits détails (CLAUDE.md, guide de reprise, 07) ; arrêt du temps et vision globale restent déséquilibrés exprès (GDD §10.5).
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.
