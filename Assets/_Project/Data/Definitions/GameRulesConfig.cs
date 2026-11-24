@@ -1,5 +1,8 @@
 using MangaLegends.Core.Abilities;
+using System.Collections.Generic;
 using MangaLegends.Core.Combat;
+using MangaLegends.Core.Content;
+using MangaLegends.Data.Serialization;
 using UnityEngine;
 
 namespace MangaLegends.Data.Definitions
@@ -29,6 +32,15 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(1, 8)] private int _inventorySlots = 6;
         [SerializeField, Range(0f, 1f)] private float _sellRatio = 0.7f;
 
+        [Header("Structures")]
+        [SerializeField, Min(0f)] private float _earlyTowerDefenseSeconds;
+        [SerializeField] private List<StatModifierData> _earlyTowerModifiers = new List<StatModifierData>();
+        [SerializeField, Min(0f)] private float _inhibitorRespawnSeconds;
+
+        [Header("Minion waves")]
+        [SerializeField] private UnitDefinition _siegeMinion;
+        [SerializeField] private UnitDefinition _megaMinion;
+
         public int TickRate => _tickRate;
         public float AbilityHasteScale => _abilityHasteScale;
         public float OutOfCombatSeconds => _outOfCombatSeconds;
@@ -40,9 +52,21 @@ namespace MangaLegends.Data.Definitions
         public float PassiveGoldPerSecond => _passiveGoldPerSecond;
         public int InventorySlots => _inventorySlots;
         public float SellRatio => _sellRatio;
+        public float EarlyTowerDefenseSeconds => _earlyTowerDefenseSeconds;
+        public IReadOnlyList<StatModifierData> EarlyTowerModifiers => _earlyTowerModifiers;
+        public float InhibitorRespawnSeconds => _inhibitorRespawnSeconds;
+        public UnitDefinition SiegeMinion => _siegeMinion;
+        public UnitDefinition MegaMinion => _megaMinion;
 
         public CombatRules CombatRules => new CombatRules(_resistanceScale, _minimumDamage);
 
         public float RespawnSeconds(int level) => RankValues.At(_respawnSecondsByLevel, level);
+
+        public void Validate(ValidationReport report)
+        {
+            if (_siegeMinion == null) report.Warning(name, "No siege minion assigned.");
+            if (_megaMinion == null) report.Warning(name, "No mega minion assigned.");
+            if (_inhibitorRespawnSeconds <= 0f) report.Warning(name, "Inhibitor respawn time is not set.");
+        }
     }
 }

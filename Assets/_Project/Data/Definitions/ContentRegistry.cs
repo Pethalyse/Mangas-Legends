@@ -32,6 +32,7 @@ namespace MangaLegends.Data.Definitions
         {
             ValidationReport report = new ValidationReport();
             if (_rules == null) report.Error(name, "No GameRulesConfig assigned.");
+            else _rules.Validate(report);
             report.CheckIds(_entries);
             foreach (ContentDefinition entry in _entries)
             {

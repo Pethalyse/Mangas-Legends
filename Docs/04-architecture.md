@@ -224,6 +224,8 @@ sequenceDiagram
 Scènes : `Boot` → `MainMenu` (créer / rejoindre un salon) → `Lobby` → `ChampionSelect` → `Match` (+ carte additive) → `PostGame`.
 `MatchController` (autorité) : `WaitingForPlayers → Loading → Playing → Ended`, horloge en ticks, vagues, réapparitions, victoire. Règles dans `GameRulesConfig`.
 
+Structures (GDD §6.1) : chaque tour, inhibiteur et Cœur placé sur la carte référence la structure qui le protège ; tant qu'elle tient, l'autorité refuse les dégâts. L'inhibiteur détruit lance un `TickTimer` de réapparition (`InhibitorRespawnSeconds`) et, pendant ce temps, le générateur de vagues de la voie remplace `SiegeMinion` par `MegaMinion`. Les tours reçoivent `EarlyTowerModifiers` jusqu'à `EarlyTowerDefenseSeconds`. Ces règles sont vérifiées par `GameRulesConfig.Validate` (appelée par `ContentRegistry.Validate`).
+
 ## 11. Données et contenu
 
 - Chaque définition a un **`id` stable** (`champion.ainz`, `ability.ainz.mantle_of_chaos`) ; le réseau transporte un **index compact** fourni par `ContentRegistry`.

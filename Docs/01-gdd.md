@@ -104,13 +104,19 @@ Disposition classique du genre, par équipe :
 
 Les noms « Inhibiteur » et « Cœur » sont provisoires 🟡. Dans les données, ce sont des `UnitDefinition` de type `Tower` (tours) et `Structure` (inhibiteur, Cœur).
 
-❓ À définir : ordre de destruction obligatoire (une structure est-elle invulnérable tant que la précédente tient ?), effet de la destruction d'un inhibiteur (sbires renforcés ?), réapparition des inhibiteurs, stats et or des structures, protection des tours en début de partie.
+Règles ✅ :
+- **Ordre de destruction** : sur une voie, la tour 1 doit tomber avant qu'on puisse attaquer la tour 2, puis la tour 3, puis l'inhibiteur. Les 2 tours du Cœur deviennent attaquables quand un inhibiteur est tombé, et le Cœur quand les 2 tours du Cœur sont tombées 🟡 (déduit de « comme le genre », à confirmer). Tant que la structure précédente tient, la suivante ne prend pas de dégâts.
+- **Inhibiteur détruit** : les vagues de cette voie remplacent le sbire de siège par un **méga sbire**. L'inhibiteur réapparaît après un délai, et les vagues redeviennent normales.
+- **Récompenses** : chaque structure détruite donne de l'or.
+- **Début de partie** : les tours sont plus résistantes pendant une durée donnée.
+
+Valeurs en données ✅ : or de chaque structure (`UnitDefinition.GoldBounty`), durée et bonus de résistance des tours en début de partie, délai de réapparition de l'inhibiteur, sbire de siège et méga sbire (`GameRulesConfig`, section *Structures* et *Minion waves*). ❓ Les valeurs elles-mêmes restent à équilibrer, ainsi que le partage de l'or (destructeur seul ou toute l'équipe ?).
 
 ## 7. Unités non-joueurs 🟡
 
 | Unité | Rôle |
 |---|---|
-| Sbires | Vagues régulières sur chaque voie (mêlée, distance, siège) |
+| Sbires | Vagues régulières sur chaque voie (mêlée, distance, siège) ; méga sbire à la place du siège quand l'inhibiteur de la voie est détruit ✅ |
 | Tours | 3 par voie, plus 2 devant le Cœur ✅ (§6.1) |
 | Inhibiteurs | 1 par voie, à l'entrée de la base ✅ (§6.1) |
 | Cœur | Structure principale de chaque base ✅ (§6.1) |
@@ -160,5 +166,5 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 4. Pain : « (mana/sec) » sur Shuradô veut-il dire coût continu en mana ?
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
-7. Structures : ordre de destruction, effet et réapparition des inhibiteurs, récompenses (§6.1).
+7. Structures (§6.1) : valeurs à équilibrer (or, bonus de début de partie, réapparition de l'inhibiteur), partage de l'or, condition exacte pour attaquer les tours du Cœur.
 8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).
