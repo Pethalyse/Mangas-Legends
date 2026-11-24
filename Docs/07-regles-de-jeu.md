@@ -122,7 +122,12 @@
 | Zodd (Baron) | **20:00** ✅ | 6:00 ✅ | 650 XP globale, 100 or + 150 or à l'équipe ✅ ; buff qui renforce les sbires proches et le retour à la base 🔁 |
 
 - Les objectifs épiques gagnent des PV et des résistances avec le niveau moyen des champions, pas avec le temps ✅.
-- ❓ Les PDF donnent à ces monstres des compétences absorbées par Rimuru (GDD §7.1). Leurs **buffs d'équipe** (drakes, âme, Shenron, Zodd) suivent par défaut ceux du genre ; à adapter aux éléments des oiseaux légendaires ?
+- **Buffs d'équipe** ✅ (décision du propriétaire) :
+  - **Sulfura** : buff du drake de feu du genre (bonus de dégâts d'attaque et de puissance, âme de feu) 🔁 pour les valeurs.
+  - **Shenron** : buff du dragon ancestral, exécution des ennemis sous 20 % de PV pendant 150 s ✅.
+  - **Zodd** : buff du Baron, sbires proches renforcés et retour à la base accéléré 🔁 pour les valeurs.
+  - **Artikodin, Électhor, Lugia** : buffs **adaptés** à leur élément (glace, électrique, profondeurs), à inventer ensemble ❓.
+- Indépendamment, les PDF donnent à chaque monstre une compétence absorbée par Rimuru (GDD §7.1).
 
 ## 8. Sorts d'invocateur
 
@@ -142,7 +147,7 @@ Chaque joueur en prend deux (D, F) ✅. Recharges 2026 ✅ :
 | Clarity ✅ (existe dans le genre) | 240 s | rend du mana au lanceur et aux alliés proches |
 
 - La plupart des sorts restent utilisables sous un contrôle qui empêche de lancer. La stase et la suppression bloquent tout. L'immobilisation bloque Flash et Téléportation ✅.
-- ❓ Ajouter Ignite, Cleanse et Clarity, que tu n'as pas cités ?
+- Ignite, Cleanse et Clarity font partie de la liste ✅ (10 sorts en tout).
 
 ## 9. Quêtes de rôle (saison 2026)
 
@@ -175,10 +180,21 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 ## 12. Ce qui reste à demander
 
 Seules les questions propres à MangaLegends restent ouvertes :
-1. Équivalents manga des Larves du Néant et du Carapateur, ou pas de monstre ?
-2. Buffs des drakes, de l'âme, de Shenron et de Zodd : ceux du genre, ou adaptés aux éléments des oiseaux légendaires ?
-3. Ignite, Cleanse et Clarity : on les ajoute ?
-4. Objets nécessaires aux quêtes de rôle et à la vision (bottes, objet de support, balises) : équivalents manga ?
+1. Équivalents manga des Larves du Néant et du Carapateur : il en faut ✅, propositions en cours (voir ci-dessous).
+2. Buffs adaptés d'Artikodin, Électhor et Lugia.
+3. Objets des quêtes de rôle et de la vision (bottes, objet de support, balises) et cercles de champignons : à choisir parmi des propositions (ci-dessous).
+
+Propositions faites au propriétaire (2026-11-24), en attente de son choix :
+
+| Rôle | Idées |
+|---|---|
+| Larves du Néant (3 petits monstres, bonus contre les structures) | Fourmis-Chimères (Hunter x Hunter), larves d'Ohmu (Nausicaä), Kikaichu (Naruto) |
+| Carapateur (monstre de rivière, vision et vitesse) | Magicarpe (Pokémon), Den Den Mushi (One Piece), Kappa (folklore, Natsume) |
+| Bottes | Équipement tridimensionnel (L'Attaque des Titans), Nuage Kinto (Dragon Ball), skate de Conan (Détective Conan) |
+| Objet de support (revenu d'or) | Carte au trésor de Nami (One Piece), licence de Hunter (Hunter x Hunter), bourse de Zeni (Dragon Ball) |
+| Balise furtive | Den Den Mushi de surveillance (One Piece), insectes de Shino (Naruto) |
+| Balise de contrôle | Byakugan (Naruto), mantra de l'observation (One Piece) |
+| Cercles de champignons | arbres de Totoro (Mon voisin Totoro), Sakura sacrés (Naruto) |
 5. Les valeurs 🔁 sont à revérifier dans le jeu actuel avant l'équilibrage final.
 
 ## Sources (consultées le 2026-11-24)

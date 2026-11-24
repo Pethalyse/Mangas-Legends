@@ -34,7 +34,7 @@ Durée cible d'une partie : 25–35 min 🟡.
 
 ### 2.1 Sorts d'invocateur ✅
 
-Chaque joueur en choisit deux (touches D et F), dans la liste suivante, comme le veut le genre. Chaque sort est un `SummonerSpellDefinition` qui pointe vers une compétence (`AbilityDefinition`) : nom affiché, recharge, portée et valeurs sont des données.
+Chaque joueur en choisit deux (touches D et F) parmi ces 10 sorts, comme le veut le genre. Chaque sort est un `SummonerSpellDefinition` qui pointe vers une compétence (`AbilityDefinition`) : nom affiché, recharge, portée et valeurs sont des données.
 
 | Sort | Effet | Construction en données |
 |---|---|---|
@@ -45,8 +45,11 @@ Chaque joueur en choisit deux (touches D et F), dans la liste suivante, comme le
 | Shield (`summoner.barrier`) | bouclier sur soi | `ShieldEffect` |
 | Fatigue (`summoner.exhaust`) | affaiblit un ennemi | `ApplyStatusEffect` |
 | Ghost (`summoner.ghost`) | vitesse de déplacement accrue | `ApplyStatusEffect` (modificateur `MoveSpeed`) |
+| Ignite (`summoner.ignite`) | dégâts bruts sur la durée, réduit les soins de la cible | `ApplyStatusEffect` (dégâts par intervalle) |
+| Cleanse (`summoner.cleanse`) | retire les contrôles et réduit les suivants | comportement spécial (`BehaviourId`) + statut |
+| Clarity (`summoner.clarity`) | rend du mana au lanceur et aux alliés proches | `CreateAreaEffect` + `HealEffect` sur la ressource (`Pool = Resource`) |
 
-Détail des effets, recharges et règles : [07-regles-de-jeu.md §8](07-regles-de-jeu.md#8-sorts-dinvocateur) (Smite §7.2). ❓ Ignite, Cleanse et Clarity existent aussi dans le genre : à ajouter ?
+Détail des effets, recharges et règles : [07-regles-de-jeu.md §8](07-regles-de-jeu.md#8-sorts-dinvocateur) (Smite §7.2). Ignite, Cleanse et Clarity sont aussi disponibles ✅ (10 sorts).
 
 ## 3. Contrôles 🟡
 
@@ -177,13 +180,13 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 
 ## 10. Questions ouvertes
 
-1. ~~Sorts d'invocateur ?~~ Réglé (§2.1 et 07 §8) ; reste : ajouter Ignite, Cleanse, Clarity ?
+1. ~~Sorts d'invocateur ?~~ Réglé (§2.1 et 07 §8), 10 sorts dont Ignite, Cleanse, Clarity.
 2. ~~Ressource alternative ?~~ Réglé : mana par défaut, autre ressource seulement si la fiche du champion le précise (§5).
 3. ~~Type de dégât « chaos » ?~~ Réglé : dégâts magiques.
 4. ~~Pain, « (mana/sec) » sur Shuradô ?~~ Réglé : coût continu en mana par seconde (`AbilityDefinition.CostPerSecond`, prélevé tant que la compétence est active). La compétence s'arrête quand le mana ne suffit plus (07 §11).
 5. Arrêt du temps (Jotaro) et vision totale (Shanks) : comment rester jouables et justes en réseau ?
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
 7. ~~Structures~~ Réglé par les règles du genre (07 §6).
-9. Équivalents manga : Larves du Néant, Carapateur, objets des quêtes de rôle et de la vision (bottes, objet de support, balises), cercles de champignons (07 §12).
-10. Buffs des drakes, de l'âme, de Shenron et de Zodd : ceux du genre, ou adaptés aux éléments des oiseaux légendaires ?
+9. Équivalents manga à choisir parmi les propositions (07 §12) : Larves du Néant, Carapateur, bottes, objet de support, balises, cercles de champignons.
+10. Buffs adaptés d'Artikodin, Électhor et Lugia (Sulfura, Shenron et Zodd gardent ceux du genre, 07 §7.3).
 8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).
