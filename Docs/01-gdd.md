@@ -191,5 +191,5 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 6. Bojji « ne prend aucun dégât tant qu'un allié est en vie » : risque d'équilibrage majeur.
 7. ~~Structures~~ Réglé par les règles du genre (07 §6).
 9. ~~Équivalents manga~~ Réglé : Pitou, Pufu, Youpi, Magicarpe (§7.1), objets système dans [03-objets.md §5](03-objets.md). Compétences absorbables par Rimuru validées (§7.1).
-10. Buffs adaptés d'Artikodin, Électhor et Lugia (Sulfura, Shenron et Zodd gardent ceux du genre, 07 §7.3).
+10. ~~Buffs des drakes~~ Réglé (07 §7.3).
 8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).

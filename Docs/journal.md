@@ -37,6 +37,8 @@
 
 **Fait (16)** : compétences absorbées par Rimuru sur Pitou (bond), Pufu (silence court), Youpi (coup en zone) et Magicarpe (« Trempette », sans effet) validées par le propriétaire (GDD §7.1).
 
+**Fait (17)** : buffs d'Artikodin (bouclier de glace), Électhor (éclair sur attaque de base) et Lugia (soin sur dégâts) validés ; toutes les âmes ont une recharge ; valeurs choisies par Claude (07 §7.3).
+
 ## 2026-11-24 — Étape 4 : modèle de données (sans Unity)
 
 **Fait** : identifiants et index de contenu, validation, prix des objets (Core, 52 tests verts) ; assembly Data (toutes les définitions et les effets) ; assembly Editor (sélecteur de type d'effet, validation, reconstruction du registre) ; compilation vérifiée contre des bouchons d'API Unity ; guide de reprise pour Claude Code connecté à Unity.

@@ -128,10 +128,10 @@
   - **Sulfura** : buff du drake de feu du genre (bonus de dégâts d'attaque et de puissance, âme de feu) 🔁 pour les valeurs.
   - **Shenron** : buff du dragon ancestral, exécution des ennemis sous 20 % de PV pendant 150 s ✅.
   - **Zodd** : buff du Baron, sbires proches renforcés et retour à la base accéléré 🔁 pour les valeurs.
-  - **Artikodin, Électhor, Lugia** : buffs **adaptés** à leur élément ❓. Propositions faites au propriétaire (2026-11-24), en attente :
-    - **Artikodin (glace)**, esprit du drake de montagne : chaque drake donne + armure et + résistance magique. Son **âme** : après quelques secondes sans dégâts subis, le champion gagne un bouclier de glace, et l'ennemi qui le brise est ralenti.
-    - **Électhor (électrique)**, esprit des drakes de vent et hextech : chaque drake donne + vitesse d'attaque et + accélération de compétence. Son **âme** : régulièrement, la prochaine attaque ou compétence lance un éclair qui rebondit sur les ennemis proches et les ralentit.
-    - **Lugia (profondeurs)**, esprit du drake océan : chaque drake donne une régénération des PV manquants. Son **âme** : infliger des dégâts rend des PV et du mana pendant quelques secondes.
+  - **Artikodin, Électhor, Lugia** : buffs **adaptés** à leur élément ✅ (validés le 2026-11-24). Chaque âme a une recharge ✅. Valeurs choisies par Claude (à ajuster à l'équilibrage) :
+    - **Artikodin (glace)**, esprit du drake de montagne : +6 % d'armure et de résistance magique par drake. **Âme** : après 4 s sans dégâts subis, bouclier de glace de 180 + 15 % des PV bonus ; l'ennemi qui le brise est ralenti de 30 % pendant 1,5 s. Recharge 8 s.
+    - **Électhor (électrique)**, esprit des drakes de vent et hextech : +7 % de vitesse d'attaque et +6 d'accélération de compétence par drake. **Âme** : une **attaque de base** ✅ déclenche un éclair (40 + 10 % AD bonus + 15 % AP, dégâts magiques) qui rebondit sur 3 ennemis proches et les ralentit de 25 % pendant 1 s. Recharge 4 s.
+    - **Lugia (profondeurs)**, esprit du drake océan : régénère 2,5 % des PV manquants toutes les 5 s par drake. **Âme** : infliger des dégâts à un champion rend 160 + 25 % AD bonus + 15 % AP + 9 % des PV bonus en PV et 80 + 2,5 % du mana max sur 3 s. Recharge 9 s.
 - Indépendamment, les PDF donnent à chaque monstre une compétence absorbée par Rimuru (GDD §7.1).
 
 ## 8. Sorts d'invocateur
@@ -188,8 +188,7 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 ## 12. Ce qui reste à demander
 
 Seules les questions propres à MangaLegends restent ouvertes :
-1. Buffs adaptés d'Artikodin, Électhor et Lugia.
-2. Les valeurs 🔁 sont à revérifier dans le jeu actuel ; Claude les ajuste lui-même à l'équilibrage (CLAUDE.md).
+1. Les valeurs 🔁 sont à revérifier dans le jeu actuel ; Claude les ajuste lui-même à l'équilibrage (CLAUDE.md).
 
 ## Sources (consultées le 2026-11-24)
 
