@@ -128,7 +128,10 @@
   - **Sulfura** : buff du drake de feu du genre (bonus de dégâts d'attaque et de puissance, âme de feu) 🔁 pour les valeurs.
   - **Shenron** : buff du dragon ancestral, exécution des ennemis sous 20 % de PV pendant 150 s ✅.
   - **Zodd** : buff du Baron, sbires proches renforcés et retour à la base accéléré 🔁 pour les valeurs.
-  - **Artikodin, Électhor, Lugia** : buffs **adaptés** à leur élément (glace, électrique, profondeurs), à inventer ensemble ❓.
+  - **Artikodin, Électhor, Lugia** : buffs **adaptés** à leur élément ❓. Propositions faites au propriétaire (2026-11-24), en attente :
+    - **Artikodin (glace)**, esprit du drake de montagne : chaque drake donne + armure et + résistance magique. Son **âme** : après quelques secondes sans dégâts subis, le champion gagne un bouclier de glace, et l'ennemi qui le brise est ralenti.
+    - **Électhor (électrique)**, esprit des drakes de vent et hextech : chaque drake donne + vitesse d'attaque et + accélération de compétence. Son **âme** : régulièrement, la prochaine attaque ou compétence lance un éclair qui rebondit sur les ennemis proches et les ralentit.
+    - **Lugia (profondeurs)**, esprit du drake océan : chaque drake donne une régénération des PV manquants. Son **âme** : infliger des dégâts rend des PV et du mana pendant quelques secondes.
 - Indépendamment, les PDF donnent à chaque monstre une compétence absorbée par Rimuru (GDD §7.1).
 
 ## 8. Sorts d'invocateur
