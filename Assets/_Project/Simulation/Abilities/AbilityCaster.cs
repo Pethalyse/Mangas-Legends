@@ -244,7 +244,7 @@ namespace MangaLegends.Simulation.Abilities
         private void Execute(AbilityDefinition ability, int rank, Unit target, Vector3 aimPoint)
         {
             LastCastTick = Runner.Tick;
-            EffectExecutor.Run(ability.OnCast, new EffectContext(_unit, target, aimPoint, aimPoint, rank, null));
+            EffectExecutor.Run(ability.OnCast, new EffectContext(_unit, target, aimPoint, _unit.Position, rank, null));
             if (!string.IsNullOrEmpty(ability.BehaviourId)) AbilityBehaviours.OnExecuted(ability.BehaviourId, _unit, target, aimPoint);
         }
 

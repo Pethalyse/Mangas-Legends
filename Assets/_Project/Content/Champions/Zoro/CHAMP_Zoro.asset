@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a67e8de616430c8f6f15cf43826684, type: 3}
+  m_Name: CHAMP_Zoro
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ChampionDefinition
+  _id: champion.zoro
+  _displayName: Zoro Roronoa
+  _description: "Sabreur \xE0 trois sabres."
+  _icon: {fileID: 0}
+  _kind: 0
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 650
+      _growthPerLevel: 110
+    - _stat: 1
+      _base: 1.6
+      _growthPerLevel: 0.15
+    - _stat: 2
+      _base: 300
+      _growthPerLevel: 30
+    - _stat: 3
+      _base: 1.4
+      _growthPerLevel: 0.12
+    - _stat: 4
+      _base: 64
+      _growthPerLevel: 3.5
+    - _stat: 6
+      _base: 34
+      _growthPerLevel: 4.7
+    - _stat: 7
+      _base: 32
+      _growthPerLevel: 1.5
+    - _stat: 8
+      _base: 0.66
+      _growthPerLevel: 0.016500002
+    - _stat: 9
+      _base: 3.45
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 1.75
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 12
+      _growthPerLevel: 0
+  _prefab: {fileID: 6298360075311980653, guid: 99b5f91a4e73bed46b5698f97e031b0c, type: 3}
+  _goldBounty: 0
+  _experienceBounty: 0
+  _collisionRadius: 0.5
+  _tint: {r: 0.2, g: 0.65, b: 0.3, a: 1}
+  _attackProjectileSpeed: 0
+  _attackWindup: 0.3
+  _role: 1
+  _resource: 0
+  _defaultAbilities:
+    _name: Default
+    _passive: {fileID: 0}
+    _a: {fileID: 11400000, guid: bdf047333b2e1d84c910b3991e0c7ebe, type: 2}
+    _z: {fileID: 11400000, guid: 19a8d1adc44749d4e84e5a84420f7c87, type: 2}
+    _e: {fileID: 11400000, guid: 3e7d6a945d8f5024788bd31d13d87a46, type: 2}
+    _r: {fileID: 11400000, guid: f4e7eb2ee7214b846ad744ffd16d3675, type: 2}
+  _alternateAbilitySets: []

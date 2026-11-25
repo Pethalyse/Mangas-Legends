@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Zoro_NitoryuSlash
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.zoro.nitoryu_slash
+  _displayName: Nitoryu slash
+  _description: "Coup en c\xF4ne devant Zoro, d\xE9g\xE2ts physiques."
+  _icon: {fileID: 0}
+  _maxRank: 5
+  _castMode: 0
+  _cooldownSeconds:
+  - 5
+  - 4.5
+  - 4
+  - 3.5
+  - 3
+  _cost:
+  - 30
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 4
+    _validTargets: 4
+    _fallback: 0
+    _range:
+      _byRank:
+      - 3
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 3
+  _onCast:
+  - rid: 2286801137428857076
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857076
+      type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _area: {fileID: 11400000, guid: db53325b80a4a2b418d398340d558427, type: 2}
+        _atAimPoint: 0

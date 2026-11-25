@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Naruto_MultiRasenShuriken
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.naruto.multi_rasen_shuriken
+  _displayName: Multi Rasen-Shuriken
+  _description: "Rasen-Shuriken sur la zone vis\xE9e : d\xE9g\xE2ts magiques en zone."
+  _icon: {fileID: 0}
+  _maxRank: 3
+  _castMode: 0
+  _cooldownSeconds:
+  - 90
+  - 80
+  - 70
+  _cost:
+  - 100
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 3
+    _validTargets: 4
+    _fallback: 0
+    _range:
+      _byRank:
+      - 10
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 4
+  _onCast:
+  - rid: 2286801137428857069
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857069
+      type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _area: {fileID: 11400000, guid: 9110b596af75a9a47abbf310a8983b9e, type: 2}
+        _atAimPoint: 1

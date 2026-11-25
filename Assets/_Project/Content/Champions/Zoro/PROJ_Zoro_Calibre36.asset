@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc063c8ef10c47d19f763b23c22f8563, type: 3}
+  m_Name: PROJ_Zoro_Calibre36
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ProjectileDefinition
+  _id: projectile.zoro.calibre_36
+  _displayName: Calibre 36
+  _description: 
+  _icon: {fileID: 0}
+  _speed:
+    _byRank:
+    - 20
+  _maxDistance:
+    _byRank:
+    - 6
+  _radius:
+    _byRank:
+    - 0.6
+  _homing: 0
+  _maxHits:
+    _byRank: 03000000
+  _hits: 12
+  _stopsOnTerrain: 1
+  _onHit:
+  - rid: 2286801137428857074
+  - rid: 2286801137428857075
+  _visualPrefab: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857074
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 0
+        _amount:
+          _baseByRank:
+          - 60
+          - 95
+          - 130
+          - 165
+          - 200
+          _ratios:
+          - _source: 1
+            _stat: 4
+            _ratioByRank:
+            - 0.8
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+    - rid: 2286801137428857075
+      type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _kind: 0
+        _distance:
+          _byRank:
+          - 2
+        _durationSeconds:
+          _byRank:
+          - 0.25

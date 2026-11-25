@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc063c8ef10c47d19f763b23c22f8563, type: 3}
+  m_Name: PROJ_Naruto_Shuriken
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ProjectileDefinition
+  _id: projectile.naruto.shuriken
+  _displayName: Shuriken
+  _description: 
+  _icon: {fileID: 0}
+  _speed:
+    _byRank:
+    - 18
+  _maxDistance:
+    _byRank:
+    - 9
+  _radius:
+    _byRank:
+    - 0.35
+  _homing: 0
+  _maxHits:
+    _byRank: 01000000
+  _hits: 12
+  _stopsOnTerrain: 1
+  _onHit:
+  - rid: 2286801137428857071
+  - rid: 2286801137428857072
+  _visualPrefab: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857071
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 0
+        _amount:
+          _baseByRank:
+          - 30
+          - 45
+          - 60
+          - 75
+          - 90
+          _ratios:
+          - _source: 1
+            _stat: 4
+            _ratioByRank:
+            - 0.4
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+    - rid: 2286801137428857072
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: ace8787130e892d47b2ae244d64e1f46, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 2
+        _modifierOverrides: []
