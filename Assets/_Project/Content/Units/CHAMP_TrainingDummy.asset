@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a67e8de616430c8f6f15cf43826684, type: 3}
+  m_Name: CHAMP_TrainingDummy
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ChampionDefinition
+  _id: champion.training_dummy
+  _displayName: "Pantin d'entra\xEEnement"
+  _description: "Cible fixe du mode entra\xEEnement."
+  _icon: {fileID: 0}
+  _kind: 0
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 3000
+      _growthPerLevel: 300
+    - _stat: 1
+      _base: 60
+      _growthPerLevel: 0
+    - _stat: 6
+      _base: 30
+      _growthPerLevel: 3
+    - _stat: 7
+      _base: 30
+      _growthPerLevel: 2
+    - _stat: 9
+      _base: 0
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 6
+      _growthPerLevel: 0
+  _prefab: {fileID: 6298360075311980653, guid: a0e11dd4d7f6d994cbcf25e60288a1cc, type: 3}
+  _goldBounty: 0
+  _experienceBounty: 0
+  _collisionRadius: 0.6
+  _tint: {r: 0.85, g: 0.7, b: 0.35, a: 1}
+  _attackProjectileSpeed: 0
+  _attackWindup: 0.3
+  _stealthed: 0
+  _revealsStealth: 0
+  _oneDamagePerHit: 0
+  _role: 0
+  _resource: 1
+  _traits: 0
+  _defaultAbilities:
+    _name: 
+    _passive: {fileID: 0}
+    _a: {fileID: 0}
+    _z: {fileID: 0}
+    _e: {fileID: 0}
+    _r: {fileID: 0}
+  _alternateAbilitySets: []
+  _resourceBarStatus: {fileID: 0}
+  _setChangeLockSeconds: 0
+  _startingItems: []
+  _selectable: 0

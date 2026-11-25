@@ -19,6 +19,7 @@ namespace MangaLegends.Simulation.Match
 
         public void Grant(Unit victim, Unit killer)
         {
+            if (victim.IsTrainingDummy) return;
             Unit killingChampion = killer != null && killer.IsChampion ? killer : null;
             if (victim.IsChampion)
             {

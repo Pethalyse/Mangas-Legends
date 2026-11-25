@@ -388,6 +388,8 @@ MonoBehaviour:
   _PendingSlot: 0
   _PendingTarget:
     Raw: 0
+  _PendingPoint: {x: 0, y: 0, z: 0}
+  _SetChangeTick: 0
   _LastCastTick: 0
   _LastCastSlot: 0
   _BaseTrinket: 0
@@ -446,6 +448,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e0a27ea8c40b74e8b387b3affc1a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MangaLegends.Simulation::MangaLegends.Simulation.Champions.ChampionController
+  _AttackMoving:
+    RawValue: 0
 --- !u!136 &2161496037152307094
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -538,8 +542,14 @@ MonoBehaviour:
   _mainModel: {fileID: 4664355097724152487}
   _formModel: {fileID: 6923101482324423123}
   _formAnimator: {fileID: 0}
+  _companionStatusId: 
+  _companionModel: {fileID: 0}
   _attackAnimationSeconds: 1
   _runBlendSpeed: 3.5
+  _floats: 0
+  _floatHeight: 0.35
+  _floatBob: 0.08
+  _floatLean: 10
   _tintBody: 0
 --- !u!114 &4279612695294280534
 MonoBehaviour:
@@ -584,6 +594,11 @@ MonoBehaviour:
   _hoverHeight: 0.6
   _flapSpeed: 3
   _flapAngle: 35
+  _runSpeed: 4.2
+  _leftHandEvery: 0
+  _postureBone: {fileID: 0}
+  _postureAngle: 0
+  _model: {fileID: 4406352685784068234}
 --- !u!1 &7321258506644230896
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,7 +70,7 @@ namespace MangaLegends.UI
         {
             victim.TryResolve(victim.Health.LastAttacker, out Unit killer);
             bool allyVictim = victim.Team == local.Team;
-            if (victim.IsChampion)
+            if (victim.IsChampion && !victim.IsTrainingDummy)
             {
                 Feed(killer, victim, now);
                 string text = victim == local ? "Vous avez été tué"

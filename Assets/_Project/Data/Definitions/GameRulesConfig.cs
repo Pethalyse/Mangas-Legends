@@ -69,6 +69,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(0f, 1f)] private float _fountainRegenPerSecond = 0.1f;
         [SerializeField, Min(0f), Tooltip("True damage per second dealt to enemy champions inside a fountain.")] private float _fountainLaserDamagePerSecond = 1500f;
         [SerializeField] private AbilityDefinition _recallAbility;
+        [SerializeField, Tooltip("Training game: the dummy spawned by the test tools (a champion hidden from champion select).")] private ChampionDefinition _trainingDummy;
         [SerializeField, Tooltip("Free trinket of every champion; its rank follows the champion level.")] private AbilityDefinition _trinketAbility;
         [SerializeField, Tooltip("Trinkets a champion can switch to at the shop.")] private List<AbilityDefinition> _trinketChoices = new List<AbilityDefinition>();
 
@@ -115,6 +116,7 @@ namespace MangaLegends.Data.Definitions
         public int DrakeElementLocksAfter => _drakeElementLocksAfter;
         public bool DevilFruitWaterIsLethal => _devilFruitWaterIsLethal;
         public int MaxLevel => _maxLevel;
+        public ChampionDefinition TrainingDummy => _trainingDummy;
         public int[] ExperienceToNextLevel => _experienceToNextLevel;
         public int[] UltimateUnlockLevels => _ultimateUnlockLevels;
         public int BasicAbilityMaxRank => _basicAbilityMaxRank;

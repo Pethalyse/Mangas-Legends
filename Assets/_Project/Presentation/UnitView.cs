@@ -118,7 +118,8 @@ namespace MangaLegends.Presentation
             _floatLeanCurrent = Mathf.Lerp(_floatLeanCurrent, moving * _floatLean, 1f - Mathf.Exp(-6f * Time.deltaTime));
             float bob = _unit.IsAlive ? Mathf.Sin(Time.time * 2f) * _floatBob : 0f;
             _model.localPosition = _basePosition + Vector3.up * ((_unit.IsAlive ? _floatHeight : 0f) + bob);
-            _model.localRotation = Quaternion.AngleAxis(_floatLeanCurrent, Vector3.right) * _baseRotation;
+            float sway = _unit.IsAlive ? Mathf.Sin(Time.time * 1.7f) * Mathf.Lerp(2f, 5f, moving) : 0f;
+            _model.localRotation = Quaternion.AngleAxis(_floatLeanCurrent, Vector3.right) * Quaternion.AngleAxis(sway, Vector3.forward) * _baseRotation;
         }
 
         private bool _companionShown;

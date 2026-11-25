@@ -21,6 +21,8 @@ MonoBehaviour:
   _inCombatRegenRatio: 0.25
   _minionDamageToChampionsRatio: 0.6
   _maxAttackSpeed: 2.5
+  _attackMoveRadius: 4
+  _brushRevealSeconds: 1
   _devilFruitWaterDrain: 0.015
   _devilFruitWaterIsLethal: 0
   _maxLevel: 18
@@ -66,6 +68,7 @@ MonoBehaviour:
   _assistGoldShare: 0.5
   _assistWindowSeconds: 10
   _shopRadius: 8
+  _minionSpawnIntervalSeconds: 0.8
   _drakesForSoul: 4
   _drakeElementLocksAfter: 2
   _monsterKillHealBase: 90
@@ -79,6 +82,7 @@ MonoBehaviour:
   _fountainRegenPerSecond: 0.1
   _fountainLaserDamagePerSecond: 1500
   _recallAbility: {fileID: 11400000, guid: 52cb391bbe382a64f92888514e4dc135, type: 2}
+  _trainingDummy: {fileID: 11400000, guid: fd14a1d197ce5464488b55b63920b349, type: 2}
   _trinketAbility: {fileID: 11400000, guid: fe120a630be7a8c4b888e40704b2d3de, type: 2}
   _trinketChoices:
   - {fileID: 11400000, guid: fe120a630be7a8c4b888e40704b2d3de, type: 2}

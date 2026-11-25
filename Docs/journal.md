@@ -3,6 +3,14 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-26 — Lot 3 (visuels), mode entraînement, boutique à onglets
+
+**Fait** : squelettes de Giorno, Jotaro et des deux stands redressés et reliés (fin des bras étirés) ; marche plus vivante (rebond, inclinaison, coudes, course sous bonus de vitesse) ; main gauche toutes les 3 attaques et rotation autour de la cible au R pour Kirito ; posture de Mark redressée ; Ainz qui se balance en flottant ; mur de Mark et boule du R d'Ainz dessinés ; flammes de Sulfura orange ; mode entraînement en solo (niveaux, or illimité, sans recharge, pantins ennemis et alliés qui se relèvent) ; boutique à onglets avec colonne des consommables et des bottes ; ouverture de la boutique en cliquant sur l'or.
+
+**Testé dans l'éditeur** : rendu d'un bras baissé avant et après la correction du squelette ; champions en marche (Giorno, Jotaro, Kirito) ; Sulfura ; mode entraînement (niveau 18, 99 999 or, pantins) ; boutique ; 0 erreur. À regarder en jeu par le propriétaire : posture de Mark (angle choisi : 20°), animations de Pain et Luffy, rotation du R de Kirito.
+
+**Reste** : animations dédiées (pas de clips pour la plupart des modèles : tout est procédural), icônes des sorts et des objets, modèles des pantins de Pain.
+
 ## 2026-11-26 — Lot 2 (interface)
 
 **Fait** : infobulles (Maj = détails, portée affichée au survol), passif allumé ou décompte, charges et rangs jusqu'à 9 sur le HUD, contour doré des actifs, jauge de Pain sous les PV (HUD et au-dessus de lui), cadre de la cible en haut à gauche (clic gauche sur une unité), marques de Kirito et fleurs de Giorno au-dessus des barres de vie, boutique à la LoL (catégories, recherche, arbre de recette, acheter et vendre), sélection des champions et des sorts d'invocateur à la LoL, Échap ferme la boutique.

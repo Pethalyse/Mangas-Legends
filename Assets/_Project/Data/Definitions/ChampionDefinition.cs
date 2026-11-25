@@ -15,6 +15,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Tooltip("Champions without mana: status whose stacks fill the bar under the health bar (Pain's body gauge).")] private StatusEffectDefinition _resourceBarStatus;
         [SerializeField, Min(0f), Tooltip("Minimum time between two ability set changes by step (Pain's bodies); shown as the passive cooldown.")] private float _setChangeLockSeconds;
         [SerializeField, Tooltip("Items in the inventory from the start (champion-exclusive items such as Mark Evans' gloves).")] private List<ItemDefinition> _startingItems = new List<ItemDefinition>();
+        [SerializeField, Tooltip("Off for technical champions such as the training dummy.")] private bool _selectable = true;
 
         public ChampionRole Role => _role;
         public ResourceKind Resource => _resource;
@@ -25,12 +26,13 @@ namespace MangaLegends.Data.Definitions
         public float SetChangeLockSeconds => _setChangeLockSeconds;
         public StatusEffectDefinition ResourceBarStatus => _resourceBarStatus;
         public IReadOnlyList<ItemDefinition> StartingItems => _startingItems;
+        public bool Selectable => _selectable;
 
         public override void Validate(ValidationReport report)
         {
             base.Validate(report);
             if (Kind != UnitKind.Champion) report.Error(Id, "A champion definition must have Kind = Champion.");
-            _defaultAbilities.Validate(Id, report, allowEmptySlots: false);
+            _defaultAbilities.Validate(Id, report, allowEmptySlots: !_selectable);
             foreach (AbilitySet set in _alternateAbilitySets) set.Validate(Id, report, allowEmptySlots: true);
         }
     }

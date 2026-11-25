@@ -50,6 +50,7 @@ namespace MangaLegends.Simulation.Units
             : null;
         public UnitKind Kind => Definition != null ? Definition.Kind : UnitKind.Minion;
         public bool IsChampion => Kind == UnitKind.Champion;
+        public bool IsTrainingDummy => Definition is ChampionDefinition champion && !champion.Selectable;
         public bool IsStructure => Kind == UnitKind.Tower || Kind == UnitKind.Structure;
         public bool IsMonster => Kind == UnitKind.Monster;
         public bool IsAlive => Health != null && !Health.IsDead;

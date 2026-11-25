@@ -77767,6 +77767,7 @@ GameObject:
   - component: {fileID: 1487576669}
   - component: {fileID: 1487576668}
   - component: {fileID: 1487576667}
+  - component: {fileID: 1487576672}
   m_Layer: 0
   m_Name: Match
   m_TagString: Untagged
@@ -77851,6 +77852,7 @@ MonoBehaviour:
   - {fileID: 1487576669}
   - {fileID: 1487576668}
   - {fileID: 1487576667}
+  - {fileID: 1487576672}
   ForceRemoteRenderTimeframe: 0
 --- !u!4 &1487576671
 Transform:
@@ -77867,6 +77869,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1487576672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1487576666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f98942d0b9f4b4e9aa4daa241fb378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MangaLegends.Simulation::MangaLegends.Simulation.Match.TrainingTools
+  _InfiniteGold:
+    RawValue: 0
+  _NoCooldowns:
+    RawValue: 0
+  _Dummies: []
 --- !u!1 &1491682310
 GameObject:
   m_ObjectHideFlags: 0

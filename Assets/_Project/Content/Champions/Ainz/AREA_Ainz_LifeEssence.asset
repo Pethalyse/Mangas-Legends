@@ -49,6 +49,8 @@ MonoBehaviour:
   _onInterval:
   - rid: 2286801137428857037
   _visualPrefab: {fileID: 0}
+  _wallHeight: 0
+  _incomingOrb: 0
   references:
     version: 2
     RefIds:

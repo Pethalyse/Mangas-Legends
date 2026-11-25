@@ -154,7 +154,7 @@ namespace MangaLegends.Simulation.Match
             float damage = Rules.FountainLaserDamagePerSecond * Runner.DeltaTime;
             foreach (Unit unit in _services.Units.All)
             {
-                if (unit == null || !unit.IsChampion || !unit.IsAlive || (unit.Team != Team.Blue && unit.Team != Team.Red)) continue;
+                if (unit == null || !unit.IsChampion || unit.IsTrainingDummy || !unit.IsAlive || (unit.Team != Team.Blue && unit.Team != Team.Red)) continue;
                 Team enemy = TeamRules.Opponent(unit.Team);
                 if (UnitRegistry.FlatDistance(unit.Position, _map.Fountain(enemy)) > Rules.FountainRadius) continue;
                 unit.Health.ApplyDamage(new DamageInfo(null, damage, Core.Combat.DamageType.True, Core.Combat.DamageFlags.IgnoreShields));

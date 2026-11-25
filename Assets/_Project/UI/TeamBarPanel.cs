@@ -49,7 +49,7 @@ namespace MangaLegends.UI
             _allyUnits.Clear();
             foreach (Unit unit in services.Units.All)
             {
-                if (unit == null || unit.Object == null || !unit.IsChampion) continue;
+                if (unit == null || unit.Object == null || !unit.IsChampion || unit.IsTrainingDummy) continue;
                 ChampionProgress progress = unit.GetComponent<ChampionProgress>();
                 if (unit.Team == Team.Blue) blue += progress.Kills;
                 else if (unit.Team == Team.Red) red += progress.Kills;

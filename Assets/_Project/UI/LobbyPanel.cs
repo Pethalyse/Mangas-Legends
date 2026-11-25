@@ -158,6 +158,7 @@ namespace MangaLegends.UI
             for (int i = 0; i < champions.Count; i++)
             {
                 ChampionDefinition champion = champions[i];
+                if (!champion.Selectable) continue;
                 if (!string.IsNullOrWhiteSpace(filter) && !(champion.DisplayName ?? "").ToLowerInvariant().Contains(filter.Trim().ToLowerInvariant())) continue;
                 AddPortrait(cell++, perRow, (short)i, Initials(champion.DisplayName), champion.DisplayName, champion.Tint, champion.Icon);
             }
@@ -226,7 +227,16 @@ namespace MangaLegends.UI
             _pickingSpell = -1;
         }
 
-        private short RandomChampion() => (short)Random.Range(0, _services.Content.Champions.Count);
+        private short RandomChampion()
+        {
+            var champions = _services.Content.Champions;
+            for (int attempt = 0; attempt < 32; attempt++)
+            {
+                short pick = (short)Random.Range(0, champions.Count);
+                if (champions[pick].Selectable) return pick;
+            }
+            return 0;
+        }
 
         private void Choose(short champion = -1, Team team = Team.None)
         {

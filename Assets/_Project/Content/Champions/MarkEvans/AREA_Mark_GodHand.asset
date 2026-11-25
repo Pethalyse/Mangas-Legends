@@ -44,6 +44,8 @@ MonoBehaviour:
   _onActivate: []
   _onInterval: []
   _visualPrefab: {fileID: 0}
+  _wallHeight: 2.5
+  _incomingOrb: 0
   references:
     version: 2
     RefIds: []

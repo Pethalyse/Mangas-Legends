@@ -10,7 +10,8 @@ namespace MangaLegends.Presentation
         None,
         StretchPunch,
         Barrage,
-        GrabDash
+        GrabDash,
+        Orbit
     }
 
     // Bone-driven animation for models that ship without clips: walk cycle, Luffy's rubber moves, flying creatures.
@@ -50,6 +51,11 @@ namespace MangaLegends.Presentation
         [SerializeField] private float _hoverHeight = 0.6f;
         [SerializeField] private float _flapSpeed = 3f;
         [SerializeField] private float _flapAngle = 35f;
+        [SerializeField, Tooltip("Moving faster than this (m/s, speed buffs) turns the walk into a run.")] private float _runSpeed = 4.2f;
+        [SerializeField, Tooltip("Every Nth chained basic attack uses the left hand (Kirito's passive); 0 = never.")] private int _leftHandEvery;
+        [SerializeField, Tooltip("Bone straightened by Posture Angle (a model whose rest pose is bent).")] private Transform _postureBone;
+        [SerializeField] private float _postureAngle;
+        [SerializeField, Tooltip("Model root: leans into the movement and whirls during an Orbit move.")] private Transform _model;
 
         private Vector3 _lastPosition;
         private float _phase;
@@ -64,6 +70,13 @@ namespace MangaLegends.Presentation
         private Quaternion[] _tailRest = new Quaternion[0];
         private Quaternion _neckRest;
         private bool _initialised;
+        private const float OrbitSeconds = 1f;
+        private Quaternion _postureRest;
+        private Quaternion _modelRest;
+        private Vector3 _modelPosition;
+        private int _attackCount;
+        private float _orbitTime = -1f;
+        private Vector3 _orbitCenter;
 
         private void Start()
         {
@@ -79,6 +92,8 @@ namespace MangaLegends.Presentation
                 limb.Length = Vector3.Distance(limb.Upper.position, limb.Lower.position) + Vector3.Distance(limb.Lower.position, end.position);
             }
             if (_hips != null) _hipsRest = _hips.localPosition;
+            if (_postureBone != null) _postureRest = _postureBone.localRotation;
+            if (_model != null) { _modelRest = _model.localRotation; _modelPosition = _model.localPosition; }
             _tailRest = new Quaternion[_tail.Length];
             for (int i = 0; i < _tail.Length; i++) if (_tail[i] != null) _tailRest[i] = _tail[i].localRotation;
             if (_neck != null) _neckRest = _neck.localRotation;
@@ -111,17 +126,26 @@ namespace MangaLegends.Presentation
             else AnimateBody();
         }
 
+        // Walk cycle with a bounce, a lean and bent elbows; past the run threshold (speed buffs) the stride becomes a run.
         private void AnimateBody()
         {
             Reset(_leftArm); Reset(_rightArm); Reset(_leftLeg); Reset(_rightLeg);
             float walk = Mathf.Clamp01(_speed / 3f);
-            float swing = Mathf.Sin(_phase) * _walkSwing * walk;
+            float run = Mathf.Clamp01((_speed - _runSpeed) / 1.5f);
+            float stride = _walkSwing * Mathf.Lerp(1f, 1.6f, run);
+            float swing = Mathf.Sin(_phase) * stride * walk;
             Swing(_leftLeg, swing);
             Swing(_rightLeg, -swing);
-            Swing(_leftArm, -swing * 0.7f);
-            Swing(_rightArm, swing * 0.7f);
-            Bend(_leftLeg, Mathf.Max(0f, -Mathf.Sin(_phase)) * 35f * walk);
-            Bend(_rightLeg, Mathf.Max(0f, Mathf.Sin(_phase)) * 35f * walk);
+            Swing(_leftArm, -swing * Mathf.Lerp(0.7f, 1.1f, run));
+            Swing(_rightArm, swing * Mathf.Lerp(0.7f, 1.1f, run));
+            float knee = Mathf.Lerp(35f, 70f, run) * walk;
+            Bend(_leftLeg, Mathf.Max(0f, -Mathf.Sin(_phase)) * knee);
+            Bend(_rightLeg, Mathf.Max(0f, Mathf.Sin(_phase)) * knee);
+            Bend(_leftArm, -Mathf.Lerp(12f, 55f, run) * walk);
+            Bend(_rightArm, -Mathf.Lerp(12f, 55f, run) * walk);
+            if (_hips != null) _hips.localPosition = _hipsRest + _hips.parent.InverseTransformVector(Vector3.up * Mathf.Abs(Mathf.Sin(_phase)) * Mathf.Lerp(0.04f, 0.09f, run) * walk);
+            if (_postureBone != null) _postureBone.localRotation = Quaternion.AngleAxis(_postureAngle, _postureBone.parent != null ? _postureBone.parent.InverseTransformDirection(_root.right) : _root.right) * _postureRest;
+            if (_model != null) _model.localRotation = Quaternion.AngleAxis(Mathf.Lerp(3f, 12f, run) * walk, Vector3.right) * _modelRest;
 
             if (!_unit.IsAlive) return;
             WatchAttacks();
@@ -129,15 +153,19 @@ namespace MangaLegends.Presentation
             Barrage();
             GrabDash();
             Punch();
+            Orbit();
         }
 
         private void WatchAttacks()
         {
             if (_unit.Attack == null || _unit.Attack.LastAttackTick == _lastAttackTick) return;
+            bool chained = _unit.Attack.LastAttackTick - _lastAttackTick <= _unit.Runner.TickRate * 4;
             _lastAttackTick = _unit.Attack.LastAttackTick;
+            _attackCount = chained ? _attackCount + 1 : 1;
             if (!_unit.TryResolve(_unit.Attack.Target, out Unit target)) return;
             bool stretch = string.IsNullOrEmpty(_stretchAttackStatus) || HasStatus(_stretchAttackStatus);
-            StartPunch(target.Position + Vector3.up, true, stretch ? _maxStretch : 1.2f);
+            bool left = _leftHandEvery > 0 && _attackCount % _leftHandEvery == 0;
+            StartPunch(target.Position + Vector3.up, !left, stretch ? _maxStretch : Mathf.Min(1f, _maxStretch));
         }
 
         private void WatchCasts()
@@ -146,9 +174,36 @@ namespace MangaLegends.Presentation
             if (caster == null || caster.LastCastTick == _lastCastTick) return;
             _lastCastTick = caster.LastCastTick;
             int slot = caster.LastCastSlot - (int)CasterSlot.A;
-            if (slot < 0 || slot >= _spellMoves.Length || _spellMoves[slot] != RigMove.StretchPunch) return;
+            if (slot < 0 || slot >= _spellMoves.Length) return;
+            if (_spellMoves[slot] == RigMove.Orbit) StartOrbit();
+            if (_spellMoves[slot] != RigMove.StretchPunch) return;
             Vector3 aim = transform.position + transform.forward * 6f + Vector3.up;
             StartPunch(aim, true, _maxStretch);
+        }
+
+        // Starburst Stream: the model whirls around the closest enemy for a moment (display only; the unit stays put).
+        private void StartOrbit()
+        {
+            Unit target = _unit.Services?.Units.Closest(_unit.Position, 8f, u => u.IsAlive && _unit.IsEnemyOf(u));
+            if (target == null || _model == null) return;
+            _orbitCenter = target.Position;
+            _orbitTime = 0f;
+        }
+
+        private void Orbit()
+        {
+            if (_orbitTime < 0f || _model == null) return;
+            _orbitTime += Time.deltaTime;
+            if (_orbitTime >= OrbitSeconds)
+            {
+                _orbitTime = -1f;
+                _model.localPosition = _modelPosition;
+                return;
+            }
+            float angle = _orbitTime / OrbitSeconds * 720f;
+            Vector3 around = _orbitCenter + Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward * 1.8f;
+            _model.position = new Vector3(around.x, _model.position.y, around.z);
+            _model.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(_orbitCenter - around, Vector3.up).normalized, Vector3.up);
         }
 
         private void StartPunch(Vector3 target, bool right, float stretch)

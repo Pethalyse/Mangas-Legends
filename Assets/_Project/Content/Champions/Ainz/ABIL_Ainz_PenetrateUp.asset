@@ -53,7 +53,7 @@ MonoBehaviour:
     _requiredTargetStatus: {fileID: 0}
     _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857689
+  - rid: 2286801137428857694
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857689
+    - rid: 2286801137428857694
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 6e53121bd3aa7af4f9590b66dbd92f5c, type: 2}

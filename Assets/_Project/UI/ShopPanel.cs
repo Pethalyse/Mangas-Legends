@@ -21,7 +21,7 @@ namespace MangaLegends.UI
         private static readonly Color Back = new Color(0.02f, 0.06f, 0.08f, 1f);
         private static readonly (ItemTier tier, string title)[] Sections =
         {
-            (ItemTier.Basic, "DÉPART ET BASIQUES"), (ItemTier.Component, "ÉPIQUES"), (ItemTier.Complete, "LÉGENDAIRES"), (ItemTier.Consumable, "CONSOMMABLES")
+            (ItemTier.Basic, "DÉPART ET BASIQUES"), (ItemTier.Component, "ÉPIQUES"), (ItemTier.Complete, "LÉGENDAIRES")
         };
 
         private readonly GameObject _root;
@@ -42,6 +42,12 @@ namespace MangaLegends.UI
         private Unit _champion;
         private bool _open;
         private string _builtFilter;
+        private int _tab;
+        private int _builtTab = -1;
+        private bool _bootsOpen;
+        private RectTransform _quick;
+        private readonly List<Image> _tabButtons = new List<Image>();
+        private static readonly string[] Tabs = { "TOUS", "COMBATTANT", "TIREUR", "ASSASSIN", "MAGE", "TANK", "SUPPORT" };
 
         public ShopPanel(Transform canvas)
         {
@@ -59,7 +65,15 @@ namespace MangaLegends.UI
             Button close = UiFactory.Button(root, "Close", "X", () => _services?.View.ToggleShop(), 22);
             UiFactory.Place(close, new Vector2(1f, 1f), new Vector2(1f, 1f), new Vector2(-10f, -10f), new Vector2(40f, 34f));
 
-            _grid = UiFactory.Rect(root, "Grid", new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(16f, 70f), new Vector2(16f + GridWidth, -54f));
+            _grid = UiFactory.Rect(root, "Grid", new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(16f, 70f), new Vector2(16f + GridWidth, -96f));
+            for (int i = 0; i < Tabs.Length; i++)
+            {
+                int tab = i;
+                Button button = UiFactory.Button(root, "Tab" + i, Tabs[i], () => _tab = tab, 13);
+                UiFactory.Place(button, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(16f + i * 100f, -54f), new Vector2(96f, 32f));
+                _tabButtons.Add(button.GetComponent<Image>());
+            }
+            _quick = UiFactory.Rect(border.transform, "Quick", new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(-104f, 0f), new Vector2(-6f, 0f));
             Image divider = UiFactory.Box(root, "Divider", new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(GridWidth + 30f, 0f), new Vector2(2f, 660f), new Color(Border.r, Border.g, Border.b, 0.4f));
             divider.raycastTarget = false;
             _detail = UiFactory.Rect(root, "Detail", new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(GridWidth + 44f, 70f), new Vector2(-16f, -54f));
@@ -86,6 +100,7 @@ namespace MangaLegends.UI
             if (_services == services) return;
             _services = services;
             BuildTrinkets();
+            BuildQuick();
         }
 
         public void Refresh(Unit champion)
@@ -97,7 +112,8 @@ namespace MangaLegends.UI
             _services.View.ShopOpen = visible;
             if (!visible) return;
             _champion = champion;
-            if (_builtFilter != _search.text) BuildGrid(_search.text);
+            for (int i = 0; i < _tabButtons.Count; i++) _tabButtons[i].color = i == _tab ? new Color(0.2f, 0.4f, 0.45f) : UiFactory.ButtonColor;
+            if (_builtFilter != _search.text || _builtTab != _tab) BuildGrid(_search.text);
 
             Inventory inventory = champion.GetComponent<Inventory>();
             bool canShop = inventory.CanShop;
@@ -140,6 +156,7 @@ namespace MangaLegends.UI
         private void BuildGrid(string filter)
         {
             _builtFilter = filter;
+            _builtTab = _tab;
             foreach (Transform child in _grid) Object.Destroy(child.gameObject);
             _entries.Clear();
             var items = _services.Content.Items;
@@ -152,7 +169,7 @@ namespace MangaLegends.UI
                 for (int i = 0; i < items.Count; i++)
                 {
                     ItemDefinition item = items[i];
-                    if (item.Tier != section.tier || item.IsChampionExclusive || (item.Tier == ItemTier.Consumable && item.RecipeCost <= 0) || !Matches(item, filter)) continue;
+                    if (item.Tier != section.tier || item.IsChampionExclusive || (item.Tier == ItemTier.Consumable && item.RecipeCost <= 0) || !Matches(item, filter) || !InTab(item, _tab)) continue;
                     if (!any)
                     {
                         Text header = UiFactory.Text(_grid, "Section", section.title, 15, TextAnchor.MiddleLeft, Border);
@@ -259,6 +276,66 @@ namespace MangaLegends.UI
             for (int i = 0; i < Inventory.Capacity; i++)
                 if (inventory.ItemAt(i) == item) return i;
             return -1;
+        }
+
+        // Left column, as in the LoL shop: consumables and wards on top, boots below (the arrow unfolds every pair).
+        private void BuildQuick()
+        {
+            foreach (Transform child in _quick) Object.Destroy(child.gameObject);
+            var items = _services.Content.Items;
+            Image top = UiFactory.Box(_quick, "Consumables", new Vector2(0f, 1f), new Vector2(0f, 1f), Vector2.zero, new Vector2(98f, 330f), Back);
+            Image bottom = UiFactory.Box(_quick, "Boots", new Vector2(0f, 0f), new Vector2(0f, 0f), Vector2.zero, new Vector2(98f, 330f), Back);
+            UiFactory.Border(top, Border, 2f);
+            UiFactory.Border(bottom, Border, 2f);
+            int consumables = 0;
+            int boots = 0;
+            for (int i = 0; i < items.Count; i++)
+            {
+                ItemDefinition item = items[i];
+                if (item.IsChampionExclusive) continue;
+                if (item.Tier == ItemTier.Consumable && item.RecipeCost > 0 && consumables < 4)
+                    QuickEntry(top.transform, item, consumables++);
+                else if (IsBoots(item) && (item.Tier == ItemTier.Basic || _bootsOpen) && boots < 4)
+                    QuickEntry(bottom.transform, item, boots++);
+            }
+            Button unfold = UiFactory.Button(bottom.transform, "Unfold", _bootsOpen ? "▶" : "◀", () => { _bootsOpen = !_bootsOpen; BuildQuick(); }, 16);
+            UiFactory.Place(unfold, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(-2f, -6f), new Vector2(24f, 40f));
+        }
+
+        private void QuickEntry(Transform parent, ItemDefinition item, int index)
+        {
+            Image frame = ItemIcon(parent, item, new Vector2(20f, -12f - index * 78f), 56f);
+            Text price = UiFactory.Text(frame.transform, "Price", item.TotalCost.ToString(), 14, TextAnchor.UpperCenter, UiFactory.Accent);
+            UiFactory.Place(price, new Vector2(0.5f, 0f), new Vector2(0.5f, 1f), Vector2.zero, new Vector2(70f, 18f));
+            price.raycastTarget = false;
+        }
+
+        private static bool IsBoots(ItemDefinition item)
+        {
+            foreach (var stat in item.Stats)
+                if (stat.Stat == Core.Stats.StatType.MoveSpeed) return true;
+            return false;
+        }
+
+        // Tabs of the LoL shop, read from the item stats.
+        private static bool InTab(ItemDefinition item, int tab)
+        {
+            if (tab == 0) return true;
+            bool Has(Core.Stats.StatType stat)
+            {
+                foreach (var s in item.Stats) if (s.Stat == stat) return true;
+                return false;
+            }
+            switch (tab)
+            {
+                case 1: return Has(Core.Stats.StatType.AttackDamage) && (Has(Core.Stats.StatType.MaxHealth) || Has(Core.Stats.StatType.Armor) || Has(Core.Stats.StatType.AbilityHaste)) || Has(Core.Stats.StatType.AttackDamage) && !Has(Core.Stats.StatType.CritChance) && !Has(Core.Stats.StatType.Lethality);
+                case 2: return Has(Core.Stats.StatType.AttackSpeed) || Has(Core.Stats.StatType.CritChance) || Has(Core.Stats.StatType.LifeSteal);
+                case 3: return Has(Core.Stats.StatType.Lethality) || Has(Core.Stats.StatType.AttackDamage) && Has(Core.Stats.StatType.MoveSpeed);
+                case 4: return Has(Core.Stats.StatType.AbilityPower) || Has(Core.Stats.StatType.MaxMana) || Has(Core.Stats.StatType.MagicPenetration);
+                case 5: return Has(Core.Stats.StatType.Armor) || Has(Core.Stats.StatType.MagicResist) || Has(Core.Stats.StatType.MaxHealth);
+                case 6: return Has(Core.Stats.StatType.HealPower) || Has(Core.Stats.StatType.ManaRegen) || Has(Core.Stats.StatType.HealthRegen);
+                default: return true;
+            }
         }
 
         private static bool Matches(ItemDefinition item, string filter)

@@ -89,6 +89,11 @@ namespace MangaLegends.UI
             UiFactory.Image(items, "Background", Frame);
             _gold = UiFactory.Text(items, "Gold", "", 22, TextAnchor.MiddleLeft, Gold);
             UiFactory.Place(_gold, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(14f, 6f), new Vector2(170f, 28f));
+            Image goldOval = UiFactory.Box(items, "GoldOval", new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(8f, 4f), new Vector2(178f, 32f), new Color(1f, 1f, 1f, 0.02f));
+            UiFactory.Border(goldOval, Gold, 2f);
+            goldOval.gameObject.AddComponent<Button>().onClick.AddListener(() => _services?.View.ToggleShop());
+            _gold.raycastTarget = false;
+            _gold.transform.SetAsLastSibling();
             for (int i = 0; i < _items.Length; i++)
             {
                 int slot = i;

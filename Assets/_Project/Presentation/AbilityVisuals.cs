@@ -24,6 +24,7 @@ namespace MangaLegends.Presentation
         private readonly Pool _projectiles = new Pool(PrimitiveType.Sphere);
         private readonly Pool _areas = new Pool(PrimitiveType.Cylinder);
         private readonly Pool _shots = new Pool(PrimitiveType.Sphere);
+        private readonly Pool _boxes = new Pool(PrimitiveType.Cube);
         private MaterialPropertyBlock _block;
 
         private void Awake() => _block = new MaterialPropertyBlock();
@@ -34,6 +35,7 @@ namespace MangaLegends.Presentation
             _projectiles.Begin();
             _areas.Begin();
             _shots.Begin();
+            _boxes.Begin();
             if (services != null)
                 foreach (Unit unit in services.Units.All)
                 {
@@ -49,6 +51,7 @@ namespace MangaLegends.Presentation
             _projectiles.End();
             _areas.End();
             _shots.End();
+            _boxes.End();
         }
 
         private void DrawProjectiles(Unit unit, Color color)
@@ -73,11 +76,41 @@ namespace MangaLegends.Presentation
                 if (!area.Active || !unit.Services.View.Vision.IsPointVisible(area.Position)) continue;
                 AreaDefinition definition = spawner.DefinitionOf(area);
                 if (definition == null) continue;
-                float diameter = definition.RadiusAt(area.Rank) * 2f;
                 Color tinted = color;
                 tinted.a = area.Activated ? _areaAlpha : _areaAlpha * 0.4f;
+                if (definition.Shape == AreaShape.Rectangle)
+                {
+                    DrawRectangle(definition, area, tinted);
+                    continue;
+                }
+                float diameter = definition.RadiusAt(area.Rank) * 2f;
                 Show(_areas.Next(_material, transform), area.Position + Vector3.up * 0.05f, new Vector3(diameter, 0.02f, diameter), tinted);
+                if (definition.IncomingOrb && !area.Activated) DrawOrb(unit, area, color);
             }
+        }
+
+        // A rectangle lies flat (laser, line), or stands up as a wall when the data gives it a height.
+        private void DrawRectangle(AreaDefinition definition, in NetArea area, Color color)
+        {
+            float width = definition.WidthAt(area.Rank);
+            float length = definition.LengthAt(area.Rank);
+            float height = definition.WallHeight;
+            Vector3 direction = area.Direction.sqrMagnitude > 0.0001f ? area.Direction : Vector3.forward;
+            Transform box = _boxes.Next(_material, transform);
+            box.rotation = Quaternion.LookRotation(direction, Vector3.up);
+            if (height > 0f) color.a = Mathf.Max(color.a, 0.6f);
+            Show(box, area.Position + direction * (length * 0.5f) + Vector3.up * (height > 0f ? height * 0.5f : 0.05f), new Vector3(width, height > 0f ? height : 0.02f, length), color);
+        }
+
+        // The orb rises from the caster and drops on the target point by the time the area lands.
+        private void DrawOrb(Unit unit, in NetArea area, Color color)
+        {
+            float duration = Mathf.Max(1, area.ActivateTick - area.SpawnTick);
+            float t = Mathf.Clamp01((unit.Runner.Tick - area.SpawnTick) / duration);
+            Vector3 start = unit.Position + Vector3.up * 2.5f;
+            Vector3 position = Vector3.Lerp(start, area.Position, t) + Vector3.up * Mathf.Sin(t * Mathf.PI) * 4f;
+            color.a = 1f;
+            Show(_projectiles.Next(_material, transform), position, Vector3.one * 1.2f, color);
         }
 
         private void DrawShots(Unit unit, Color color)

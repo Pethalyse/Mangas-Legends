@@ -30,6 +30,8 @@ namespace MangaLegends.Data.Definitions
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onActivate = new List<EffectDefinition>();
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onInterval = new List<EffectDefinition>();
         [SerializeField] private GameObject _visualPrefab;
+        [SerializeField, Min(0f), Tooltip("Rectangle areas: drawn as a standing wall this tall (Mark Evans' God Hand).")] private float _wallHeight;
+        [SerializeField, Tooltip("Delayed areas: an orb flies from the caster to the area until it lands (Ainz's energy ball).")] private bool _incomingOrb;
 
         public AreaShape Shape => _shape;
         public float RadiusAt(int rank) => _radius.At(rank);
@@ -45,6 +47,8 @@ namespace MangaLegends.Data.Definitions
         public IReadOnlyList<EffectDefinition> OnActivate => _onActivate;
         public IReadOnlyList<EffectDefinition> OnInterval => _onInterval;
         public GameObject VisualPrefab => _visualPrefab;
+        public float WallHeight => _wallHeight;
+        public bool IncomingOrb => _incomingOrb;
 
         public override void Validate(ValidationReport report)
         {
