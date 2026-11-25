@@ -107,6 +107,8 @@ namespace MangaLegends.Simulation.Match
         [SerializeField] private List<MapZone> _river = new List<MapZone>();
         [SerializeField] private List<MapZone> _brushes = new List<MapZone>();
         [SerializeField] private Vector2 _size = new Vector2(160f, 160f);
+        [SerializeField, Min(0f), Tooltip("Half width of a lane, for the rules that care whether a unit stands on a lane.")] private float _laneHalfWidth = 5f;
+        [SerializeField, Min(0f), Tooltip("Radius around each fountain counted as the base.")] private float _baseRadius = 40f;
 
         public IReadOnlyList<LanePath> Lanes => _lanes;
         public IReadOnlyList<StructurePlacement> Structures => _structures;
@@ -120,6 +122,28 @@ namespace MangaLegends.Simulation.Match
             foreach (MapZone zone in _river)
                 if (zone.Contains(position)) return true;
             return false;
+        }
+
+        public bool IsOnLaneOrBase(Vector3 position)
+        {
+            if (Distance(position, _blueFountain.position) <= _baseRadius || Distance(position, _redFountain.position) <= _baseRadius) return true;
+            foreach (LanePath lane in _lanes)
+            {
+                IReadOnlyList<Transform> points = lane.Waypoints;
+                for (int i = 1; i < points.Count; i++)
+                    if (SegmentDistance(position, points[i - 1].position, points[i].position) <= _laneHalfWidth) return true;
+            }
+            return false;
+        }
+
+        private static float Distance(Vector3 a, Vector3 b) => new Vector2(a.x - b.x, a.z - b.z).magnitude;
+
+        private static float SegmentDistance(Vector3 p, Vector3 a, Vector3 b)
+        {
+            Vector2 point = new Vector2(p.x, p.z), from = new Vector2(a.x, a.z), to = new Vector2(b.x, b.z);
+            Vector2 segment = to - from;
+            float t = segment.sqrMagnitude > 0f ? Mathf.Clamp01(Vector2.Dot(point - from, segment) / segment.sqrMagnitude) : 0f;
+            return Vector2.Distance(point, from + segment * t);
         }
 
         public int BrushAt(Vector3 position)

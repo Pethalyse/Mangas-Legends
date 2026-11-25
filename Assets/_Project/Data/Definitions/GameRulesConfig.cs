@@ -59,8 +59,12 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _monsterLeashResetSeconds = 4f;
 
         [Header("Base")]
+        [SerializeField, Tooltip("Move speed buff after a respawn or a recall, before the late threshold.")] private StatusEffectDefinition _homeguardEarly;
+        [SerializeField] private StatusEffectDefinition _homeguardLate;
+        [SerializeField, Min(0f)] private float _homeguardLateAfterSeconds = 840f;
         [SerializeField, Min(0f)] private float _fountainRadius = 8f;
         [SerializeField, Range(0f, 1f)] private float _fountainRegenPerSecond = 0.1f;
+        [SerializeField, Min(0f), Tooltip("True damage per second dealt to enemy champions inside a fountain.")] private float _fountainLaserDamagePerSecond = 1500f;
         [SerializeField] private AbilityDefinition _recallAbility;
         [SerializeField, Tooltip("Free trinket of every champion; its rank follows the champion level.")] private AbilityDefinition _trinketAbility;
         [SerializeField, Tooltip("Trinkets a champion can switch to at the shop.")] private List<AbilityDefinition> _trinketChoices = new List<AbilityDefinition>();
@@ -98,6 +102,9 @@ namespace MangaLegends.Data.Definitions
         public float MinionDamageToChampionsRatio => _minionDamageToChampionsRatio;
         public float MaxAttackSpeed => _maxAttackSpeed;
         public float DevilFruitWaterDrain => _devilFruitWaterDrain;
+        public StatusEffectDefinition HomeguardFor(float elapsedSeconds) => elapsedSeconds >= _homeguardLateAfterSeconds ? _homeguardLate : _homeguardEarly;
+        public StatusEffectDefinition HomeguardEarly => _homeguardEarly;
+        public StatusEffectDefinition HomeguardLate => _homeguardLate;
         public int DrakesForSoul => _drakesForSoul;
         public int DrakeElementLocksAfter => _drakeElementLocksAfter;
         public bool DevilFruitWaterIsLethal => _devilFruitWaterIsLethal;
@@ -122,6 +129,7 @@ namespace MangaLegends.Data.Definitions
         public float MonsterKillHeal(int level) => Mathf.Min(_monsterKillHealMax, _monsterKillHealBase + _monsterKillHealPerLevel * Mathf.Max(0, level - 1));
         public float FountainRadius => _fountainRadius;
         public float FountainRegenPerSecond => _fountainRegenPerSecond;
+        public float FountainLaserDamagePerSecond => _fountainLaserDamagePerSecond;
         public AbilityDefinition RecallAbility => _recallAbility;
         public AbilityDefinition TrinketAbility => _trinketAbility;
         public IReadOnlyList<AbilityDefinition> TrinketChoices => _trinketChoices;

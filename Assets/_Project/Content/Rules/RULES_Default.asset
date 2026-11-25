@@ -72,8 +72,12 @@ MonoBehaviour:
   _monsterKillHealPerLevel: 20
   _monsterKillHealMax: 250
   _monsterLeashResetSeconds: 4
+  _homeguardEarly: {fileID: 11400000, guid: 0eb373e1eba235140a258e222f70b293, type: 2}
+  _homeguardLate: {fileID: 11400000, guid: 0a9070de7a7558840824cc6079a8cefe, type: 2}
+  _homeguardLateAfterSeconds: 840
   _fountainRadius: 8
   _fountainRegenPerSecond: 0.1
+  _fountainLaserDamagePerSecond: 1500
   _recallAbility: {fileID: 11400000, guid: 52cb391bbe382a64f92888514e4dc135, type: 2}
   _trinketAbility: {fileID: 11400000, guid: fe120a630be7a8c4b888e40704b2d3de, type: 2}
   _trinketChoices:

@@ -3,6 +3,7 @@ using Fusion;
 using MangaLegends.Core.Simulation;
 using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Champions;
+using MangaLegends.Simulation.Combat;
 using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
@@ -141,8 +142,23 @@ namespace MangaLegends.Simulation.Match
             Waves.Simulate(elapsed);
             Jungle.Simulate(elapsed);
             SimulateChampions(elapsed);
+            FireFountains();
             SimulateStructures(elapsed);
             CollectCorpses();
+        }
+
+        // Fountains shoot enemy champions who walk in, which is what keeps a base's back entrances safe.
+        private void FireFountains()
+        {
+            if (_map == null || Rules.FountainLaserDamagePerSecond <= 0f) return;
+            float damage = Rules.FountainLaserDamagePerSecond * Runner.DeltaTime;
+            foreach (Unit unit in _services.Units.All)
+            {
+                if (unit == null || !unit.IsChampion || !unit.IsAlive || (unit.Team != Team.Blue && unit.Team != Team.Red)) continue;
+                Team enemy = TeamRules.Opponent(unit.Team);
+                if (UnitRegistry.FlatDistance(unit.Position, _map.Fountain(enemy)) > Rules.FountainRadius) continue;
+                unit.Health.ApplyDamage(new DamageInfo(null, damage, Core.Combat.DamageType.True, Core.Combat.DamageFlags.IgnoreShields));
+            }
         }
 
         public void OnUnitKilled(Unit victim, Unit killer)
@@ -172,11 +188,30 @@ namespace MangaLegends.Simulation.Match
             return true;
         }
 
+        private void GiveHomeguard(Unit champion)
+        {
+            StatusEffectDefinition homeguard = Rules.HomeguardFor(ElapsedSeconds);
+            if (homeguard != null) champion.Status.Apply(new StatusApplication(homeguard, champion, 1, 1, 0f, null));
+        }
+
+        // Homeguard ends in combat or once the champion leaves the lanes and the base (LoL rule).
+        public void UpdateHomeguard(Unit champion)
+        {
+            if (!HasStateAuthority || _map == null) return;
+            StatusEffectDefinition early = Rules.HomeguardEarly, late = Rules.HomeguardLate;
+            bool active = (early != null && champion.Status.StacksOf(early) > 0) || (late != null && champion.Status.StacksOf(late) > 0);
+            if (!active) return;
+            if (!champion.Health.IsInCombat(0.5f) && _map.IsOnLaneOrBase(champion.Position)) return;
+            champion.Status.Remove(early);
+            champion.Status.Remove(late);
+        }
+
         public void ReturnToBase(Unit unit)
         {
             if (!HasStateAuthority || _map == null) return;
             unit.Attack?.ClearTarget();
             unit.Motor?.Teleport(_map.Fountain(unit.Team));
+            GiveHomeguard(unit);
         }
 
         public bool IsAtFountain(Unit unit) =>
@@ -333,6 +368,7 @@ namespace MangaLegends.Simulation.Match
             champion.Motor?.Teleport(_map.Fountain(champion.Team));
             champion.Health.Revive();
             champion.Resource?.Fill();
+            GiveHomeguard(champion);
         }
 
         private void SimulateStructures(float elapsed)

@@ -21,6 +21,10 @@ namespace MangaLegends.Simulation.Movement
         private const int SeparationPeriod = 2;
 
         private readonly List<Unit> _neighbours = new List<Unit>();
+        private const int LaneArea = 3;
+        private const float OffLaneCostForMinions = 4f;
+        private NavMeshQueryFilter _minionFilter;
+        private bool _hasMinionFilter;
 
         private NavMeshPath _path;
         private Unit _unit;
@@ -101,7 +105,7 @@ namespace MangaLegends.Simulation.Movement
             RequestedPoint = point;
             Vector3 start = transform.position;
             if (!NavMesh.SamplePosition(point, out NavMeshHit hit, NavMeshSampleDistance, NavMesh.AllAreas)) return false;
-            if (!NavMesh.CalculatePath(start, hit.position, NavMesh.AllAreas, _path) || _path.corners.Length == 0)
+            if (!CalculatePath(start, hit.position) || _path.corners.Length == 0)
             {
                 Stop();
                 return false;
@@ -116,6 +120,19 @@ namespace MangaLegends.Simulation.Movement
             StopDistance = Mathf.Max(0f, stopDistance);
             IsMoving = true;
             return true;
+        }
+
+        // Minions price everything that is not a lane higher, so they only leave the lane when it is blocked.
+        private bool CalculatePath(Vector3 start, Vector3 end)
+        {
+            if (_unit.Kind != UnitKind.Minion) return NavMesh.CalculatePath(start, end, NavMesh.AllAreas, _path);
+            if (!_hasMinionFilter)
+            {
+                _minionFilter = new NavMeshQueryFilter { areaMask = NavMesh.AllAreas, agentTypeID = 0 };
+                for (int area = 0; area < 32; area++) _minionFilter.SetAreaCost(area, area == LaneArea ? 1f : OffLaneCostForMinions);
+                _hasMinionFilter = true;
+            }
+            return NavMesh.CalculatePath(start, end, _minionFilter, _path);
         }
 
         public void Stop()

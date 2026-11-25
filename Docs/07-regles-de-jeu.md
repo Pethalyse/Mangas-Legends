@@ -32,7 +32,7 @@
 
 - 5 contre 5, 3 voies, jungle, rivière ✅.
 - Victoire : destruction du Cœur adverse ✅.
-- Retour à la base : canalisation de 8 s 🔁. Vitesse de retour (Homeguard) : +80 % avant 14:00, +150 % après, s'arrête en combat ou en entrant dans la jungle ✅.
+- Retour à la base : canalisation de 8 s 🔁. Vitesse de retour (Homeguard) : +80 % avant 14:00, +150 % après, s'arrête en combat ou en entrant dans la jungle ✅. Codé le 2026-11-25 : donné à la réapparition et à l'arrivée du rappel ; perdu en combat ou hors des voies et de la base (jungle, rivière). La fontaine inflige 1 500 dégâts bruts par seconde aux champions ennemis qui y entrent (valeur choisie par Claude) .
 - Fontaine : soin rapide, achat d'objets uniquement à la base 🔁.
 - Recréer une partie (remake) entre 0:55 et 2:25 ; abandon possible dès 2:55 ✅. ❓ Utile entre amis ?
 

@@ -102,6 +102,11 @@ namespace MangaLegends.Input
         {
             InputAction action = Gameplay.FindAction(actionName, false);
             if (action == null || action.bindings.Count == 0) return "";
+            // Digit row keys show the digit, as in the LoL client, not the AZERTY character (&, é, "...).
+            string path = action.bindings[0].effectivePath ?? "";
+            string control = path.Substring(path.LastIndexOf('/') + 1);
+            if (control.StartsWith("numpad")) control = control.Substring(6);
+            if (control.Length == 1 && char.IsDigit(control[0])) return control;
             return action.GetBindingDisplayString(0, InputBinding.DisplayStringOptions.DontIncludeInteractions).ToUpperInvariant();
         }
 

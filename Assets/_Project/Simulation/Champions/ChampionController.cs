@@ -29,6 +29,7 @@ namespace MangaLegends.Simulation.Champions
 
         public void Think()
         {
+            if (HasStateAuthority) _unit.Services.Match?.UpdateHomeguard(_unit);
             if (!GetInput(out PlayerInput input)) return;
             HandleShopping(input);
             HandleLevelUp(input);
