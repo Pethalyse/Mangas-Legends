@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba7ad899b7a4b1ca660ee398a07c065, type: 3}
+  m_Name: AREA_Zoro_DemonSlash
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AreaDefinition
+  _id: area.zoro.demon_slash
+  _displayName: Demon slash
+  _description: 
+  _icon: {fileID: 0}
+  _shape: 1
+  _radius:
+    _byRank:
+    - 4
+  _angle:
+    _byRank:
+    - 120
+  _width:
+    _byRank:
+    - 2
+  _length:
+    _byRank:
+    - 5
+  _delaySeconds:
+    _byRank:
+    - 0
+  _durationSeconds:
+    _byRank:
+    - 0
+  _intervalSeconds:
+    _byRank:
+    - 0
+  _followsCaster: 0
+  _affects: 12
+  _kinds: 
+  _onActivate:
+  - rid: 2286801137428857195
+  _onInterval: []
+  _visualPrefab: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857195
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 2
+        _type: 0
+        _amount:
+          _baseByRank:
+          - 60
+          - 97.5
+          - 135
+          - 172.5
+          - 210
+          _ratios:
+          - _source: 1
+            _stat: 4
+            _ratioByRank:
+            - 1.5
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0

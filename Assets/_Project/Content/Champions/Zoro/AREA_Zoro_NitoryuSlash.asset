@@ -40,8 +40,10 @@ MonoBehaviour:
     - 0
   _followsCaster: 0
   _affects: 12
+  _kinds: 
   _onActivate:
   - rid: 2286801137428857079
+  - rid: 2286801137428857197
   _onInterval: []
   _visualPrefab: {fileID: 0}
   references:
@@ -66,3 +68,18 @@ MonoBehaviour:
             - 1
         _canCrit: 0
         _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0
+    - rid: 2286801137428857197
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 1
+        _status: {fileID: 11400000, guid: 03029b4bf7c867a428fa1f519c9026c3, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []

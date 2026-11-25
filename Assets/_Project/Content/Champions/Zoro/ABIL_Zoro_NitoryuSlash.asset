@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.zoro.nitoryu_slash
   _displayName: Nitoryu slash
-  _description: "Coup en c\xF4ne devant Zoro, d\xE9g\xE2ts physiques."
+  _description: "Coup en c\xF4ne devant Zoro ; chaque coup qui touche le charge,
+    la 3e utilisation devient Demon slash."
   _icon: {fileID: 0}
   _maxRank: 5
   _castMode: 0

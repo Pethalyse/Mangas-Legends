@@ -13,7 +13,7 @@
 |---|---|---|---|---|
 | Ainz Ooal Gown | Support | ✅ | ✅ jouable (testé en solo le 2026-11-25) | Shield, Charges, Zone de soin |
 | Luffy | Jungle | ✅ | 🔧 jouable, simplifié (Z portée) | TerrainZone (eau), AA chargée, Canalisation |
-| Zoro Roronoa | Top | ✅ | 🔧 jouable, simplifié (A) | Stack, Shield, Dash |
+| Zoro Roronoa | Top | ✅ | 🔧 jouable, simplifié (Z, R) | Stack, Shield, Dash |
 | Naruto Uzumaki | Mid | ✅ | 🔧 jouable, simplifié (P, A raté) | Dash, Knockback, Zone (clones = visuel) |
 | Gon Freecss | ❓ | ✅ | — | Mark ×3, Synergy (Killua) |
 | Rimuru | Jungle | ✅ | — | AbilitySet dynamique (monstre absorbé) |
@@ -79,7 +79,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **Z — Parade** : canalise ≤ 1.5 s, bloque 40 % du premier coup ; si bloqué, bouclier = 40 % AD + dégâts bloqués. `[11 s]`
 - **E — Calibre 36** : lame d'air courte portée, ? dégâts physiques + projection. `[8 s]`
 - **R — Ashura** : grand dash, ? dégâts physiques, +10 % par ennemi touché. `[90 s]`
-**Implémentation (2026-11-25, rôle Top choisi par Claude)** : A = coup en cône de 3 m, 40/65/90/115/140 (+100 % AD bonus), recharge 5→3 s (le cumul vers *Demon slash* n'est pas codé) ; Z = bouclier de 60→200 (+40 % AD bonus) pendant 1,5 s (pas de blocage de 40 % du premier coup) ; E = lame d'air de 6 m, 60→200 (+80 % AD bonus), projection de 2 m, traverse 3 cibles ; R = dash de 7 m puis zone de 3 m, 150/275/400 (+120 % AD bonus) (le +10 % par ennemi n'est pas codé). P = +1 AD par attaque de base sur un champion (`on_hit_champion`), **30 cumuls au plus, perdus à la mort** (choix d'équilibrage : sans plafond, le bonus devient illimité en fin de partie).
+**Implémentation (2026-11-25, rôle Top choisi par Claude)** : A = coup en cône de 3 m, 40/65/90/115/140 (+100 % AD bonus), recharge 5→3 s ; chaque utilisation qui touche charge Zoro (6 s) et la 3e devient **Demon slash** : cône de 4 m et 120°, 60→210 (+150 % AD bonus), recharge 1,5 s, puis retour à Nitoryu (jeu de compétences alternatif) ; Z = bouclier de 60→200 (+40 % AD bonus) pendant 1,5 s (pas de blocage de 40 % du premier coup) ; E = lame d'air de 6 m, 60→200 (+80 % AD bonus), projection de 2 m, traverse 3 cibles ; R = dash de 7 m puis zone de 3 m, 150/275/400 (+120 % AD bonus) (le +10 % par ennemi n'est pas codé). P = +1 AD par attaque de base sur un champion (`on_hit_champion`), **30 cumuls au plus, perdus à la mort** (choix d'équilibrage : sans plafond, le bonus devient illimité en fin de partie).
 
 ### Naruto Uzumaki
 - **P** : +10 % vitesse dans une zone de carte dédiée.

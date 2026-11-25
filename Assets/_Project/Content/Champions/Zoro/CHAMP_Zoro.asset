@@ -62,8 +62,12 @@ MonoBehaviour:
   _tint: {r: 0.2, g: 0.65, b: 0.3, a: 1}
   _attackProjectileSpeed: 0
   _attackWindup: 0.3
+  _stealthed: 0
+  _revealsStealth: 0
+  _oneDamagePerHit: 0
   _role: 1
   _resource: 0
+  _traits: 0
   _defaultAbilities:
     _name: Default
     _passive: {fileID: 11400000, guid: 657bbf490d33e23499859099178d33d7, type: 2}
@@ -71,4 +75,10 @@ MonoBehaviour:
     _z: {fileID: 11400000, guid: 19a8d1adc44749d4e84e5a84420f7c87, type: 2}
     _e: {fileID: 11400000, guid: 3e7d6a945d8f5024788bd31d13d87a46, type: 2}
     _r: {fileID: 11400000, guid: f4e7eb2ee7214b846ad744ffd16d3675, type: 2}
-  _alternateAbilitySets: []
+  _alternateAbilitySets:
+  - _name: Demon slash
+    _passive: {fileID: 11400000, guid: 657bbf490d33e23499859099178d33d7, type: 2}
+    _a: {fileID: 11400000, guid: b02ad79157a543146820405e251bd757, type: 2}
+    _z: {fileID: 11400000, guid: 19a8d1adc44749d4e84e5a84420f7c87, type: 2}
+    _e: {fileID: 11400000, guid: 3e7d6a945d8f5024788bd31d13d87a46, type: 2}
+    _r: {fileID: 11400000, guid: f4e7eb2ee7214b846ad744ffd16d3675, type: 2}
