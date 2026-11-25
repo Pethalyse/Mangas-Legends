@@ -3,6 +3,22 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Legacy supprimé, tirage des drakes, Ogrest invoqué, Haki de l'observation
+
+**Fait** :
+- `Legacy/` supprimé (accord du propriétaire ; reste dans l'historique git). Étape 10 cochée.
+- **Drakes** (règle précisée par le propriétaire) : 1er tiré au hasard, 2e parmi les autres, puis toujours le même élément à partir du 3e (élément de la carte), donc l'âme est de cet élément. Règle pure `ElementRotation` dans Core, 43 cas de test.
+- **Ogrest** : l'Œil remplace le bijou du tueur pendant 240 s ; il invoque un Ogrest allié qui fonce sur la tourelle ennemie la plus proche (3 000 dégâts bruts).
+- **Haki de l'observation** : second bijou, à choisir à la boutique depuis la fontaine ; révèle et désactive les balises à 6 m pendant 8 s.
+
+**Testé dans l'éditeur** : tirage Électhor → Lugia → Artikodin ×2 → âme d'Artikodin → Shenron ; Ogrest invoqué : tourelle centrale 9 000 → 6 000 PV, bijou rétabli ; Haki : balise ennemie invisible puis révélée. 96 tests Core verts, 0 erreur en console, contenu valide.
+
+**Réponse au propriétaire** : chaque drake a son bonus cumulable **et** l'âme existe (4e drake), avec un effet propre à chaque élément.
+
+**Reste** : modèles 3D, zone de Naruto (à décider), test en ligne à deux.
+
+**Bloquants** : aucun.
+
 ## 2026-11-25 — Objectifs épiques, balises, ligne de vue, Demon slash, décor
 
 **Fait** (même branche) :
