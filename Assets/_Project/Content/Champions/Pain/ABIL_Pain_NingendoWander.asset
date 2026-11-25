@@ -47,7 +47,7 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857460
+  - rid: 2286801137428857543
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857460
+    - rid: 2286801137428857543
       type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _kind: 3

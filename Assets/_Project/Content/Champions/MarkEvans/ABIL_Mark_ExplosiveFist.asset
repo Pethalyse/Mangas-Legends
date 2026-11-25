@@ -50,7 +50,7 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857468
+  - rid: 2286801137428857551
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857468
+    - rid: 2286801137428857551
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 14787751063ef304983c72aeacbd45d2, type: 2}

@@ -46,8 +46,8 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857481
-  - rid: 2286801137428857482
+  - rid: 2286801137428857564
+  - rid: 2286801137428857565
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857481
+    - rid: 2286801137428857564
       type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _kind: 1
@@ -68,7 +68,7 @@ MonoBehaviour:
           _byRank:
           - 0.25
         _fromImpactPoint: 0
-    - rid: 2286801137428857482
+    - rid: 2286801137428857565
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0

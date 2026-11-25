@@ -31,7 +31,7 @@ MonoBehaviour:
   - _trigger: 0
     _otherKinds: 
     _effects:
-    - rid: 2286801137428857436
+    - rid: 2286801137428857519
   _persistsThroughDeath: 0
   _triggerCooldownSeconds: 0
   _revealRadius: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857436
+    - rid: 2286801137428857519
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 71098607589eb5c4dad8be312f4faf80, type: 2}

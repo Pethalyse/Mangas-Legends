@@ -24,8 +24,8 @@ MonoBehaviour:
   _modifiersPerStack: []
   _tickIntervalSeconds: 0.5
   _onTick:
-  - rid: 2286801137428857499
-  - rid: 2286801137428857500
+  - rid: 2286801137428857582
+  - rid: 2286801137428857583
   _triggers: []
   _persistsThroughDeath: 0
   _triggerCooldownSeconds: 0
@@ -43,12 +43,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857499
+    - rid: 2286801137428857582
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: a5e0a0e990451834bbc8c55dd4836caa, type: 2}
         _atAimPoint: 1
-    - rid: 2286801137428857500
+    - rid: 2286801137428857583
       type: {class: PayHealthEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _amount:

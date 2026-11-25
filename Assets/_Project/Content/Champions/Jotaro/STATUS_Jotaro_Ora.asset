@@ -28,7 +28,7 @@ MonoBehaviour:
   - _trigger: 0
     _otherKinds: 
     _effects:
-    - rid: 2286801137428857495
+    - rid: 2286801137428857578
   _persistsThroughDeath: 0
   _triggerCooldownSeconds: 0
   _revealRadius: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857495
+    - rid: 2286801137428857578
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0

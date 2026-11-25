@@ -7,12 +7,12 @@
 
 **Fait** :
 - **Ciblage** : retour à l'unité sous la souris pour tous les sorts ciblés (lancement rapide et normal) ; le rayon « au plus proche du clic » est supprimé. Le « Q-clic » demandé est l'attaque-déplacement de LoL (Q en AZERTY) : elle attaque l'ennemi près du clic, sinon l'ennemi à portée le plus proche du clic, sinon le champion marche vers le clic et attaque le premier ennemi à portée (avant, il marchait sans attaquer).
-- **Mark Evans** : l'allié lié se choisit avec l'objet réservé **Gants de David Evans** (actif sur un allié, recharge 20 s, un seul lié). Son E est un mur dans la direction visée qui le suit ; il n'arrête rien, mais les sorts venus de devant font 70 % de dégâts en moins.
+- **Mark Evans** : l'allié lié se choisit avec l'objet réservé **Gants de David Evans** (actif sur un allié, une seule fois : le lien dure toute la partie, l'objet disparaît). Son E est un mur dans la direction visée qui le suit ; il n'arrête rien, mais les sorts venus de devant font 70 % de dégâts en moins.
 - **Pain** : la jauge pleine change de pantin automatiquement ; après un kill seulement, R (Ondes de chakra, appris dès le début) change de pantin, sinon le changement se fait en sortant du combat. Pas de Z (confirmé).
 - **Ainz** : il flotte au lieu de marcher (`UnitView._floats`) ; l'évènement `aaCreation` de son clip d'attaque est retiré (plus d'erreur en console).
 - Systèmes ajoutés : objets réservés à un champion et objets de départ, statut « un seul par lanceur », réduction de dégâts limitée à un arc, statut qui se termine hors combat, compétence soumise à un statut, compétence apprise d'office, effet qui retire un statut. Le passif « allié le plus proche » est supprimé.
 
-**Testé dans l'éditeur** : gants (lien posé, 270/30 sur 300, recharge), mur (41 de face, 135 de côté), Pain (R refusé sans kill ; après un kill, pantin gardé, R change ; sans R, changement 5 s après le combat). Contenu valide, compilation sans erreur, 0 erreur en console. Non testé à la souris : ciblage et attaque-déplacement (les touches simulées n'atteignent pas l'Input System).
+**Testé dans l'éditeur** : gants (lien posé, 270/30 sur 300 ; ensuite rendus à usage unique, objet consommé), mur (41 de face, 135 de côté), Pain (R refusé sans kill ; après un kill, pantin gardé, R change ; sans R, changement 5 s après le combat). Contenu valide, compilation sans erreur, 0 erreur en console. Non testé à la souris : ciblage et attaque-déplacement (les touches simulées n'atteignent pas l'Input System).
 
 **Docs mis à jour** : `02-champions.md`, `03-objets.md` §6, `04-architecture.md` §15, `07-regles-de-jeu.md` §11, `01-gdd.md` §10.
 

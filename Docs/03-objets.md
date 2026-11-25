@@ -123,4 +123,4 @@ Ni achetés ni vendus : le champion les a dès le début (`ChampionDefinition.St
 
 | Id | Nom | Champion | Effet |
 |---|---|---|---|
-| `item.david_evans_gloves` | Gants de David Evans (Inazuma Eleven) | Mark Evans | Actif « Lien du capitaine » (2026-11-25, demandé par le propriétaire) : cible un allié à 10 m, recharge 20 s ; Mark encaisse ensuite 10 % des dégâts que subit cet allié. Un seul allié lié à la fois (relier un autre allié retire le lien précédent), lien gardé à la mort. Pas de statistiques. |
+| `item.david_evans_gloves` | Gants de David Evans (Inazuma Eleven) | Mark Evans | Actif « Lien du capitaine » (2026-11-25, demandé par le propriétaire) : cible un allié à 10 m ; Mark encaisse ensuite 10 % des dégâts que subit cet allié **pour toute la partie** (lien gardé à la mort). Utilisable une seule fois : l'objet disparaît. Pas de statistiques. |

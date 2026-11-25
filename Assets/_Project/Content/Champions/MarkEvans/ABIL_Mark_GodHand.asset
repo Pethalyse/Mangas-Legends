@@ -52,8 +52,8 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857463
-  - rid: 2286801137428857464
+  - rid: 2286801137428857546
+  - rid: 2286801137428857547
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -63,12 +63,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857463
+    - rid: 2286801137428857546
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: b09b6a8f02407d34e91f54f37085316a, type: 2}
         _atAimPoint: 0
-    - rid: 2286801137428857464
+    - rid: 2286801137428857547
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1

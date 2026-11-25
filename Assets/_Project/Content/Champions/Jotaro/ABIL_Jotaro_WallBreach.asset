@@ -46,7 +46,7 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857434
+  - rid: 2286801137428857517
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857434
+    - rid: 2286801137428857517
       type: {class: DashEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _destination: 0

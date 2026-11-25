@@ -49,9 +49,9 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857501
-  - rid: 2286801137428857502
-  - rid: 2286801137428857503
+  - rid: 2286801137428857584
+  - rid: 2286801137428857585
+  - rid: 2286801137428857586
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857501
+    - rid: 2286801137428857584
       type: {class: SwapAbilitySetEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _alternateSetIndex: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
         _durationSeconds:
           _byRank:
           - 10
-    - rid: 2286801137428857502
+    - rid: 2286801137428857585
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -85,7 +85,7 @@ MonoBehaviour:
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857503
+    - rid: 2286801137428857586
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 217f92ec5588ab84992fc2bb424eb802, type: 2}

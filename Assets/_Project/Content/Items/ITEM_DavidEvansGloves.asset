@@ -25,10 +25,10 @@ MonoBehaviour:
   _passives: []
   _active:
     _enabled: 1
-    _consumedOnUse: 0
+    _consumedOnUse: 1
     _name: Lien du capitaine
-    _description: "Lie Mark \xE0 l'alli\xE9 cibl\xE9 : Mark encaisse 10 % des d\xE9g\xE2ts
-      qu'il subit. Un seul alli\xE9 li\xE9 \xE0 la fois."
+    _description: "Lie Mark \xE0 l'alli\xE9 cibl\xE9 pour toute la partie : Mark
+      encaisse 10 % des d\xE9g\xE2ts qu'il subit. Utilisable une seule fois."
     _cooldownSeconds: 20
     _targeting:
       _mode: 2
@@ -44,12 +44,12 @@ MonoBehaviour:
         _byRank:
         - 0
     _effects:
-    - rid: 2286801137428857491
+    - rid: 2286801137428857574
   _championExclusive: 1
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857491
+    - rid: 2286801137428857574
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0

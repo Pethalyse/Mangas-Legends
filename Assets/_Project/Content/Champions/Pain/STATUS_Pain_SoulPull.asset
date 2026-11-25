@@ -24,7 +24,7 @@ MonoBehaviour:
   _modifiersPerStack: []
   _tickIntervalSeconds: 3
   _onTick:
-  - rid: 2286801137428857450
+  - rid: 2286801137428857533
   _triggers: []
   _persistsThroughDeath: 0
   _triggerCooldownSeconds: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857450
+    - rid: 2286801137428857533
       type: {class: HealEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
