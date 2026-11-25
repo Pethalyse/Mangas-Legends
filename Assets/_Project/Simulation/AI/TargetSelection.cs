@@ -1,5 +1,7 @@
 using MangaLegends.Data.Definitions;
 using MangaLegends.Core.Simulation;
+using MangaLegends.Core.Stats;
+using MangaLegends.Simulation.Match;
 using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
@@ -11,7 +13,23 @@ namespace MangaLegends.Simulation.AI
         private const float HarassMemorySeconds = 2f;
 
         public static bool IsValidEnemy(Unit self, Unit other) =>
-            other != null && other.IsAlive && other.IsTargetable && !other.IsInvulnerable && other.Kind != UnitKind.Ward && self.IsEnemyOf(other);
+            other != null && other.IsAlive && other.IsTargetable && !other.IsInvulnerable && other.Kind != UnitKind.Ward && self.IsEnemyOf(other) && CanSee(self, other);
+
+        // AI sight of brushes (LoL): a unit in a brush is hidden from a team that has no unit (ward included) inside the same brush,
+        // unless it fought in the last moments. Minions, towers and monsters all follow it.
+        public static bool CanSee(Unit self, Unit other)
+        {
+            MapLayout map = self.Services.Match != null ? self.Services.Match.Map : null;
+            int brush = map != null ? map.BrushAt(other.Position) : -1;
+            if (brush < 0) return true;
+            if (other.Health.IsInCombat(self.Services.Rules.BrushRevealSeconds) && other.Health.LastDamagedTick != other.Health.LastCombatTick) return true;
+            foreach (Unit watcher in self.Services.Units.All)
+            {
+                if (watcher == null || !watcher.IsAlive || watcher.Team != self.Team) continue;
+                if (map.BrushAt(watcher.Position) == brush && UnitRegistry.FlatDistance(watcher.Position, other.Position) <= watcher.Stats.Get(StatType.VisionRange) + other.Radius) return true;
+            }
+            return false;
+        }
 
         // Genre rule: an enemy champion that hurt an allied champion nearby is punished first, then the closest non-champion.
         public static Unit Pick(Unit self, float radius)

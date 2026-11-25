@@ -49,9 +49,13 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857527
-  - rid: 2286801137428857528
+  - rid: 2286801137428857619
+  - rid: 2286801137428857620
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -61,7 +65,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857527
+    - rid: 2286801137428857619
       type: {class: DashEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _destination: 0
@@ -72,7 +76,7 @@ MonoBehaviour:
           _byRank:
           - 14
         _passesThroughWalls: 0
-    - rid: 2286801137428857528
+    - rid: 2286801137428857620
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1

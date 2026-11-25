@@ -44,7 +44,7 @@ MonoBehaviour:
     - 0.5
   _followsCaster: 1
   _affects: 3
-  _kinds: 
+  _kinds: 00000000
   _onActivate: []
   _onInterval:
   - rid: 2286801137428857037
@@ -69,3 +69,4 @@ MonoBehaviour:
             _stat: 5
             _ratioByRank:
             - 0.05
+        _anyTeam: 0

@@ -14,21 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.pain.shurado_missiles
   _displayName: "Lance-missiles (Shurad\xF4)"
-  _description: "Activable : port\xE9e d'attaque accrue, les attaques infligent 10
-    % de l'AD en zone ; co\xFBte du mana chaque seconde."
+  _description: "Pendant 4 s : port\xE9e d'attaque accrue de 1,5 m, les attaques
+    infligent 10 % de l'AD en zone."
   _icon: {fileID: 0}
-  _maxRank: 5
-  _castMode: 3
+  _maxRank: 9
+  _castMode: 0
   _cooldownSeconds:
   - 5
   _cost:
-  - 20
+  - 0
   _costPerSecond:
-  - 8
-  - 9
-  - 10
-  - 11
-  - 12
+  - 0
   _castTimeSeconds:
     _byRank:
     - 0
@@ -50,13 +46,33 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
-  _onCast: []
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
+  _onCast:
+  - rid: 2286801137428857649
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
-  _toggleStatus: {fileID: 11400000, guid: a623939aa9e4e1946bfb81e397782b22, type: 2}
+  _toggleStatus: {fileID: 0}
   _requiredStatus: {fileID: 0}
   _startsLearned: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2286801137428857649
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 1
+        _status: {fileID: 11400000, guid: a623939aa9e4e1946bfb81e397782b22, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 4
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0
+        _onePerCaster: 0

@@ -45,6 +45,10 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast: []
   _behaviourId: 
   _readyStatus: {fileID: 0}

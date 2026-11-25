@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.naruto.rasengan
   _displayName: Rasengan
-  _description: "Fonce sur l'ennemi cibl\xE9 : d\xE9g\xE2ts magiques et projection."
+  _description: "Naruto tient son Rasengan 2,5 s et court plus vite (+30 %) ; le
+    premier ennemi qu'il touche subit des d\xE9g\xE2ts magiques et est projet\xE9.
+    S'il ne touche personne, il est ralenti 1 s. Il peut lancer son E pendant ce
+    temps."
   _icon: {fileID: 0}
   _maxRank: 5
   _castMode: 0
@@ -41,63 +44,45 @@ MonoBehaviour:
   _charges:
     _byRank: 01000000
   _targeting:
-    _mode: 2
-    _validTargets: 12
+    _mode: 1
+    _validTargets: 1
     _fallback: 0
     _range:
       _byRank:
-      - 6
+      - 0
     _indicatorWidth:
       _byRank:
       - 0
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857065
-  - rid: 2286801137428857066
-  - rid: 2286801137428857067
+  - rid: 2286801137428857679
   _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857065
-      type: {class: DashEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+    - rid: 2286801137428857679
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
-        _destination: 1
-        _maxDistance:
+        _target: 1
+        _status: {fileID: 11400000, guid: fdcff3768304d12418a9d057b591a0ff, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
           _byRank:
-          - 6
-        _speed:
-          _byRank:
-          - 22
-        _passesThroughWalls: 0
-    - rid: 2286801137428857066
-      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
-      data:
-        _target: 0
-        _type: 1
-        _amount:
-          _baseByRank:
-          - 70
-          - 110
-          - 150
-          - 190
-          - 230
-          _ratios:
-          - _source: 0
-            _stat: 5
-            _ratioByRank:
-            - 0.6
-        _canCrit: 0
-        _appliesOnHitEffects: 0
-    - rid: 2286801137428857067
-      type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
-      data:
-        _kind: 0
-        _distance:
-          _byRank:
-          - 2.5
-        _durationSeconds:
-          _byRank:
-          - 0.25
+          - 0
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0
+        _onePerCaster: 0

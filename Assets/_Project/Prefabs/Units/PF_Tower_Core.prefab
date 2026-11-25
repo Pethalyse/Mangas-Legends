@@ -753,7 +753,6 @@ GameObject:
   - component: {fileID: 7324415407791860943}
   - component: {fileID: 3412231248071822145}
   - component: {fileID: 129296917096463550}
-  - component: {fileID: 8774951521637382612}
   m_Layer: 8
   m_Name: PF_Tower_Core
   m_TagString: Untagged
@@ -1010,25 +1009,15 @@ MonoBehaviour:
   _mainModel: {fileID: 0}
   _formModel: {fileID: 0}
   _formAnimator: {fileID: 0}
+  _companionStatusId: 
+  _companionModel: {fileID: 0}
   _attackAnimationSeconds: 1
   _runBlendSpeed: 3.5
+  _floats: 0
+  _floatHeight: 0.35
+  _floatBob: 0.08
+  _floatLean: 10
   _tintBody: 0
---- !u!208 &8774951521637382612
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7331978199710012915}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 1.0200001, y: 2, z: 1.0200001}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 2, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &7588861297296046412
 GameObject:
   m_ObjectHideFlags: 0

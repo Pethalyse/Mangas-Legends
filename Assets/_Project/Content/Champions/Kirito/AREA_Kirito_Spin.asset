@@ -40,6 +40,7 @@ MonoBehaviour:
     - 0
   _followsCaster: 0
   _affects: 12
+  _kinds: 
   _onActivate:
   - rid: 2286801137428857129
   - rid: 2286801137428857130
@@ -98,3 +99,4 @@ MonoBehaviour:
         _remainingFraction:
           _byRank:
           - 0.5
+        _onlyIfChampionHit: 1

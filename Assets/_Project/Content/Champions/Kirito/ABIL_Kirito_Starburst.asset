@@ -38,20 +38,29 @@ MonoBehaviour:
   _targeting:
     _mode: 2
     _validTargets: 12
-    _fallback: 0
+    _fallback: 2
     _range:
       _byRank:
-      - 2.5
+      - 6
     _indicatorWidth:
       _byRank:
       - 0
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 1
+    _requiredTargetStatus: {fileID: 11400000, guid: e48202b975528884fb6252d25b51f40d, type: 2}
+    _requiredTargetStacks: 5
   _onCast:
   - rid: 2286801137428857151
   - rid: 2286801137428857152
   _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
     RefIds:
@@ -71,6 +80,10 @@ MonoBehaviour:
           _value:
             _byRank:
             - -0.25
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0
+        _onePerCaster: 0
     - rid: 2286801137428857152
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:

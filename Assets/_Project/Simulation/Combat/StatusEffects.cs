@@ -76,11 +76,12 @@ namespace MangaLegends.Simulation.Combat
                 if (!status.IsActive) continue;
                 if (status.ExpiresTick > 0 && status.ExpiresTick <= tick)
                 {
-                    Clear(i);
+                    Expire(i, status);
                     continue;
                 }
                 if (HasStateAuthority && status.NextPulseTick > 0 && status.NextPulseTick <= tick) Pulse(i, status, tick);
-                if (HasStateAuthority) EndOutOfCombat(i);
+                if (HasStateAuthority && Active[i].IsActive) EndOutOfCombat(i);
+                if (HasStateAuthority && Active[i].IsActive) CheckContact(i);
             }
         }
 
@@ -122,7 +123,7 @@ namespace MangaLegends.Simulation.Combat
                 Stacks = (byte)System.Math.Max(1, System.Math.Min(definition.MaxStacks, application.Stacks)),
                 Rank = (byte)application.Rank,
                 Source = application.Source != null ? application.Source.Object.Id : default,
-                NextPulseTick = definition.TickIntervalSeconds > 0f ? tick + TickTime.SecondsToTicks(definition.TickIntervalSeconds, Runner.TickRate) : 0
+                NextPulseTick = definition.StackDecaySeconds > 0f ? tick + TickTime.SecondsToTicks(definition.StackDecaySeconds, Runner.TickRate) : definition.TickIntervalSeconds > 0f ? tick + TickTime.SecondsToTicks(definition.TickIntervalSeconds, Runner.TickRate) : 0
             };
             WriteOverrides(ref created, application);
             Active.Set(slot, created);
@@ -324,10 +325,66 @@ namespace MangaLegends.Simulation.Combat
         {
             StatusEffectDefinition definition = DefinitionAt(slot);
             if (definition == null) return;
+            if (definition.StackDecaySeconds > 0f)
+            {
+                DecayStack(slot, status, definition, tick);
+                return;
+            }
             status.NextPulseTick = tick + System.Math.Max(1, TickTime.SecondsToTicks(definition.TickIntervalSeconds, Runner.TickRate));
             Active.Set(slot, status);
             _unit.TryResolve(status.Source, out Unit source);
             EffectExecutor.Run(definition.OnTick, EffectContext.ForTarget(source != null ? source : _unit, _unit, status.Rank).AsProc());
+        }
+
+        private void DecayStack(int slot, NetStatus status, StatusEffectDefinition definition, int tick)
+        {
+            if (status.Stacks <= 1)
+            {
+                Clear(slot);
+                return;
+            }
+            status.Stacks--;
+            status.NextPulseTick = tick + System.Math.Max(1, TickTime.SecondsToTicks(definition.StackDecaySeconds, Runner.TickRate));
+            Active.Set(slot, status);
+            Version++;
+        }
+
+        // Keeps a decaying status full (Homeguard inside the base): its decay restarts from now.
+        public void SetFull(StatusEffectDefinition definition)
+        {
+            if (!HasStateAuthority || definition == null || _unit == null) return;
+            int index = _unit.Services.Content.StatusEffects.IndexOf(definition.Id);
+            int slot = Find((short)index);
+            if (slot < 0) return;
+            NetStatus status = Active[slot];
+            int decay = TickTime.SecondsToTicks(definition.StackDecaySeconds, Runner.TickRate);
+            if (status.Stacks == definition.MaxStacks && status.NextPulseTick > Runner.Tick + decay - 1) return;
+            status.Stacks = (byte)definition.MaxStacks;
+            status.NextPulseTick = definition.StackDecaySeconds > 0f ? Runner.Tick + System.Math.Max(1, decay) : status.NextPulseTick;
+            Active.Set(slot, status);
+            Version++;
+        }
+
+        private void Expire(int slot, NetStatus status)
+        {
+            StatusEffectDefinition definition = DefinitionAt(slot);
+            Clear(slot);
+            if (!HasStateAuthority || definition == null || definition.OnExpire.Count == 0) return;
+            _unit.TryResolve(status.Source, out Unit source);
+            EffectExecutor.Run(definition.OnExpire, EffectContext.ForTarget(source != null ? source : _unit, _unit, status.Rank).AsProc());
+        }
+
+        // A charging status (Naruto's Rasengan) fires its effects on the first enemy the unit runs into, then ends.
+        private void CheckContact(int slot)
+        {
+            StatusEffectDefinition definition = DefinitionAt(slot);
+            if (definition == null || definition.ContactRadius <= 0f || definition.OnContact.Count == 0) return;
+            Unit hit = _unit.Services.Units.Closest(_unit.Position, definition.ContactRadius + _unit.Radius,
+                u => u.IsAlive && u.IsTargetable && _unit.IsEnemyOf(u) && !u.IsStructure && u.Kind != UnitKind.Ward);
+            if (hit == null) return;
+            int rank = Active[slot].Rank;
+            Clear(slot);
+            EffectExecutor.Run(definition.OnContact, new EffectContext(_unit, hit, hit.Position, hit.Position, rank, null));
         }
 
         private int Find(short definition)

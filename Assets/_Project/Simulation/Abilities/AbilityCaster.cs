@@ -50,6 +50,8 @@ namespace MangaLegends.Simulation.Abilities
         [Networked] public NetworkId ChannelTarget { get; set; }
         [Networked] public sbyte PendingSlot { get; set; }
         [Networked] public NetworkId PendingTarget { get; set; }
+        [Networked] public Vector3 PendingPoint { get; set; }
+        [Networked] public int SetChangeTick { get; set; }
         [Networked] public int LastCastTick { get; set; }
         [Networked] public sbyte LastCastSlot { get; set; }
         [Networked] public short BaseTrinket { get; set; }
@@ -135,7 +137,7 @@ namespace MangaLegends.Simulation.Abilities
                 int[] unlocks = rules.UltimateUnlockLevels;
                 return rank < unlocks.Length && _unit.Stats.Level >= unlocks[rank];
             }
-            return rank < rules.BasicAbilityMaxRank && rank < (_unit.Stats.Level + 1) / 2;
+            return rank < Mathf.Max(rules.BasicAbilityMaxRank, ability.MaxRank) && rank < (_unit.Stats.Level + 1) / 2;
         }
 
         public void LevelUp(CasterSlot slot)
@@ -153,7 +155,45 @@ namespace MangaLegends.Simulation.Abilities
             AbilityDefinition ability = AbilityAt(slot);
             if (ability == null || data.Rank == 0) return false;
             if (ability.RequiredStatus != null && _unit.Status.StacksOf(ability.RequiredStatus) == 0) return false;
+            if (SetChangeLocked && StepsSet(ability)) return false;
             return ability.ChargesAt(data.Rank) > 1 ? data.Charges > 0 : Runner.Tick >= data.ReadyTick;
+        }
+
+        private float SetChangeLockSeconds => _unit.Definition is ChampionDefinition champion ? champion.SetChangeLockSeconds : 0f;
+
+        private bool SetChangeLocked => SetChangeLockSeconds > 0f && Runner.Tick < SetChangeTick + TickTime.SecondsToTicks(SetChangeLockSeconds, Runner.TickRate);
+
+        private static bool StepsSet(AbilityDefinition ability)
+        {
+            foreach (var effect in ability.OnCast)
+                if (effect is Data.Effects.SwapAbilitySetEffect swap && swap.Step != 0) return true;
+            return false;
+        }
+
+        // What the HUD shows on the passive: lit when active, otherwise the time left before it is.
+        public bool PassiveTimer(out float remaining, out float total)
+        {
+            remaining = total = 0f;
+            AbilityDefinition passive = AbilityAt(CasterSlot.Passive);
+            if (passive == null) return false;
+            int tick = Runner.Tick;
+            if (passive.BehaviourId == AbilityBehaviours.PeriodicOutOfCombat)
+            {
+                total = _unit.Services.Rules.OutOfCombatSeconds;
+                int last = _unit.Health.LastCombatTick;
+                remaining = last > 0 ? Mathf.Max(0f, total - (tick - last) / (float)Runner.TickRate) : 0f;
+                return remaining <= 0f;
+            }
+            if (SetChangeLockSeconds > 0f)
+            {
+                total = SetChangeLockSeconds;
+                remaining = Mathf.Max(0f, (SetChangeTick + TickTime.SecondsToTicks(total, Runner.TickRate) - tick) / (float)Runner.TickRate);
+                return remaining <= 0f;
+            }
+            if (passive.BehaviourId == AbilityBehaviours.WhileInBrush) return passive.ReadyStatus != null && _unit.Status.StacksOf(passive.ReadyStatus) > 0;
+            total = passive.CooldownAtRank(1);
+            remaining = CooldownRemaining(CasterSlot.Passive);
+            return remaining <= 0f;
         }
 
         private bool StartsLearned(CasterSlot slot)
@@ -200,6 +240,14 @@ namespace MangaLegends.Simulation.Abilities
                 case TargetingMode.Point:
                     Vector3 offset = aimPoint - _unit.Position;
                     offset.y = 0f;
+                    if (targeting.WalkIntoRange && offset.magnitude > range)
+                    {
+                        PendingSlot = (sbyte)slot;
+                        PendingTarget = default;
+                        PendingPoint = aimPoint;
+                        _unit.Motor?.MoveTo(aimPoint, range - 0.2f);
+                        return false;
+                    }
                     aimPoint = _unit.Position + Vector3.ClampMagnitude(offset, range);
                     break;
             }
@@ -255,6 +303,7 @@ namespace MangaLegends.Simulation.Abilities
             if (!(_unit.Definition is ChampionDefinition champion)) return;
             int count = 1 + champion.AlternateAbilitySets.Count;
             SwapSet(((ActiveSet + step) % count + count) % count, 0f, resetCooldowns);
+            SetChangeTick = Runner.Tick;
         }
 
         public void Simulate()
@@ -360,14 +409,19 @@ namespace MangaLegends.Simulation.Abilities
         private void SimulatePending()
         {
             if (PendingSlot < 0) return;
-            if (!_unit.TryResolve(PendingTarget, out Unit target) || !target.IsAlive)
+            CasterSlot slot = (CasterSlot)PendingSlot;
+            AbilityDefinition ability = AbilityAt(slot);
+            if (ability == null)
             {
                 PendingSlot = -1;
                 return;
             }
-            CasterSlot slot = (CasterSlot)PendingSlot;
-            AbilityDefinition ability = AbilityAt(slot);
-            if (ability == null)
+            if (!PendingTarget.IsValid)
+            {
+                SimulatePendingPoint(slot, ability);
+                return;
+            }
+            if (!_unit.TryResolve(PendingTarget, out Unit target) || !target.IsAlive)
             {
                 PendingSlot = -1;
                 return;
@@ -493,9 +547,32 @@ namespace MangaLegends.Simulation.Abilities
             }
         }
 
+        // Ground-targeted spell ordered out of range: walk to the point, cast once in range.
+        private void SimulatePendingPoint(CasterSlot slot, AbilityDefinition ability)
+        {
+            float range = ability.Targeting.RangeAt(Mathf.Max(1, RankOf(slot)));
+            if (UnitRegistry.FlatDistance(_unit.Position, PendingPoint) <= range)
+            {
+                _unit.Motor?.Stop();
+                Vector3 point = PendingPoint;
+                PendingSlot = -1;
+                TryCast(slot, point, null);
+            }
+            else if (_unit.Motor != null && !_unit.Motor.IsMoving) _unit.Motor.MoveTo(PendingPoint, range - 0.2f);
+        }
+
+        private bool IsValidUnitTarget(TargetingData targeting, Unit unit)
+        {
+            if (unit == null || !unit.IsAlive || !unit.IsTargetable || !TeamRules.Matches(targeting.ValidTargets, _unit, unit)) return false;
+            if (targeting.ChampionsOnly && !unit.IsChampion) return false;
+            return targeting.RequiredTargetStatus == null || unit.Status.StacksOf(targeting.RequiredTargetStatus) >= targeting.RequiredTargetStacks;
+        }
+
         private Unit ResolveUnitTarget(TargetingData targeting, Unit aimTarget, float range)
         {
-            if (aimTarget != null && aimTarget.IsAlive && aimTarget.IsTargetable && TeamRules.Matches(targeting.ValidTargets, _unit, aimTarget)) return aimTarget;
+            if (IsValidUnitTarget(targeting, aimTarget)) return aimTarget;
+            if (targeting.Fallback == TargetFallback.NearestWithRequiredStatus)
+                return _unit.Services.Units.Closest(_unit.Position, range + _unit.Radius + 1f, u => IsValidUnitTarget(targeting, u) && InRange(u, range));
             if (targeting.Fallback != TargetFallback.LowestHealthAllyInRange) return null;
             List<Unit> allies = new List<Unit>();
             _unit.Services.Units.Query(_unit.Position, range, _unit, TeamFilter.Self | TeamFilter.Allies, allies);

@@ -31,12 +31,12 @@ MonoBehaviour:
   _hits: 4
   _stopsOnTerrain: 0
   _onHit:
-  - rid: 2286801137428857510
+  - rid: 2286801137428857599
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857510
+    - rid: 2286801137428857599
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -44,10 +44,14 @@ MonoBehaviour:
         _amount:
           _baseByRank:
           - 70
-          - 110
-          - 150
-          - 190
-          - 230
+          - 98.625
+          - 127.25
+          - 155.875
+          - 184.5
+          - 213.125
+          - 241.75
+          - 270.375
+          - 299
           _ratios:
           - _source: 1
             _stat: 4

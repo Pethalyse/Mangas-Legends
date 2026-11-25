@@ -21,6 +21,7 @@ MonoBehaviour:
   _restrictions: 0
   _stacking: 0
   _maxStacks: 1
+  _stackDecaySeconds: 0
   _isCrowdControl: 0
   _modifiersPerStack: []
   _tickIntervalSeconds: 0
@@ -39,12 +40,15 @@ MonoBehaviour:
   _blocksNextBasicAttack: 0
   _removedOnTrigger: 0
   _onOutOfCombat:
-  - rid: 2286801137428857557
-  - rid: 2286801137428857558
+  - rid: 2286801137428857650
+  - rid: 2286801137428857651
+  _onExpire: []
+  _contactRadius: 0
+  _onContact: []
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857557
+    - rid: 2286801137428857650
       type: {class: SwapAbilitySetEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _alternateSetIndex: 0
@@ -53,7 +57,7 @@ MonoBehaviour:
         _durationSeconds:
           _byRank:
           - 0
-    - rid: 2286801137428857558
+    - rid: 2286801137428857651
       type: {class: RemoveStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1

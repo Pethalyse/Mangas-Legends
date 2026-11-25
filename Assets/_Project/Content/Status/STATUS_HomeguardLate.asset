@@ -19,12 +19,13 @@ MonoBehaviour:
   _durationSeconds: 0
   _restrictions: 0
   _stacking: 0
-  _maxStacks: 1
+  _maxStacks: 10
+  _stackDecaySeconds: 0.4
   _isCrowdControl: 0
   _modifiersPerStack:
   - _stat: 9
     _kind: 1
-    _value: 1.5
+    _value: 0.15
   _tickIntervalSeconds: 0
   _onTick: []
   _triggers: []
@@ -33,6 +34,17 @@ MonoBehaviour:
   _revealRadius: 0
   _onMaxStacks: []
   _rankCount: 1
+  _invulnerable: 0
+  _abilityDamageReduction: 0
+  _reductionArcDegrees: 0
+  _redirectToSource: 0
+  _taunt: 0
+  _blocksNextBasicAttack: 0
+  _removedOnTrigger: 0
+  _onOutOfCombat: []
+  _onExpire: []
+  _contactRadius: 0
+  _onContact: []
   references:
     version: 2
     RefIds: []

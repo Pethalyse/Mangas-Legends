@@ -43,13 +43,17 @@ MonoBehaviour:
       _indicatorRadius:
         _byRank:
         - 0
+      _walkIntoRange: 0
+      _championsOnly: 0
+      _requiredTargetStatus: {fileID: 0}
+      _requiredTargetStacks: 1
     _effects:
-    - rid: 2286801137428857574
+    - rid: 2286801137428857668
   _championExclusive: 1
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857574
+    - rid: 2286801137428857668
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0

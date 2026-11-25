@@ -23,6 +23,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(0f, 1f)] private float _minionDamageToChampionsRatio = 0.6f;
         [SerializeField, Min(0f)] private float _maxAttackSpeed = 2.5f;
         [SerializeField, Min(0f), Tooltip("Attack-move (Q-click): an enemy this close to the click is attacked at once.")] private float _attackMoveRadius = 4f;
+        [SerializeField, Min(0f), Tooltip("A unit hidden in a brush is revealed to the AI this long after it dealt damage.")] private float _brushRevealSeconds = 1f;
 
         [Header("Terrain")]
         [SerializeField, Range(0f, 0.2f), Tooltip("Share of max health lost per second by a Devil Fruit user standing in the river.")] private float _devilFruitWaterDrain = 0.015f;
@@ -104,6 +105,7 @@ namespace MangaLegends.Data.Definitions
         public float MinionDamageToChampionsRatio => _minionDamageToChampionsRatio;
         public float MaxAttackSpeed => _maxAttackSpeed;
         public float AttackMoveRadius => _attackMoveRadius;
+        public float BrushRevealSeconds => _brushRevealSeconds;
         public float DevilFruitWaterDrain => _devilFruitWaterDrain;
         public StatusEffectDefinition HomeguardFor(float elapsedSeconds) => elapsedSeconds >= _homeguardLateAfterSeconds ? _homeguardLate : _homeguardEarly;
         public StatusEffectDefinition HomeguardEarly => _homeguardEarly;

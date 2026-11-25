@@ -3,6 +3,14 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-26 — Retours du propriétaire, lot 1 (gameplay)
+
+**Fait** : R d'Ainz au sol (40 m, avance jusqu'à la portée, impact différé) ; Z et E d'Ainz réservés aux champions alliés ; Giorno mêlée, transfert de vie seulement sur les champions et payé seulement s'il soigne, fleurs qui traversent et contrôles qui grandissent avec les rangs, Gold Experience 8/10/12 s ; Kirito : R seulement sur un champion à 5 marques (repli sur le plus proche, pas de recharge sinon), réductions de recharge seulement sur un champion touché ; Mark : R qui grandit avec les rangs ; Naruto : nouveau Rasengan (courir, toucher, ralenti si raté) ; Pain sans mana, rangs jusqu'à 9, 5 s entre deux changements ; Homeguard qui s'estompe hors de la base ; or des tours partagé, XP des monstres au tueur ; IA aveugle aux buissons ; sbires qui traversent tout droit (zone NavMesh « Structure », NavMesh recalculé) ; sortie de mur au point libre le plus proche après une ruée à travers un mur.
+
+**Testé dans l'éditeur** : Homeguard 10 cumuls dans la base puis 0 en 3 s dehors ; R d'Ainz visé à 50 m : avance de 10 m puis se lance ; Rasengan : 158 dégâts et projection au contact ; Pain A/E au-delà de 5, sans mana ; NavMesh : tours et inhibiteurs en zone « Structure », chemin de sbire droit. 0 erreur.
+
+**Reste (lots suivants)** : interface (infobulles et Maj, portée affichée, piles sur les sorts, compteur et marques de Kirito, jauge de Pain sous les PV, cadre de la cible, boutique et écrans de sélection à la LoL, contour doré des actifs, passif allumé), visuels (mur de Mark, boule d'Ainz, deux cercles du R de Mark, rotation du R de Kirito, marques de Giorno sur les cibles), modèles et animations (squelettes de Jotaro, Giorno et des stands, cape d'Ainz, Kirito et Pain moins robotiques, main gauche du passif de Kirito, dos de Mark, course sous bonus de vitesse, couleurs de Sulfura), Échap qui ferme la boutique.
+
 ## 2026-11-25 — Corrections du propriétaire : ciblage, attaque-déplacement, Mark, Pain, Ainz qui flotte
 
 **Fait** :

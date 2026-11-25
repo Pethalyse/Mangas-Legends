@@ -19,7 +19,9 @@ MonoBehaviour:
   _shape: 0
   _radius:
     _byRank:
-    - 4.5
+    - 3.5
+    - 4.25
+    - 5
   _angle:
     _byRank:
     - 0
@@ -42,14 +44,14 @@ MonoBehaviour:
   _affects: 12
   _kinds: 
   _onActivate:
-  - rid: 2286801137428857544
-  - rid: 2286801137428857545
+  - rid: 2286801137428857636
+  - rid: 2286801137428857637
   _onInterval: []
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857544
+    - rid: 2286801137428857636
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 2
@@ -70,7 +72,7 @@ MonoBehaviour:
         _stacksOnCaster: 0
         _minStacks: 0
         _consumesStacks: 0
-    - rid: 2286801137428857545
+    - rid: 2286801137428857637
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 2
@@ -79,6 +81,8 @@ MonoBehaviour:
           _byRank: 01000000
         _durationOverrideSeconds:
           _byRank:
+          - 1
+          - 1.5
           - 2
         _modifierOverrides: []
         _requiredStatus: {fileID: 0}

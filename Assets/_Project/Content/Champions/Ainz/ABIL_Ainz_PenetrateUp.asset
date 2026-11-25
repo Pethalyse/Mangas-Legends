@@ -36,30 +36,35 @@ MonoBehaviour:
   _charges:
     _byRank: 01000000
   _targeting:
-    _mode: 4
+    _mode: 3
     _validTargets: 4
     _fallback: 0
     _range:
       _byRank:
-      - 30
+      - 40
     _indicatorWidth:
       _byRank:
-      - 1.6
+      - 0
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 1
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857039
+  - rid: 2286801137428857680
   _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857039
-      type: {class: LaunchProjectileEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+    - rid: 2286801137428857680
+      type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
-        _projectile: {fileID: 11400000, guid: 778e21661a3228847a64d48a539fef96, type: 2}
-        _count:
-          _byRank: 01000000
-        _spreadAngle:
-          _byRank:
-          - 0
+        _area: {fileID: 11400000, guid: 6e53121bd3aa7af4f9590b66dbd92f5c, type: 2}
+        _atAimPoint: 1

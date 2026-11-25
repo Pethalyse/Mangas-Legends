@@ -32,7 +32,8 @@ namespace MangaLegends.Simulation.Match
 
             if (victim.IsStructure)
             {
-                foreach (Unit champion in ChampionsNear(victim, rewarded)) Progress(champion).AddGold(definition.GoldBounty);
+                List<Unit> sharers = ChampionsNear(victim, rewarded);
+                foreach (Unit champion in sharers) Progress(champion).AddGold(definition.GoldBounty / (float)sharers.Count);
                 return;
             }
 
@@ -48,6 +49,11 @@ namespace MangaLegends.Simulation.Match
                 progress.AddGold(definition.GoldBounty);
                 progress.MinionKills++;
                 if (victim.IsMonster) GrantMonster(victim, killingChampion);
+            }
+            if (victim.IsMonster)
+            {
+                if (killingChampion != null) Progress(killingChampion).AddExperience(definition.ExperienceBounty);
+                return;
             }
             ShareExperience(victim, rewarded, definition.ExperienceBounty);
         }

@@ -20,12 +20,12 @@ MonoBehaviour:
   _restrictions: 0
   _stacking: 0
   _maxStacks: 1
+  _stackDecaySeconds: 0
   _isCrowdControl: 0
   _modifiersPerStack: []
   _tickIntervalSeconds: 0.5
   _onTick:
-  - rid: 2286801137428857582
-  - rid: 2286801137428857583
+  - rid: 2286801137428857675
   _triggers: []
   _persistsThroughDeath: 0
   _triggerCooldownSeconds: 0
@@ -40,22 +40,14 @@ MonoBehaviour:
   _blocksNextBasicAttack: 0
   _removedOnTrigger: 0
   _onOutOfCombat: []
+  _onExpire: []
+  _contactRadius: 0
+  _onContact: []
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857582
+    - rid: 2286801137428857675
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: a5e0a0e990451834bbc8c55dd4836caa, type: 2}
         _atAimPoint: 1
-    - rid: 2286801137428857583
-      type: {class: PayHealthEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
-      data:
-        _amount:
-          _baseByRank:
-          - 6
-          - 9
-          - 12
-          - 15
-          - 18
-          _ratios: []

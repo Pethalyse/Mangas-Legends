@@ -15,6 +15,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private StatusRestriction _restrictions;
         [SerializeField] private StackingRule _stacking = StackingRule.Refresh;
         [SerializeField, Min(1)] private int _maxStacks = 1;
+        [SerializeField, Min(0f), Tooltip("Loses one stack every this many seconds instead of expiring all at once (decaying buff); 0 = off.")] private float _stackDecaySeconds;
         [SerializeField] private bool _isCrowdControl;
         [SerializeField] private List<StatModifierData> _modifiersPerStack = new List<StatModifierData>();
         [SerializeField, Min(0f)] private float _tickIntervalSeconds;
@@ -35,11 +36,15 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Tooltip("The next basic attack taken is ignored and removes the status.")] private bool _blocksNextBasicAttack;
         [SerializeField, Tooltip("Removed once one of its triggers has run (empowered next attack).")] private bool _removedOnTrigger;
         [SerializeReference, TypeSelector, Tooltip("Run when the unit is out of combat; the status is then removed.")] private List<EffectDefinition> _onOutOfCombat = new List<EffectDefinition>();
+        [SerializeReference, TypeSelector, Tooltip("Run when the status runs out (not when removed early).")] private List<EffectDefinition> _onExpire = new List<EffectDefinition>();
+        [SerializeField, Min(0f), Tooltip("While active, the first enemy within this distance triggers On Contact and ends the status.")] private float _contactRadius;
+        [SerializeReference, TypeSelector] private List<EffectDefinition> _onContact = new List<EffectDefinition>();
 
         public float DurationSeconds => _durationSeconds;
         public StatusRestriction Restrictions => _restrictions;
         public StackingRule Stacking => _stacking;
         public int MaxStacks => _maxStacks;
+        public float StackDecaySeconds => _stackDecaySeconds;
         public bool IsCrowdControl => _isCrowdControl;
         public IReadOnlyList<StatModifierData> ModifiersPerStack => _modifiersPerStack;
         public float TickIntervalSeconds => _tickIntervalSeconds;
@@ -57,6 +62,9 @@ namespace MangaLegends.Data.Definitions
         public bool RemovedOnTrigger => _removedOnTrigger;
         public float ReductionArcDegrees => _reductionArcDegrees;
         public IReadOnlyList<EffectDefinition> OnOutOfCombat => _onOutOfCombat;
+        public IReadOnlyList<EffectDefinition> OnExpire => _onExpire;
+        public float ContactRadius => _contactRadius;
+        public IReadOnlyList<EffectDefinition> OnContact => _onContact;
 
         public StatusEffectSpec ToSpec(int runtimeId, int tickRate) => new StatusEffectSpec(
             runtimeId,

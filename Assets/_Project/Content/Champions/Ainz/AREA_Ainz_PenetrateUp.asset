@@ -31,7 +31,7 @@ MonoBehaviour:
     - 5
   _delaySeconds:
     _byRank:
-    - 0
+    - 0.8
   _durationSeconds:
     _byRank:
     - 0
@@ -40,6 +40,7 @@ MonoBehaviour:
     - 0
   _followsCaster: 0
   _affects: 12
+  _kinds: 
   _onActivate:
   - rid: 2286801137428857029
   - rid: 2286801137428857030
@@ -65,6 +66,10 @@ MonoBehaviour:
             - 0.75
         _canCrit: 0
         _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0
     - rid: 2286801137428857030
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
@@ -90,3 +95,7 @@ MonoBehaviour:
             - -0.2
             - -0.3
             - -0.4
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0
+        _onePerCaster: 0

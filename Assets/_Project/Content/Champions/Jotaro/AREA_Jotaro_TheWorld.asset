@@ -42,13 +42,13 @@ MonoBehaviour:
   _affects: 14
   _kinds: 
   _onActivate:
-  - rid: 2286801137428857550
+  - rid: 2286801137428857642
   _onInterval: []
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857550
+    - rid: 2286801137428857642
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 2

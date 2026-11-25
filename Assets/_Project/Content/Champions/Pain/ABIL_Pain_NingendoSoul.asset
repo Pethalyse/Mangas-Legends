@@ -17,7 +17,7 @@ MonoBehaviour:
   _description: "Retire 20 % des PV actuels de la cible pendant 3 s, puis elle les
     r\xE9cup\xE8re."
   _icon: {fileID: 0}
-  _maxRank: 5
+  _maxRank: 9
   _castMode: 0
   _cooldownSeconds:
   - 5
@@ -46,9 +46,13 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857568
-  - rid: 2286801137428857569
+  - rid: 2286801137428857660
+  - rid: 2286801137428857661
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -58,7 +62,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857568
+    - rid: 2286801137428857660
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -77,7 +81,7 @@ MonoBehaviour:
         _stacksOnCaster: 0
         _minStacks: 0
         _consumesStacks: 0
-    - rid: 2286801137428857569
+    - rid: 2286801137428857661
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0

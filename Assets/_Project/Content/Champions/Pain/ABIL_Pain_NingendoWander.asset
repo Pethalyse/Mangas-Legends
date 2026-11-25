@@ -17,7 +17,7 @@ MonoBehaviour:
   _description: "Fait avancer la cible dans une direction al\xE9atoire pendant 1
     s."
   _icon: {fileID: 0}
-  _maxRank: 5
+  _maxRank: 9
   _castMode: 0
   _cooldownSeconds:
   - 7
@@ -46,8 +46,12 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857543
+  - rid: 2286801137428857606
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -57,7 +61,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857543
+    - rid: 2286801137428857606
       type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _kind: 3

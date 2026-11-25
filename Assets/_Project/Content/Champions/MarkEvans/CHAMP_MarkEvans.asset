@@ -76,5 +76,6 @@ MonoBehaviour:
     _e: {fileID: 11400000, guid: d3135b569b45a554ab92c2686236437e, type: 2}
     _r: {fileID: 11400000, guid: f1654d14bd0e64f428f7957f191e3f0d, type: 2}
   _alternateAbilitySets: []
+  _setChangeLockSeconds: 0
   _startingItems:
   - {fileID: 11400000, guid: dbec92c8ae92e7b438e6d4e294a109a4, type: 2}

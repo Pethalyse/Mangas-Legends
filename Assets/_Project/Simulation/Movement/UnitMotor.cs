@@ -14,6 +14,8 @@ namespace MangaLegends.Simulation.Movement
         private const int MaxCorners = 16;
         private const float CornerReachedDistance = 0.05f;
         private const float NavMeshSampleDistance = 4f;
+        // A dash through a wall that ends inside it lands on the closest walkable point instead (like Kayn's E in LoL).
+        private const float WallExitSearchDistance = 10f;
         private const float SeparationShare = 0.25f;
         private const float SeparationMaxStepRatio = 1.5f;
         private const float RepathSeconds = 0.25f;
@@ -22,6 +24,8 @@ namespace MangaLegends.Simulation.Movement
 
         private readonly List<Unit> _neighbours = new List<Unit>();
         private const int LaneArea = 3;
+        // Structures sit on a NavMesh area of their own: solid for champions and monsters, open to minions so waves walk straight down the lane.
+        private const int StructureArea = 4;
         private const float OffLaneCostForMinions = 4f;
         private NavMeshQueryFilter _minionFilter;
         private bool _hasMinionFilter;
@@ -87,6 +91,7 @@ namespace MangaLegends.Simulation.Movement
                 if (overlap <= 0f) continue;
                 // LoL body-blocking is very light: minions walk through champions and only nudge each other.
                 if (other.IsChampion) continue;
+                if (other.IsStructure && _unit.Kind == UnitKind.Minion) continue;
                 float share = other.IsStructure ? 1f : SeparationShare;
                 Vector3 direction = distance > 0.0001f ? away / distance : Quaternion.Euler(0f, (_unit.SortKey % 360u), 0f) * Vector3.forward;
                 push += direction * (overlap * share);
@@ -94,9 +99,11 @@ namespace MangaLegends.Simulation.Movement
             if (push.sqrMagnitude < 0.000001f) return;
             push = Vector3.ClampMagnitude(push, Mathf.Max(0.05f, Speed) * Runner.DeltaTime * SeparationMaxStepRatio * SeparationPeriod);
             Vector3 target = position + push;
-            if (NavMesh.Raycast(position, target, out NavMeshHit wall, NavMesh.AllAreas)) target = wall.position;
+            if (NavMesh.Raycast(position, target, out NavMeshHit wall, WalkMask)) target = wall.position;
             Place(target, false);
         }
+
+        private int WalkMask => _unit.Kind == UnitKind.Minion ? NavMesh.AllAreas : NavMesh.AllAreas & ~(1 << StructureArea);
 
         public bool MoveTo(Vector3 point, float stopDistance = 0f)
         {
@@ -106,7 +113,7 @@ namespace MangaLegends.Simulation.Movement
             NextPathTick = Runner.Tick + Mathf.Max(1, Core.Simulation.TickTime.SecondsToTicks(RepathSeconds, Runner.TickRate));
             RequestedPoint = point;
             Vector3 start = transform.position;
-            if (!NavMesh.SamplePosition(point, out NavMeshHit hit, NavMeshSampleDistance, NavMesh.AllAreas)) return false;
+            if (!NavMesh.SamplePosition(point, out NavMeshHit hit, NavMeshSampleDistance, WalkMask)) return false;
             if (!CalculatePath(start, hit.position) || _path.corners.Length == 0)
             {
                 Stop();
@@ -127,11 +134,11 @@ namespace MangaLegends.Simulation.Movement
         // Minions price everything that is not a lane higher, so they only leave the lane when it is blocked.
         private bool CalculatePath(Vector3 start, Vector3 end)
         {
-            if (_unit.Kind != UnitKind.Minion) return NavMesh.CalculatePath(start, end, NavMesh.AllAreas, _path);
+            if (_unit.Kind != UnitKind.Minion) return NavMesh.CalculatePath(start, end, WalkMask, _path);
             if (!_hasMinionFilter)
             {
                 _minionFilter = new NavMeshQueryFilter { areaMask = NavMesh.AllAreas, agentTypeID = 0 };
-                for (int area = 0; area < 32; area++) _minionFilter.SetAreaCost(area, area == LaneArea ? 1f : OffLaneCostForMinions);
+                for (int area = 0; area < 32; area++) _minionFilter.SetAreaCost(area, area == LaneArea || area == StructureArea ? 1f : OffLaneCostForMinions);
                 _hasMinionFilter = true;
             }
             return NavMesh.CalculatePath(start, end, _minionFilter, _path);
@@ -148,8 +155,9 @@ namespace MangaLegends.Simulation.Movement
         {
             Vector3 start = transform.position;
             Vector3 target = end;
-            if (!passesThroughWalls && NavMesh.Raycast(start, end, out NavMeshHit wall, NavMesh.AllAreas)) target = wall.position;
-            if (NavMesh.SamplePosition(target, out NavMeshHit hit, NavMeshSampleDistance, NavMesh.AllAreas)) target = hit.position;
+            if (!passesThroughWalls && NavMesh.Raycast(start, end, out NavMeshHit wall, WalkMask)) target = wall.position;
+            float search = passesThroughWalls ? WallExitSearchDistance : NavMeshSampleDistance;
+            if (NavMesh.SamplePosition(target, out NavMeshHit hit, search, WalkMask)) target = hit.position;
             else target = start;
 
             Stop();
@@ -167,7 +175,7 @@ namespace MangaLegends.Simulation.Movement
         {
             Stop();
             IsDashing = false;
-            if (NavMesh.SamplePosition(position, out NavMeshHit hit, NavMeshSampleDistance, NavMesh.AllAreas)) position = hit.position;
+            if (NavMesh.SamplePosition(position, out NavMeshHit hit, NavMeshSampleDistance, WalkMask)) position = hit.position;
             if (_networkTransform != null) _networkTransform.Teleport(position, transform.rotation);
             else transform.position = position;
         }

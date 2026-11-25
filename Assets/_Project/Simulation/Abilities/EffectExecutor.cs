@@ -78,6 +78,7 @@ namespace MangaLegends.Simulation.Abilities
                     else caster.Caster?.SwapSet(swap.AlternateSetIndex + 1, swap.DurationSecondsAt(context.Rank), swap.ResetCooldowns);
                     break;
                 case ReduceCooldownEffect reduce:
+                    if (reduce.OnlyIfChampionHit && !HitEnemyChampion(context)) break;
                     caster.Caster?.ReduceCooldown((CasterSlot)(int)reduce.Slot, reduce.RemainingFractionAt(context.Rank));
                     break;
                 case PlaceWardEffect ward when authority:
@@ -202,6 +203,13 @@ namespace MangaLegends.Simulation.Abilities
             if (displace.Kind == DisplacementKind.Knockup) distance = 0f;
             if (displace.Kind == DisplacementKind.Pull && displace.FromImpactPoint) distance = Mathf.Min(distance, UnitRegistry.FlatDistance(target.Position, origin));
             target.Motor.StartDash(target.Position + direction * distance, distance / duration, false);
+        }
+
+        private static bool HitEnemyChampion(in EffectContext context)
+        {
+            foreach (Unit unit in Targets(EffectTarget.AllHitUnits, context))
+                if (unit.IsChampion && context.Caster.IsEnemyOf(unit)) return true;
+            return false;
         }
 
         private static void RemoveFromOthers(StatusEffectDefinition status, Unit caster, Unit keep)

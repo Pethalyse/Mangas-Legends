@@ -16,7 +16,7 @@ MonoBehaviour:
   _displayName: "F\xFBjutsu Ky\xFBin (Gakid\xF4)"
   _description: "Absorbe la prochaine attaque re\xE7ue (4 s)."
   _icon: {fileID: 0}
-  _maxRank: 5
+  _maxRank: 9
   _castMode: 0
   _cooldownSeconds:
   - 7
@@ -45,8 +45,12 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857520
+  - rid: 2286801137428857613
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -56,7 +60,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857520
+    - rid: 2286801137428857613
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1

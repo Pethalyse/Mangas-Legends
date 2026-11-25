@@ -191,19 +191,25 @@ namespace MangaLegends.Simulation.Match
         private void GiveHomeguard(Unit champion)
         {
             StatusEffectDefinition homeguard = Rules.HomeguardFor(ElapsedSeconds);
-            if (homeguard != null) champion.Status.Apply(new StatusApplication(homeguard, champion, 1, 1, 0f, null));
+            if (homeguard != null) champion.Status.Apply(new StatusApplication(homeguard, champion, 1, homeguard.MaxStacks, 0f, null));
         }
 
-        // Homeguard ends in combat or once the champion leaves the lanes and the base (LoL rule).
+        // Homeguard stays full inside the base, fades out in a few seconds once outside (stack decay) and ends in combat.
         public void UpdateHomeguard(Unit champion)
         {
             if (!HasStateAuthority || _map == null) return;
             StatusEffectDefinition early = Rules.HomeguardEarly, late = Rules.HomeguardLate;
             bool active = (early != null && champion.Status.StacksOf(early) > 0) || (late != null && champion.Status.StacksOf(late) > 0);
             if (!active) return;
-            if (!champion.Health.IsInCombat(0.5f) && _map.IsOnLaneOrBase(champion.Position)) return;
-            champion.Status.Remove(early);
-            champion.Status.Remove(late);
+            if (champion.Health.IsInCombat(0.5f))
+            {
+                champion.Status.Remove(early);
+                champion.Status.Remove(late);
+                return;
+            }
+            if (!_map.IsInBase(champion.Position, champion.Team)) return;
+            champion.Status.SetFull(early);
+            champion.Status.SetFull(late);
         }
 
         public void ReturnToBase(Unit unit)

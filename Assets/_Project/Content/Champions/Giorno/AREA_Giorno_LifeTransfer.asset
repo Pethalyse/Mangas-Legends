@@ -40,15 +40,16 @@ MonoBehaviour:
     - 0
   _followsCaster: 0
   _affects: 2
-  _kinds: 
+  _kinds: 00000000
   _onActivate:
-  - rid: 2286801137428857542
+  - rid: 2286801137428857634
+  - rid: 2286801137428857635
   _onInterval: []
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857542
+    - rid: 2286801137428857634
       type: {class: HealEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 2
@@ -66,3 +67,14 @@ MonoBehaviour:
             _ratioByRank:
             - 0.04
         _anyTeam: 0
+    - rid: 2286801137428857635
+      type: {class: PayHealthEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _amount:
+          _baseByRank:
+          - 6
+          - 9
+          - 12
+          - 15
+          - 18
+          _ratios: []

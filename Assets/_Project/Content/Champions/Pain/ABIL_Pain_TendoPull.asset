@@ -16,7 +16,7 @@ MonoBehaviour:
   _displayName: "Bansho Ten'in (Tend\xF4)"
   _description: "Attire un ennemi vers lui et lui inflige des d\xE9g\xE2ts physiques."
   _icon: {fileID: 0}
-  _maxRank: 5
+  _maxRank: 9
   _castMode: 0
   _cooldownSeconds:
   - 5
@@ -45,9 +45,13 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857564
-  - rid: 2286801137428857565
+  - rid: 2286801137428857657
+  - rid: 2286801137428857658
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -57,7 +61,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857564
+    - rid: 2286801137428857657
       type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _kind: 1
@@ -68,7 +72,7 @@ MonoBehaviour:
           _byRank:
           - 0.25
         _fromImpactPoint: 0
-    - rid: 2286801137428857565
+    - rid: 2286801137428857658
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -76,10 +80,14 @@ MonoBehaviour:
         _amount:
           _baseByRank:
           - 60
-          - 95
-          - 130
-          - 165
-          - 200
+          - 85
+          - 110
+          - 135
+          - 160
+          - 185
+          - 210
+          - 235
+          - 260
           _ratios:
           - _source: 1
             _stat: 4

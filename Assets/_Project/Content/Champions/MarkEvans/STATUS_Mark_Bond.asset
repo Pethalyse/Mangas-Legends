@@ -20,6 +20,7 @@ MonoBehaviour:
   _restrictions: 0
   _stacking: 0
   _maxStacks: 1
+  _stackDecaySeconds: 0
   _isCrowdControl: 0
   _modifiersPerStack: []
   _tickIntervalSeconds: 0
@@ -38,6 +39,9 @@ MonoBehaviour:
   _blocksNextBasicAttack: 0
   _removedOnTrigger: 0
   _onOutOfCombat: []
+  _onExpire: []
+  _contactRadius: 0
+  _onContact: []
   references:
     version: 2
     RefIds: []

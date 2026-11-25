@@ -48,11 +48,15 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857523
-  - rid: 2286801137428857524
-  - rid: 2286801137428857525
-  - rid: 2286801137428857526
+  - rid: 2286801137428857615
+  - rid: 2286801137428857616
+  - rid: 2286801137428857617
+  - rid: 2286801137428857618
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -62,7 +66,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857523
+    - rid: 2286801137428857615
       type: {class: SwapAbilitySetEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _alternateSetIndex: 0
@@ -71,7 +75,7 @@ MonoBehaviour:
         _durationSeconds:
           _byRank:
           - 13
-    - rid: 2286801137428857524
+    - rid: 2286801137428857616
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -86,7 +90,7 @@ MonoBehaviour:
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857525
+    - rid: 2286801137428857617
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -101,7 +105,7 @@ MonoBehaviour:
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857526
+    - rid: 2286801137428857618
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 514d07efaf129be4d903c146f6227d3d, type: 2}

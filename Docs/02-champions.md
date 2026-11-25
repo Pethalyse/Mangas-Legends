@@ -234,3 +234,12 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - Systèmes nécessaires : <StatusEffect, Mark, …>
 - Questions ouvertes : …
 ```
+
+## 6. Changements du 2026-11-26 (retours du propriétaire)
+
+- **Ainz** : R = sort au sol. On vise un point avec la souris (l'indicateur est un cercle centré sur la souris), portée 40 m ; hors de portée, Ainz avance jusqu'à être à portée puis le lance, et un autre ordre (déplacement, attaque) annule l'attente. L'impact au point visé fait les dégâts et les effets, 0,8 s après le lancement (la boule d'énergie n'est qu'un visuel). Z : seulement sur un champion allié. E : soigne seulement les champions alliés. Passif : allumé quand il est actif ; en combat, le HUD montre le temps restant avant qu'il ne le redevienne.
+- **Giorno** : mêlée (1,75 m). Z : soigne seulement les champions alliés et ne coûte des PV que s'il soigne quelqu'un. A : les fleurs traversent et touchent tout ce qu'elles rencontrent (sbires compris) ; ralentissement 20→40 %, immobilisation et étourdissement 1→1,5 s selon le rang. R : Gold Experience 8 / 10 / 12 s.
+- **Kirito** : R seulement sur un champion ennemi qui porte 5 marques (portée 6 m) ; sans cible valide, il prend le champion marqué 5 fois le plus proche, sinon il ne part pas (pas de recharge). Les réductions de recharge entre A et E ne jouent que si un champion ennemi est touché.
+- **Mark Evans** : R, zone et durées qui grandissent avec les rangs : onde 3,5 / 4,25 / 5 m, centre 1,2 / 1,5 / 1,8 m, étourdissement et immobilisation 1 / 1,5 / 2 s.
+- **Naruto** : A = il tient son Rasengan 2,5 s et court 30 % plus vite, le joueur le dirige ; le premier ennemi touché prend les dégâts et est projeté ; s'il ne touche personne, il est ralenti (30 %, 1 s). Il peut lancer son E pendant ce temps.
+- **Pain** : pas de mana (la barre sous ses PV sera la jauge de pantin). A et E montent jusqu'au rang 9 (pas de Z ni de R à monter : 18 points au total) ; les valeurs des rangs 6 à 9 prolongent celles du rang 5 jusqu'à +30 %. 5 s au moins entre deux changements de pantin (R, E de Chikushôdô et de Jigokudô bloqués pendant ce temps) : c'est le décompte affiché sur le passif, qui s'allume quand le changement est possible. Lance-missiles de Shuradô : bonus de 4 s (plus de coût en mana par seconde, puisqu'il n'a pas de mana).

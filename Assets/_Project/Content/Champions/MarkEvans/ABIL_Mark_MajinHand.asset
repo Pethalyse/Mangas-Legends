@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.mark.majin_hand
   _displayName: Main magique
-  _description: "Frappe le sol : \xE9tourdit 2 s au centre, immobilise 2 s dans l'onde
-    de choc."
+  _description: "Frappe le sol : \xE9tourdit au centre, immobilise dans l'onde de
+    choc (1 / 1,5 / 2 s) ; la zone grandit avec les rangs."
   _icon: {fileID: 0}
   _maxRank: 3
   _castMode: 0
@@ -48,9 +48,13 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857580
-  - rid: 2286801137428857581
+  - rid: 2286801137428857673
+  - rid: 2286801137428857674
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -60,12 +64,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857580
+    - rid: 2286801137428857673
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: d21099ad3ad532b47a3cf987f88587b7, type: 2}
         _atAimPoint: 1
-    - rid: 2286801137428857581
+    - rid: 2286801137428857674
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 430b89a297d78264abf825c8d58fb392, type: 2}

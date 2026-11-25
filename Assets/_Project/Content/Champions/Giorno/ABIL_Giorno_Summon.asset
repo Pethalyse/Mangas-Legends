@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.giorno.summon
   _displayName: Gold Experience
-  _description: Invoque Gold Experience 10 s et rend muets les ennemis autour de
-    lui 3 s.
+  _description: Invoque Gold Experience (8 / 10 / 12 s) et rend muets les ennemis
+    autour de lui 3 s.
   _icon: {fileID: 0}
   _maxRank: 3
   _castMode: 0
@@ -48,10 +48,14 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _walkIntoRange: 0
+    _championsOnly: 0
+    _requiredTargetStatus: {fileID: 0}
+    _requiredTargetStacks: 1
   _onCast:
-  - rid: 2286801137428857584
-  - rid: 2286801137428857585
-  - rid: 2286801137428857586
+  - rid: 2286801137428857676
+  - rid: 2286801137428857677
+  - rid: 2286801137428857678
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
@@ -61,7 +65,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857584
+    - rid: 2286801137428857676
       type: {class: SwapAbilitySetEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _alternateSetIndex: 0
@@ -69,8 +73,10 @@ MonoBehaviour:
         _resetCooldowns: 0
         _durationSeconds:
           _byRank:
+          - 8
           - 10
-    - rid: 2286801137428857585
+          - 12
+    - rid: 2286801137428857677
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -79,13 +85,15 @@ MonoBehaviour:
           _byRank: 01000000
         _durationOverrideSeconds:
           _byRank:
-          - 0
+          - 8
+          - 10
+          - 12
         _modifierOverrides: []
         _requiredStatus: {fileID: 0}
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857586
+    - rid: 2286801137428857678
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: 217f92ec5588ab84992fc2bb424eb802, type: 2}

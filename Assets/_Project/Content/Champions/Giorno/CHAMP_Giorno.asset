@@ -47,7 +47,7 @@ MonoBehaviour:
       _base: 3.3
       _growthPerLevel: 0
     - _stat: 10
-      _base: 5.25
+      _base: 1.75
       _growthPerLevel: 0
     - _stat: 12
       _base: 2
@@ -60,7 +60,7 @@ MonoBehaviour:
   _experienceBounty: 0
   _collisionRadius: 0.5
   _tint: {r: 1, g: 0.85, b: 0.3, a: 1}
-  _attackProjectileSpeed: 16
+  _attackProjectileSpeed: 0
   _attackWindup: 0.3
   _stealthed: 0
   _revealsStealth: 0
@@ -82,4 +82,5 @@ MonoBehaviour:
     _z: {fileID: 11400000, guid: 16f939a8b7245f74cb6a3a870158cc73, type: 2}
     _e: {fileID: 11400000, guid: 275431cd0d3abaa46b7511ab2a3aa034, type: 2}
     _r: {fileID: 11400000, guid: aad806f7ba5669f45aa2e8fda0409019, type: 2}
+  _setChangeLockSeconds: 0
   _startingItems: []

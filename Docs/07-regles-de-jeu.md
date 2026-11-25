@@ -192,6 +192,10 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 - Hors combat après 5 s sans dégâts subis ni infligés 🔁 (`OutOfCombatSeconds`).
 - **Sorts ciblés sur une unité** ✅ (précisé par le propriétaire le 2026-11-25) : le sort part sur l'unité sous la souris, en lancement rapide comme en lancement normal (touche puis clic gauche sur l'unité). Aucun ciblage automatique.
 - **Attaque-déplacement (« Q-clic » en AZERTY, A en QWERTY)** ✅ : Q puis clic gauche. Le champion attaque l'ennemi proche du clic (4 m, `GameRulesConfig.AttackMoveRadius`), sinon l'ennemi à sa portée d'attaque le plus proche du clic, sinon il marche vers le clic et attaque le premier ennemi qui arrive à sa portée.
+- **Retour à la base (Homeguard)** ✅ : plein dans la base, puis il s'estompe en 4 s une fois sorti (un dixième du bonus toutes les 0,4 s) ; perdu en combat.
+- **Or et XP** ✅ : l'XP d'une unité qui meurt est partagée entre les champions alliés proches, comme l'or des tours (partagé entre les champions proches) ; l'XP et l'or des monstres vont au tueur ; l'or des sbires et des champions va à celui qui donne le dernier coup ; les objectifs épiques donnent de l'or à toute l'équipe.
+- **Buissons et IA** ✅ : les sbires, tours et monstres ne voient pas une unité dans un buisson sans unité de leur équipe (balise comprise) dans ce buisson ; une unité qui frappe depuis un buisson est révélée 1 s (`GameRulesConfig.BrushRevealSeconds`).
+- **Sbires et structures** ✅ : les sbires vont tout droit au milieu de la voie et ne contournent ni leurs structures ni celles qu'ils attaquent (zone de NavMesh « Structure », ouverte aux seuls sbires).
 
 ## 12. Ce qui reste à demander
 

@@ -10,7 +10,7 @@ namespace MangaLegends.Data.Definitions
     [CreateAssetMenu(menuName = "MangaLegends/Ability", fileName = "ABIL_New")]
     public sealed class AbilityDefinition : ContentDefinition
     {
-        [SerializeField, Range(1, 6)] private int _maxRank = 5;
+        [SerializeField, Range(1, 18)] private int _maxRank = 5;
         [SerializeField] private CastMode _castMode = CastMode.Instant;
         [SerializeField] private float[] _cooldownSeconds = { 10f };
         [SerializeField] private float[] _cost = { 0f };

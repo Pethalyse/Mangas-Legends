@@ -20,6 +20,7 @@ MonoBehaviour:
   _restrictions: 0
   _stacking: 1
   _maxStacks: 100
+  _stackDecaySeconds: 0
   _isCrowdControl: 0
   _modifiersPerStack: []
   _tickIntervalSeconds: 0
@@ -28,21 +29,21 @@ MonoBehaviour:
   - _trigger: 0
     _otherKinds: 
     _effects:
-    - rid: 2286801137428857559
+    - rid: 2286801137428857652
   - _trigger: 1
     _otherKinds: 
     _effects:
-    - rid: 2286801137428857560
+    - rid: 2286801137428857653
   - _trigger: 3
     _otherKinds: 
     _effects:
-    - rid: 2286801137428857561
+    - rid: 2286801137428857654
   _persistsThroughDeath: 1
   _triggerCooldownSeconds: 0
   _revealRadius: 0
   _onMaxStacks:
-  - rid: 2286801137428857562
-  - rid: 2286801137428857563
+  - rid: 2286801137428857655
+  - rid: 2286801137428857656
   _rankCount: 1
   _invulnerable: 0
   _abilityDamageReduction: 0
@@ -52,10 +53,13 @@ MonoBehaviour:
   _blocksNextBasicAttack: 0
   _removedOnTrigger: 0
   _onOutOfCombat: []
+  _onExpire: []
+  _contactRadius: 0
+  _onContact: []
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857559
+    - rid: 2286801137428857652
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -70,7 +74,7 @@ MonoBehaviour:
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857560
+    - rid: 2286801137428857653
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -85,7 +89,7 @@ MonoBehaviour:
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857561
+    - rid: 2286801137428857654
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -100,7 +104,7 @@ MonoBehaviour:
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857562
+    - rid: 2286801137428857655
       type: {class: SwapAbilitySetEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _alternateSetIndex: 0
@@ -109,7 +113,7 @@ MonoBehaviour:
         _durationSeconds:
           _byRank:
           - 0
-    - rid: 2286801137428857563
+    - rid: 2286801137428857656
       type: {class: RemoveStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1

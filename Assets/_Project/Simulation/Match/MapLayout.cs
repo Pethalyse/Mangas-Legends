@@ -124,6 +124,8 @@ namespace MangaLegends.Simulation.Match
             return false;
         }
 
+        public bool IsInBase(Vector3 position, Team team) => Distance(position, Fountain(team)) <= _baseRadius;
+
         public bool IsOnLaneOrBase(Vector3 position)
         {
             if (Distance(position, _blueFountain.position) <= _baseRadius || Distance(position, _redFountain.position) <= _baseRadius) return true;

@@ -27,20 +27,20 @@ MonoBehaviour:
     - 0.5
   _homing: 0
   _maxHits:
-    _byRank: 01000000
+    _byRank: 14000000
   _hits: 4
   _stopsOnTerrain: 1
   _onHit:
-  - rid: 2286801137428857552
-  - rid: 2286801137428857553
-  - rid: 2286801137428857554
-  - rid: 2286801137428857555
-  - rid: 2286801137428857556
+  - rid: 2286801137428857644
+  - rid: 2286801137428857645
+  - rid: 2286801137428857646
+  - rid: 2286801137428857647
+  - rid: 2286801137428857648
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857552
+    - rid: 2286801137428857644
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
         _stacksOnCaster: 0
         _minStacks: 0
         _consumesStacks: 0
-    - rid: 2286801137428857553
+    - rid: 2286801137428857645
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -72,13 +72,17 @@ MonoBehaviour:
           _byRank: 01000000
         _durationOverrideSeconds:
           _byRank:
+          - 1
+          - 1.1
+          - 1.2
+          - 1.35
           - 1.5
         _modifierOverrides: []
         _requiredStatus: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
         _requiredMinStacks: 2
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857554
+    - rid: 2286801137428857646
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -87,13 +91,17 @@ MonoBehaviour:
           _byRank: 01000000
         _durationOverrideSeconds:
           _byRank:
+          - 1
+          - 1.1
+          - 1.2
+          - 1.35
           - 1.5
         _modifierOverrides: []
         _requiredStatus: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
         _requiredMinStacks: 1
         _requiredMaxStacks: 1
         _onePerCaster: 0
-    - rid: 2286801137428857555
+    - rid: 2286801137428857647
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -108,12 +116,16 @@ MonoBehaviour:
           _kind: 2
           _value:
             _byRank:
+            - -0.2
+            - -0.25
             - -0.3
+            - -0.35
+            - -0.4
         _requiredStatus: {fileID: 0}
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
         _onePerCaster: 0
-    - rid: 2286801137428857556
+    - rid: 2286801137428857648
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0

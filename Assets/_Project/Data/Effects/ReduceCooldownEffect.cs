@@ -12,8 +12,10 @@ namespace MangaLegends.Data.Effects
     {
         [SerializeField] private AbilitySlot _slot = AbilitySlot.A;
         [SerializeField] private RankedFloat _remainingFraction = new RankedFloat(0.5f);
+        [SerializeField, Tooltip("Only when an enemy champion was hit.")] private bool _onlyIfChampionHit;
 
         public AbilitySlot Slot => _slot;
+        public bool OnlyIfChampionHit => _onlyIfChampionHit;
         public float RemainingFractionAt(int rank) => Mathf.Clamp01(_remainingFraction.At(rank));
 
         public override void Validate(string ownerId, int maxRank, ValidationReport report) =>
