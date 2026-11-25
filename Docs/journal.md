@@ -3,6 +3,26 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Carte et HUD à la LoL, rivière et fruits du démon
+
+**Fait** (même branche `feat/aim-indicators-controls`) :
+- **Carte au tracé de LoL** (primitives) : bases dans les coins avec murs et trois sorties, rivière en diagonale jusqu'aux voies du haut et du bas, fosses de Zodd et du drake, quatre quadrants de jungle symétriques, 20 buissons, bords de carte. Korogu déplacé en miroir de Pompoko. NavMesh refait ; tous les camps, structures, points de voie et fontaines sont atteignables (vérifié par script).
+- **Buissons** : une unité dans un buisson n'est vue que depuis le même buisson.
+- **Rivière et fruits du démon** (décision du propriétaire : la rivière est le seul point d'eau pour l'instant) : trait `DevilFruitUser` (Luffy), −1,5 % des PV max par seconde dans la rivière, jamais mortel.
+- **HUD à la LoL** : stats, portrait, niveau et XP, passif et 4 compétences avec rangs, sorts d'invocateur, PV et mana avec régénération, buffs, inventaire avec touches et rappel, or ; score en haut à droite ; cadres des alliés à gauche ; **minicarte** (clic gauche = caméra, clic droit = déplacement) ; annonces (premier sang, multi-frags, tourelles, objectifs épiques) et fil des frags.
+
+**Testé dans l'éditeur** : rendu de la carte vue de dessus, HUD et minicarte, Luffy dans la rivière (640 → 598 PV en ~4 s), annonce de tourelle détruite. 0 erreur en console.
+
+**Décisions** : valeurs de la rivière (1,5 %/s, non mortel), ADR-0007 §7 et §9 mis à jour. Zone de Naruto (Vallée de la Fin) : reportée par le propriétaire.
+
+**Docs mis à jour** : architecture, GDD §6, règles §10, champions (Luffy), plan, ADR-0007.
+
+**À vérifier par l'humain** : clics sur la minicarte, lisibilité du HUD en 1080p, déplacements dans la nouvelle jungle.
+
+**Prochaine étape** : balises (bijou « Insectes de Shino » sur la touche 4, Den Den Mushi), murs qui bloquent la vue, Zodd (renfort des sbires et du rappel), âmes de drake et Shenron, Ogrest et larves, *Demon slash*, décor de la carte.
+
+**Bloquants** : aucun.
+
 ## 2026-11-25 — Visée LoL, options, passifs, Luffy, Kirito, brouillard de guerre
 
 **Fait** (branche `feat/aim-indicators-controls`, empilée sur `feat/step-5-simulation`) :
