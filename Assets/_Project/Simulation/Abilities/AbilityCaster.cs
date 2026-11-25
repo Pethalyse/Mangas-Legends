@@ -338,12 +338,26 @@ namespace MangaLegends.Simulation.Abilities
         {
             if (!HasStateAuthority) return;
             AbilityDefinition passive = AbilityAt(CasterSlot.Passive);
+            SyncReadyStatus(passive, tick);
             if (passive == null || string.IsNullOrEmpty(passive.BehaviourId)) return;
             NetSlot data = Slots[(int)CasterSlot.Passive];
             if (tick < data.ReadyTick || !AbilityBehaviours.CanTriggerPassive(passive.BehaviourId, _unit)) return;
             data.ReadyTick = tick + Mathf.Max(1, TickTime.SecondsToTicks(passive.CooldownAtRank(1), Runner.TickRate));
             Slots.Set((int)CasterSlot.Passive, data);
             EffectExecutor.Run(passive.OnCast, new EffectContext(_unit, _unit, _unit.Position, _unit.Position, 1, null));
+        }
+
+        // A passive can show it is armed with a status (Luffy's stretched punch), ranked by champion level.
+        private void SyncReadyStatus(AbilityDefinition passive, int tick)
+        {
+            StatusEffectDefinition ready = passive != null ? passive.ReadyStatus : null;
+            if (ready == null) return;
+            bool armed = tick >= Slots[(int)CasterSlot.Passive].ReadyTick;
+            int stacks = _unit.Status.StacksOf(ready);
+            int wanted = armed ? Mathf.Min(ready.MaxStacks, passive.ReadyStatusBaseStacks + _unit.Stats.Level) : 0;
+            if (stacks == wanted) return;
+            if (stacks > 0) _unit.Status.Remove(ready);
+            if (wanted > 0) _unit.Status.Apply(new Combat.StatusApplication(ready, _unit, 1, wanted, 0f, null));
         }
 
         public void RaisePassiveTrigger(ItemTrigger trigger, Unit other)

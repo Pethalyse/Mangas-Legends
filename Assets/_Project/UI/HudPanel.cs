@@ -230,32 +230,49 @@ namespace MangaLegends.UI
         private sealed class BuffView
         {
             private readonly GameObject _root;
+            private readonly Image _back;
             private readonly Image _icon;
+            private readonly Image _sweep;
             private readonly Text _label;
-            private readonly Text _time;
+            private readonly Text _stacks;
+            private StatusEffectDefinition _shown;
+            private float _total;
 
             public BuffView(Transform parent, int index)
             {
-                Image frame = UiFactory.Box(parent, "Buff" + index, Vector2.zero, Vector2.zero, new Vector2(322f + index * 38f, 182f), new Vector2(34f, 34f), Frame);
-                _root = frame.gameObject;
-                _icon = UiFactory.Image(frame.transform, "Icon", Color.white);
-                _label = UiFactory.Text(frame.transform, "Label", "", 12, TextAnchor.MiddleCenter, Color.white);
-                _time = UiFactory.Text(frame.transform, "Time", "", 11, TextAnchor.LowerRight, Gold);
+                _back = UiFactory.Box(parent, "Buff" + index, Vector2.zero, Vector2.zero, new Vector2(322f + index * 40f, 182f), new Vector2(36f, 36f), Frame);
+                _root = _back.gameObject;
+                _icon = UiFactory.Image(_back.transform, "Icon", Color.white);
+                _icon.rectTransform.offsetMin = new Vector2(2f, 2f);
+                _icon.rectTransform.offsetMax = new Vector2(-2f, -2f);
+                _label = UiFactory.Text(_back.transform, "Label", "", 12, TextAnchor.MiddleCenter, Color.white);
+                _sweep = UiFactory.Radial(_back.transform, "Sweep", new Color(0f, 0f, 0f, 0.6f));
+                _stacks = UiFactory.Text(_back.transform, "Stacks", "", 12, TextAnchor.LowerRight, Gold);
                 _root.SetActive(false);
             }
 
+            // A timed effect shows a radial sweep of its remaining time; a permanent one is a plain coloured square.
             public void Show(StatusEffectDefinition definition, float remaining, int stacks)
             {
                 _root.SetActive(true);
+                if (definition != _shown || remaining > _total) { _shown = definition; _total = Mathf.Max(remaining, 0.01f); }
+                bool harmful = definition.IsCrowdControl;
+                Color tone = harmful ? new Color(0.85f, 0.3f, 0.3f) : new Color(0.3f, 0.75f, 0.4f);
+                _back.color = tone;
                 _icon.enabled = definition.Icon != null;
                 _icon.sprite = definition.Icon;
                 string name = definition.DisplayName ?? "";
                 _label.text = definition.Icon != null ? "" : name.Length > 3 ? name.Substring(0, 3) : name;
-                _label.color = definition.IsCrowdControl ? new Color(1f, 0.5f, 0.45f) : new Color(0.6f, 1f, 0.6f);
-                _time.text = stacks > 1 ? stacks.ToString() : remaining >= 0f ? Mathf.CeilToInt(remaining).ToString() : "";
+                _sweep.gameObject.SetActive(remaining >= 0f);
+                if (remaining >= 0f) _sweep.fillAmount = 1f - Mathf.Clamp01(remaining / _total);
+                _stacks.text = stacks > 1 ? stacks.ToString() : "";
             }
 
-            public void Hide() => _root.SetActive(false);
+            public void Hide()
+            {
+                _root.SetActive(false);
+                _shown = null;
+            }
         }
 
         private sealed class SlotView
@@ -314,7 +331,7 @@ namespace MangaLegends.UI
                 bool learned = rank > 0 || slot == CasterSlot.Passive;
                 float remaining = caster.CooldownRemaining(slot);
                 float total = Mathf.Max(0.01f, caster.CooldownTotal(slot));
-                bool cooling = learned && !caster.IsReady(slot) && slot != CasterSlot.Passive;
+                bool cooling = learned && !caster.IsReady(slot) && remaining > 0f;
                 Fill(_cooldown.rectTransform, !learned ? 1f : cooling ? remaining / total : 0f);
                 _timer.text = cooling && remaining > 0f ? Mathf.CeilToInt(remaining).ToString() : "";
                 int maxRank = ability != null ? Mathf.Min(RankPips, ability.MaxRank) : 0;

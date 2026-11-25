@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.luffy.rubber_body
   _displayName: Corps en caoutchouc
-  _description: "Toutes les 20 s, la prochaine attaque de base sur un champion inflige
-    des d\xE9g\xE2ts bonus et ralentit de 30 % pendant 1,5 s. R\xE9sistance physique
-    accrue (armure de base plus haute)."
+  _description: "Toutes les 20 s, son poing est arm\xE9 : port\xE9e d'attaque augment\xE9e
+    (+0,7 m au niveau 1 \xE0 +2,4 m au niveau 18) et la prochaine attaque de base
+    sur un champion inflige des d\xE9g\xE2ts bonus et ralentit de 30 % pendant 1,5
+    s."
   _icon: {fileID: 0}
   _maxRank: 1
   _castMode: 5
@@ -47,10 +48,13 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _snapToNearestTarget: 0
   _onCast:
   - rid: 2286801137428857135
   - rid: 2286801137428857136
   _behaviourId: on_hit_champion
+  _readyStatus: {fileID: 11400000, guid: cd026e221906f67408dbae887e1eb4dd, type: 2}
+  _readyStatusBaseStacks: 6
   references:
     version: 2
     RefIds:

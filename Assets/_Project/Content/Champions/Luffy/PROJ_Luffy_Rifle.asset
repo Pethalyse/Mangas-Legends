@@ -18,7 +18,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _speed:
     _byRank:
-    - 25
+    - 70
   _maxDistance:
     _byRank:
     - 6

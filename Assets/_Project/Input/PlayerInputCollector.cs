@@ -21,6 +21,7 @@ namespace MangaLegends.Input
     {
         private const float MoveRepeatSeconds = 0.15f;
         private const float RaycastDistance = 500f;
+        private const float SnapRadius = 8f;
 
         private static readonly InputButton[] CastButtons =
         {
@@ -213,6 +214,7 @@ namespace MangaLegends.Input
 
         private void UpdateAiming(LocalView view)
         {
+            view.AimTarget = _aiming && _aimButton != InputButton.AttackMove ? TargetFor(_aimButton, view) : null;
             if (!_aiming) return;
             if (view.LocalChampion == null || !view.LocalChampion.IsAlive)
             {
@@ -239,7 +241,7 @@ namespace MangaLegends.Input
         {
             AimSource source = AimSource.For(view.LocalChampion, _aimButton);
             if (source.Targeting.Mode != TargetingMode.Unit) return false;
-            Unit hovered = view.HoveredUnit;
+            Unit hovered = TargetFor(_aimButton, view);
             return hovered == null || !TeamRules.Matches(source.Targeting.ValidTargets, view.LocalChampion, hovered);
         }
 
@@ -263,8 +265,25 @@ namespace MangaLegends.Input
             _pending.Set(button, true);
             _hasAim = true;
             _aimPoint = view.PointerWorld;
-            Unit target = onSelf ? view.LocalChampion : view.HoveredUnit;
+            Unit target = onSelf ? view.LocalChampion : TargetFor(button, view);
             _aimTarget = target != null && target.Object != null ? target.Object.Id : default;
+        }
+
+        // Some unit-targeted spells take the valid unit closest to the cursor, so the click does not need to be on the unit.
+        private Unit TargetFor(InputButton button, LocalView view)
+        {
+            AimSource source = AimSource.For(view.LocalChampion, button);
+            if (!source.IsValid || source.Targeting.Mode != TargetingMode.Unit || !source.Targeting.SnapToNearestTarget) return view.HoveredUnit;
+            Unit best = null;
+            float bestDistance = SnapRadius;
+            foreach (Unit unit in _services.Units.All)
+            {
+                if (unit == null || unit.Object == null || !unit.IsAlive || !unit.IsTargetable || !view.Vision.IsVisible(unit)) continue;
+                if (!TeamRules.Matches(source.Targeting.ValidTargets, view.LocalChampion, unit)) continue;
+                float distance = UnitRegistry.FlatDistance(unit.Position, view.PointerWorld);
+                if (distance < bestDistance) { best = unit; bestDistance = distance; }
+            }
+            return best != null ? best : view.HoveredUnit;
         }
 
         private void FireAttackMove(LocalView view)

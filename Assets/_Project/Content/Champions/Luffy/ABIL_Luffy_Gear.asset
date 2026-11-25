@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.luffy.gear
   _displayName: Gear Second
-  _description: "Pendant 12 s : +20/30/40 % d'AD (donc de d\xE9g\xE2ts des comp\xE9tences)
-    et +10 % de vitesse."
+  _description: 'Gear 5 pendant 10 / 13 / 16 s : +20/30/40 % d''AD et +10 % de vitesse.'
   _icon: {fileID: 0}
   _maxRank: 3
   _castMode: 0
@@ -48,9 +47,12 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 0
+    _snapToNearestTarget: 0
   _onCast:
   - rid: 2286801137428857150
   _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
   references:
     version: 2
     RefIds:
@@ -63,7 +65,9 @@ MonoBehaviour:
           _byRank: 01000000
         _durationOverrideSeconds:
           _byRank:
-          - 0
+          - 10
+          - 13
+          - 16
         _modifierOverrides:
         - _stat: 4
           _kind: 1

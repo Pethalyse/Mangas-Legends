@@ -21,6 +21,8 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private TargetingData _targeting = new TargetingData();
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onCast = new List<EffectDefinition>();
         [SerializeField] private string _behaviourId;
+        [SerializeField, Tooltip("Passive only: status kept on the champion while the passive is ready; its stacks are this base plus the champion level.")] private StatusEffectDefinition _readyStatus;
+        [SerializeField, Min(0)] private int _readyStatusBaseStacks;
 
         public int MaxRank => _maxRank;
         public CastMode CastMode => _castMode;
@@ -30,6 +32,8 @@ namespace MangaLegends.Data.Definitions
         public TargetingData Targeting => _targeting;
         public IReadOnlyList<EffectDefinition> OnCast => _onCast;
         public string BehaviourId => _behaviourId;
+        public StatusEffectDefinition ReadyStatus => _readyStatus;
+        public int ReadyStatusBaseStacks => _readyStatusBaseStacks;
 
         public float CooldownAtRank(int rank) => RankValues.At(_cooldownSeconds, rank);
         public float CostAtRank(int rank) => RankValues.At(_cost, rank);

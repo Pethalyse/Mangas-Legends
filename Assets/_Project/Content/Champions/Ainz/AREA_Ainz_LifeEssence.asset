@@ -19,7 +19,11 @@ MonoBehaviour:
   _shape: 0
   _radius:
     _byRank:
-    - 2.5
+    - 3
+    - 3.5
+    - 4
+    - 4.5
+    - 5
   _angle:
     _byRank:
     - 90
@@ -38,8 +42,9 @@ MonoBehaviour:
   _intervalSeconds:
     _byRank:
     - 0.5
-  _followsCaster: 0
+  _followsCaster: 1
   _affects: 3
+  _kinds: 
   _onActivate: []
   _onInterval:
   - rid: 2286801137428857037

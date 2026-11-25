@@ -37,21 +37,24 @@ MonoBehaviour:
   _charges:
     _byRank: 01000000
   _targeting:
-    _mode: 3
+    _mode: 1
     _validTargets: 2
     _fallback: 0
     _range:
       _byRank:
-      - 9
+      - 0
     _indicatorWidth:
       _byRank:
       - 0
     _indicatorRadius:
       _byRank:
       - 2.5
+    _snapToNearestTarget: 0
   _onCast:
   - rid: 2286801137428857049
   _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
   references:
     version: 2
     RefIds:
@@ -59,4 +62,4 @@ MonoBehaviour:
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: eb4c7a93576ad3b4e889bf973fefd312, type: 2}
-        _atAimPoint: 1
+        _atAimPoint: 0

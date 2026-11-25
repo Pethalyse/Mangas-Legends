@@ -19,6 +19,23 @@ namespace MangaLegends.UI
 
         public static Font Font => _font != null ? _font : _font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
 
+        private static Sprite _white;
+
+        // Filled images (radial cooldowns) need a sprite to fill.
+        public static Sprite White => _white != null ? _white : _white = Sprite.Create(Texture2D.whiteTexture, new Rect(0f, 0f, 4f, 4f), new Vector2(0.5f, 0.5f));
+
+        public static Image Radial(Transform parent, string name, Color color)
+        {
+            Image image = Image(parent, name, color);
+            image.sprite = White;
+            image.type = UnityEngine.UI.Image.Type.Filled;
+            image.fillMethod = UnityEngine.UI.Image.FillMethod.Radial360;
+            image.fillOrigin = (int)UnityEngine.UI.Image.Origin360.Top;
+            image.fillClockwise = false;
+            image.raycastTarget = false;
+            return image;
+        }
+
         public static Canvas Canvas(Transform parent, string name, int order)
         {
             GameObject go = new GameObject(name, typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));

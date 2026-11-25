@@ -101,7 +101,7 @@ namespace MangaLegends.Presentation
                     break;
             }
 
-            Unit hovered = view.HoveredUnit;
+            Unit hovered = view.AimTarget != null ? view.AimTarget : view.HoveredUnit;
             if (source.Targeting.Mode == TargetingMode.Unit && hovered != null && hovered.IsAlive && TeamRules.Matches(source.Targeting.ValidTargets, champion, hovered))
             {
                 Vector3 at = hovered.Position;

@@ -49,10 +49,12 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private RankedFloat _range = new RankedFloat(0f);
         [SerializeField] private RankedFloat _indicatorWidth = new RankedFloat(0f);
         [SerializeField] private RankedFloat _indicatorRadius = new RankedFloat(0f);
+        [SerializeField, Tooltip("Unit targeting: take the valid unit closest to the cursor instead of the one under it.")] private bool _snapToNearestTarget;
 
         public TargetingMode Mode => _mode;
         public TeamFilter ValidTargets => _validTargets;
         public TargetFallback Fallback => _fallback;
+        public bool SnapToNearestTarget => _snapToNearestTarget;
         public float RangeAt(int rank) => _range.At(rank);
         public float IndicatorWidthAt(int rank) => _indicatorWidth.At(rank);
         public float IndicatorRadiusAt(int rank) => _indicatorRadius.At(rank);

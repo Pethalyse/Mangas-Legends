@@ -67,6 +67,14 @@ namespace MangaLegends.Simulation.Combat
         public float Max => _unit != null ? Mathf.Max(1f, _unit.Stats.Get(StatType.MaxHealth)) : 1f;
         public float Ratio => Mathf.Clamp01(Current / Max);
 
+        public float ShieldOf(ShieldFilter filter)
+        {
+            float total = 0f;
+            for (int i = 0; i < Shields.Length; i++)
+                if (Shields[i].Remaining > 0f && Shields[i].Filter == (byte)filter) total += Shields[i].Remaining;
+            return total;
+        }
+
         public float ShieldTotal
         {
             get

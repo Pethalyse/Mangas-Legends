@@ -22,6 +22,7 @@ namespace MangaLegends.Simulation.Services
         public bool PointerOverUi { get; set; }
         public bool IsAiming { get; set; }
         public InputButton AimButton { get; set; }
+        public Unit AimTarget { get; set; }
         public bool MenuOpen { get; set; }
         public TeamVision Vision { get; } = new TeamVision();
         public Vector3? CameraFocusRequest { get; set; }

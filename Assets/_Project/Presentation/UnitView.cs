@@ -1,3 +1,4 @@
+using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
 
@@ -27,6 +28,10 @@ namespace MangaLegends.Presentation
         [SerializeField] private string _deadClip;
         [SerializeField] private string _respawnClip;
         [SerializeField] private Animator _animator;
+        [SerializeField, Tooltip("Optional transformation: while a status with this id is on the unit, the form model replaces the main one.")] private string _formStatusId;
+        [SerializeField] private GameObject _mainModel;
+        [SerializeField] private GameObject _formModel;
+        [SerializeField] private Animator _formAnimator;
         [SerializeField, Min(0.01f), Tooltip("Length of the attack clip, so that one clip plays per basic attack.")] private float _attackAnimationSeconds = 1f;
         [SerializeField, Min(0.1f), Tooltip("Ground speed (m/s) at which the run animation fully plays.")] private float _runBlendSpeed = 3.5f;
         [SerializeField, Tooltip("Off for textured models: only primitive placeholders take the unit tint.")] private bool _tintBody = true;
@@ -51,6 +56,7 @@ namespace MangaLegends.Presentation
         {
             if (_unit.Object == null || _unit.Definition == null) return;
             ShowTeamModel();
+            ShowForm();
             bool visible = _unit.Services == null || _unit.Services.View.Vision.IsVisible(_unit);
             SetVisible(visible);
             if (!visible) return;
@@ -63,7 +69,7 @@ namespace MangaLegends.Presentation
                 _teamRing.enabled = _unit.IsAlive;
                 Paint(_teamRing, team);
             }
-            if (_animator != null) Animate();
+            if (ActiveAnimator != null) Animate();
             else AnimateAttack();
         }
 
@@ -75,13 +81,55 @@ namespace MangaLegends.Presentation
             _lastPosition = position;
             float measured = Time.deltaTime > 0f ? delta.magnitude / Time.deltaTime : 0f;
             _speed = Mathf.Lerp(_speed, measured, 1f - Mathf.Exp(-12f * Time.deltaTime));
-            _animator.SetFloat(SpeedId, _unit.IsAlive ? Mathf.Clamp01(_speed / _runBlendSpeed) : 0f);
+            ActiveAnimator.SetFloat(SpeedId, _unit.IsAlive ? Mathf.Clamp01(_speed / _runBlendSpeed) : 0f);
             if (_unit.Attack == null || _unit.Attack.LastAttackTick == _lastAttackTick) return;
             _lastAttackTick = _unit.Attack.LastAttackTick;
             float attacksPerSecond = Mathf.Max(0.1f, _unit.Stats.Get(Core.Stats.StatType.AttackSpeed));
-            _animator.SetFloat(AttackSpeedId, Mathf.Max(0.5f, _attackAnimationSeconds * attacksPerSecond));
-            _animator.SetTrigger(AttackId);
+            ActiveAnimator.SetFloat(AttackSpeedId, Mathf.Max(0.5f, _attackAnimationSeconds * attacksPerSecond));
+            ActiveAnimator.SetTrigger(AttackId);
         }
+
+        private bool _inForm;
+        private StatusEffectDefinition _formStatus;
+
+        private Animator ActiveAnimator => _inForm && _formAnimator != null ? _formAnimator : _animator;
+
+        private void ShowForm()
+        {
+            if (string.IsNullOrEmpty(_formStatusId) || _formModel == null || _unit.Services == null) return;
+            if (_formStatus == null)
+            {
+                var statuses = _unit.Services.Content.StatusEffects;
+                int index = statuses.IndexOf(_formStatusId);
+                if (index < 0) return;
+                _formStatus = statuses[index];
+            }
+            bool form = _unit.IsAlive && _unit.Status.StacksOf(_formStatus) > 0;
+            if (form == _inForm) return;
+            _inForm = form;
+            if (_mainModel != null) _mainModel.SetActive(!form);
+            _formModel.SetActive(form);
+            Smoke();
+        }
+
+        private void Smoke()
+        {
+            var go = new GameObject("FormSmoke");
+            go.transform.position = transform.position + Vector3.up;
+            var particles = go.AddComponent<ParticleSystem>();
+            particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = particles.main;
+            main.duration = 0.5f; main.loop = false; main.startLifetime = 1.1f; main.startSpeed = 3f; main.startSize = 1.6f;
+            main.startColor = new Color(0.85f, 0.85f, 0.85f, 0.7f); main.gravityModifier = -0.15f; main.stopAction = ParticleSystemStopAction.Destroy;
+            var emission = particles.emission; emission.rateOverTime = 0f; emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 40) });
+            var shape = particles.shape; shape.shapeType = ParticleSystemShapeType.Sphere; shape.radius = 0.8f;
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.sharedMaterial = SmokeMaterial;
+            particles.Play();
+        }
+
+        private Material _smokeMaterial;
+        private Material SmokeMaterial => _smokeMaterial != null ? _smokeMaterial : _smokeMaterial = new Material(Shader.Find("Sprites/Default"));
 
         private void ShowTeamModel()
         {

@@ -36,7 +36,7 @@ namespace MangaLegends.Presentation
                 _snapped = true;
             }
             Unit champion = _view.LocalChampion;
-            if (champion != null && (_locked || local.CameraCenterHeld || !_snapped))
+            if (champion != null && (champion.IsAlive && _locked || local.CameraCenterHeld || !_snapped))
             {
                 _focus = champion.transform.position;
                 _snapped = true;

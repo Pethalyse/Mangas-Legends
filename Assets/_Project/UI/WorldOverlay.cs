@@ -14,6 +14,8 @@ namespace MangaLegends.UI
         private readonly RectTransform _root;
         private readonly Image _fill;
         private readonly Image _shield;
+        private readonly Image _magicShield;
+        private readonly Image _physicalShield;
         private readonly Image _mana;
         private readonly GameObject _manaBack;
         private readonly GameObject _levelBox;
@@ -28,6 +30,8 @@ namespace MangaLegends.UI
             _fill = UiFactory.Image(_root, "Fill", Color.white);
             _fill.rectTransform.pivot = new Vector2(0f, 0.5f);
             _shield = UiFactory.Image(_root, "Shield", new Color(1f, 1f, 1f, 0.85f));
+            _physicalShield = UiFactory.Image(_root, "ShieldPhysical", new Color(1f, 0.6f, 0.25f, 0.9f));
+            _magicShield = UiFactory.Image(_root, "ShieldMagic", new Color(0.65f, 0.35f, 1f, 0.9f));
             Image manaBack = UiFactory.Box(_root, "ManaBack", new Vector2(0f, 0f), new Vector2(0f, 1f), Vector2.zero, Vector2.one, new Color(0.05f, 0.05f, 0.07f, 0.9f));
             _manaBack = manaBack.gameObject;
             _mana = UiFactory.Image(manaBack.transform, "Mana", UiFactory.Mana);
@@ -54,8 +58,13 @@ namespace MangaLegends.UI
             float total = Mathf.Max(max, unit.Health.Current + shield);
             _fill.color = color;
             Span(_fill.rectTransform, 0f, unit.Health.Current / total);
-            _shield.gameObject.SetActive(shield > 0f);
-            if (shield > 0f) Span(_shield.rectTransform, unit.Health.Current / total, (unit.Health.Current + shield) / total);
+            float any = unit.Health.ShieldOf(Core.Combat.ShieldFilter.Any);
+            float physical = unit.Health.ShieldOf(Core.Combat.ShieldFilter.Physical);
+            float magic = unit.Health.ShieldOf(Core.Combat.ShieldFilter.Magical);
+            float from = unit.Health.Current;
+            Segment(_shield, ref from, any, total);
+            Segment(_physicalShield, ref from, physical, total);
+            Segment(_magicShield, ref from, magic, total);
             bool mana = champion && unit.Resource != null && unit.Resource.UsesResource;
             _manaBack.SetActive(mana);
             if (mana)
@@ -73,6 +82,14 @@ namespace MangaLegends.UI
             _level.text = unit.Stats.Level.ToString();
             string player = unit.GetComponent<Simulation.Champions.ChampionProgress>().PlayerName.ToString();
             _name.text = string.IsNullOrEmpty(player) ? unit.Definition.DisplayName : player;
+        }
+
+        private static void Segment(Image image, ref float from, float amount, float total)
+        {
+            image.gameObject.SetActive(amount > 0f);
+            if (amount <= 0f) return;
+            Span(image.rectTransform, from / total, (from + amount) / total);
+            from += amount;
         }
 
         public void Hide() => _root.gameObject.SetActive(false);
