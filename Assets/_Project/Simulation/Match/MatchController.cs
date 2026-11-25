@@ -237,6 +237,7 @@ namespace MangaLegends.Simulation.Match
             {
                 Unit summon = SpawnUnit(definition, owner.Team, point + Quaternion.AngleAxis(360f * i / Mathf.Max(1, count), Vector3.up) * Vector3.forward, Quaternion.identity, PlayerRef.None);
                 if (summon != null && summon.TryGetComponent(out AI.MinionBrain brain)) brain.MakeSummon(owner, durationSeconds);
+                if (summon != null && summon.TryGetComponent(out AI.ChargerBrain charger)) charger.Launch(owner);
             }
         }
 

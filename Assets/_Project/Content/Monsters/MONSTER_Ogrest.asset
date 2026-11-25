@@ -53,10 +53,15 @@ MonoBehaviour:
   _tint: {r: 0.55, g: 0.35, b: 0.2, a: 1}
   _attackProjectileSpeed: 0
   _attackWindup: 0.3
+  _stealthed: 0
+  _revealsStealth: 0
+  _oneDamagePerHit: 0
   _isEpic: 1
-  _killerReward: {fileID: 11400000, guid: 9bf721a61fc66e247a1588d19395627d, type: 2}
+  _killerReward: {fileID: 0}
   _teamReward: {fileID: 0}
   _teamGold: 0
   _isDrake: 0
   _soulReward: {fileID: 0}
   _scalesWithAverageLevel: 1
+  _killerTrinket: {fileID: 11400000, guid: 531c302c6d5cf344287c4b2bad35346c, type: 2}
+  _killerTrinketSeconds: 240

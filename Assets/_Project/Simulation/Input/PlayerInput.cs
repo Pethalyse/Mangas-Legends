@@ -35,9 +35,10 @@ namespace MangaLegends.Simulation.Input
         public short BuyItem;
         public sbyte SellSlot;
         public sbyte LevelUpSlot;
+        public sbyte TrinketChoice;
 
         public bool Has(InputButton button) => Buttons.IsSet(button);
 
-        public static PlayerInput Empty => new PlayerInput { BuyItem = -1, SellSlot = -1, LevelUpSlot = -1 };
+        public static PlayerInput Empty => new PlayerInput { BuyItem = -1, SellSlot = -1, LevelUpSlot = -1, TrinketChoice = -1 };
     }
 }

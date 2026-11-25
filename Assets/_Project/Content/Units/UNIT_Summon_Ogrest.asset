@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620953f1c98a4acb8f5e139c896a64a7, type: 3}
+  m_Name: UNIT_Summon_Ogrest
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.UnitDefinition
+  _id: unit.summon.ogrest
+  _displayName: "Ogrest (invoqu\xE9)"
+  _description: 
+  _icon: {fileID: 0}
+  _kind: 4
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 3000
+      _growthPerLevel: 0
+    - _stat: 4
+      _base: 3000
+      _growthPerLevel: 0
+    - _stat: 6
+      _base: 40
+      _growthPerLevel: 0
+    - _stat: 7
+      _base: 40
+      _growthPerLevel: 0
+    - _stat: 9
+      _base: 4.5
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 8
+      _growthPerLevel: 0
+  _prefab: {fileID: 8306523973183964884, guid: 64865020c5e313e4f8ca073148ac3fe2, type: 3}
+  _goldBounty: 50
+  _experienceBounty: 0
+  _collisionRadius: 1.6
+  _tint: {r: 0.55, g: 0.35, b: 0.2, a: 1}
+  _attackProjectileSpeed: 0
+  _attackWindup: 0.3
+  _stealthed: 0
+  _revealsStealth: 0
+  _oneDamagePerHit: 0

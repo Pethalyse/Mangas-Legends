@@ -41,6 +41,8 @@ namespace MangaLegends.Simulation.Champions
             if (!HasStateAuthority) return;
             if (input.BuyItem >= 0) _inventory.TryBuy(input.BuyItem);
             if (input.SellSlot >= 0) _inventory.TrySell(input.SellSlot);
+            var trinkets = _unit.Services.Rules.TrinketChoices;
+            if (input.TrinketChoice >= 0 && input.TrinketChoice < trinkets.Count && _inventory.CanShop) _unit.Caster.ChooseTrinket(trinkets[input.TrinketChoice]);
         }
 
         private void HandleLevelUp(in PlayerInput input)

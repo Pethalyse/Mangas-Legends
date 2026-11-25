@@ -34,8 +34,9 @@ namespace MangaLegends.Simulation.Services
             if (!Enabled) return;
             foreach (Unit unit in units)
             {
-                if (unit == null || unit.Object == null || unit.Definition == null || !unit.IsAlive || !unit.Definition.RevealsStealth) continue;
-                float range = unit.Stats.Get(StatType.VisionRange);
+                if (unit == null || unit.Object == null || unit.Definition == null || !unit.IsAlive) continue;
+                float range = unit.Definition.RevealsStealth ? unit.Stats.Get(StatType.VisionRange) : StatusRevealRadius(unit);
+                if (range <= 0f) continue;
                 if (unit.Team == team) _revealers.Add((unit.Position, range));
                 else if (TeamRules.AreEnemies(unit.Team, team)) _enemyRevealers.Add((unit.Position, range));
             }
@@ -59,6 +60,17 @@ namespace MangaLegends.Simulation.Services
             foreach ((Vector3 position, float range, int eyeBrush) in _eyes)
                 if ((brush < 0 || eyeBrush == brush) && UnitRegistry.FlatDistance(position, point) <= range && InSight(position, point)) return true;
             return false;
+        }
+
+        private static float StatusRevealRadius(Unit unit)
+        {
+            float radius = 0f;
+            for (int slot = 0; slot < unit.Status.Active.Length; slot++)
+            {
+                Data.Definitions.StatusEffectDefinition definition = unit.Status.DefinitionAt(slot);
+                if (definition != null && definition.RevealRadius > radius) radius = definition.RevealRadius;
+            }
+            return radius;
         }
 
         private static bool Within(List<(Vector3 position, float range)> sources, Vector3 point, float margin)

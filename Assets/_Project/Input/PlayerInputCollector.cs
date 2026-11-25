@@ -151,6 +151,7 @@ namespace MangaLegends.Input
             data.AimTarget = _hasAim ? _aimTarget : view.HoveredUnit != null ? view.HoveredUnit.Object.Id : default;
             data.BuyItem = (short)_services.Commands.TakeBuy();
             data.SellSlot = (sbyte)_services.Commands.TakeSell();
+            data.TrinketChoice = (sbyte)_services.Commands.TakeTrinket();
             int uiLevelUp = _services.Commands.TakeLevelUp();
             data.LevelUpSlot = uiLevelUp >= 0 ? (sbyte)uiLevelUp : _levelUpSlot;
             input.Set(data);

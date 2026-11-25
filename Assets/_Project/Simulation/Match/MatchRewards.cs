@@ -86,6 +86,7 @@ namespace MangaLegends.Simulation.Match
         {
             killer.Health.Heal(Rules.MonsterKillHeal(killer.Stats.Level), killer);
             if (!(monster.Definition is MonsterDefinition definition)) return;
+            if (definition.KillerTrinket != null) killer.Caster?.SetTrinketOverride(definition.KillerTrinket, definition.KillerTrinketSeconds);
             if (definition.KillerReward != null)
                 killer.Status.Apply(new StatusApplication(definition.KillerReward, killer, 1, 1, 0f, null));
             StatusEffectDefinition soul = null;

@@ -9,6 +9,7 @@ namespace MangaLegends.Simulation.Abilities
     {
         public const string Recall = "recall";
         public const string PeriodicOutOfCombat = "periodic_out_of_combat";
+        public const string RestoreTrinket = "restore_trinket";
         public const string OnHit = "on_hit";
         public const string OnHitChampion = "on_hit_champion";
         public const string OnAbilityHit = "on_ability_hit";
@@ -18,6 +19,7 @@ namespace MangaLegends.Simulation.Abilities
         public static void OnExecuted(string behaviourId, Unit caster, Unit target, Vector3 aimPoint)
         {
             if (behaviourId == Recall && caster.HasStateAuthority) caster.Services.Match?.ReturnToBase(caster);
+            if (behaviourId == RestoreTrinket) caster.Caster?.RestoreTrinket();
         }
 
         public static bool CanTriggerPassive(string behaviourId, Unit unit)

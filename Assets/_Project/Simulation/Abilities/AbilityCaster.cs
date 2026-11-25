@@ -52,6 +52,9 @@ namespace MangaLegends.Simulation.Abilities
         [Networked] public NetworkId PendingTarget { get; set; }
         [Networked] public int LastCastTick { get; set; }
         [Networked] public sbyte LastCastSlot { get; set; }
+        [Networked] public short BaseTrinket { get; set; }
+        [Networked] public int TrinketOverrideEndTick { get; set; }
+        [Networked] public int TrinketSavedReadyTick { get; set; }
 
         public ProjectileLauncher Projectiles { get; private set; }
         public AreaSpawner Areas { get; private set; }
@@ -87,6 +90,7 @@ namespace MangaLegends.Simulation.Abilities
             }
             SetSlotAbility(CasterSlot.Recall, recall, 1);
             SetSlotAbility(CasterSlot.Trinket, trinket, 1);
+            BaseTrinket = Slots[(int)CasterSlot.Trinket].Ability;
         }
 
         public AbilityDefinition AbilityAt(CasterSlot slot)
@@ -242,6 +246,7 @@ namespace MangaLegends.Simulation.Abilities
             int tick = Runner.Tick;
             if (SetEndTick > 0 && tick >= SetEndTick && ActiveSet > 0) SwapSet(0, 0f, false);
             RechargeCharges(tick);
+            if (HasStateAuthority && TrinketOverrideEndTick > 0 && tick >= TrinketOverrideEndTick) RestoreTrinket();
             SyncTrinketRank();
             if (_unit.IsAlive)
             {
@@ -355,6 +360,42 @@ namespace MangaLegends.Simulation.Abilities
                 Slots.Set((int)CasterSlot.Passive, data);
             }
             Combat.CombatTriggers.Run(passive.OnCast, _unit, other, 1);
+        }
+
+        public bool HasTrinketOverride => TrinketOverrideEndTick > 0;
+
+        public void ChooseTrinket(AbilityDefinition trinket)
+        {
+            if (!HasStateAuthority || trinket == null || HasTrinketOverride) return;
+            int ready = Slots[(int)CasterSlot.Trinket].ReadyTick;
+            SetSlotAbility(CasterSlot.Trinket, trinket, 1);
+            BaseTrinket = Slots[(int)CasterSlot.Trinket].Ability;
+            SetReadyTick(CasterSlot.Trinket, ready);
+        }
+
+        public void SetTrinketOverride(AbilityDefinition ability, float seconds)
+        {
+            if (!HasStateAuthority || ability == null) return;
+            if (!HasTrinketOverride) TrinketSavedReadyTick = Slots[(int)CasterSlot.Trinket].ReadyTick;
+            SetSlotAbility(CasterSlot.Trinket, ability, 1);
+            SetReadyTick(CasterSlot.Trinket, 0);
+            TrinketOverrideEndTick = Runner.Tick + Mathf.Max(1, TickTime.SecondsToTicks(seconds, Runner.TickRate));
+        }
+
+        public void RestoreTrinket()
+        {
+            if (!HasStateAuthority || !HasTrinketOverride) return;
+            TrinketOverrideEndTick = 0;
+            var abilities = _unit.Services.Content.Abilities;
+            SetSlotAbility(CasterSlot.Trinket, BaseTrinket >= 0 && BaseTrinket < abilities.Count ? abilities[BaseTrinket] : null, 1);
+            SetReadyTick(CasterSlot.Trinket, TrinketSavedReadyTick);
+        }
+
+        private void SetReadyTick(CasterSlot slot, int readyTick)
+        {
+            NetSlot data = Slots[(int)slot];
+            data.ReadyTick = readyTick;
+            Slots.Set((int)slot, data);
         }
 
         // The trinket has one rank per champion level, so its cooldown shrinks as the champion levels up.

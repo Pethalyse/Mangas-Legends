@@ -8,12 +8,15 @@ namespace MangaLegends.Simulation.Services
         private int _buyItem = -1;
         private int _sellSlot = -1;
         private int _levelUpSlot = -1;
+        private int _trinketChoice = -1;
         private Vector3 _movePoint;
         private bool _hasMove;
 
         public void RequestBuy(int itemIndex) => _buyItem = itemIndex;
         public void RequestSell(int inventorySlot) => _sellSlot = inventorySlot;
         public void RequestLevelUp(int abilitySlot) => _levelUpSlot = abilitySlot;
+        public void RequestTrinket(int choice) => _trinketChoice = choice;
+        public int TakeTrinket() => Take(ref _trinketChoice);
         public void RequestMove(Vector3 point)
         {
             _movePoint = point;

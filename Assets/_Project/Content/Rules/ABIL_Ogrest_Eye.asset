@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Ogrest_Eye
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.ogrest.eye
+  _displayName: "\u0152il d'Ogrest"
+  _description: "Invoque Ogrest : il fonce vers la tourelle ennemie la plus proche
+    et lui inflige 3 000 d\xE9g\xE2ts bruts."
+  _icon: {fileID: 0}
+  _maxRank: 1
+  _castMode: 0
+  _cooldownSeconds:
+  - 0
+  _cost:
+  - 0
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 3
+    _validTargets: 1
+    _fallback: 0
+    _range:
+      _byRank:
+      - 6
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 1.5
+  _onCast:
+  - rid: 2286801137428857206
+  _behaviourId: restore_trinket
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857206
+      type: {class: SummonEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _unit: {fileID: 11400000, guid: 9fbfde17111240249942eee7e893a903, type: 2}
+        _count:
+          _byRank: 01000000
+        _durationSeconds:
+          _byRank:
+          - 0
+        _controllable: 0

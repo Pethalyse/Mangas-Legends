@@ -18,10 +18,11 @@ namespace MangaLegends.UI
         private readonly List<(ItemDefinition item, Image frame, Text price)> _entries = new List<(ItemDefinition, Image, Text)>();
         private MatchServices _services;
         private bool _open;
+        private readonly List<Text> _trinketLabels = new List<Text>();
 
         public ShopPanel(Transform canvas)
         {
-            Image panel = UiFactory.Box(canvas, "Shop", new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(20f, 60f), new Vector2(560f, 640f), UiFactory.Panel);
+            Image panel = UiFactory.Box(canvas, "Shop", new Vector2(0f, 0.5f), new Vector2(0f, 0.5f), new Vector2(20f, 60f), new Vector2(560f, 700f), UiFactory.Panel);
             _root = panel.gameObject;
             Text title = UiFactory.Text(panel.transform, "Title", "Boutique (P)", 30, TextAnchor.UpperCenter, UiFactory.Accent);
             title.rectTransform.offsetMax = new Vector2(0f, -10f);
@@ -48,6 +49,10 @@ namespace MangaLegends.UI
             Inventory inventory = champion.GetComponent<Inventory>();
             bool canShop = inventory.CanShop;
             _status.text = canShop ? "Clic : acheter. Clic sur un objet de l'inventaire : vendre." : "Retournez à la fontaine pour acheter.";
+            var choices = _services.Rules.TrinketChoices;
+            var current = champion.Caster.AbilityAt(Simulation.Abilities.CasterSlot.Trinket);
+            for (int i = 0; i < _trinketLabels.Count && i < choices.Count; i++)
+                _trinketLabels[i].color = choices[i] == current ? UiFactory.Accent : canShop ? Color.white : new Color(1f, 1f, 1f, 0.4f);
             foreach (var entry in _entries)
             {
                 PurchaseQuote quote = inventory.Quote(entry.item);
@@ -60,6 +65,16 @@ namespace MangaLegends.UI
         {
             var items = _services.Content.Items;
             Transform root = _root.transform;
+            Text caption = UiFactory.Text(root, "TrinketCaption", "Bijou :", 20, TextAnchor.MiddleLeft, Color.white);
+            UiFactory.Place(caption, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(20f, 44f), new Vector2(80f, 40f));
+            var trinkets = _services.Rules.TrinketChoices;
+            for (int i = 0; i < trinkets.Count; i++)
+            {
+                int choice = i;
+                Button button = UiFactory.Button(root, "Trinket" + i, trinkets[i] != null ? trinkets[i].DisplayName : "?", () => _services.Commands.RequestTrinket(choice), 18);
+                UiFactory.Place(button, new Vector2(0f, 0f), new Vector2(0f, 0f), new Vector2(100f + i * 220f, 44f), new Vector2(210f, 40f));
+                _trinketLabels.Add(button.GetComponentInChildren<Text>());
+            }
             int column = 0;
             int row = 0;
             for (int i = 0; i < items.Count; i++)
