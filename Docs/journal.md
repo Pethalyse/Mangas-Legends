@@ -3,6 +3,25 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Objectifs épiques, balises, ligne de vue, Demon slash, décor
+
+**Fait** (même branche) :
+- **Objectifs épiques** : drakes en rotation (Sulfura, Artikodin, Électhor, Lugia) avec cumuls d'équipe gardés à la mort ; **âme** au 4e drake ; puis **Shenron** (exécution sous 20 % pendant 150 s) ; **Zodd** renforce les sbires proches et divise le rappel par 2 ; **Pitou, Pufu, Youpi** (8:00 → 14:45, dégâts bonus aux structures) ; **Ogrest** (15:00 → 19:45, l'œil inflige 3 000 à une tourelle) ; apparition au niveau moyen des champions.
+- **Balises** : bijou Insectes de Shino sur la touche 4 (3 max, 90 s, recharge 170 → 90 s), Den Den Mushi de surveillance (75 or, révèle et désactive les balises ennemies) ; 1 PV par attaque de base ; ignorées par l'IA.
+- **Les murs bloquent la vue** (calque `Terrain`).
+- **Zoro** : Demon slash (3e Nitoryu, 150 %).
+- **Décor** : arbres sur les murs et autour de la carte, rochers, fontaines.
+
+**Testé dans l'éditeur** : 4 drakes → âme de Lugia → Shenron ; Zodd (rappel −50 %) ; larves (×3) ; Ogrest (œil) ; à la mort, cumuls de drake, âme et larves gardés, Shenron/Zodd/œil perdus ; balise ennemie invisible puis révélée par le Den Den Mushi, 1 PV par coup, compétences sans effet ; point derrière un mur caché ; cycle Nitoryu → Demon slash. 0 erreur, 53 tests verts, contenu valide.
+
+**Décisions** (valeurs choisies par Claude, 07 §7.4 et 03 §5) : rotation fixe des drakes, âmes simplifiées (Artikodin réagit aux dégâts, Lugia soigne d'un coup), Ogrest simplifié (pas encore d'Ogrest invoqué qui charge), bijou = compétence du lanceur dont le rang suit le niveau.
+
+**Docs mis à jour** : règles §7.3–7.4 et §10, objets §5, champions (Zoro), architecture, plan, ADR-0007.
+
+**Reste** : Ogrest invoqué, Haki de l'observation (changement de bijou), modèles 3D, zone de Naruto (à décider), suppression de `Legacy/` (sur accord), test en ligne.
+
+**Bloquants** : aucun.
+
 ## 2026-11-25 — Carte et HUD à la LoL, rivière et fruits du démon
 
 **Fait** (même branche `feat/aim-indicators-controls`) :
