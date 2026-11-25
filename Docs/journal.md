@@ -3,6 +3,20 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Retours du propriétaire : carte exacte, IA des sbires, mort, modèles
+
+**Fait** :
+- **Carte** tirée du plan schématique LoL fourni (rastérisé en grille de 1 m) : murs, rivière, fosses et buissons à leur place ; voies mesurées à ±61,4 m ; structures et camps aux coordonnées LoL. Structures solides.
+- **IA des sbires** selon la liste de priorités LoL (appel à l'aide), sbires lancés un par un en file, collision très légère (ils traversent les champions), Homeguard dès le départ.
+- **Structures** : inhibiteurs et nexus LoL posés au sol à leur origine (partie basse enterrée) avec leurs animations (debout, mort, réapparition). Les fichiers `turrets_*.glb` ne contiennent que la tourelle détruite : tourelle provisoire, gravats LoL à la destruction.
+- **Mort** : écran gris, caméra libre, récapitulatif des dégâts.
+- **HUD** : icônes d'effets avec balayage circulaire, recharge du passif ; boucliers colorés (violet = magique).
+- **Ainz** : Q sur l'ennemi le plus proche du curseur, E zone autour de lui qui grandit, Z violet. **Luffy** : A très rapide, passif armé = portée qui grandit avec le niveau, R = Gear 5 (modèle + fumée) 10/13/16 s.
+- **Modèles** : Luffy, Gear 5, Kirito, les 4 drakes ; animations procédurales (marche, bras élastique, Gatling, Rocket, vol des oiseaux).
+- Lag : non reproduit après le correctif de performances (tour + sbires qui poursuivent : 12 ms max) ; à revérifier par le propriétaire.
+
+**Reste** : tourelle debout (fichier à fournir), Naruto (format `.brres` illisible par Unity : il faut un FBX/DAE/GLB), Mark Evans, Giorno, Jotaro et Pain importés mais leurs champions ne sont pas encore créés (stands à activer sous R, retirer le ballon de Mark), épées de Kirito, test en ligne.
+
 ## 2026-11-25 — Lag corrigé, Summoner's Rift, sbires sur leur voie, retour à la base, barres de vie
 
 **Fait** (retours du propriétaire) :
