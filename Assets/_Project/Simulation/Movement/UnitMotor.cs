@@ -13,7 +13,7 @@ namespace MangaLegends.Simulation.Movement
         private const float CornerReachedDistance = 0.05f;
         private const float NavMeshSampleDistance = 4f;
 
-        private readonly NavMeshPath _path = new NavMeshPath();
+        private NavMeshPath _path;
         private Unit _unit;
         private NetworkTransform _networkTransform;
 
@@ -30,7 +30,11 @@ namespace MangaLegends.Simulation.Movement
         public bool IsForcedMovement => IsDashing;
         public float Speed => _unit != null ? _unit.Stats.Get(StatType.MoveSpeed) : 0f;
 
-        private void Awake() => _networkTransform = GetComponent<NetworkTransform>();
+        private void Awake()
+        {
+            _networkTransform = GetComponent<NetworkTransform>();
+            _path = new NavMeshPath();
+        }
 
         public void Initialize(Unit unit) => _unit = unit;
 

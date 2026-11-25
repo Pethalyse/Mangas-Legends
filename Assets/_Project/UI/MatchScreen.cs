@@ -1,0 +1,47 @@
+using MangaLegends.Networking;
+using MangaLegends.Presentation;
+using MangaLegends.Simulation.Services;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace MangaLegends.UI
+{
+    public sealed class MatchScreen : MonoBehaviour
+    {
+        [SerializeField] private MatchView _view;
+
+        private LobbyPanel _lobby;
+        private HudPanel _hud;
+        private ShopPanel _shop;
+        private ScoreboardPanel _scoreboard;
+        private WorldOverlay _overlay;
+        private Text _waiting;
+
+        private void Start()
+        {
+            Canvas canvas = UiFactory.Canvas(transform, "MatchUi", 10);
+            _overlay = new WorldOverlay(canvas.transform);
+            _hud = new HudPanel(canvas.transform);
+            _shop = new ShopPanel(canvas.transform);
+            _lobby = new LobbyPanel(canvas.transform);
+            _scoreboard = new ScoreboardPanel(canvas.transform);
+            _scoreboard.LeaveButton.onClick.AddListener(() => GameLauncher.Leave(_view.Runner));
+            _waiting = UiFactory.Text(canvas.transform, "Waiting", "Connexion à la partie…", 36, TextAnchor.MiddleCenter, Color.white);
+        }
+
+        private void Update()
+        {
+            MatchServices services = _view.Services;
+            _waiting.gameObject.SetActive(services == null || services.Match == null);
+            if (services == null || services.Match == null) return;
+            _lobby.Bind(services);
+            _hud.Bind(services);
+            _shop.Bind(services);
+            _lobby.Refresh(services.Match);
+            _hud.Refresh(services.Match, _view.LocalChampion);
+            _shop.Refresh(services.Match.Phase == Simulation.Match.MatchPhase.Playing ? _view.LocalChampion : null);
+            _scoreboard.Refresh(services, services.Match);
+            _overlay.Refresh(services);
+        }
+    }
+}

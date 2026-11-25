@@ -46,7 +46,7 @@ MonoBehaviour:
     - _stat: 20
       _base: 8
       _growthPerLevel: 0
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 1989889756838507518, guid: dede33d1c98f07344ba8ee37ac0dbe57, type: 3}
   _goldBounty: 20
   _experienceBounty: 62
   _collisionRadius: 0.45
