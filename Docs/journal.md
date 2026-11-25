@@ -3,6 +3,23 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Lag corrigé, Summoner's Rift, sbires sur leur voie, retour à la base, barres de vie
+
+**Fait** (retours du propriétaire) :
+- **Lag** : le jeu tournait à ~0,5 image/s (spirale de rattrapage : chaque tick coûtait ~30 ms, Fusion en enchaînait 60 par image). Causes mesurées au profileur : chemins NavMesh recalculés à chaque tick par les sbires, échantillonnage NavMesh à chaque pas, séparation en O(n²), filtres coûteux avant la distance dans `Closest`. Maintenant ~11 ms par image avec les vagues et la jungle.
+- **Carte** reconstruite sur les positions de Summoner's Rift (coordonnées LoL converties), symétrie centrale : bases carrées avec trois sorties et deux entrées latérales, fontaine qui tue les ennemis, tourelles T1/T2 décalées sur le côté, bords collés aux voies, jungle avec alcôves, fosses aux places de LoL.
+- **Sbires** : ne quittent plus leur voie (zone NavMesh `Lane`, coût 4× ailleurs pour eux) ; les vagues se rencontrent au milieu (testé : centre de la carte au mid, coin de la voie du haut).
+- **Retour à la base** (Homeguard) : +80 % (+150 % après 14:00) après réapparition ou rappel, perdu en combat ou hors des voies.
+- **Barres de vie** plus grandes à la LoL (niveau, nom, mana, bouclier), cachées pour les structures encore protégées ; touches des objets affichées 1 2 3 5 6 7 en AZERTY.
+
+**Testé** : 0 sbire hors voie sur 70, rencontres au milieu, Homeguard 3,30 → 5,94 m/s puis retiré en jungle, laser de fontaine, barres ; 0 erreur.
+
+**Collision** (question du propriétaire) : LoL a une collision entre unités (wiki : unit collision) ; ici, collision douce côté hôte pour sbires et monstres, sans détour : avec le coût des voies, un sbire ne contourne plus par la jungle.
+
+**À trancher** : fichiers TextMesh Pro modifiés par Unity (réimport automatique), non commités.
+
+**Prochaine étape** : test en ligne, modèles des autres champions, zone de Naruto.
+
 ## 2026-11-25 — Legacy supprimé, tirage des drakes, Ogrest invoqué, Haki de l'observation
 
 **Fait** :
