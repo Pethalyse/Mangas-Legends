@@ -12,7 +12,7 @@
 | Champion | Rôle | Design | Code | Systèmes nécessaires |
 |---|---|---|---|---|
 | Ainz Ooal Gown | Support | ✅ | ✅ jouable (testé en solo le 2026-11-25) | Shield, Charges, Zone de soin |
-| Luffy | Jungle | ✅ | 🔧 jouable, simplifié (P eau, Z portée) | TerrainZone (eau), AA chargée, Canalisation |
+| Luffy | Jungle | ✅ | 🔧 jouable, simplifié (Z portée) | TerrainZone (eau), AA chargée, Canalisation |
 | Zoro Roronoa | Top | ✅ | 🔧 jouable, simplifié (A) | Stack, Shield, Dash |
 | Naruto Uzumaki | Mid | ✅ | 🔧 jouable, simplifié (P, A raté) | Dash, Knockback, Zone (clones = visuel) |
 | Gon Freecss | ❓ | ✅ | — | Mark ×3, Synergy (Killua) |
@@ -71,7 +71,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **E — Rocket** : s'agrippe à la cible et fonce vers elle. `[10 s]`
 - **R — Gear** : augmente les dégâts des compétences selon l'AD. `[90 s]`
 
-**Implémentation (2026-11-25)** : P = toutes les 20 s, la prochaine attaque de base sur un champion inflige 30 (+30 % AD bonus) et ralentit de 30 % pendant 1,5 s ; « résistance physique accrue » = armure de base 40 (+4,8 par niveau) au lieu de 32–36 ; la perte de PV dans l'eau n'est pas codée (pas encore de zones de terrain). A = poing étiré de 6 m (projectile), 60→180 (+90 % AD bonus), ralentit de 25 % pendant 1,5 s, recharge 8→6 s. Z = 8 coups en 2 s sur la cible (12→36 (+15 % AD bonus) chacun, soit 96→288 (+120 %)), Luffy ne peut pas bouger pendant ce temps, portée 3,5 m (la portée qui croît avec l'AD n'est pas codée), recharge 12→10 s. E = fonce sur la cible jusqu'à 8 m, 50→170 (+60 % AD bonus), recharge 10→8 s. R = 12 s de +20/30/40 % d'AD et +10 % de vitesse, recharge 90/80/70 s.
+**Implémentation (2026-11-25)** : P = toutes les 20 s, la prochaine attaque de base sur un champion inflige 30 (+30 % AD bonus) et ralentit de 30 % pendant 1,5 s ; « résistance physique accrue » = armure de base 40 (+4,8 par niveau) au lieu de 32–36 ; fruit du démon : perd 1,5 % de ses PV max par seconde dans la rivière (jamais mortel). A = poing étiré de 6 m (projectile), 60→180 (+90 % AD bonus), ralentit de 25 % pendant 1,5 s, recharge 8→6 s. Z = 8 coups en 2 s sur la cible (12→36 (+15 % AD bonus) chacun, soit 96→288 (+120 %)), Luffy ne peut pas bouger pendant ce temps, portée 3,5 m (la portée qui croît avec l'AD n'est pas codée), recharge 12→10 s. E = fonce sur la cible jusqu'à 8 m, 50→170 (+60 % AD bonus), recharge 10→8 s. R = 12 s de +20/30/40 % d'AD et +10 % de vitesse, recharge 90/80/70 s.
 
 ### Zoro Roronoa
 - **P — Haki de l'armement** : chaque AA sur un champion donne +1 AD (cumul).

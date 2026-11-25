@@ -108,7 +108,20 @@ namespace MangaLegends.Simulation.Combat
             if (IsDead) return;
             float regen = _unit.Stats.Get(StatType.HealthRegen);
             if (regen > 0f && Current < Max) Current = Mathf.Min(Max, Current + regen * Runner.DeltaTime);
+            DrainInWater();
             if (Current > Max) Current = Max;
+        }
+
+        // Devil Fruit users lose health in the river (One Piece rule), without entering combat.
+        private void DrainInWater()
+        {
+            if (IsDead || !(_unit.Definition is ChampionDefinition champion) || !champion.Has(ChampionTraits.DevilFruitUser)) return;
+            Match.MapLayout map = _unit.Services.Match != null ? _unit.Services.Match.Map : null;
+            if (map == null || !map.IsInRiver(_unit.Position)) return;
+            GameRulesConfig rules = _unit.Services.Rules;
+            float floor = rules.DevilFruitWaterIsLethal ? 0f : 1f;
+            Current = Mathf.Max(floor, Current - Max * rules.DevilFruitWaterDrain * Runner.DeltaTime);
+            if (Current <= 0f) Kill(null);
         }
 
         public DamageResult ApplyDamage(in DamageInfo info)

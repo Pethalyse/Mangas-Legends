@@ -106,9 +106,9 @@ Calcul standard : `valeurFinale = (base + bonusPlats) × (1 + somme des bonus %)
 ## 6. Carte 🟡
 
 - 3 voies, jungle entre les voies, une **rivière** au centre.
-- **Points d'eau** : les champions porteurs d'un fruit du démon (Luffy, Kaido, Law) perdent des PV en les traversant ✅. La rivière et les points d'eau sont donc des zones de terrain explicites.
+- **Points d'eau** : les champions porteurs d'un fruit du démon (Luffy, Kaido, Law) perdent des PV en les traversant ✅. La rivière et les points d'eau sont donc des zones de terrain explicites. Pour l'instant le seul point d'eau est la **rivière** (fosses comprises) ✅ (2026-11-25) ; perte de 1,5 % des PV max par seconde, jamais mortelle (valeurs choisies par Claude, `GameRulesConfig`). Trait `DevilFruitUser` sur la fiche du champion : Luffy l'a ; Kaido et Law l'auront à leur création.
 - **Buissons** qui cachent les unités (Giorno y régénère) ✅.
-- **Vallée de la Fin** : zone de la carte où Naruto se déplace plus vite ✅ (emplacement sur la carte ❓).
+- **Vallée de la Fin** : zone de la carte où Naruto se déplace plus vite ✅ (emplacement sur la carte ❓, à décider plus tard selon le propriétaire).
 - Brouillard de guerre, vision par unités et balises.
 - Murs destructibles temporairement (Jotaro + stand) ✅ : la navigation doit gérer des obstacles dynamiques.
 

@@ -124,6 +124,12 @@ namespace MangaLegends.Input
             UpdatePointer(view);
 
             CollectMove(view);
+            if (_services.Commands.TakeMove(out Vector3 minimapPoint))
+            {
+                _pending.Set(InputButton.Move, true);
+                _movePoint = minimapPoint;
+                _moveTarget = default;
+            }
             if (_buttons[InputButton.Stop].WasPressedThisFrame())
             {
                 StopAiming(view);

@@ -23,6 +23,10 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(0f, 1f)] private float _minionDamageToChampionsRatio = 0.6f;
         [SerializeField, Min(0f)] private float _maxAttackSpeed = 2.5f;
 
+        [Header("Terrain")]
+        [SerializeField, Range(0f, 0.2f), Tooltip("Share of max health lost per second by a Devil Fruit user standing in the river.")] private float _devilFruitWaterDrain = 0.015f;
+        [SerializeField, Tooltip("If off, the drain stops at 1 health.")] private bool _devilFruitWaterIsLethal;
+
         [Header("Progression")]
         [SerializeField, Range(1, 30)] private int _maxLevel = 18;
         [SerializeField] private int[] _experienceToNextLevel = { 280, 380, 480, 580, 680, 780, 880, 980, 1080, 1180, 1280, 1380, 1480, 1580, 1680, 1780, 1880 };
@@ -89,6 +93,8 @@ namespace MangaLegends.Data.Definitions
         public float InCombatRegenRatio => _inCombatRegenRatio;
         public float MinionDamageToChampionsRatio => _minionDamageToChampionsRatio;
         public float MaxAttackSpeed => _maxAttackSpeed;
+        public float DevilFruitWaterDrain => _devilFruitWaterDrain;
+        public bool DevilFruitWaterIsLethal => _devilFruitWaterIsLethal;
         public int MaxLevel => _maxLevel;
         public int[] ExperienceToNextLevel => _experienceToNextLevel;
         public int[] UltimateUnlockLevels => _ultimateUnlockLevels;

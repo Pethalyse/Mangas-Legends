@@ -11,6 +11,10 @@ namespace MangaLegends.Presentation
     {
         [SerializeField] private MatchController _match;
         [SerializeField] private Camera _camera;
+        [SerializeField] private LayerMask _minimapExcluded = 1 << 8;
+        [SerializeField] private int _minimapResolution = 512;
+
+        private RenderTexture _minimap;
 
         public MatchController Match => _match;
         public NetworkRunner Runner => _match != null && _match.Object != null ? _match.Runner : null;
@@ -18,6 +22,14 @@ namespace MangaLegends.Presentation
         public Camera Camera => _camera;
         public Unit LocalChampion { get; private set; }
         public bool IsReady => Services != null;
+        public Vector2 MapSize => _match != null && _match.Map != null ? _match.Map.Size : new Vector2(160f, 160f);
+
+        public Texture Minimap => _minimap != null ? _minimap : _minimap = MinimapCapture.Render(MapSize, _minimapResolution, _minimapExcluded);
+
+        private void OnDestroy()
+        {
+            if (_minimap != null) _minimap.Release();
+        }
 
         private void Update()
         {
@@ -26,7 +38,7 @@ namespace MangaLegends.Presentation
             services.View.Camera = _camera;
             if (LocalChampion == null || LocalChampion.Object == null) LocalChampion = FindLocalChampion(services);
             services.View.LocalChampion = LocalChampion;
-            services.View.Vision.Update(LocalChampion != null ? LocalChampion.Team : Team.None, services.Units.All);
+            services.View.Vision.Update(LocalChampion != null ? LocalChampion.Team : Team.None, services.Units.All, _match != null ? _match.Map : null);
         }
 
         private static Unit FindLocalChampion(MatchServices services)

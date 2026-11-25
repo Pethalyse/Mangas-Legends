@@ -179,7 +179,7 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 - **Den Den Mushi de surveillance** (balise de contrôle, achetable) : révèle et désactive les balises ennemies proches 🔁.
 - **Haki de l'observation** (bijou de détection) : révèle les balises et unités cachées autour du champion pendant 8 s ✅.
 - Pas de cercles de champignons dans MangaLegends ✅ (choix du propriétaire).
-- Buissons : cachent les unités qui s'y trouvent ✅ (GDD §6).
+- Buissons : cachent les unités qui s'y trouvent ✅ (GDD §6). Comme dans LoL, une unité dans un buisson n'est vue que par un ennemi qui se tient dans le même buisson (codé le 2026-11-25, côté client, ADR-0007 §9).
 
 ## 11. Combat
 

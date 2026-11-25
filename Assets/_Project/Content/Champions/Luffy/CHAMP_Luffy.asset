@@ -64,6 +64,7 @@ MonoBehaviour:
   _attackWindup: 0.3
   _role: 2
   _resource: 0
+  _traits: 1
   _defaultAbilities:
     _name: Default
     _passive: {fileID: 11400000, guid: f815faddfe22106488d6bcf8c9771f65, type: 2}

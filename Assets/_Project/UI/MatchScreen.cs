@@ -15,6 +15,8 @@ namespace MangaLegends.UI
         private HudPanel _hud;
         private ShopPanel _shop;
         private ScoreboardPanel _scoreboard;
+        private TeamBarPanel _teamBar;
+        private MinimapPanel _minimap;
         private WorldOverlay _overlay;
         private Text _waiting;
         private SettingsPanel _settings;
@@ -25,6 +27,8 @@ namespace MangaLegends.UI
             Canvas canvas = UiFactory.Canvas(transform, "MatchUi", 10);
             _overlay = new WorldOverlay(canvas.transform);
             _hud = new HudPanel(canvas.transform);
+            _teamBar = new TeamBarPanel(canvas.transform);
+            _minimap = new MinimapPanel(canvas.transform, _view);
             _shop = new ShopPanel(canvas.transform);
             _lobby = new LobbyPanel(canvas.transform);
             _scoreboard = new ScoreboardPanel(canvas.transform);
@@ -43,6 +47,8 @@ namespace MangaLegends.UI
             _shop.Bind(services);
             _lobby.Refresh(services.Match);
             _hud.Refresh(services.Match, _view.LocalChampion);
+            _teamBar.Refresh(services, services.Match, _view.LocalChampion);
+            _minimap.Refresh(services, services.Match.Phase != Simulation.Match.MatchPhase.Lobby && _view.LocalChampion != null);
             _shop.Refresh(services.Match.Phase == Simulation.Match.MatchPhase.Playing ? _view.LocalChampion : null);
             _scoreboard.Refresh(services, services.Match);
             _overlay.Refresh(services);

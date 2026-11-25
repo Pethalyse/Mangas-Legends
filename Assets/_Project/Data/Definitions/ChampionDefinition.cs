@@ -9,11 +9,14 @@ namespace MangaLegends.Data.Definitions
     {
         [SerializeField] private ChampionRole _role;
         [SerializeField] private ResourceKind _resource = ResourceKind.Mana;
+        [SerializeField] private ChampionTraits _traits;
         [SerializeField] private AbilitySet _defaultAbilities = new AbilitySet();
         [SerializeField] private List<AbilitySet> _alternateAbilitySets = new List<AbilitySet>();
 
         public ChampionRole Role => _role;
         public ResourceKind Resource => _resource;
+        public ChampionTraits Traits => _traits;
+        public bool Has(ChampionTraits trait) => (_traits & trait) == trait;
         public AbilitySet DefaultAbilities => _defaultAbilities;
         public IReadOnlyList<AbilitySet> AlternateAbilitySets => _alternateAbilitySets;
 

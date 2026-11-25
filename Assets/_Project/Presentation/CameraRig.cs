@@ -28,6 +28,13 @@ namespace MangaLegends.Presentation
             if (local.TakeCameraLockToggle()) _locked = !_locked;
             _zoom = Mathf.Clamp(_zoom - local.TakeZoom() * _zoomStep, _minZoom, _maxZoom);
 
+            if (local.CameraFocusRequest.HasValue)
+            {
+                _focus = local.CameraFocusRequest.Value;
+                local.CameraFocusRequest = null;
+                _locked = false;
+                _snapped = true;
+            }
             Unit champion = _view.LocalChampion;
             if (champion != null && (_locked || local.CameraCenterHeld || !_snapped))
             {
