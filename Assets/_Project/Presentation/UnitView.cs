@@ -22,6 +22,10 @@ namespace MangaLegends.Presentation
         [SerializeField, Tooltip("Optional per-team models (structures): the one matching the unit's team is shown.")] private GameObject _blueModel;
         [SerializeField] private GameObject _redModel;
         [SerializeField, Tooltip("Shown instead once the unit is destroyed.")] private GameObject _deadModel;
+        [SerializeField, Tooltip("Clips of the legacy Animation found on the active model (structures).")] private string _aliveClip;
+        [SerializeField] private string _deathClip;
+        [SerializeField] private string _deadClip;
+        [SerializeField] private string _respawnClip;
         [SerializeField] private Animator _animator;
         [SerializeField, Min(0.01f), Tooltip("Length of the attack clip, so that one clip plays per basic attack.")] private float _attackAnimationSeconds = 1f;
         [SerializeField, Min(0.1f), Tooltip("Ground speed (m/s) at which the run animation fully plays.")] private float _runBlendSpeed = 3.5f;
@@ -81,12 +85,48 @@ namespace MangaLegends.Presentation
 
         private void ShowTeamModel()
         {
+            PlayStateClips();
             if (_blueModel == null && _redModel == null && _deadModel == null) return;
             bool alive = _unit.IsAlive;
             if (_blueModel != null && _blueModel.activeSelf != (alive && _unit.Team != Team.Red)) _blueModel.SetActive(alive && _unit.Team != Team.Red);
             if (_redModel != null && _redModel.activeSelf != (alive && _unit.Team == Team.Red)) _redModel.SetActive(alive && _unit.Team == Team.Red);
             if (_deadModel != null && _deadModel.activeSelf != !alive) _deadModel.SetActive(!alive);
         }
+
+        private Animation _legacy;
+        private bool _legacyAlive;
+        private bool _legacyStarted;
+
+        private void PlayStateClips()
+        {
+            if (string.IsNullOrEmpty(_aliveClip)) return;
+            GameObject model = _unit.Team == Team.Red && _redModel != null ? _redModel : _blueModel;
+            Animation legacy = model != null ? model.GetComponentInChildren<Animation>(true) : null;
+            if (legacy == null) return;
+            bool alive = _unit.IsAlive;
+            if (legacy == _legacy && _legacyStarted && alive == _legacyAlive) return;
+            bool changed = _legacyStarted && legacy == _legacy;
+            _legacy = legacy;
+            _legacyAlive = alive;
+            _legacyStarted = true;
+            if (alive)
+            {
+                Loop(legacy, _aliveClip);
+                if (changed && Has(legacy, _respawnClip)) { legacy.Play(_respawnClip); legacy.PlayQueued(_aliveClip); }
+                else legacy.Play(_aliveClip);
+            }
+            else
+            {
+                if (Has(legacy, _deadClip)) Loop(legacy, _deadClip);
+                string death = Has(legacy, _deathClip) ? _deathClip : _deadClip;
+                if (changed && Has(legacy, death)) { Once(legacy, death); legacy.Play(death); if (Has(legacy, _deadClip) && death != _deadClip) legacy.PlayQueued(_deadClip); }
+                else if (Has(legacy, death)) { Once(legacy, death); legacy.Play(death); legacy[death].normalizedTime = 1f; }
+            }
+        }
+
+        private static bool Has(Animation legacy, string clip) => !string.IsNullOrEmpty(clip) && legacy[clip] != null;
+        private static void Loop(Animation legacy, string clip) { if (Has(legacy, clip)) legacy[clip].wrapMode = WrapMode.Loop; }
+        private static void Once(Animation legacy, string clip) { if (Has(legacy, clip)) legacy[clip].wrapMode = WrapMode.ClampForever; }
 
         private void SetVisible(bool visible)
         {

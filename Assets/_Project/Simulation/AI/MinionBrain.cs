@@ -12,7 +12,7 @@ namespace MangaLegends.Simulation.AI
     {
         private const int RetargetPeriod = 6;
         private const float WaypointReached = 2f;
-        private const float LeashBonus = 3f;
+        private const float LeashBonus = 1f;
         private const float FollowDistance = 3f;
 
         private Unit _unit;
@@ -47,17 +47,18 @@ namespace MangaLegends.Simulation.AI
             }
 
             float aggro = _unit.Services.Rules.MinionAggroRange;
-            if (_unit.TryResolve(_unit.Attack.Target, out Unit current) && !TargetSelection.ShouldDrop(_unit, current, aggro + LeashBonus)) return;
-            if (current != null || TargetSelection.IsRetargetTick(_unit, RetargetPeriod))
+            Unit current = _unit.TryResolve(_unit.Attack.Target, out Unit held) && !TargetSelection.ShouldDrop(_unit, held, aggro + LeashBonus) ? held : null;
+            if (current == null || TargetSelection.IsRetargetTick(_unit, RetargetPeriod))
             {
-                Unit target = TargetSelection.Pick(_unit, aggro);
+                Unit target = TargetSelection.PickForMinion(_unit, aggro + (current != null ? LeashBonus : 0f), current);
                 if (target != null)
                 {
-                    _unit.Attack.SetTarget(target);
+                    if (target != current) _unit.Attack.SetTarget(target);
                     return;
                 }
                 _unit.Attack.ClearTarget();
             }
+            else return;
             if (_unit.Attack.HasTarget) return;
             if (LaneIndex == MatchController.NoLane) FollowOwner();
             else FollowLane();

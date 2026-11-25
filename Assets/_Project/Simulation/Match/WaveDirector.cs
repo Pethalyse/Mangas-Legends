@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Fusion;
 using MangaLegends.Core.Simulation;
 using MangaLegends.Data.Definitions;
@@ -12,10 +13,14 @@ namespace MangaLegends.Simulation.Match
         private const float LateSiegeSeconds = 840f;
         private const float LateCasterSeconds = 1800f;
 
+        private readonly List<UnitDefinition> _wave = new List<UnitDefinition>();
         private MatchController _match;
 
         [Networked] public int WaveIndex { get; set; }
         [Networked] public int NextWaveTick { get; set; }
+        [Networked] public int SpawnStep { get; set; }
+        [Networked] public int NextSpawnTick { get; set; }
+        [Networked] public float WaveElapsed { get; set; }
 
         public override void Spawned() => _match = GetComponent<MatchController>();
 
@@ -25,19 +30,35 @@ namespace MangaLegends.Simulation.Match
             NextWaveTick = Runner.Tick + TickTime.SecondsToTicks(_match.Rules.FirstWaveSeconds, Runner.TickRate);
         }
 
+        // Minions leave the base one at a time, in single file, as in LoL.
         public void Simulate(float elapsed)
         {
-            if (NextWaveTick <= 0 || Runner.Tick < NextWaveTick || _match.Map == null) return;
+            if (_match.Map == null) return;
+            if (NextSpawnTick > 0 && Runner.Tick >= NextSpawnTick) SpawnNextInLine();
+            if (NextWaveTick <= 0 || Runner.Tick < NextWaveTick) return;
             WaveIndex++;
-            for (int lane = 0; lane < _match.Map.Lanes.Count; lane++)
-            {
-                SpawnWave(lane, Team.Blue, elapsed);
-                SpawnWave(lane, Team.Red, elapsed);
-            }
+            WaveElapsed = elapsed;
+            SpawnStep = 0;
+            SpawnNextInLine();
             NextWaveTick = Runner.Tick + TickTime.SecondsToTicks(_match.Rules.WaveIntervalAt(elapsed), Runner.TickRate);
         }
 
-        private void SpawnWave(int lane, Team team, float elapsed)
+        private void SpawnNextInLine()
+        {
+            bool any = false;
+            for (int lane = 0; lane < _match.Map.Lanes.Count; lane++)
+                foreach (Team team in new[] { Team.Blue, Team.Red })
+                {
+                    BuildWave(lane, team, WaveElapsed);
+                    if (SpawnStep >= _wave.Count) continue;
+                    Spawn(_wave[SpawnStep], lane, team);
+                    any = true;
+                }
+            SpawnStep++;
+            NextSpawnTick = any ? Runner.Tick + Mathf.Max(1, TickTime.SecondsToTicks(_match.Rules.MinionSpawnIntervalSeconds, Runner.TickRate)) : 0;
+        }
+
+        private void BuildWave(int lane, Team team, float elapsed)
         {
             GameRulesConfig rules = _match.Rules;
             Team opponent = TeamRules.Opponent(team);
@@ -49,14 +70,14 @@ namespace MangaLegends.Simulation.Match
             int melee = rules.MeleePerWave - (siege && elapsed >= LateSiegeSeconds ? 1 : 0);
             int casters = rules.CasterPerWave - (elapsed >= LateCasterSeconds ? 1 : 0);
 
-            int order = 0;
-            for (int i = 0; i < melee; i++) Spawn(rules.MeleeMinion, lane, team, order++);
-            for (int i = 0; i < megas; i++) Spawn(rules.MegaMinion, lane, team, order++);
-            if (siege) Spawn(rules.SiegeMinion, lane, team, order++);
-            for (int i = 0; i < casters; i++) Spawn(rules.CasterMinion, lane, team, order++);
+            _wave.Clear();
+            for (int i = 0; i < melee; i++) _wave.Add(rules.MeleeMinion);
+            for (int i = 0; i < megas; i++) _wave.Add(rules.MegaMinion);
+            if (siege) _wave.Add(rules.SiegeMinion);
+            for (int i = 0; i < casters; i++) _wave.Add(rules.CasterMinion);
         }
 
-        private void Spawn(UnitDefinition definition, int lane, Team team, int order)
+        private void Spawn(UnitDefinition definition, int lane, Team team)
         {
             LanePath path = _match.Map.Lanes[lane];
             Vector3 start = path.WaypointFor(team, 0);
@@ -64,9 +85,7 @@ namespace MangaLegends.Simulation.Match
             Vector3 direction = next - start;
             direction.y = 0f;
             direction = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector3.forward;
-            Vector3 side = Vector3.Cross(Vector3.up, direction) * ((order % 2 == 0 ? 1f : -1f) * 0.6f);
-            Vector3 position = start - direction * (_match.Rules.MinionSpawnSpacing * (order / 2)) + side;
-            Unit unit = _match.SpawnUnit(definition, team, position, Quaternion.LookRotation(direction), PlayerRef.None, lane);
+            Unit unit = _match.SpawnUnit(definition, team, start, Quaternion.LookRotation(direction), PlayerRef.None, lane);
             if (unit != null && unit.TryGetComponent(out MinionBrain brain)) brain.AssignLane(lane);
         }
 

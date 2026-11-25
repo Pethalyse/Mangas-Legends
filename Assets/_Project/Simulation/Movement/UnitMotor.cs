@@ -14,7 +14,7 @@ namespace MangaLegends.Simulation.Movement
         private const int MaxCorners = 16;
         private const float CornerReachedDistance = 0.05f;
         private const float NavMeshSampleDistance = 4f;
-        private const float SeparationShare = 0.5f;
+        private const float SeparationShare = 0.25f;
         private const float SeparationMaxStepRatio = 1.5f;
         private const float RepathSeconds = 0.25f;
         private const float RepathTolerance = 1.5f;
@@ -85,7 +85,9 @@ namespace MangaLegends.Simulation.Movement
                 float distance = away.magnitude;
                 float overlap = radius + other.Radius - distance;
                 if (overlap <= 0f) continue;
-                float share = other.IsChampion || other.IsStructure ? 1f : SeparationShare;
+                // LoL body-blocking is very light: minions walk through champions and only nudge each other.
+                if (other.IsChampion) continue;
+                float share = other.IsStructure ? 1f : SeparationShare;
                 Vector3 direction = distance > 0.0001f ? away / distance : Quaternion.Euler(0f, (_unit.SortKey % 360u), 0f) * Vector3.forward;
                 push += direction * (overlap * share);
             }

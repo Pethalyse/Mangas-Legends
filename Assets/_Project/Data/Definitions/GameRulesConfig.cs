@@ -50,6 +50,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _assistWindowSeconds = 10f;
         [SerializeField, Min(0f)] private float _shopRadius = 8f;
 
+        [SerializeField, Min(0.05f), Tooltip("Delay between two minions of a wave leaving the base (single file).")] private float _minionSpawnIntervalSeconds = 0.8f;
         [Header("Jungle")]
         [SerializeField, Range(1, 10)] private int _drakesForSoul = 4;
         [SerializeField, Range(0, 10), Tooltip("Spawn index from which the drake element stops changing (LoL: the 3rd drake sets the map element).")] private int _drakeElementLocksAfter = 2;
@@ -106,6 +107,7 @@ namespace MangaLegends.Data.Definitions
         public StatusEffectDefinition HomeguardEarly => _homeguardEarly;
         public StatusEffectDefinition HomeguardLate => _homeguardLate;
         public int DrakesForSoul => _drakesForSoul;
+        public float MinionSpawnIntervalSeconds => _minionSpawnIntervalSeconds;
         public int DrakeElementLocksAfter => _drakeElementLocksAfter;
         public bool DevilFruitWaterIsLethal => _devilFruitWaterIsLethal;
         public int MaxLevel => _maxLevel;
