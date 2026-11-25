@@ -26,7 +26,7 @@ MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host
 - **Pas de** `GameObject.Find`, singletons statiques, lecture d'entrées hors `PlayerInputCollector`, `new void Update()`.
 - **Pas de commentaires** sauf pour un *pourquoi* non évident ; pas de code commenté.
 - **Respect des assemblies** : Core et Data ne dépendent ni de Fusion, ni de l'UI, ni de la présentation.
-- **Contenu** : jeu de fans privé entre amis ; les personnages et monstres issus de mangas, animés et autres œuvres gardent leurs vrais noms, **ne jamais proposer de les renommer** (`Docs/01-gdd.md` §1.2). **Règles et mécaniques = League of Legends 2026** (`Docs/07-regles-de-jeu.md`) : pour une question de règle générale, chercher la réponse là (ou dans LoL 2026) au lieu de la poser ; ne poser au propriétaire que les questions propres aux champions, objets et monstres manga. On ne recopie ni les assets ni les textes de LoL.
+- **Contenu** : jeu de fans privé entre amis ; les personnages et monstres issus de mangas, animés et autres œuvres gardent leurs vrais noms, **ne jamais proposer de les renommer** (`Docs/01-gdd.md` §1.2). **Règles et mécaniques = League of Legends 2026** (`Docs/07-regles-de-jeu.md`) : pour une question de règle générale, chercher la réponse là (ou dans LoL 2026) au lieu de la poser ; ne poser au propriétaire que les questions propres aux champions, objets et monstres manga. **Les modèles, textures et textes de LoL peuvent être repris** (jeu privé entre amis, décision du propriétaire le 2026-11-25), par exemple les structures de `Assets/Sprites/Map` (`.glb`, paquet `com.unity.cloud.gltfast`).
 - Fichiers en UTF-8.
 
 ## Mettre à jour les docs — obligatoire à chaque avancée

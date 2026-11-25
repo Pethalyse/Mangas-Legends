@@ -19,6 +19,9 @@ namespace MangaLegends.Presentation
         [SerializeField] private Color _red = new Color(1f, 0.25f, 0.2f);
         [SerializeField] private Color _neutral = new Color(0.45f, 0.8f, 0.3f);
         [SerializeField] private float _attackPunch = 0.15f;
+        [SerializeField, Tooltip("Optional per-team models (structures): the one matching the unit's team is shown.")] private GameObject _blueModel;
+        [SerializeField] private GameObject _redModel;
+        [SerializeField, Tooltip("Shown instead once the unit is destroyed.")] private GameObject _deadModel;
         [SerializeField] private Animator _animator;
         [SerializeField, Min(0.01f), Tooltip("Length of the attack clip, so that one clip plays per basic attack.")] private float _attackAnimationSeconds = 1f;
         [SerializeField, Min(0.1f), Tooltip("Ground speed (m/s) at which the run animation fully plays.")] private float _runBlendSpeed = 3.5f;
@@ -43,6 +46,7 @@ namespace MangaLegends.Presentation
         private void Update()
         {
             if (_unit.Object == null || _unit.Definition == null) return;
+            ShowTeamModel();
             bool visible = _unit.Services == null || _unit.Services.View.Vision.IsVisible(_unit);
             SetVisible(visible);
             if (!visible) return;
@@ -73,6 +77,15 @@ namespace MangaLegends.Presentation
             float attacksPerSecond = Mathf.Max(0.1f, _unit.Stats.Get(Core.Stats.StatType.AttackSpeed));
             _animator.SetFloat(AttackSpeedId, Mathf.Max(0.5f, _attackAnimationSeconds * attacksPerSecond));
             _animator.SetTrigger(AttackId);
+        }
+
+        private void ShowTeamModel()
+        {
+            if (_blueModel == null && _redModel == null && _deadModel == null) return;
+            bool alive = _unit.IsAlive;
+            if (_blueModel != null && _blueModel.activeSelf != (alive && _unit.Team != Team.Red)) _blueModel.SetActive(alive && _unit.Team != Team.Red);
+            if (_redModel != null && _redModel.activeSelf != (alive && _unit.Team == Team.Red)) _redModel.SetActive(alive && _unit.Team == Team.Red);
+            if (_deadModel != null && _deadModel.activeSelf != !alive) _deadModel.SetActive(!alive);
         }
 
         private void SetVisible(bool visible)

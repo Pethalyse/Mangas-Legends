@@ -16,7 +16,7 @@
 
 ### 1.1 Positionnement et originalité
 
-Le jeu reprend les **conventions du genre MOBA** (trois voies, jungle, tours, sbires, objets, quatre compétences + un passif). Son contenu (champions, monstres, lieux) vient des mangas, animés et autres œuvres choisis par le propriétaire (§1.2). **Règles et mécaniques : celles de League of Legends, version 2026** ✅ (décision du propriétaire). Elles sont détaillées dans [07-regles-de-jeu.md](07-regles-de-jeu.md), qui fait foi pour toute question de règle générale : progression, or, sbires, structures, jungle, objectifs, sorts d'invocateur, quêtes de rôle, vision. Les champions, objets, monstres et lieux sont ceux des mangas. On ne recopie ni les assets ni les textes de LoL.
+Le jeu reprend les **conventions du genre MOBA** (trois voies, jungle, tours, sbires, objets, quatre compétences + un passif). Son contenu (champions, monstres, lieux) vient des mangas, animés et autres œuvres choisis par le propriétaire (§1.2). **Règles et mécaniques : celles de League of Legends, version 2026** ✅ (décision du propriétaire). Elles sont détaillées dans [07-regles-de-jeu.md](07-regles-de-jeu.md), qui fait foi pour toute question de règle générale : progression, or, sbires, structures, jungle, objectifs, sorts d'invocateur, quêtes de rôle, vision. Les champions, objets, monstres et lieux sont ceux des mangas. Les modèles, textures et textes de LoL peuvent être repris (jeu privé entre amis) ✅ (décision du propriétaire, 2026-11-25).
 
 ### 1.2 Licences : jeu de fans privé ✅
 
