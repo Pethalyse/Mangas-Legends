@@ -177,7 +177,7 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 ## 10. Vision
 
 - Brouillard de guerre ; chaque unité, tour et balise révèle autour d'elle 🔁.
-- **Insectes de Shino** (balise furtive, bijou gratuit) : recharge de 170 à 90 s ✅.
+- **Insectes de Shino** (balise furtive, bijou gratuit) : recharge de 170 à 90 s ✅. Codé (03-objets §5, touche 4).
 - **Den Den Mushi de surveillance** (balise de contrôle, achetable) : révèle et désactive les balises ennemies proches 🔁.
 - **Haki de l'observation** (bijou de détection) : révèle les balises et unités cachées autour du champion pendant 8 s ✅.
 - Pas de cercles de champignons dans MangaLegends ✅ (choix du propriétaire).

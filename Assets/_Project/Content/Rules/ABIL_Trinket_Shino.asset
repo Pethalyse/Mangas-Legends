@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Trinket_Shino
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.trinket.shino_insects
+  _displayName: Insectes de Shino
+  _description: "Pose une balise invisible pendant 90 s (3 au plus). Recharge de
+    170 s au niveau 1 \xE0 90 s au niveau 18."
+  _icon: {fileID: 0}
+  _maxRank: 18
+  _castMode: 0
+  _cooldownSeconds:
+  - 170
+  - 165
+  - 161
+  - 156
+  - 151
+  - 146
+  - 142
+  - 137
+  - 132
+  - 128
+  - 123
+  - 118
+  - 114
+  - 109
+  - 104
+  - 99
+  - 95
+  - 90
+  _cost:
+  - 0
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 3
+    _validTargets: 1
+    _fallback: 0
+    _range:
+      _byRank:
+      - 6
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 1
+  _onCast:
+  - rid: 2286801137428857188
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857188
+      type: {class: PlaceWardEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _ward: {fileID: 11400000, guid: 784c6d0207f4d394a913671b78f3db21, type: 2}
+        _lifetimeSeconds: 90
+        _maxPerOwner: 3

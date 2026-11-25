@@ -20,6 +20,9 @@ namespace MangaLegends.Data.Definitions
         [Header("Basic attack")]
         [SerializeField, Min(0f)] private float _attackProjectileSpeed;
         [SerializeField, Range(0f, 1f)] private float _attackWindup = 0.3f;
+        [SerializeField, Tooltip("Hidden from enemies unless one of their revealers sees it.")] private bool _stealthed;
+        [SerializeField, Tooltip("Reveals and disables enemy stealthed units in its vision radius.")] private bool _revealsStealth;
+        [SerializeField, Tooltip("Basic attacks deal exactly 1 damage; other damage is ignored (wards).")] private bool _oneDamagePerHit;
 
         public UnitKind Kind => _kind;
         public StatProfile Stats => _stats;
@@ -31,6 +34,9 @@ namespace MangaLegends.Data.Definitions
         public float AttackProjectileSpeed => _attackProjectileSpeed;
         public bool IsRanged => _attackProjectileSpeed > 0f;
         public float AttackWindup => _attackWindup;
+        public bool Stealthed => _stealthed;
+        public bool RevealsStealth => _revealsStealth;
+        public bool OneDamagePerHit => _oneDamagePerHit;
 
         public override void Validate(ValidationReport report)
         {

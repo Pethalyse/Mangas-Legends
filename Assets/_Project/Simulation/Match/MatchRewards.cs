@@ -36,6 +36,12 @@ namespace MangaLegends.Simulation.Match
                 return;
             }
 
+            if (victim.Kind == UnitKind.Ward)
+            {
+                if (killingChampion != null) Progress(killingChampion).AddGold(definition.GoldBounty);
+                return;
+            }
+
             if (killingChampion != null)
             {
                 ChampionProgress progress = Progress(killingChampion);

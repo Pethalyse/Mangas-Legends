@@ -60,7 +60,7 @@ namespace MangaLegends.Simulation.Champions
 
             if (input.Has(InputButton.AttackMove))
             {
-                Unit closest = _unit.Services.Units.Closest(input.MovePoint, AttackMoveSearchRadius, u => _unit.IsEnemyOf(u) && u.IsTargetable && !u.IsInvulnerable);
+                Unit closest = _unit.Services.Units.Closest(input.MovePoint, AttackMoveSearchRadius, u => _unit.IsEnemyOf(u) && u.IsTargetable && !u.IsInvulnerable && u.Kind != MangaLegends.Data.Definitions.UnitKind.Ward);
                 if (closest != null)
                 {
                     BeginAttack(closest);
@@ -95,6 +95,7 @@ namespace MangaLegends.Simulation.Champions
             Cast(input, InputButton.Summoner1, CasterSlot.Summoner1);
             Cast(input, InputButton.Summoner2, CasterSlot.Summoner2);
             Cast(input, InputButton.Recall, CasterSlot.Recall);
+            Cast(input, InputButton.Trinket, CasterSlot.Trinket);
             for (InputButton button = InputButton.Item1; button <= InputButton.Item6; button++)
             {
                 if (!input.Has(button)) continue;

@@ -240,6 +240,26 @@ namespace MangaLegends.Simulation.Match
             }
         }
 
+        public void PlaceWard(Unit owner, UnitDefinition definition, Vector3 point, float lifetimeSeconds, int maxPerOwner)
+        {
+            if (!HasStateAuthority || owner == null || definition == null) return;
+            if (UnityEngine.AI.NavMesh.SamplePosition(point, out UnityEngine.AI.NavMeshHit hit, 3f, UnityEngine.AI.NavMesh.AllAreas)) point = hit.position;
+            AI.WardBrain oldest = null;
+            int count = 0;
+            foreach (Unit unit in _services.Units.All)
+            {
+                if (unit == null || !unit.IsAlive || unit.Definition != definition || !unit.TryGetComponent(out AI.WardBrain brain) || brain.Owner != owner.Object.Id) continue;
+                count++;
+                if (oldest == null || brain.PlacedTick < oldest.PlacedTick) oldest = brain;
+            }
+            if (count >= maxPerOwner && oldest != null) oldest.GetComponent<Unit>().Health.Expire();
+            Unit ward = SpawnUnit(definition, owner.Team, point, Quaternion.identity, PlayerRef.None);
+            if (ward == null || !ward.TryGetComponent(out AI.WardBrain placed)) return;
+            placed.Owner = owner.Object.Id;
+            placed.PlacedTick = Runner.Tick;
+            placed.ExpireTick = lifetimeSeconds > 0f ? Runner.Tick + TickTime.SecondsToTicks(lifetimeSeconds, Runner.TickRate) : 0;
+        }
+
         private void SpawnStructures()
         {
             if (_map == null) return;
@@ -281,7 +301,7 @@ namespace MangaLegends.Simulation.Match
             var allSpells = _services.Content.SummonerSpells;
             if (slot.Summoner1 >= 0 && slot.Summoner1 < allSpells.Count) spells.Add(allSpells[slot.Summoner1]);
             if (slot.Summoner2 >= 0 && slot.Summoner2 < allSpells.Count) spells.Add(allSpells[slot.Summoner2]);
-            unit.Caster?.Setup(definition, spells, Rules.RecallAbility);
+            unit.Caster?.Setup(definition, spells, Rules.RecallAbility, Rules.TrinketAbility);
         }
 
         private void SimulateChampions(float elapsed)

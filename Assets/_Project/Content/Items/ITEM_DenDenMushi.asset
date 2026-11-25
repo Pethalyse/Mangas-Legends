@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3827949f8e94ddbbce2a761611d34a1, type: 3}
+  m_Name: ITEM_DenDenMushi
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ItemDefinition
+  _id: item.den_den_mushi_watch
+  _displayName: Den Den Mushi de surveillance
+  _description: "Consommable : pose une balise visible qui r\xE9v\xE8le et d\xE9sactive
+    les balises ennemies proches (1 au plus)."
+  _icon: {fileID: 0}
+  _tier: 3
+  _recipeCost: 75
+  _unique: 0
+  _components: []
+  _stats: []
+  _passives: []
+  _active:
+    _enabled: 1
+    _consumedOnUse: 1
+    _name: Poser
+    _description: Pose le Den Den Mushi.
+    _cooldownSeconds: 0
+    _targeting:
+      _mode: 3
+      _validTargets: 1
+      _fallback: 0
+      _range:
+        _byRank:
+        - 6
+      _indicatorWidth:
+        _byRank:
+        - 0
+      _indicatorRadius:
+        _byRank:
+        - 1
+    _effects:
+    - rid: 2286801137428857189
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857189
+      type: {class: PlaceWardEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _ward: {fileID: 11400000, guid: 166ed6007636ef642ac97b245bc0fd74, type: 2}
+        _lifetimeSeconds: 0
+        _maxPerOwner: 1

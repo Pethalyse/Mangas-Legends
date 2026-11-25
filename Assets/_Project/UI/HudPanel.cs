@@ -18,8 +18,8 @@ namespace MangaLegends.UI
         private const int BuffSlots = 10;
         private const int RankPips = 5;
 
-        private static readonly CasterSlot[] SlotOrder = { CasterSlot.Passive, CasterSlot.A, CasterSlot.Z, CasterSlot.E, CasterSlot.R, CasterSlot.Summoner1, CasterSlot.Summoner2, CasterSlot.Recall };
-        private static readonly string[] KeyActions = { "", "AbilityA", "AbilityZ", "AbilityE", "AbilityR", "Summoner1", "Summoner2", "Recall" };
+        private static readonly CasterSlot[] SlotOrder = { CasterSlot.Passive, CasterSlot.A, CasterSlot.Z, CasterSlot.E, CasterSlot.R, CasterSlot.Summoner1, CasterSlot.Summoner2, CasterSlot.Recall, CasterSlot.Trinket };
+        private static readonly string[] KeyActions = { "", "AbilityA", "AbilityZ", "AbilityE", "AbilityR", "Summoner1", "Summoner2", "Recall", "Trinket" };
         private static readonly string[] ItemActions = { "Item1", "Item2", "Item3", "Item4", "Item5", "Item6" };
         private static readonly (StatType stat, string label)[] StatLines =
         {
@@ -100,7 +100,7 @@ namespace MangaLegends.UI
                 else item.gameObject.SetActive(false);
             }
 
-            for (int i = 0; i < SlotOrder.Length; i++) _slots[i] = new SlotView(SlotOrder[i] == CasterSlot.Recall ? items : root, i, this);
+            for (int i = 0; i < SlotOrder.Length; i++) _slots[i] = new SlotView(SlotOrder[i] >= CasterSlot.Recall ? items : root, i, this);
 
             UiFactory.Bar(root, "Health", Vector2.zero, Vector2.zero, new Vector2(322f, 30f), new Vector2(530f, 22f), UiFactory.Health, out _health);
             _healthText = UiFactory.Text(_health.transform.parent, "Value", "", 16, TextAnchor.MiddleCenter, Color.white);
@@ -279,7 +279,7 @@ namespace MangaLegends.UI
                 if (slot == CasterSlot.Passive) { position = new Vector2(322f, 96f); size = 46f; }
                 else if (slot <= CasterSlot.R) { position = new Vector2(376f + (index - 1) * 76f, 72f); size = 68f; }
                 else if (slot <= CasterSlot.Summoner2) { position = new Vector2(684f + (index - 5) * 56f, 90f); size = 50f; }
-                else { position = new Vector2(196f, 50f); size = 44f; }
+                else { position = new Vector2(196f, slot == CasterSlot.Recall ? 50f : 104f); size = 44f; }
                 Image frame = UiFactory.Box(parent, "Slot" + index, Vector2.zero, Vector2.zero, position, new Vector2(size, size), new Color(0f, 0f, 0f, 0.6f));
                 _icon = UiFactory.Image(frame.transform, "Icon", Color.white);
                 _cooldown = UiFactory.Image(frame.transform, "Cooldown", new Color(0f, 0f, 0f, 0.7f));

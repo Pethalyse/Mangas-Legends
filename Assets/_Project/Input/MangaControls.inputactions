@@ -30,7 +30,8 @@
                 { "name": "Item3", "type": "Button", "id": "a1f3c9d2-0023-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
                 { "name": "Item4", "type": "Button", "id": "a1f3c9d2-0024-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
                 { "name": "Item5", "type": "Button", "id": "a1f3c9d2-0025-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
-                { "name": "Item6", "type": "Button", "id": "a1f3c9d2-0026-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false }
+                { "name": "Item6", "type": "Button", "id": "a1f3c9d2-0026-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Trinket", "type": "Button", "id": "a1f3c9d2-0027-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false }
             ],
             "bindings": [
                 { "name": "", "id": "b2e4d0a1-0001-4c7f-9e3b-8d2a1f0c4b01", "path": "<Pointer>/position", "interactions": "", "processors": "", "groups": "", "action": "Point", "isComposite": false, "isPartOfComposite": false },
@@ -58,7 +59,8 @@
                 { "name": "", "id": "b2e4d0a1-0023-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/3", "interactions": "", "processors": "", "groups": "", "action": "Item3", "isComposite": false, "isPartOfComposite": false },
                 { "name": "", "id": "b2e4d0a1-0024-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/5", "interactions": "", "processors": "", "groups": "", "action": "Item4", "isComposite": false, "isPartOfComposite": false },
                 { "name": "", "id": "b2e4d0a1-0025-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/6", "interactions": "", "processors": "", "groups": "", "action": "Item5", "isComposite": false, "isPartOfComposite": false },
-                { "name": "", "id": "b2e4d0a1-0026-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/7", "interactions": "", "processors": "", "groups": "", "action": "Item6", "isComposite": false, "isPartOfComposite": false }
+                { "name": "", "id": "b2e4d0a1-0026-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/7", "interactions": "", "processors": "", "groups": "", "action": "Item6", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0027-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/4", "interactions": "", "processors": "", "groups": "", "action": "Trinket", "isComposite": false, "isPartOfComposite": false }
             ]
         }
     ],

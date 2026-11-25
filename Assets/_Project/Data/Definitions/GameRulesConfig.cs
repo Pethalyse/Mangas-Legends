@@ -61,6 +61,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _fountainRadius = 8f;
         [SerializeField, Range(0f, 1f)] private float _fountainRegenPerSecond = 0.1f;
         [SerializeField] private AbilityDefinition _recallAbility;
+        [SerializeField, Tooltip("Free trinket of every champion; its rank follows the champion level.")] private AbilityDefinition _trinketAbility;
 
         [Header("Summoner spells")]
         [SerializeField, Range(0, 4)] private int _summonerSpellSlots = 2;
@@ -119,6 +120,7 @@ namespace MangaLegends.Data.Definitions
         public float FountainRadius => _fountainRadius;
         public float FountainRegenPerSecond => _fountainRegenPerSecond;
         public AbilityDefinition RecallAbility => _recallAbility;
+        public AbilityDefinition TrinketAbility => _trinketAbility;
         public int SummonerSpellSlots => _summonerSpellSlots;
         public IReadOnlyList<SummonerSpellDefinition> DefaultSummonerSpells => _defaultSummonerSpells;
         public float EarlyTowerDefenseSeconds => _earlyTowerDefenseSeconds;

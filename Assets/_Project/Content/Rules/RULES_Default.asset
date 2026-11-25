@@ -21,6 +21,8 @@ MonoBehaviour:
   _inCombatRegenRatio: 0.25
   _minionDamageToChampionsRatio: 0.6
   _maxAttackSpeed: 2.5
+  _devilFruitWaterDrain: 0.015
+  _devilFruitWaterIsLethal: 0
   _maxLevel: 18
   _experienceToNextLevel: 180100007c010000e001000044020000a80200000c03000070030000d4030000380400009c0400000005000064050000c80500002c06000090060000f406000058070000
   _ultimateUnlockLevels: 060000000b00000010000000
@@ -64,9 +66,15 @@ MonoBehaviour:
   _assistGoldShare: 0.5
   _assistWindowSeconds: 10
   _shopRadius: 8
+  _drakesForSoul: 4
+  _monsterKillHealBase: 90
+  _monsterKillHealPerLevel: 20
+  _monsterKillHealMax: 250
+  _monsterLeashResetSeconds: 4
   _fountainRadius: 8
   _fountainRegenPerSecond: 0.1
   _recallAbility: {fileID: 11400000, guid: 52cb391bbe382a64f92888514e4dc135, type: 2}
+  _trinketAbility: {fileID: 11400000, guid: fe120a630be7a8c4b888e40704b2d3de, type: 2}
   _summonerSpellSlots: 2
   _defaultSummonerSpells:
   - {fileID: 11400000, guid: e86e0b2b5cac1d147b6a465b78a25dca, type: 2}

@@ -17,7 +17,7 @@ namespace MangaLegends.UI
         {
             { "AbilityA", "Compétence 1" }, { "AbilityZ", "Compétence 2" }, { "AbilityE", "Compétence 3" }, { "AbilityR", "Ultime" },
             { "Summoner1", "Sort d'invocateur 1" }, { "Summoner2", "Sort d'invocateur 2" },
-            { "Item1", "Objet 1" }, { "Item2", "Objet 2" }, { "Item3", "Objet 3" }, { "Item4", "Objet 4" }, { "Item5", "Objet 5" }, { "Item6", "Objet 6" },
+            { "Item1", "Objet 1" }, { "Item2", "Objet 2" }, { "Item3", "Objet 3" }, { "Item4", "Objet 4" }, { "Item5", "Objet 5" }, { "Item6", "Objet 6" }, { "Trinket", "Bijou (balise)" },
             { "AttackMove", "Attaque-déplacement" }, { "Stop", "Arrêter" }, { "Recall", "Rappel" },
             { "LevelUpModifier", "Monter un rang (+ touche)" }, { "SelfCastModifier", "Lancer sur soi (+ touche)" },
             { "Shop", "Boutique" }, { "Scoreboard", "Scores (maintenir)" }, { "CameraLock", "Verrouiller la caméra" }, { "CameraCenter", "Centrer la caméra (maintenir)" }

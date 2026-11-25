@@ -36,6 +36,7 @@ namespace MangaLegends.Simulation.Abilities
                 case InputButton.Summoner1: slot = CasterSlot.Summoner1; return true;
                 case InputButton.Summoner2: slot = CasterSlot.Summoner2; return true;
                 case InputButton.Recall: slot = CasterSlot.Recall; return true;
+                case InputButton.Trinket: slot = CasterSlot.Trinket; return true;
                 default: slot = CasterSlot.Passive; return false;
             }
         }

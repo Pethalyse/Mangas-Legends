@@ -96,6 +96,7 @@ namespace MangaLegends.Data.Definitions
     public sealed class ItemActive
     {
         [SerializeField] private bool _enabled;
+        [SerializeField, Tooltip("The item disappears once its active is used.")] private bool _consumedOnUse;
         [SerializeField] private string _name;
         [SerializeField, TextArea] private string _description;
         [SerializeField, Min(0f)] private float _cooldownSeconds;
@@ -103,6 +104,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeReference, TypeSelector] private List<EffectDefinition> _effects = new List<EffectDefinition>();
 
         public bool Enabled => _enabled;
+        public bool ConsumedOnUse => _consumedOnUse;
         public string Name => _name;
         public string Description => _description;
         public float CooldownSeconds => _cooldownSeconds;

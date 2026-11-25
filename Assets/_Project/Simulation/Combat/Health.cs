@@ -127,6 +127,7 @@ namespace MangaLegends.Simulation.Combat
         public DamageResult ApplyDamage(in DamageInfo info)
         {
             if (!HasStateAuthority || IsDead || _unit.IsInvulnerable || info.Amount <= 0f) return DamageResult.None;
+            if (_unit.Definition != null && _unit.Definition.OneDamagePerHit) return TakeOneHit(info);
 
             float amount = info.Amount;
             if (info.Source != null && info.Source.Kind == Data.Definitions.UnitKind.Minion && (_unit.IsChampion || _unit.IsStructure))
@@ -208,6 +209,23 @@ namespace MangaLegends.Simulation.Combat
             LastCombatTick > 0 && Runner.Tick - LastCombatTick < TickTime.SecondsToTicks(windowSeconds, Runner.TickRate);
 
         public HitRecord HitAt(int sequence) => Hits[((sequence % HitHistory) + HitHistory) % HitHistory];
+
+        public void Expire()
+        {
+            if (!HasStateAuthority || IsDead) return;
+            Current = 0f;
+            Kill(null);
+        }
+
+        private DamageResult TakeOneHit(in DamageInfo info)
+        {
+            if ((info.Flags & DamageFlags.AutoAttack) == 0) return DamageResult.None;
+            Current = Mathf.Max(0f, Current - 1f);
+            LastDamagedTick = Runner.Tick;
+            Record(info.Source, 1f, DamageType.True, info.Flags, false);
+            if (Current <= 0f) Kill(info.Source);
+            return DamageResult.None;
+        }
 
         private void Kill(Unit killer)
         {

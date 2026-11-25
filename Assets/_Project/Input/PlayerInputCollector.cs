@@ -26,7 +26,7 @@ namespace MangaLegends.Input
         {
             InputButton.AbilityA, InputButton.AbilityZ, InputButton.AbilityE, InputButton.AbilityR,
             InputButton.Summoner1, InputButton.Summoner2, InputButton.Recall,
-            InputButton.Item1, InputButton.Item2, InputButton.Item3, InputButton.Item4, InputButton.Item5, InputButton.Item6
+            InputButton.Item1, InputButton.Item2, InputButton.Item3, InputButton.Item4, InputButton.Item5, InputButton.Item6, InputButton.Trinket
         };
 
         [SerializeField] private InputActionAsset _controls;

@@ -7,6 +7,7 @@ namespace MangaLegends.Data.Definitions
         Tower,
         Monster,
         Summon,
-        Structure
+        Structure,
+        Ward
     }
 }

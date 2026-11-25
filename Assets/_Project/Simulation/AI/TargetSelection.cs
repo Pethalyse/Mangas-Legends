@@ -1,3 +1,4 @@
+using MangaLegends.Data.Definitions;
 using MangaLegends.Core.Simulation;
 using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
@@ -10,7 +11,7 @@ namespace MangaLegends.Simulation.AI
         private const float HarassMemorySeconds = 2f;
 
         public static bool IsValidEnemy(Unit self, Unit other) =>
-            other != null && other.IsAlive && other.IsTargetable && !other.IsInvulnerable && self.IsEnemyOf(other);
+            other != null && other.IsAlive && other.IsTargetable && !other.IsInvulnerable && other.Kind != UnitKind.Ward && self.IsEnemyOf(other);
 
         // Genre rule: an enemy champion that hurt an allied champion nearby is punished first, then the closest non-champion.
         public static Unit Pick(Unit self, float radius)

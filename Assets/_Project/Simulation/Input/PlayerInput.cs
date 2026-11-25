@@ -20,7 +20,8 @@ namespace MangaLegends.Simulation.Input
         Item3,
         Item4,
         Item5,
-        Item6
+        Item6,
+        Trinket
     }
 
     // Each set button is an event for this tick; the collector accumulates presses between ticks.

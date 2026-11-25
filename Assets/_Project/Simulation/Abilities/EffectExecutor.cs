@@ -73,6 +73,9 @@ namespace MangaLegends.Simulation.Abilities
                 case ReduceCooldownEffect reduce:
                     caster.Caster?.ReduceCooldown((CasterSlot)(int)reduce.Slot, reduce.RemainingFractionAt(context.Rank));
                     break;
+                case PlaceWardEffect ward when authority:
+                    caster.Services.Match?.PlaceWard(caster, ward.Ward, context.AimPoint, ward.LifetimeSeconds, ward.MaxPerOwner);
+                    break;
                 case ExecuteEffect execute when authority:
                     Execute(execute, context);
                     break;

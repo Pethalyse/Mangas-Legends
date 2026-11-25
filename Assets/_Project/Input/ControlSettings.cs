@@ -25,13 +25,13 @@ namespace MangaLegends.Input
         {
             InputButton.AbilityA, InputButton.AbilityZ, InputButton.AbilityE, InputButton.AbilityR,
             InputButton.Summoner1, InputButton.Summoner2, InputButton.AttackMove,
-            InputButton.Item1, InputButton.Item2, InputButton.Item3, InputButton.Item4, InputButton.Item5, InputButton.Item6
+            InputButton.Item1, InputButton.Item2, InputButton.Item3, InputButton.Item4, InputButton.Item5, InputButton.Item6, InputButton.Trinket
         };
 
         public static readonly string[] RebindableActions =
         {
             "AbilityA", "AbilityZ", "AbilityE", "AbilityR", "Summoner1", "Summoner2",
-            "Item1", "Item2", "Item3", "Item4", "Item5", "Item6",
+            "Item1", "Item2", "Item3", "Item4", "Item5", "Item6", "Trinket",
             "AttackMove", "Stop", "Recall", "LevelUpModifier", "SelfCastModifier",
             "Shop", "Scoreboard", "CameraLock", "CameraCenter"
         };

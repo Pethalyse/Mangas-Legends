@@ -19,7 +19,8 @@ namespace MangaLegends.Simulation.Abilities
         R,
         Summoner1,
         Summoner2,
-        Recall
+        Recall,
+        Trinket
     }
 
     public struct NetSlot : INetworkStruct
@@ -34,7 +35,7 @@ namespace MangaLegends.Simulation.Abilities
     [RequireComponent(typeof(ProjectileLauncher), typeof(AreaSpawner))]
     public sealed class AbilityCaster : NetworkBehaviour
     {
-        public const int SlotCount = 8;
+        public const int SlotCount = 9;
         public const int NoAbility = -1;
 
         private Unit _unit;
@@ -74,7 +75,7 @@ namespace MangaLegends.Simulation.Abilities
             for (int i = 0; i < SlotCount; i++) Slots.Set(i, new NetSlot { Ability = NoAbility });
         }
 
-        public void Setup(ChampionDefinition champion, IReadOnlyList<SummonerSpellDefinition> summoners, AbilityDefinition recall)
+        public void Setup(ChampionDefinition champion, IReadOnlyList<SummonerSpellDefinition> summoners, AbilityDefinition recall, AbilityDefinition trinket)
         {
             if (!HasStateAuthority) return;
             ApplySet(champion.DefaultAbilities, keepRanks: false);
@@ -85,6 +86,7 @@ namespace MangaLegends.Simulation.Abilities
                 SetSlotAbility(CasterSlot.Summoner1 + i, spell, 1);
             }
             SetSlotAbility(CasterSlot.Recall, recall, 1);
+            SetSlotAbility(CasterSlot.Trinket, trinket, 1);
         }
 
         public AbilityDefinition AbilityAt(CasterSlot slot)
@@ -240,6 +242,7 @@ namespace MangaLegends.Simulation.Abilities
             int tick = Runner.Tick;
             if (SetEndTick > 0 && tick >= SetEndTick && ActiveSet > 0) SwapSet(0, 0f, false);
             RechargeCharges(tick);
+            SyncTrinketRank();
             if (_unit.IsAlive)
             {
                 SimulateChannel(tick);
@@ -352,6 +355,19 @@ namespace MangaLegends.Simulation.Abilities
                 Slots.Set((int)CasterSlot.Passive, data);
             }
             Combat.CombatTriggers.Run(passive.OnCast, _unit, other, 1);
+        }
+
+        // The trinket has one rank per champion level, so its cooldown shrinks as the champion levels up.
+        private void SyncTrinketRank()
+        {
+            if (!HasStateAuthority) return;
+            AbilityDefinition trinket = AbilityAt(CasterSlot.Trinket);
+            if (trinket == null) return;
+            NetSlot data = Slots[(int)CasterSlot.Trinket];
+            byte rank = (byte)Mathf.Clamp(_unit.Stats.Level, 1, trinket.MaxRank);
+            if (data.Rank == rank) return;
+            data.Rank = rank;
+            Slots.Set((int)CasterSlot.Trinket, data);
         }
 
         private void RechargeCharges(int tick)

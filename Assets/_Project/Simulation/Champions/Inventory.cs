@@ -109,6 +109,11 @@ namespace MangaLegends.Simulation.Champions
                     break;
             }
             ActiveReadyTicks.Set(slot, Runner.Tick + TickTime.SecondsToTicks(item.Active.CooldownSeconds, Runner.TickRate));
+            if (item.Active.ConsumedOnUse && HasStateAuthority)
+            {
+                Items.Set(slot, 0);
+                Version++;
+            }
             _unit.Motor?.Face(aimPoint);
             EffectExecutor.Run(item.Active.Effects, new EffectContext(_unit, target, aimPoint, _unit.Position, 1, null));
             return true;
