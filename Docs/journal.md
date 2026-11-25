@@ -18,7 +18,9 @@
 - partie hôte + client (deux PC, ou Multiplayer Play Mode) et ressenti avec latence ;
 - caméra et lisibilité.
 
-**Prochaine étape** : test en ligne à deux, indicateurs de visée, passifs et actifs d'objets, sbires qui s'écartent les uns des autres, champions du premier jalon (Luffy, Zoro, Naruto, Kirito), brouillard de guerre, suppression de `Legacy/`.
+**Fait aussi** : Naruto et Zoro jouables en données (testé : Rasengan avec approche automatique, shurikens), rôles Mid et Top choisis.
+
+**Prochaine étape** : test en ligne à deux, indicateurs de visée, passifs et actifs d'objets (passifs de Zoro, Totoro), sbires qui s'écartent les uns des autres, Luffy et Kirito, brouillard de guerre, suppression de `Legacy/`.
 
 **Bloquants** : aucun.
 
