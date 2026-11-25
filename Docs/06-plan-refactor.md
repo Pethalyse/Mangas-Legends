@@ -136,7 +136,7 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 - **Fini quand** : une partie complète 2v2 entre amis, en ligne, se joue du salon jusqu'à la victoire.
 
 ### Après la refonte
-Champions du premier jalon (GDD §10) : Luffy, Zoro, Naruto, Kirito — **jouables en données (2026-11-25)** ; brouillard de guerre côté client avec buissons (les murs ne bloquent pas encore la vue) ; carte au tracé de LoL en primitives (reste le décor) ; HUD et minicarte à la LoL.
+Champions du premier jalon (GDD §10) : Luffy, Zoro, Naruto, Kirito — **jouables en données (2026-11-25)** ; brouillard de guerre côté client avec buissons et murs qui bloquent la vue ; carte au tracé de LoL en primitives (reste le décor) ; HUD et minicarte à la LoL.
 
 ## 4. Notes d'avancement
 

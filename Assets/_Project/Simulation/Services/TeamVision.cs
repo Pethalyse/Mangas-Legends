@@ -8,12 +8,13 @@ namespace MangaLegends.Simulation.Services
 {
     // What the local player's team sees this frame: a unit is visible if it is an ally, a structure, or stands inside
     // the vision radius of a living allied unit; a unit in a brush is only seen from inside the same brush (LoL rule);
-    // stealthed wards are only seen by revealers (control wards), which also switch off enemy wards in their range.
+    // walls block sight; stealthed wards are only seen by revealers (control wards), which also switch off enemy wards in their range.
     // Display only: the simulation ignores it.
     public sealed class TeamVision
     {
         private readonly List<(Vector3 position, float range, int brush)> _eyes = new List<(Vector3, float, int)>();
         private MapLayout _map;
+        private int _sightBlockers;
         private readonly List<(Vector3 position, float range)> _revealers = new List<(Vector3, float)>();
         private readonly List<(Vector3 position, float range)> _enemyRevealers = new List<(Vector3, float)>();
         private readonly HashSet<Unit> _visible = new HashSet<Unit>();
@@ -21,10 +22,11 @@ namespace MangaLegends.Simulation.Services
         public Team Team { get; private set; } = Team.None;
         public bool Enabled => Team == Team.Blue || Team == Team.Red;
 
-        public void Update(Team team, IEnumerable<Unit> units, MapLayout map)
+        public void Update(Team team, IEnumerable<Unit> units, MapLayout map, int sightBlockers)
         {
             Team = team;
             _map = map;
+            _sightBlockers = sightBlockers;
             _eyes.Clear();
             _visible.Clear();
             _revealers.Clear();
@@ -55,7 +57,7 @@ namespace MangaLegends.Simulation.Services
             if (!Enabled) return true;
             int brush = BrushOf(point);
             foreach ((Vector3 position, float range, int eyeBrush) in _eyes)
-                if ((brush < 0 || eyeBrush == brush) && UnitRegistry.FlatDistance(position, point) <= range) return true;
+                if ((brush < 0 || eyeBrush == brush) && UnitRegistry.FlatDistance(position, point) <= range && InSight(position, point)) return true;
             return false;
         }
 
@@ -66,6 +68,14 @@ namespace MangaLegends.Simulation.Services
             return false;
         }
 
+        // Walls of the terrain layer block sight, checked at eye height.
+        private bool InSight(Vector3 from, Vector3 to)
+        {
+            if (_sightBlockers == 0) return true;
+            Vector3 lift = Vector3.up * 1.2f;
+            return !Physics.Linecast(from + lift, to + lift, _sightBlockers, QueryTriggerInteraction.Ignore);
+        }
+
         private int BrushOf(Vector3 position) => _map != null ? _map.BrushAt(position) : -1;
 
         private bool Sees(Unit unit)
@@ -74,7 +84,7 @@ namespace MangaLegends.Simulation.Services
             if (unit.Definition.Stealthed) return Within(_revealers, unit.Position, unit.Radius);
             int brush = BrushOf(unit.Position);
             foreach ((Vector3 position, float range, int eyeBrush) in _eyes)
-                if ((brush < 0 || eyeBrush == brush) && UnitRegistry.FlatDistance(position, unit.Position) <= range + unit.Radius) return true;
+                if ((brush < 0 || eyeBrush == brush) && UnitRegistry.FlatDistance(position, unit.Position) <= range + unit.Radius && InSight(position, unit.Position)) return true;
             return false;
         }
     }
