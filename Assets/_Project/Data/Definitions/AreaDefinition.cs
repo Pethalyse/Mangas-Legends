@@ -26,6 +26,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private RankedFloat _intervalSeconds = new RankedFloat(0f);
         [SerializeField] private bool _followsCaster;
         [SerializeField] private TeamFilter _affects = TeamFilter.Enemies;
+        [SerializeField, Tooltip("Only these unit kinds; empty = any.")] private List<UnitKind> _kinds = new List<UnitKind>();
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onActivate = new List<EffectDefinition>();
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onInterval = new List<EffectDefinition>();
         [SerializeField] private GameObject _visualPrefab;
@@ -40,6 +41,7 @@ namespace MangaLegends.Data.Definitions
         public float IntervalSecondsAt(int rank) => _intervalSeconds.At(rank);
         public bool FollowsCaster => _followsCaster;
         public TeamFilter Affects => _affects;
+        public bool Accepts(UnitKind kind) => _kinds == null || _kinds.Count == 0 || _kinds.Contains(kind);
         public IReadOnlyList<EffectDefinition> OnActivate => _onActivate;
         public IReadOnlyList<EffectDefinition> OnInterval => _onInterval;
         public GameObject VisualPrefab => _visualPrefab;

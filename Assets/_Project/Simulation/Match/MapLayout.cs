@@ -50,6 +50,9 @@ namespace MangaLegends.Simulation.Match
         [SerializeField, Min(0f)] private float _firstSpawnSeconds = 55f;
         [SerializeField, Min(0f)] private float _respawnSeconds = 135f;
         [SerializeField, Min(0f)] private float _leashRadius = 8f;
+        [SerializeField, Tooltip("If set, each spawn takes the next monster of this list instead of Monsters.")] private List<UnitDefinition> _rotation = new List<UnitDefinition>();
+        [SerializeField, Tooltip("Spawned instead once a team owns the dragon soul.")] private UnitDefinition _afterSoul;
+        [SerializeField, Min(0f), Tooltip("Match time at which the camp leaves for good; 0 = never.")] private float _despawnSeconds;
 
         public string Name => _name;
         public IReadOnlyList<UnitDefinition> Monsters => _monsters;
@@ -57,6 +60,9 @@ namespace MangaLegends.Simulation.Match
         public float FirstSpawnSeconds => _firstSpawnSeconds;
         public float RespawnSeconds => _respawnSeconds;
         public float LeashRadius => _leashRadius;
+        public IReadOnlyList<UnitDefinition> Rotation => _rotation;
+        public UnitDefinition AfterSoul => _afterSoul;
+        public float DespawnSeconds => _despawnSeconds;
     }
 
     public enum ZoneShape

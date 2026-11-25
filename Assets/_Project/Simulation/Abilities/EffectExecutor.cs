@@ -73,6 +73,9 @@ namespace MangaLegends.Simulation.Abilities
                 case ReduceCooldownEffect reduce:
                     caster.Caster?.ReduceCooldown((CasterSlot)(int)reduce.Slot, reduce.RemainingFractionAt(context.Rank));
                     break;
+                case ExecuteEffect execute when authority:
+                    Execute(execute, context);
+                    break;
                 case SummonEffect summon when authority:
                     caster.Services.Match?.SpawnSummon(caster, summon.Unit, summon.CountAt(context.Rank), summon.DurationSecondsAt(context.Rank), context.AimPoint);
                     break;
@@ -121,6 +124,16 @@ namespace MangaLegends.Simulation.Abilities
             if (context.IsProc || result.AfterMitigation <= 0f) return;
             CombatTriggers.Raise(caster, ItemTrigger.OnAbilityHit, target);
             if (damage.AppliesOnHitEffects) CombatTriggers.Raise(caster, ItemTrigger.OnHit, target);
+        }
+
+        private static void Execute(ExecuteEffect execute, in EffectContext context)
+        {
+            Unit target = context.Target;
+            if (target == null || !target.IsAlive || !context.Caster.IsEnemyOf(target)) return;
+            if (execute.ChampionsOnly && !target.IsChampion) return;
+            if (target.Health.Ratio > execute.HealthRatio) return;
+            float lethal = target.Health.Current + target.Health.ShieldTotal + 1f;
+            target.Health.ApplyDamage(new DamageInfo(context.Caster, lethal, DamageType.True, DamageFlags.IgnoreShields | DamageFlags.Proc));
         }
 
         private static void Heal(HealEffect heal, in EffectContext context, Unit target)

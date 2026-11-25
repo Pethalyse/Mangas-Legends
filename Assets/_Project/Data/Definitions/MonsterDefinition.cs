@@ -10,11 +10,17 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private StatusEffectDefinition _killerReward;
         [SerializeField] private StatusEffectDefinition _teamReward;
         [SerializeField, Min(0)] private int _teamGold;
+        [SerializeField, Tooltip("Counts towards the dragon soul.")] private bool _isDrake;
+        [SerializeField] private StatusEffectDefinition _soulReward;
+        [SerializeField, Tooltip("Spawns at the average champion level.")] private bool _scalesWithAverageLevel;
 
         public bool IsEpic => _isEpic;
         public StatusEffectDefinition KillerReward => _killerReward;
         public StatusEffectDefinition TeamReward => _teamReward;
         public int TeamGold => _teamGold;
+        public bool IsDrake => _isDrake;
+        public StatusEffectDefinition SoulReward => _soulReward;
+        public bool ScalesWithAverageLevel => _scalesWithAverageLevel;
 
         public override void Validate(ValidationReport report)
         {

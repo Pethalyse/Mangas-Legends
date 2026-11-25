@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6236aa462b0247af83266903f99527a0, type: 3}
+  m_Name: STATUS_ChimeraHunger
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.StatusEffectDefinition
+  _id: status.chimera_hunger
+  _displayName: "Faim des Chim\xE8res"
+  _description: 
+  _icon: {fileID: 0}
+  _durationSeconds: 0
+  _restrictions: 0
+  _stacking: 1
+  _maxStacks: 3
+  _isCrowdControl: 0
+  _modifiersPerStack: []
+  _tickIntervalSeconds: 0
+  _onTick: []
+  _triggers:
+  - _trigger: 0
+    _otherKinds: 0200000005000000
+    _effects:
+    - rid: 2286801137428857175
+  _persistsThroughDeath: 1
+  _triggerCooldownSeconds: 0
+  _onMaxStacks: []
+  _rankCount: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857175
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 2
+        _amount:
+          _baseByRank:
+          - 0
+          _ratios:
+          - _source: 6
+            _stat: 4
+            _ratioByRank:
+            - 15
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 11400000}
+        _stacksOnCaster: 1
+        _minStacks: 0
+        _consumesStacks: 0

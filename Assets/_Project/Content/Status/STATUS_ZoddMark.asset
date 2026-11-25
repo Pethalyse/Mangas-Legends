@@ -28,8 +28,25 @@ MonoBehaviour:
   - _stat: 5
     _kind: 0
     _value: 40
+  - _stat: 21
+    _kind: 0
+    _value: 0.5
   _tickIntervalSeconds: 0
   _onTick: []
+  _triggers:
+  - _trigger: 5
+    _otherKinds: 
+    _effects:
+    - rid: 2286801137428857182
+  _persistsThroughDeath: 0
+  _triggerCooldownSeconds: 1
+  _onMaxStacks: []
+  _rankCount: 1
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2286801137428857182
+      type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _area: {fileID: 11400000, guid: c98b5d79c64700944a791e5b5bfa3396, type: 2}
+        _atAimPoint: 0

@@ -11,6 +11,7 @@ namespace MangaLegends.Data.Definitions
     public sealed class TriggeredEffect
     {
         [SerializeField] private ItemTrigger _trigger;
+        [SerializeField, Tooltip("Only when the other unit is of one of these kinds; empty = any.")] private List<UnitKind> _otherKinds = new List<UnitKind>();
         [SerializeReference, TypeSelector] private List<EffectDefinition> _effects = new List<EffectDefinition>();
 
         public TriggeredEffect() { }
@@ -23,6 +24,9 @@ namespace MangaLegends.Data.Definitions
 
         public ItemTrigger Trigger => _trigger;
         public IReadOnlyList<EffectDefinition> Effects => _effects;
+        public IReadOnlyList<UnitKind> OtherKinds => _otherKinds;
+
+        public bool Accepts(UnitKind kind) => _otherKinds == null || _otherKinds.Count == 0 || _otherKinds.Contains(kind);
 
         public void Validate(string ownerId, ValidationReport report)
         {

@@ -18,8 +18,8 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _durationSeconds: 0
   _restrictions: 0
-  _stacking: 0
-  _maxStacks: 1
+  _stacking: 1
+  _maxStacks: 4
   _isCrowdControl: 0
   _modifiersPerStack:
   - _stat: 4
@@ -30,6 +30,11 @@ MonoBehaviour:
     _value: 0.03
   _tickIntervalSeconds: 0
   _onTick: []
+  _triggers: []
+  _persistsThroughDeath: 1
+  _triggerCooldownSeconds: 0
+  _onMaxStacks: []
+  _rankCount: 1
   references:
     version: 2
     RefIds: []

@@ -22,7 +22,8 @@ namespace MangaLegends.Core.Stats
         LifeSteal,
         HealPower,
         AbilityHaste,
-        VisionRange
+        VisionRange,
+        RecallTimeReduction
     }
 
     public static class StatTypes

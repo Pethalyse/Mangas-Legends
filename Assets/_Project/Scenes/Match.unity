@@ -2542,6 +2542,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Presentation::MangaLegends.Presentation.MatchView
   _match: {fileID: 1487576667}
   _camera: {fileID: 548580633}
+  _minimapExcluded:
+    serializedVersion: 2
+    m_Bits: 256
+  _minimapResolution: 512
 --- !u!4 &386591620
 Transform:
   m_ObjectHideFlags: 0
@@ -12991,6 +12995,7 @@ MonoBehaviour:
   _Seed: 0
   _FirstBloodTaken:
     RawValue: 0
+  _DrakeKills: 
   _Structures: []
   _StructureRespawnTick: 
 --- !u!114 &1487576668
@@ -13007,6 +13012,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Simulation::MangaLegends.Simulation.Match.JungleDirector
   _NextSpawnTick: 
   _Monsters: []
+  _SpawnCount: 
 --- !u!114 &1487576669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16424,6 +16430,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 300
     _leashRadius: 9
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Roi des profondeurs (rouge)
     _monsters:
     - {fileID: 11400000, guid: b4ea2fc2d0db3ad4e9b189a9f6d179f1, type: 2}
@@ -16431,6 +16440,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 300
     _leashRadius: 9
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Hawk (bleu)
     _monsters:
     - {fileID: 11400000, guid: bf95350fa898c0a49b9f8b93184e1115, type: 2}
@@ -16438,6 +16450,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 67
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Hawk (rouge)
     _monsters:
     - {fileID: 11400000, guid: bf95350fa898c0a49b9f8b93184e1115, type: 2}
@@ -16445,6 +16460,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 67
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Pompoko (bleu)
     _monsters:
     - {fileID: 11400000, guid: 6a6a2438d4ec79c40ad094380c7cb873, type: 2}
@@ -16453,6 +16471,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Pompoko (rouge)
     _monsters:
     - {fileID: 11400000, guid: 6a6a2438d4ec79c40ad094380c7cb873, type: 2}
@@ -16461,6 +16482,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Totoro (bleu)
     _monsters:
     - {fileID: 11400000, guid: 51b32253d9951f44ebf9448b60d08b83, type: 2}
@@ -16468,6 +16492,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 300
     _leashRadius: 9
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Totoro (rouge)
     _monsters:
     - {fileID: 11400000, guid: 51b32253d9951f44ebf9448b60d08b83, type: 2}
@@ -16475,6 +16502,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 300
     _leashRadius: 9
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: "P\xE8re de Rebecca (bleu)"
     _monsters:
     - {fileID: 11400000, guid: 975c7258a9bc4e04082f9e26dd4cfa2b, type: 2}
@@ -16482,6 +16512,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 67
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: "P\xE8re de Rebecca (rouge)"
     _monsters:
     - {fileID: 11400000, guid: 975c7258a9bc4e04082f9e26dd4cfa2b, type: 2}
@@ -16489,6 +16522,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 67
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Korogu (bleu)
     _monsters:
     - {fileID: 11400000, guid: 484710e0a5a7dd84aba84fd9e7818722, type: 2}
@@ -16498,6 +16534,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Korogu (rouge)
     _monsters:
     - {fileID: 11400000, guid: 484710e0a5a7dd84aba84fd9e7818722, type: 2}
@@ -16507,6 +16546,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 55
     _respawnSeconds: 135
     _leashRadius: 8
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Magicarpe (bleu)
     _monsters:
     - {fileID: 11400000, guid: 749c7c42987bbe14e8f5aedc79703766, type: 2}
@@ -16514,6 +16556,9 @@ MonoBehaviour:
     _firstSpawnSeconds: 175
     _respawnSeconds: 150
     _leashRadius: 10
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
   - _name: Magicarpe (rouge)
     _monsters:
     - {fileID: 11400000, guid: 749c7c42987bbe14e8f5aedc79703766, type: 2}
@@ -16521,13 +16566,23 @@ MonoBehaviour:
     _firstSpawnSeconds: 175
     _respawnSeconds: 150
     _leashRadius: 10
-  - _name: Sulfura
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
+  - _name: Drakes
     _monsters:
     - {fileID: 11400000, guid: fd79de54a6dfc5c439bda54dc10a345e, type: 2}
     _point: {fileID: 945492692}
     _firstSpawnSeconds: 300
     _respawnSeconds: 300
     _leashRadius: 10
+    _rotation:
+    - {fileID: 11400000, guid: fd79de54a6dfc5c439bda54dc10a345e, type: 2}
+    - {fileID: 11400000, guid: fc776249fff676b44b37c43ae5e02789, type: 2}
+    - {fileID: 11400000, guid: 5251aca7683db2b49825b0fbd4894a48, type: 2}
+    - {fileID: 11400000, guid: dea7eece79582194cacf21ae2e55e53e, type: 2}
+    _afterSoul: {fileID: 11400000, guid: 80acd5cb0b44d9642a4a70ec655d5621, type: 2}
+    _despawnSeconds: 0
   - _name: Zodd
     _monsters:
     - {fileID: 11400000, guid: 3ebccb0ee656cc1438b788c8754b3ff1, type: 2}
@@ -16535,6 +16590,31 @@ MonoBehaviour:
     _firstSpawnSeconds: 1200
     _respawnSeconds: 360
     _leashRadius: 10
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 0
+  - _name: Larves
+    _monsters:
+    - {fileID: 11400000, guid: 18bec61f85cd64a4b9f4de0d0f088508, type: 2}
+    - {fileID: 11400000, guid: f773cca17d96e8a4b84794719213e13e, type: 2}
+    - {fileID: 11400000, guid: c4e5996363817ea429576e3c02342442, type: 2}
+    _point: {fileID: 669855989}
+    _firstSpawnSeconds: 480
+    _respawnSeconds: 0
+    _leashRadius: 10
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 885
+  - _name: Ogrest
+    _monsters:
+    - {fileID: 11400000, guid: 16b5fe19e01becb489697f9013ebcfc6, type: 2}
+    _point: {fileID: 669855989}
+    _firstSpawnSeconds: 900
+    _respawnSeconds: 0
+    _leashRadius: 10
+    _rotation: []
+    _afterSoul: {fileID: 0}
+    _despawnSeconds: 1185
   _river:
   - _name: "Rivi\xE8re"
     _point: {fileID: 1354295033}

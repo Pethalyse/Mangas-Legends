@@ -21,10 +21,10 @@ MonoBehaviour:
     _entries:
     - _stat: 0
       _base: 4500
-      _growthPerLevel: 0
+      _growthPerLevel: 150
     - _stat: 4
       _base: 100
-      _growthPerLevel: 0
+      _growthPerLevel: 4
     - _stat: 6
       _base: 21
       _growthPerLevel: 0
@@ -57,3 +57,6 @@ MonoBehaviour:
   _killerReward: {fileID: 0}
   _teamReward: {fileID: 11400000, guid: fb852e71054283a4897ff68ec1e5aeb8, type: 2}
   _teamGold: 0
+  _isDrake: 1
+  _soulReward: {fileID: 11400000, guid: d25c085e660cc994489eeb9f39f1ad46, type: 2}
+  _scalesWithAverageLevel: 1

@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e52c5235265864181c7e15b48d3de8, type: 3}
+  m_Name: MONSTER_Pufu
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.MonsterDefinition
+  _id: monster.pufu
+  _displayName: Shaiapouf
+  _description: 
+  _icon: {fileID: 0}
+  _kind: 3
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 1500
+      _growthPerLevel: 60
+    - _stat: 4
+      _base: 35
+      _growthPerLevel: 2
+    - _stat: 6
+      _base: 20
+      _growthPerLevel: 0
+    - _stat: 7
+      _base: 20
+      _growthPerLevel: 0
+    - _stat: 8
+      _base: 0.6
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 1.5
+      _growthPerLevel: 0
+    - _stat: 9
+      _base: 3
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 6
+      _growthPerLevel: 0
+  _prefab: {fileID: 3858369620088047421, guid: dd7b7c2211515f64a913773c7d4602a7, type: 3}
+  _goldBounty: 30
+  _experienceBounty: 65
+  _collisionRadius: 0.8
+  _tint: {r: 0.7, g: 0.5, b: 0.8, a: 1}
+  _attackProjectileSpeed: 0
+  _attackWindup: 0.3
+  _isEpic: 0
+  _killerReward: {fileID: 0}
+  _teamReward: {fileID: 11400000, guid: fe025f5e6cef4a44f9388ec5b9ffe27a, type: 2}
+  _teamGold: 0
+  _isDrake: 0
+  _soulReward: {fileID: 0}
+  _scalesWithAverageLevel: 1

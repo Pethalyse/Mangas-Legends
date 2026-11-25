@@ -20,6 +20,9 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _tickIntervalSeconds;
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onTick = new List<EffectDefinition>();
         [SerializeField] private List<TriggeredEffect> _triggers = new List<TriggeredEffect>();
+        [SerializeField, Tooltip("Kept through death, like the drake buffs and souls.")] private bool _persistsThroughDeath;
+        [SerializeField, Min(0f), Tooltip("Shared cooldown of all its triggers.")] private float _triggerCooldownSeconds;
+        [SerializeReference, TypeSelector, Tooltip("Run when the status reaches its max stacks; the status is then removed.")] private List<EffectDefinition> _onMaxStacks = new List<EffectDefinition>();
         [SerializeField, Min(1), Tooltip("Ranks used by ranked values in tick effects: a status takes the rank of the ability that applies it.")] private int _rankCount = 1;
 
         public float DurationSeconds => _durationSeconds;
@@ -31,6 +34,9 @@ namespace MangaLegends.Data.Definitions
         public float TickIntervalSeconds => _tickIntervalSeconds;
         public IReadOnlyList<EffectDefinition> OnTick => _onTick;
         public IReadOnlyList<TriggeredEffect> Triggers => _triggers;
+        public bool PersistsThroughDeath => _persistsThroughDeath;
+        public float TriggerCooldownSeconds => _triggerCooldownSeconds;
+        public IReadOnlyList<EffectDefinition> OnMaxStacks => _onMaxStacks;
 
         public StatusEffectSpec ToSpec(int runtimeId, int tickRate) => new StatusEffectSpec(
             runtimeId,

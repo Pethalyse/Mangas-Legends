@@ -43,7 +43,12 @@ namespace MangaLegends.Simulation.Combat
                 StatusEffectDefinition definition = status.DefinitionAt(slot);
                 if (definition == null) continue;
                 foreach (TriggeredEffect triggered in definition.Triggers)
-                    if (triggered != null && triggered.Trigger == trigger) Run(triggered.Effects, owner, other, status.Active[slot].Rank);
+                {
+                    if (triggered == null || triggered.Trigger != trigger) continue;
+                    if (triggered.OtherKinds.Count > 0 && (other == null || !triggered.Accepts(other.Kind))) continue;
+                    if (!status.TryStartTriggerCooldown(slot, definition.TriggerCooldownSeconds)) break;
+                    Run(triggered.Effects, owner, other, status.Active[slot].Rank);
+                }
             }
         }
     }

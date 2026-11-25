@@ -82,13 +82,22 @@ namespace MangaLegends.Simulation.Match
             if (!(monster.Definition is MonsterDefinition definition)) return;
             if (definition.KillerReward != null)
                 killer.Status.Apply(new StatusApplication(definition.KillerReward, killer, 1, 1, 0f, null));
-            if (definition.TeamReward == null && definition.TeamGold <= 0) return;
+            StatusEffectDefinition soul = null;
+            if (definition.IsDrake && _match.AddDrake(killer.Team) == Rules.DrakesForSoul) soul = definition.SoulReward;
+            if (definition.TeamReward == null && definition.TeamGold <= 0 && soul == null) return;
             foreach (Unit unit in _match.Services.Units.All)
             {
                 if (unit == null || !unit.IsChampion || unit.Team != killer.Team) continue;
-                if (definition.TeamReward != null && unit.IsAlive) unit.Status.Apply(new StatusApplication(definition.TeamReward, killer, 1, 1, 0f, null));
+                GiveTeamStatus(unit, definition.TeamReward, killer);
+                GiveTeamStatus(unit, soul, killer);
                 if (definition.TeamGold > 0) Progress(unit).AddGold(definition.TeamGold);
             }
+        }
+
+        private static void GiveTeamStatus(Unit unit, StatusEffectDefinition status, Unit source)
+        {
+            if (status == null || (!unit.IsAlive && !status.PersistsThroughDeath)) return;
+            unit.Status.Apply(new StatusApplication(status, source, 1, 1, 0f, null));
         }
 
         private void ShareExperience(Unit victim, Team team, int amount)

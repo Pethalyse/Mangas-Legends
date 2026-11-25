@@ -37,6 +37,7 @@ namespace MangaLegends.Simulation.Match
         [Networked] public Team Winner { get; set; }
         [Networked] public ulong Seed { get; set; }
         [Networked] public NetworkBool FirstBloodTaken { get; set; }
+        [Networked, Capacity(4)] public NetworkArray<byte> DrakeKills => default;
         [Networked, Capacity(StructureCapacity)] public NetworkArray<NetworkId> Structures => default;
         [Networked, Capacity(StructureCapacity)] public NetworkArray<int> StructureRespawnTick => default;
 
@@ -192,6 +193,27 @@ namespace MangaLegends.Simulation.Match
                 if (IsInhibitor(structure) && !structure.IsAlive) return true;
             }
             return false;
+        }
+
+        public int DrakesOf(Team team) => DrakeKills[(int)team];
+
+        public bool HasSoul(Team team) => (team == Team.Blue || team == Team.Red) && DrakesOf(team) >= Rules.DrakesForSoul;
+
+        public bool AnySoul => HasSoul(Team.Blue) || HasSoul(Team.Red);
+
+        public int AddDrake(Team team)
+        {
+            int count = DrakesOf(team) + 1;
+            DrakeKills.Set((int)team, (byte)Mathf.Min(255, count));
+            return count;
+        }
+
+        public int AverageChampionLevel()
+        {
+            int total = 0, count = 0;
+            foreach (Unit unit in _services.Units.All)
+                if (unit != null && unit.Object != null && unit.IsChampion) { total += unit.Stats.Level; count++; }
+            return count > 0 ? Mathf.Max(1, Mathf.RoundToInt(total / (float)count)) : 1;
         }
 
         public Unit SpawnUnit(UnitDefinition definition, Team team, Vector3 position, Quaternion rotation, PlayerRef owner, int lane = NoLane)

@@ -108,6 +108,8 @@ namespace MangaLegends.Simulation.Abilities
             int rank = area.Rank;
             float reach = definition.Shape == AreaShape.Circle ? definition.RadiusAt(rank) : Mathf.Max(definition.LengthAt(rank), definition.RadiusAt(rank));
             _unit.Services.Units.Query(area.Position, reach, _unit, definition.Affects, results);
+            for (int i = results.Count - 1; i >= 0; i--)
+                if (!definition.Accepts(results[i].Kind)) results.RemoveAt(i);
             if (definition.Shape == AreaShape.Circle) return;
             for (int i = results.Count - 1; i >= 0; i--)
                 if (!Inside(definition, area, results[i])) results.RemoveAt(i);

@@ -51,6 +51,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _shopRadius = 8f;
 
         [Header("Jungle")]
+        [SerializeField, Range(1, 10)] private int _drakesForSoul = 4;
         [SerializeField, Min(0f)] private float _monsterKillHealBase = 90f;
         [SerializeField, Min(0f)] private float _monsterKillHealPerLevel = 20f;
         [SerializeField, Min(0f)] private float _monsterKillHealMax = 250f;
@@ -94,6 +95,7 @@ namespace MangaLegends.Data.Definitions
         public float MinionDamageToChampionsRatio => _minionDamageToChampionsRatio;
         public float MaxAttackSpeed => _maxAttackSpeed;
         public float DevilFruitWaterDrain => _devilFruitWaterDrain;
+        public int DrakesForSoul => _drakesForSoul;
         public bool DevilFruitWaterIsLethal => _devilFruitWaterIsLethal;
         public int MaxLevel => _maxLevel;
         public int[] ExperienceToNextLevel => _experienceToNextLevel;

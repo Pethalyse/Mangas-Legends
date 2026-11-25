@@ -279,7 +279,9 @@ namespace MangaLegends.Simulation.Abilities
             _unit.Attack?.ClearTarget();
             ChannelSlot = (sbyte)slot;
             ChannelStartTick = Runner.Tick;
-            ChannelEndTick = Runner.Tick + TickTime.SecondsToTicks(ability.ChannelSecondsAt(rank), Runner.TickRate);
+            float seconds = ability.ChannelSecondsAt(rank);
+            if (ability.BehaviourId == AbilityBehaviours.Recall) seconds *= Mathf.Clamp01(1f - _unit.Stats.Get(StatType.RecallTimeReduction));
+            ChannelEndTick = Runner.Tick + TickTime.SecondsToTicks(seconds, Runner.TickRate);
             ChannelPoint = point;
             ChannelTarget = target != null ? target.Object.Id : default;
         }

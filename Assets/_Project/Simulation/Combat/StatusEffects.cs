@@ -19,6 +19,7 @@ namespace MangaLegends.Simulation.Combat
         public byte Rank;
         public NetworkId Source;
         public byte OverrideCount;
+        public int TriggerReadyTick;
         public byte Stat0, Kind0, Stat1, Kind1, Stat2, Kind2;
         public float Value0, Value1, Value2;
 
@@ -82,7 +83,7 @@ namespace MangaLegends.Simulation.Combat
         public StatusApplyOutcome Apply(in StatusApplication application)
         {
             StatusEffectDefinition definition = application.Definition;
-            if (!HasStateAuthority || definition == null || _unit == null || !_unit.IsAlive) return StatusApplyOutcome.Ignored;
+            if (!HasStateAuthority || definition == null || _unit == null || (!_unit.IsAlive && !definition.PersistsThroughDeath)) return StatusApplyOutcome.Ignored;
             if (definition.IsCrowdControl && _unit.Health.BlocksCrowdControl) return StatusApplyOutcome.BlockedByImmunity;
 
             short index = (short)_unit.Services.Content.StatusEffects.IndexOf(definition.Id);
@@ -104,6 +105,7 @@ namespace MangaLegends.Simulation.Combat
                 WriteOverrides(ref existing, application);
                 Active.Set(slot, existing);
                 Version++;
+                CheckMaxStacks(slot, definition, application.Source);
                 return stacked ? StatusApplyOutcome.Stacked : StatusApplyOutcome.Refreshed;
             }
 
@@ -121,6 +123,7 @@ namespace MangaLegends.Simulation.Combat
             WriteOverrides(ref created, application);
             Active.Set(slot, created);
             Version++;
+            CheckMaxStacks(slot, definition, application.Source);
             return StatusApplyOutcome.Added;
         }
 
@@ -149,7 +152,29 @@ namespace MangaLegends.Simulation.Combat
         public void ClearAll()
         {
             for (int i = 0; i < Active.Length; i++)
-                if (Active[i].IsActive) Clear(i);
+            {
+                if (!Active[i].IsActive) continue;
+                StatusEffectDefinition definition = DefinitionAt(i);
+                if (definition == null || !definition.PersistsThroughDeath) Clear(i);
+            }
+        }
+
+        public bool TryStartTriggerCooldown(int slot, float cooldownSeconds)
+        {
+            NetStatus status = Active[slot];
+            if (Runner.Tick < status.TriggerReadyTick) return false;
+            if (cooldownSeconds <= 0f) return true;
+            status.TriggerReadyTick = Runner.Tick + TickTime.SecondsToTicks(cooldownSeconds, Runner.TickRate);
+            Active.Set(slot, status);
+            return true;
+        }
+
+        private void CheckMaxStacks(int slot, StatusEffectDefinition definition, Unit source)
+        {
+            if (definition.OnMaxStacks.Count == 0 || Active[slot].Stacks < definition.MaxStacks) return;
+            int rank = Active[slot].Rank;
+            Clear(slot);
+            EffectExecutor.Run(definition.OnMaxStacks, EffectContext.ForTarget(source != null ? source : _unit, _unit, rank).AsProc());
         }
 
         public int StacksOf(StatusEffectDefinition definition)
