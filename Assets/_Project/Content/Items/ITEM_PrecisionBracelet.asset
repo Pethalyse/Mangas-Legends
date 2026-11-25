@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3827949f8e94ddbbce2a761611d34a1, type: 3}
+  m_Name: ITEM_PrecisionBracelet
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ItemDefinition
+  _id: item.precision_bracelet
+  _displayName: "Bracelet de pr\xE9cision"
+  _description: 
+  _icon: {fileID: 21300000, guid: 29e6b230a1832dc4492d2a458810011a, type: 3}
+  _tier: 0
+  _recipeCost: 600
+  _unique: 0
+  _components: []
+  _stats:
+  - _stat: 11
+    _kind: 0
+    _value: 0.15
+  _passives: []
+  _active:
+    _enabled: 0
+    _name: 
+    _description: 
+    _cooldownSeconds: 0
+    _targeting:
+      _mode: 4
+      _validTargets: 4
+      _fallback: 0
+      _range:
+        _byRank:
+        - 0
+      _indicatorWidth:
+        _byRank:
+        - 0
+      _indicatorRadius:
+        _byRank:
+        - 0
+    _effects: []
+  references:
+    version: 2
+    RefIds: []

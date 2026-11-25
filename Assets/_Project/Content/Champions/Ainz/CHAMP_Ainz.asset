@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a67e8de616430c8f6f15cf43826684, type: 3}
+  m_Name: CHAMP_Ainz
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ChampionDefinition
+  _id: champion.ainz
+  _displayName: Ainz Ooal Gown
+  _description: Support. Roi sorcier de Nazarick.
+  _icon: {fileID: 21300000, guid: dd94812a850e1044d87107203bb489b9, type: 3}
+  _kind: 0
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 560
+      _growthPerLevel: 99
+    - _stat: 1
+      _base: 1.1
+      _growthPerLevel: 0.11
+    - _stat: 2
+      _base: 480
+      _growthPerLevel: 23.5
+    - _stat: 3
+      _base: 1.6
+      _growthPerLevel: 0.16
+    - _stat: 4
+      _base: 52
+      _growthPerLevel: 3.3
+    - _stat: 5
+      _base: 0
+      _growthPerLevel: 0
+    - _stat: 6
+      _base: 19
+      _growthPerLevel: 4.4
+    - _stat: 7
+      _base: 30
+      _growthPerLevel: 1.3
+    - _stat: 8
+      _base: 0.625
+      _growthPerLevel: 0.0125
+    - _stat: 9
+      _base: 3.3
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 5.5
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 12
+      _growthPerLevel: 0
+  _prefab: {fileID: 0}
+  _goldBounty: 0
+  _experienceBounty: 0
+  _collisionRadius: 0.5
+  _tint: {r: 0.35, g: 0.2, b: 0.5, a: 1}
+  _attackProjectileSpeed: 12
+  _attackWindup: 0.3
+  _role: 5
+  _resource: 0
+  _defaultAbilities:
+    _name: Default
+    _passive: {fileID: 11400000, guid: a98661965e984594db0c22545d2a37a7, type: 2}
+    _a: {fileID: 11400000, guid: a0d7defa492984a4ea402f20b49a3e61, type: 2}
+    _z: {fileID: 11400000, guid: a7b3971654f1ac04daa7e48ef7947c93, type: 2}
+    _e: {fileID: 11400000, guid: 9b15ea904b423854dbfd6b190ccf57fe, type: 2}
+    _r: {fileID: 11400000, guid: df5131dd3bd3d4448b98084b02c06797, type: 2}
+  _alternateAbilitySets: []

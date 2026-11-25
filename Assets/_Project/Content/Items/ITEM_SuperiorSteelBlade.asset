@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3827949f8e94ddbbce2a761611d34a1, type: 3}
+  m_Name: ITEM_SuperiorSteelBlade
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ItemDefinition
+  _id: item.superior_steel_blade
+  _displayName: "Lame d'acier de qualit\xE9 sup\xE9rieure"
+  _description: 
+  _icon: {fileID: 21300000, guid: f6d1886c214abfc4ab6f09fda74df95d, type: 3}
+  _tier: 1
+  _recipeCost: 150
+  _unique: 0
+  _components:
+  - {fileID: 11400000, guid: 5c45f54e4e2ff814f966bb6b49fa00d6, type: 2}
+  - {fileID: 11400000, guid: 5c45f54e4e2ff814f966bb6b49fa00d6, type: 2}
+  - {fileID: 11400000, guid: b6c4a9651f85da74d9ef0d9bbec5bf70, type: 2}
+  _stats:
+  - _stat: 4
+    _kind: 0
+    _value: 25
+  - _stat: 8
+    _kind: 1
+    _value: 0.15
+  _passives: []
+  _active:
+    _enabled: 0
+    _name: 
+    _description: 
+    _cooldownSeconds: 0
+    _targeting:
+      _mode: 4
+      _validTargets: 4
+      _fallback: 0
+      _range:
+        _byRank:
+        - 0
+      _indicatorWidth:
+        _byRank:
+        - 0
+      _indicatorRadius:
+        _byRank:
+        - 0
+    _effects: []
+  references:
+    version: 2
+    RefIds: []

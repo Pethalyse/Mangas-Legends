@@ -105,7 +105,7 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 - [x] Assembly `MangaLegends.Data` : `UnitDefinition`, `ChampionDefinition` (+ `AbilitySet` alternatifs), `AbilityDefinition`, effets (`Damage`, `Heal`, `Shield`, `ApplyStatus`, `Dash`, `Displace`, `SwapPositions`, `LaunchProjectile`, `CreateArea`, `Summon`, `SwapAbilitySet`), `ProjectileDefinition`, `AreaDefinition`, `StatusEffectDefinition`, `ItemDefinition` (+ passifs, actif), `GameRulesConfig`, `ContentRegistry`.
 - [x] Assembly `MangaLegends.Editor` : `TypeSelectorDrawer` (choix du type d'effet dans l'inspecteur), menus *Validate* et *Rebuild Registry From Project*, validation en batchmode.
 - [x] Compilation Data + Editor vérifiée hors Unity contre des bouchons (`Tools/CoreTests/DataCheck`) ; 52 tests Core verts.
-- [ ] Créer les assets (règles, registre, objets, statuts, sbires, Ainz) **dans Unity** → [guides/reprise-claude-code-unity.md](guides/reprise-claude-code-unity.md) §2.
+- [x] Créer les assets dans Unity (`Assets/_Project/Content/`) : règles, registre, 15 objets, 11 statuts, 10 unités (sbires, tours, inhibiteur, Cœur), Ainz et ses 5 compétences, 10 sorts d'invocateur, rappel. Validation : 0 erreur.
 
 ### Étape 5 — Prototype réseau (risques d'abord)
 - [ ] Salon Host / Join par code, spawn d'un champion par joueur.

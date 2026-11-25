@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620953f1c98a4acb8f5e139c896a64a7, type: 3}
+  m_Name: UNIT_Tower_Core
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.UnitDefinition
+  _id: unit.tower_core
+  _displayName: "Tour du C\u0153ur"
+  _description: 
+  _icon: {fileID: 0}
+  _kind: 2
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 3500
+      _growthPerLevel: 0
+    - _stat: 4
+      _base: 150
+      _growthPerLevel: 0
+    - _stat: 6
+      _base: 60
+      _growthPerLevel: 0
+    - _stat: 7
+      _base: 60
+      _growthPerLevel: 0
+    - _stat: 8
+      _base: 0.833
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 7.75
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 11
+      _growthPerLevel: 0
+  _prefab: {fileID: 0}
+  _goldBounty: 50
+  _experienceBounty: 0
+  _collisionRadius: 1.2
+  _tint: {r: 0.7, g: 0.7, b: 0.75, a: 1}
+  _attackProjectileSpeed: 15
+  _attackWindup: 0.2

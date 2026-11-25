@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Ainz_MantleOfChaos
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.ainz.mantle_of_chaos
+  _displayName: Mantle of Chaos
+  _description: "Projectile cibl\xE9 : d\xE9g\xE2ts magiques et ralentissement."
+  _icon: {fileID: 21300000, guid: 02d4df4a49072094a92ee5129e1b1c90, type: 3}
+  _maxRank: 5
+  _castMode: 0
+  _cooldownSeconds:
+  - 7
+  _cost:
+  - 60
+  - 65
+  - 70
+  - 75
+  - 80
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 2
+    _validTargets: 12
+    _fallback: 0
+    _range:
+      _byRank:
+      - 9
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857034
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857034
+      type: {class: LaunchProjectileEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _projectile: {fileID: 11400000, guid: d2925fabad38cbd4da9ffd107b4b1647, type: 2}
+        _count:
+          _byRank: 01000000
+        _spreadAngle:
+          _byRank:
+          - 0

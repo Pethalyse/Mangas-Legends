@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483785041c8344798eda526b6bcad3c2, type: 3}
+  m_Name: RULES_Default
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.GameRulesConfig
+  _tickRate: 30
+  _playersPerTeam: 5
+  _resistanceScale: 100
+  _minimumDamage: 0
+  _abilityHasteScale: 100
+  _outOfCombatSeconds: 5
+  _inCombatRegenRatio: 0.25
+  _minionDamageToChampionsRatio: 0.6
+  _maxAttackSpeed: 2.5
+  _maxLevel: 18
+  _experienceToNextLevel: 180100007c010000e001000044020000a80200000c03000070030000d4030000380400009c0400000005000064050000c80500002c06000090060000f406000058070000
+  _ultimateUnlockLevels: 060000000b00000010000000
+  _basicAbilityMaxRank: 5
+  _respawnSecondsByLevel:
+  - 10
+  - 10
+  - 12
+  - 12
+  - 14
+  - 16
+  - 20
+  - 25
+  - 28
+  - 32.5
+  - 35
+  - 37.5
+  - 40
+  - 42.5
+  - 45
+  - 47.5
+  - 50
+  - 52.5
+  _experienceShareRadius: 15
+  _experienceShareRatios:
+  - 1
+  - 0.65
+  - 0.433
+  - 0.325
+  - 0.26
+  - 0.217
+  _killExperienceBase: 140
+  _killExperiencePerLevel: 20
+  _startingGold: 500
+  _passiveGoldPerSecond: 2
+  _passiveGoldStartSeconds: 65
+  _inventorySlots: 6
+  _sellRatio: 0.7
+  _championKillGold: 300
+  _firstBloodBonusGold: 100
+  _assistGoldShare: 0.5
+  _assistWindowSeconds: 10
+  _shopRadius: 8
+  _fountainRadius: 8
+  _fountainRegenPerSecond: 0.1
+  _recallAbility: {fileID: 11400000, guid: 52cb391bbe382a64f92888514e4dc135, type: 2}
+  _summonerSpellSlots: 2
+  _defaultSummonerSpells:
+  - {fileID: 11400000, guid: e86e0b2b5cac1d147b6a465b78a25dca, type: 2}
+  - {fileID: 11400000, guid: a1485afc856d7334a98c626c3d9ff6d3, type: 2}
+  _earlyTowerDefenseSeconds: 300
+  _earlyTowerModifiers:
+  - _stat: 6
+    _kind: 0
+    _value: 40
+  - _stat: 7
+    _kind: 0
+    _value: 40
+  _inhibitorRespawnSeconds: 300
+  _towerDamageRampPerShot: 0.4
+  _towerDamageRampMax: 1.2
+  _meleeMinion: {fileID: 11400000, guid: c7dd9d857320811479ccd7fef6aeda71, type: 2}
+  _casterMinion: {fileID: 11400000, guid: 45e17d2b461a2e342bbfc904e166909e, type: 2}
+  _siegeMinion: {fileID: 11400000, guid: 63f91dd4dcbd8ee4c96db7b64b106aae, type: 2}
+  _megaMinion: {fileID: 11400000, guid: 400330f7575905046a6e4f8bf89e29d7, type: 2}
+  _meleePerWave: 3
+  _casterPerWave: 3
+  _firstWaveSeconds: 30
+  _waveIntervalSeconds:
+  - _fromSeconds: 0
+    _value: 30
+  - _fromSeconds: 840
+    _value: 25
+  - _fromSeconds: 1800
+    _value: 20
+  _siegeEveryNWaves:
+  - _fromSeconds: 0
+    _value: 3
+  - _fromSeconds: 840
+    _value: 2
+  - _fromSeconds: 1500
+    _value: 1
+  _firstSiegeWave: 3
+  _minionAggroRange: 5
+  _minionSpawnSpacing: 1.2

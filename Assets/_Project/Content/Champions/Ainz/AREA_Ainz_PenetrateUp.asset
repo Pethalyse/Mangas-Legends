@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba7ad899b7a4b1ca660ee398a07c065, type: 3}
+  m_Name: AREA_Ainz_PenetrateUp
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AreaDefinition
+  _id: area.ainz.penetrate_up
+  _displayName: Penetrate Up (impact)
+  _description: 
+  _icon: {fileID: 0}
+  _shape: 0
+  _radius:
+    _byRank:
+    - 3.5
+  _angle:
+    _byRank:
+    - 90
+  _width:
+    _byRank:
+    - 2
+  _length:
+    _byRank:
+    - 5
+  _delaySeconds:
+    _byRank:
+    - 0
+  _durationSeconds:
+    _byRank:
+    - 0
+  _intervalSeconds:
+    _byRank:
+    - 0
+  _followsCaster: 0
+  _affects: 12
+  _onActivate:
+  - rid: 2286801137428857029
+  - rid: 2286801137428857030
+  _onInterval: []
+  _visualPrefab: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857029
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 2
+        _type: 1
+        _amount:
+          _baseByRank:
+          - 200
+          - 325
+          - 450
+          _ratios:
+          - _source: 0
+            _stat: 5
+            _ratioByRank:
+            - 0.75
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+    - rid: 2286801137428857030
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 2
+        _status: {fileID: 11400000, guid: 03f5f8b06c18bf84ab1fd5741aa454ba, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 4
+        _modifierOverrides:
+        - _stat: 6
+          _kind: 2
+          _value:
+            _byRank:
+            - -0.2
+            - -0.3
+            - -0.4
+        - _stat: 7
+          _kind: 2
+          _value:
+            _byRank:
+            - -0.2
+            - -0.3
+            - -0.4

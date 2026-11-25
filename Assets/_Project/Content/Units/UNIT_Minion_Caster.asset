@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620953f1c98a4acb8f5e139c896a64a7, type: 3}
+  m_Name: UNIT_Minion_Caster
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.UnitDefinition
+  _id: unit.minion_caster
+  _displayName: "Sbire \xE0 distance"
+  _description: 
+  _icon: {fileID: 0}
+  _kind: 1
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 296
+      _growthPerLevel: 0
+    - _stat: 4
+      _base: 23
+      _growthPerLevel: 0
+    - _stat: 6
+      _base: 0
+      _growthPerLevel: 0
+    - _stat: 7
+      _base: 0
+      _growthPerLevel: 0
+    - _stat: 8
+      _base: 0.667
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 5.5
+      _growthPerLevel: 0
+    - _stat: 9
+      _base: 3.25
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 8
+      _growthPerLevel: 0
+  _prefab: {fileID: 0}
+  _goldBounty: 14
+  _experienceBounty: 31
+  _collisionRadius: 0.4
+  _tint: {r: 0.6, g: 0.6, b: 0.9, a: 1}
+  _attackProjectileSpeed: 6.5
+  _attackWindup: 0.3

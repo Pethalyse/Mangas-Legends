@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Summoner_Smite
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.summoner.smite
+  _displayName: Smite
+  _description: "600 / 1 000 / 1 400 d\xE9g\xE2ts bruts \xE0 un monstre."
+  _icon: {fileID: 0}
+  _maxRank: 3
+  _castMode: 0
+  _cooldownSeconds:
+  - 90
+  _cost:
+  - 0
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 02000000
+  _targeting:
+    _mode: 2
+    _validTargets: 8
+    _fallback: 0
+    _range:
+      _byRank:
+      - 5
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857050
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857050
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 2
+        _amount:
+          _baseByRank:
+          - 600
+          - 1000
+          - 1400
+          _ratios: []
+        _canCrit: 0
+        _appliesOnHitEffects: 0

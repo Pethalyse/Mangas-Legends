@@ -127,6 +127,7 @@ Les temps (recharges, durées) sont stockés en **ticks** (`TickTimer`), jamais 
 - `StatModifier { StatType, ModifierKind (Flat | PercentAdd | PercentMult), float value, SourceId }` ; retrait **par source**.
 - Valeur : `(base + croissance × (niveau − 1) + Σflat) × (1 + ΣpercentAdd) × Π(1 + percentMult)`, mise en cache.
 - Unités : pourcentages en fraction (`CritChance 0.25`, `ArmorPenetration 0.3`, `PercentAdd 0.1` = +10 %), `CritDamage` en multiplicateur (`2` par défaut, 07 §11), `AttackSpeed` en attaques par seconde.
+- **Distances en mètres** : 1 m = 100 unités du genre (portée 550 → 5,5 m, vitesse 325 → 3,25 m/s). Toutes les portées, rayons et vitesses des données suivent cette échelle.
 - Implémentation : `MangaLegends.Core.Stats` (`StatBlock` implémente `IStatReader`, la base vient d'un `IStatBaseline` fourni par les données).
 - Les formules (résistances, cadence d'attaque, plafonds) sont des paramètres de `GameRulesConfig`.
 

@@ -37,6 +37,8 @@
 Source : `Assets/Resources/Items/**.asset` (YAML lisible, scripts d'origine dans `Legacy/`). Ce sont des valeurs de départ à migrer vers `ItemDefinition` (étape 9), pas des décisions d'équilibrage.
 Le « prix recette » est le coût propre de l'objet ; le prix total ajoute celui des composants.
 
+**Migré le 2026-11-25** : les 14 objets existent en `ItemDefinition` (`Assets/_Project/Content/Items/`, ids du guide de reprise), plus `item.odm_recruit` (bottes de base, +0,25 m/s). Choix : la Dague donne +10 % de vitesse d'attaque ; la Pierre de régénération +50 % de régénération de mana (`PercentAdd 0.5`) ; Wado Ichimonji coûte 3 300 au total (recette du prototype). Passifs et actifs pas encore reliés (étape 9).
+
 ### Tier 1 — basiques
 
 | Objet | Stats | Prix |

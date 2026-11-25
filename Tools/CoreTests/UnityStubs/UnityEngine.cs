@@ -43,6 +43,13 @@ namespace UnityEngine
         public float x, y, width, height;
     }
 
+    public struct Color
+    {
+        public Color(float r, float g, float b, float a = 1f) { this.r = r; this.g = g; this.b = b; this.a = a; }
+        public float r, g, b, a;
+        public static Color white => new Color(1f, 1f, 1f);
+    }
+
     public class GUIContent
     {
         public GUIContent(string text) { }

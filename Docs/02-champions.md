@@ -11,7 +11,7 @@
 
 | Champion | Rôle | Design | Code | Systèmes nécessaires |
 |---|---|---|---|---|
-| Ainz Ooal Gown | Support | ✅ | 🔧 (ancien code, à refactorer) | Shield, Charges, Zone de soin |
+| Ainz Ooal Gown | Support | ✅ | 🔧 (données ✅, exécution étape 7) | Shield, Charges, Zone de soin |
 | Luffy | Jungle | ✅ | — | TerrainZone (eau), AA chargée, Canalisation |
 | Zoro Roronoa | ❓ | ✅ | — | Stack, Shield, Dash |
 | Naruto Uzumaki | ❓ | ✅ | — | Dash, Knockback, Zone (clones = visuel) |
@@ -61,6 +61,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **Z — Infinity Wall** : bouclier sur un allié qui absorbe dégâts magiques **et contrôles** jusqu'à ? dégâts, expire après ? s. `[15 s]`
 - **E — Life Essence** : zone de soin ? PV/s pendant ? s (variante : 3 charges posables à longue portée). `[10 s]`
 - **R — Penetrate Up** : projectile très longue portée, dégâts de zone et −?% résistances pendant ? s. `[100 s]`
+
+**Valeurs choisies (2026-11-25, référence : supports mages du genre)** : stats PV 560 (+99), mana 480 (+23,5), régén. mana 1,6/s, AD 52, armure 19 (+4,4), RM 30, vitesse d'attaque 0,625, vitesse 3,3 m/s, portée 5,5 m (attaque à distance). P : 2 % du mana max par seconde hors combat. A : 80/120/160/200/240 (+60 % AP) magiques, ralentit 20/25/30/35/40 % pendant 2 s, portée 9 m, coût 60–80. Z : bouclier magique 80/115/150/185/220 (+50 % AP), bloque les contrôles, 2,5 s, recharge 15/14/13/12/11 s, portée 8 m. E : zone de 2,5 m pendant 3 s, soigne 12/18/24/30/36 (+5 % AP) toutes les 0,5 s ; la version à 3 charges du brouillon n'est pas retenue. R (3 rangs) : projectile de 30 m, impact de 3,5 m, 200/325/450 (+75 % AP) magiques, −20/30/40 % d'armure et de RM pendant 4 s, recharge 100/85/70 s.
 
 ### Luffy — Jungle
 - **P** : perd ? PV/s dans l'eau ; résistance physique accrue ; AA chargée qui ralentit un champion `[20 s]`.
