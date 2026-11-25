@@ -16,6 +16,9 @@ namespace MangaLegends.Simulation.Movement
         private const float NavMeshSampleDistance = 4f;
         private const float SeparationShare = 0.5f;
         private const float SeparationMaxStepRatio = 1.5f;
+        private const float RepathSeconds = 0.25f;
+        private const float RepathTolerance = 1.5f;
+        private const int SeparationPeriod = 2;
 
         private readonly List<Unit> _neighbours = new List<Unit>();
 
@@ -32,6 +35,8 @@ namespace MangaLegends.Simulation.Movement
         [Networked] public NetworkBool IsDashing { get; set; }
         [Networked] public Vector3 DashEnd { get; set; }
         [Networked] public float DashSpeed { get; set; }
+        [Networked] public int NextPathTick { get; set; }
+        [Networked] public Vector3 RequestedPoint { get; set; }
 
         public bool IsForcedMovement => IsDashing;
         public float Speed => _unit != null ? _unit.Stats.Get(StatType.MoveSpeed) : 0f;
@@ -58,7 +63,7 @@ namespace MangaLegends.Simulation.Movement
                 return;
             }
             if (IsMoving && _unit.Status.CanMove) Advance(Speed * Runner.DeltaTime);
-            if (HasStateAuthority && (_unit.Kind == UnitKind.Minion || _unit.IsMonster)) Separate();
+            if (HasStateAuthority && (_unit.Kind == UnitKind.Minion || _unit.IsMonster) && (Runner.Tick + _unit.SortKey) % SeparationPeriod == 0) Separate();
         }
 
         // Host-only soft collision for units that are never predicted: minions and monsters stop stacking on one spot.
@@ -66,11 +71,11 @@ namespace MangaLegends.Simulation.Movement
         {
             Vector3 position = transform.position;
             float radius = _unit.Radius;
-            _unit.Services.Units.Query(position, radius * 2f + 1f, _unit, TeamFilter.Self | TeamFilter.Allies | TeamFilter.Enemies | TeamFilter.Neutral, _neighbours);
+            _unit.Services.Units.Nearby(position, radius * 2f + 1f, Runner.Tick, _neighbours);
             Vector3 push = Vector3.zero;
             foreach (Unit other in _neighbours)
             {
-                if (other == _unit) continue;
+                if (other == _unit || !other.IsAlive || other.Kind == UnitKind.Ward) continue;
                 Vector3 away = position - other.Position;
                 away.y = 0f;
                 float distance = away.magnitude;
@@ -81,15 +86,19 @@ namespace MangaLegends.Simulation.Movement
                 push += direction * (overlap * share);
             }
             if (push.sqrMagnitude < 0.000001f) return;
-            push = Vector3.ClampMagnitude(push, Mathf.Max(0.05f, Speed) * Runner.DeltaTime * SeparationMaxStepRatio);
+            push = Vector3.ClampMagnitude(push, Mathf.Max(0.05f, Speed) * Runner.DeltaTime * SeparationMaxStepRatio * SeparationPeriod);
             Vector3 target = position + push;
             if (NavMesh.Raycast(position, target, out NavMeshHit wall, NavMesh.AllAreas)) target = wall.position;
-            Place(target);
+            Place(target, false);
         }
 
         public bool MoveTo(Vector3 point, float stopDistance = 0f)
         {
             if (IsDashing) return false;
+            // AI units ask for paths every tick; recomputing the same one is what made large waves lag.
+            if (!_unit.IsChampion && Runner.Tick < NextPathTick && IsMoving && FlatDistance(point, RequestedPoint) <= RepathTolerance) return true;
+            NextPathTick = Runner.Tick + Mathf.Max(1, Core.Simulation.TickTime.SecondsToTicks(RepathSeconds, Runner.TickRate));
+            RequestedPoint = point;
             Vector3 start = transform.position;
             if (!NavMesh.SamplePosition(point, out NavMeshHit hit, NavMeshSampleDistance, NavMesh.AllAreas)) return false;
             if (!NavMesh.CalculatePath(start, hit.position, NavMesh.AllAreas, _path) || _path.corners.Length == 0)
@@ -177,7 +186,7 @@ namespace MangaLegends.Simulation.Movement
                 if (step <= 0f) break;
             }
             if (CornerIndex >= CornerCount) Stop();
-            Place(position);
+            Place(position, false);
         }
 
         private float RemainingDistance(Vector3 position)
@@ -201,17 +210,17 @@ namespace MangaLegends.Simulation.Movement
             float step = DashSpeed * Runner.DeltaTime;
             if (toEnd.magnitude <= step)
             {
-                Place(DashEnd);
+                Place(DashEnd, false);
                 IsDashing = false;
                 return;
             }
             transform.rotation = Quaternion.LookRotation(toEnd);
-            Place(position + toEnd.normalized * step);
+            Place(position + toEnd.normalized * step, false);
         }
 
-        private void Place(Vector3 position)
+        private void Place(Vector3 position, bool sampleHeight = true)
         {
-            if (NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) position.y = hit.position.y;
+            if (sampleHeight && NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) position.y = hit.position.y;
             transform.position = position;
         }
 

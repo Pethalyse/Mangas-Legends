@@ -1,4 +1,5 @@
 using Fusion;
+using Unity.Profiling;
 using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Abilities;
 using MangaLegends.Simulation.Combat;
@@ -88,18 +89,36 @@ namespace MangaLegends.Simulation.Units
             MatchServices.Of(runner)?.Units.Remove(this);
         }
 
+        private static readonly ProfilerMarker StatsMarker = new ProfilerMarker("ML.Unit.Stats");
+        private static readonly ProfilerMarker StatusMarker = new ProfilerMarker("ML.Unit.Status");
+        private static readonly ProfilerMarker HealthMarker = new ProfilerMarker("ML.Unit.Health");
+        private static readonly ProfilerMarker BrainMarker = new ProfilerMarker("ML.Unit.Brain.Minion");
+        private static readonly ProfilerMarker ChampionBrainMarker = new ProfilerMarker("ML.Unit.Brain.Champion");
+        private static readonly ProfilerMarker TowerBrainMarker = new ProfilerMarker("ML.Unit.Brain.Tower");
+        private static readonly ProfilerMarker MonsterBrainMarker = new ProfilerMarker("ML.Unit.Brain.Other");
+        private static readonly ProfilerMarker CasterMarker = new ProfilerMarker("ML.Unit.Caster");
+        private static readonly ProfilerMarker AttackMarker = new ProfilerMarker("ML.Unit.Attack");
+        private static readonly ProfilerMarker MotorMarker = new ProfilerMarker("ML.Unit.Motor");
+
         public override void FixedUpdateNetwork()
         {
             if (Definition == null) return;
-            Stats.Refresh();
-            Status.Simulate();
-            Health.Simulate();
-            Resource?.Simulate();
-            if (IsAlive && HasStateAuthority && IsChampion) CombatTriggers.Raise(this, ItemTrigger.Periodic, this);
-            if (IsAlive) _brain?.Think();
-            Caster?.Simulate();
-            Attack?.Simulate();
-            Motor?.Simulate();
+            using (StatsMarker.Auto()) Stats.Refresh();
+            using (StatusMarker.Auto()) Status.Simulate();
+            using (HealthMarker.Auto())
+            {
+                Health.Simulate();
+                Resource?.Simulate();
+                if (IsAlive && HasStateAuthority && IsChampion) CombatTriggers.Raise(this, ItemTrigger.Periodic, this);
+            }
+            if (IsAlive && _brain != null)
+            {
+                ProfilerMarker marker = IsChampion ? ChampionBrainMarker : Kind == UnitKind.Minion ? BrainMarker : Kind == UnitKind.Tower ? TowerBrainMarker : MonsterBrainMarker;
+                using (marker.Auto()) _brain.Think();
+            }
+            using (CasterMarker.Auto()) Caster?.Simulate();
+            using (AttackMarker.Auto()) Attack?.Simulate();
+            using (MotorMarker.Auto()) Motor?.Simulate();
         }
 
         public bool IsInvulnerable
