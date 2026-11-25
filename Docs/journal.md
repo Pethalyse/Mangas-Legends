@@ -3,15 +3,24 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
-## 2026-11-25 — Étapes 5 à 10 : simulation, réseau, présentation (en cours)
+## 2026-11-25 — Étapes 5 à 10 : le jeu tourne en solo
 
-**Fait** : assemblies `Simulation`, `Input`, `Networking`, `Presentation`, `UI` créées et ajoutées au weaving Fusion. Simulation : `Unit` (orchestre les composants dans un ordre fixe), `UnitStats`, `Health` (boucliers, historique des coups, mort), `ResourcePool`, `StatusEffects` (tableau réseau, modificateurs par rang), `UnitMotor` (chemin NavMesh en état réseau, dashs), `AutoAttack` (attaques à distance, critiques côté autorité), `AbilityCaster` + `ProjectileLauncher` + `AreaSpawner` + `EffectExecutor`, champion (`ChampionController`, `ChampionProgress`, `Inventory`), partie (`MatchController`, `MatchRewards`, `WaveDirector`, `JungleDirector`, `PlayerSlot`, `MapLayout`), IA (sbires, tours, monstres). Input : `PlayerInputCollector`, `MangaControls.inputactions`. Networking : `GameLauncher` (hôte, rejoindre, solo). Présentation : caméra, vues d'unités, visuels des projectiles, zones et attaques. UI : menu principal, salon, HUD. Data : `MonsterDefinition`, règles de jungle. Tout compile dans Unity.
+**Fait** : assemblies `Simulation`, `Input`, `Networking`, `Presentation`, `UI` (ajoutées au weaving Fusion). Simulation complète (unités, stats, PV et boucliers, statuts, NavMesh prédit, attaques, compétences, projectiles, zones, canalisation, sorts d'invocateur, rappel, XP, or, inventaire, primes, vagues, tours, structures protégées, inhibiteurs, jungle, victoire). Entrées (`PlayerInputCollector`), lancement réseau (`GameLauncher` : héberger, rejoindre par code, solo). Présentation (caméra, vues d'unités, projectiles, zones, attaques). UI en code : menu, salon, HUD, boutique, tableau des scores, barres de vie, dégâts flottants, fin de partie. Contenu : 9 monstres de jungle et 4 bonus, prefabs (unités, runner, slot joueur), scènes `MainMenu` et `Match` (carte de test symétrique de 160 m, 3 voies, rivière, murs, 30 structures, 16 camps, NavMesh).
 
-**Pas encore fait** : `MatchScreen` (assemble salon, HUD, boutique, tableau des scores, barres de vie, dégâts flottants, fin de partie), boutique et tableau des scores, prefabs des unités (`Unit` + `NetworkObject` + `NetworkTransform` + collider), prefab du runner (`MatchServices`, `PlayerInputCollector`, `NetworkSceneManagerDefault`), scènes `MainMenu` et `Match` (carte de test, NavMesh, `MapLayout`, `MatchController`), monstres de jungle en données, ADR des simplifications (impacts sans compensation de latence, salon dans la scène de match), mise à jour de l'architecture. **Rien n'a été lancé en jeu** : aucun test en mode Play.
+**Testé dans l'éditeur (mode solo, piloté par la CLI)** : le salon se crée, la partie démarre, 31 unités ; vagues toutes les 30 s et combats sbires/tours ; jungle à 0:55 ; Ainz se déplace, lance Mantle of Chaos (recharge et mana affichées), gagne XP et or, meurt sous les sbires puis réapparaît à la fontaine ; montée de rang et achat passent bien par l'input réseau. 0 erreur en console, 53 tests verts, validation du contenu sans problème.
 
-**Prochaine étape** : écrire `MatchScreen`, créer prefabs et scènes via `script eval`, tester une partie solo puis hôte + client (Multiplayer Play Mode).
+**Décisions** : ADR-0007 (impacts sans compensation de latence, salon dans la scène de match, services par runner, UI en code). Valeurs des monstres et des tours : 07 §7.4.
 
-**Bloquants** : aucun technique ; limite d'utilisation atteinte pendant la session.
+**Docs mis à jour** : plan (étapes 5 à 10), architecture (§15), champions (Ainz jouable), règles (07 §7.4), ADR-0007.
+
+**À vérifier par l'humain** :
+- clavier et souris réels (les touches simulées par la CLI n'atteignent pas l'Input System quand la fenêtre Game n'a pas le focus) ;
+- partie hôte + client (deux PC, ou Multiplayer Play Mode) et ressenti avec latence ;
+- caméra et lisibilité.
+
+**Prochaine étape** : test en ligne à deux, indicateurs de visée, passifs et actifs d'objets, sbires qui s'écartent les uns des autres, champions du premier jalon (Luffy, Zoro, Naruto, Kirito), brouillard de guerre, suppression de `Legacy/`.
+
+**Bloquants** : aucun.
 
 ## 2026-11-25 — Étape 1 : Unity 6 LTS et Fusion 2
 

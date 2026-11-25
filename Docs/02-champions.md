@@ -11,7 +11,7 @@
 
 | Champion | Rôle | Design | Code | Systèmes nécessaires |
 |---|---|---|---|---|
-| Ainz Ooal Gown | Support | ✅ | 🔧 (données ✅, exécution étape 7) | Shield, Charges, Zone de soin |
+| Ainz Ooal Gown | Support | ✅ | ✅ jouable (testé en solo le 2026-11-25) | Shield, Charges, Zone de soin |
 | Luffy | Jungle | ✅ | — | TerrainZone (eau), AA chargée, Canalisation |
 | Zoro Roronoa | ❓ | ✅ | — | Stack, Shield, Dash |
 | Naruto Uzumaki | ❓ | ✅ | — | Dash, Knockback, Zone (clones = visuel) |

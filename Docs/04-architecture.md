@@ -1,6 +1,6 @@
 # MangaLegends — Architecture technique
 
-> Statut : **cible v0.2** (2026-11-24). Décrit l'architecture visée par la réécriture. L'ancien code est décrit dans [06-plan-refactor.md §1](06-plan-refactor.md#1-audit-du-code-existant).
+> Statut : **v0.3** (2026-11-25). Décrit l'architecture visée ; l'implémentation actuelle et ses écarts sont au §15 ([ADR-0007](adr/0007-simplifications-premier-jalon-jouable.md)). L'ancien code est décrit dans [06-plan-refactor.md §1](06-plan-refactor.md#1-audit-du-code-existant).
 > Toute modification structurelle met ce doc à jour et, si c'est une décision, ajoute un ADR dans [adr/](adr/).
 
 ## 1. Principes
@@ -258,3 +258,46 @@ Structures (GDD §6.1) : chaque tour, inhibiteur et Cœur placé sur la carte r�
 1. **Déplacement prédit sur NavMesh** (clic-pour-bouger + resimulation) : vérifier coût et stabilité.
 2. **Projectile prédit + compensation de latence + faux dégâts** de bout en bout.
 3. Volume d'état réseau pour 10 champions + ~60 sbires à 30 Hz.
+
+## 15. Implémentation actuelle (2026-11-25)
+
+Écarts avec la cible : [ADR-0007](adr/0007-simplifications-premier-jalon-jouable.md) (impacts sans compensation de latence, salon dans la scène `Match`, interface construite en code).
+
+### 15.1 Assemblies et fichiers
+
+| Assembly | Contenu principal |
+|---|---|
+| `Simulation` | `Units/` (`Unit`, `UnitStats`, `Team`), `Combat/` (`Health`, `ResourcePool`, `StatusEffects`, `AutoAttack`), `Movement/UnitMotor`, `Abilities/` (`AbilityCaster`, `ProjectileLauncher`, `AreaSpawner`, `EffectExecutor`, `EffectContext`, `AbilityBehaviours`), `Champions/` (`ChampionController`, `ChampionProgress`, `Inventory`), `Match/` (`MatchController`, `MatchRewards`, `WaveDirector`, `JungleDirector`, `PlayerSlot`, `MapLayout`), `AI/` (`MinionBrain`, `TowerBrain`, `MonsterBrain`, `TargetSelection`), `Services/` (`MatchServices`, `UnitRegistry`, `LocalCommands`, `LocalView`), `Input/PlayerInput` |
+| `Input` | `PlayerInputCollector`, `MangaControls.inputactions` |
+| `Networking` | `GameLauncher` (hôte, rejoindre par code, solo, quitter) |
+| `Presentation` | `MatchView`, `CameraRig`, `UnitView`, `AbilityVisuals` |
+| `UI` | `UiFactory`, `MainMenuScreen`, `MatchScreen` (+ `LobbyPanel`, `HudPanel`, `ShopPanel`, `ScoreboardPanel`, `WorldOverlay`) |
+
+Contenu : `Assets/_Project/Content/` (données), `Prefabs/` (`PF_Runner`, `PF_PlayerSlot`, `Units/PF_*`), `Scenes/` (`MainMenu`, `Match`), `Art/` (matériaux, NavMesh).
+
+### 15.2 Services et flux
+
+```mermaid
+flowchart LR
+    MM[MainMenu<br/>GameLauncher] -- StartGame Host/Client/Single --> R[PF_Runner<br/>NetworkRunner + MatchServices + PlayerInputCollector]
+    R -- charge --> M[Scène Match]
+    M --> MC[MatchController<br/>NetworkObject de scène]
+    MC -- Attach --> S[MatchServices]
+    MC --> W[WaveDirector] & J[JungleDirector] & RW[MatchRewards]
+    PIC[PlayerInputCollector] -- PlayerInput --> CC[ChampionController]
+    PIC -- LocalView --> V[MatchView / CameraRig / MatchScreen]
+    UI[MatchScreen] -- LocalCommands achat, vente, rang --> PIC
+```
+
+- `MatchServices` vit sur le runner (`MatchServices.Of(runner)`) : contenu, règles, registre des unités, carte, partie, commandes et vue locales.
+- Phases de `MatchController` : `Lobby` (un `PlayerSlot` par joueur, choix par RPC, l'hôte lance) → `Playing` → `Ended` (destruction d'un Cœur).
+- Les tours, inhibiteurs et Cœurs sont créés au lancement depuis `MapLayout` ; leur protection (`Unit.Protectors`, `ProtectionMode`) rend l'autorité invulnérable tant que la structure précédente tient.
+
+### 15.3 Tick d'une unité
+
+`Unit.FixedUpdateNetwork` : `Stats.Refresh` → `Status.Simulate` (expirations, effets périodiques) → `Health.Simulate` (boucliers, régénération) → `Resource.Simulate` → cerveau (`ChampionController` lit l'input, IA côté hôte) → `Caster.Simulate` (canalisation, cible à rejoindre, passif, projectiles, zones) → `Attack.Simulate` → `Motor.Simulate`.
+
+- Seul le champion local est simulé chez le client (prédiction Fusion) ; les autres unités sont des proxys interpolés par `NetworkTransform`.
+- Effets exécutés partout (prédits) : `Dash`, `LaunchProjectile`, `CreateArea`, `SwapAbilitySet`. Effets réservés à l'autorité : dégâts, soins, boucliers, statuts, purification, déplacements forcés, téléportation, échange, invocation.
+- Chemins NavMesh stockés dans l'état réseau (16 coins) pour une resimulation identique.
+- Retours visuels : l'historique réseau des coups (`Health.Hits`) alimente les dégâts flottants ; les tampons de projectiles, zones et attaques sont dessinés par `AbilityVisuals`.

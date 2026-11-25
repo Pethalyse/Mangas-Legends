@@ -108,30 +108,30 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 - [x] Créer les assets dans Unity (`Assets/_Project/Content/`) : règles, registre, 15 objets, 11 statuts, 10 unités (sbires, tours, inhibiteur, Cœur), Ainz et ses 5 compétences, 10 sorts d'invocateur, rappel. Validation : 0 erreur.
 
 ### Étape 5 — Prototype réseau (risques d'abord)
-- [ ] Salon Host / Join par code, spawn d'un champion par joueur.
-- [ ] `PlayerInput` + `PlayerInputCollector` (Input System).
-- [ ] `UnitMotor` : clic-pour-bouger **prédit** sur NavMesh, testé avec latence simulée (100–150 ms).
-- [ ] Un projectile prédit + compensation de latence + faux dégâts réconciliés.
+- [x] Salon Host / Join par code (`GameLauncher`), mode solo, spawn d'un champion par joueur (`MatchController`, `PlayerSlot`). Hôte + client à tester par l'humain.
+- [x] `PlayerInput` + `PlayerInputCollector` (Input System, `MangaControls.inputactions`).
+- [ ] `UnitMotor` : clic-pour-bouger prédit sur NavMesh **écrit et testé en solo** ; test avec latence simulée (100–150 ms) à faire.
+- [ ] Projectile prédit et faux dégâts : faits (tampon réseau, dégâts flottants) ; compensation de latence reportée (ADR-0007).
 - **Fini quand** : deux instances (Multiplayer Play Mode) se tirent dessus avec 150 ms de latence simulée et la sensation reste immédiate. Résultats notés ici.
 
 ### Étape 6 — Unités
-- [ ] `Unit`, `UnitStats`, `Health`, `ResourcePool`, `StatusEffects`, `AutoAttack`.
-- [ ] Mort, réapparition, or et XP, régénération par tick.
-- [ ] HUD sur `LocalPlayerContext` (PV, mana, recharges, faux dégâts).
+- [x] `Unit`, `UnitStats`, `Health`, `ResourcePool`, `StatusEffects`, `AutoAttack`.
+- [x] Mort, réapparition, or et XP, régénération par tick.
+- [x] HUD (PV, mana, recharges, rangs, or, niveau, inventaire, chronomètre), dégâts flottants, barres de vie.
 
 ### Étape 7 — Compétences
-- [ ] `AbilityCaster`, `AbilitySet`, ciblages, effets génériques, tampon de projectiles, zones.
+- [x] `AbilityCaster`, `AbilitySet`, ciblages, effets génériques, tampon de projectiles, zones, canalisation, charges, sorts d'invocateur, rappel.
 - [ ] Indicateurs de visée (présentation).
-- [ ] **Ainz** complet, uniquement en données.
+- [x] **Ainz** complet, uniquement en données (passif par `BehaviourId`).
 
 ### Étape 8 — Sbires, tours, jungle
-- [ ] `MinionBrain`, vagues pilotées par `MatchController`, tours, monstres (normaux, gros, épiques). Valeurs en données.
+- [x] `MinionBrain`, vagues pilotées par `WaveDirector`, tours (`TowerBrain`, aggro sur harcèlement, dégâts croissants), structures protégées, inhibiteurs qui réapparaissent, méga sbires, monstres (`JungleDirector`, `MonsterBrain`, 9 monstres dont 2 épiques). Valeurs en données.
 
 ### Étape 9 — Économie et objets
-- [ ] `Wallet`, `Inventory`, achat via l'input validé par l'autorité (prix calculé par l'autorité), recettes, passifs et actifs en effets génériques, UI boutique.
+- [x] Or (`ChampionProgress`), `Inventory`, achat et vente via l'input validés par l'autorité, recettes, UI boutique. Reste : passifs et actifs des objets.
 
 ### Étape 10 — Flux de partie
-- [ ] `MainMenu → Lobby → ChampionSelect → Match → PostGame`, `MatchController`, victoire, horloge.
+- [x] `MainMenu → Match (salon, partie, fin)`, `MatchController`, victoire, horloge (ADR-0007 : salon et sélection dans la scène de match).
 - [ ] Suppression de `Legacy/`.
 - **Fini quand** : une partie complète 2v2 entre amis, en ligne, se joue du salon jusqu'à la victoire.
 
@@ -141,6 +141,7 @@ Champions du premier jalon (GDD §10) : Luffy, Zoro, Naruto, Kirito ; brouillard
 ## 4. Notes d'avancement
 
 _Claude Code ajoute ici, par étape terminée : date, PR, ce qui a changé, ce qui reste._
+- 2026-11-25 (étapes 5 à 10, branche `feat/step-5-simulation`) : couche Simulation complète, entrées, lancement réseau, présentation, UI, monstres, prefabs, scènes `MainMenu` et `Match` (carte de test symétrique, 30 structures, 16 camps, NavMesh). **Testé en solo dans l'éditeur** : vagues, combat sbires/tours, sort d'Ainz, XP, or, mort et réapparition, achat et montée de rang par l'input réseau. Pas encore testé : hôte + client en ligne, latence simulée, clavier réel (les touches simulées par la CLI n'atteignent pas l'Input System hors focus). Écarts : ADR-0007.
 
 - 2026-11-25 (étape 1) : Unity 6000.3.26f1, Input System, AI Navigation, Multiplayer Play Mode, Fusion 2.1.4 et App ID. Paquet `com.unity.pipeline` ajouté pour piloter l'éditeur depuis la CLI `unity`. Exemples de l'ancien TextMesh Pro supprimés (ne compilaient plus avec le TMP intégré à Unity UI 2.0). Console sans erreur, 53 tests EditMode verts dans Unity. Corrigé : `ItemPricing.SellValue` donnait 804 au lieu de 805 sous Mono (arrondi float), calcul passé en `decimal`. Les projets `Tools/CoreTests/Tests` et `DataCheck` n'avaient jamais été commités (règle `*.csproj` du `.gitignore`) : recréés et suivis. Reste : inventaire des prefabs et animations.
 
