@@ -97,7 +97,6 @@ Assets/
   Plugins/        (tiers)
 Docs/
 Tools/CoreTests/  (projets .NET pour compiler et tester le Core sans Unity)
-Legacy/           (ancien code, non compilé, supprimé à l'étape 10)
 ```
 
 ## 5. Modèle d'unité

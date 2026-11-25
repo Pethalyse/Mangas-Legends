@@ -132,7 +132,7 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 
 ### Étape 10 — Flux de partie
 - [x] `MainMenu → Match (salon, partie, fin)`, `MatchController`, victoire, horloge (ADR-0007 : salon et sélection dans la scène de match).
-- [ ] Suppression de `Legacy/`.
+- [x] Suppression de `Legacy/` (2026-11-25, accord du propriétaire ; reste dans l'historique git).
 - **Fini quand** : une partie complète 2v2 entre amis, en ligne, se joue du salon jusqu'à la victoire.
 
 ### Après la refonte

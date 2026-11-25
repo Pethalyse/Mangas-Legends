@@ -4,7 +4,7 @@
 
 ## Le projet
 
-MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host, voir `Docs/adr/0006`), champions issus de mangas, **Unity 6 LTS**. L'ancien code (Mirror, 2023) est remplacé par une **refonte** ; il reste consultable dans `Legacy/` jusqu'à l'étape 10. Langue de travail : **français** (docs, échanges) ; code en **anglais**.
+MOBA 5v5 en Unity (C#), multijoueur entre amis (**Photon Fusion 2** en mode Host, voir `Docs/adr/0006`), champions issus de mangas, **Unity 6 LTS**. L'ancien code (Mirror, 2023) a été remplacé par une **refonte** ; il a été supprimé à l'étape 10 (consultable dans l'historique git). Langue de travail : **français** (docs, échanges) ; code en **anglais**.
 
 ## Avant de coder : lire
 
