@@ -52,6 +52,7 @@ namespace MangaLegends.Data.Definitions
 
         [Header("Jungle")]
         [SerializeField, Range(1, 10)] private int _drakesForSoul = 4;
+        [SerializeField, Range(0, 10), Tooltip("Spawn index from which the drake element stops changing (LoL: the 3rd drake sets the map element).")] private int _drakeElementLocksAfter = 2;
         [SerializeField, Min(0f)] private float _monsterKillHealBase = 90f;
         [SerializeField, Min(0f)] private float _monsterKillHealPerLevel = 20f;
         [SerializeField, Min(0f)] private float _monsterKillHealMax = 250f;
@@ -97,6 +98,7 @@ namespace MangaLegends.Data.Definitions
         public float MaxAttackSpeed => _maxAttackSpeed;
         public float DevilFruitWaterDrain => _devilFruitWaterDrain;
         public int DrakesForSoul => _drakesForSoul;
+        public int DrakeElementLocksAfter => _drakeElementLocksAfter;
         public bool DevilFruitWaterIsLethal => _devilFruitWaterIsLethal;
         public int MaxLevel => _maxLevel;
         public int[] ExperienceToNextLevel => _experienceToNextLevel;

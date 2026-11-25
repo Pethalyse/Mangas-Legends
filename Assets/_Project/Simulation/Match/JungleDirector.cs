@@ -84,12 +84,12 @@ namespace MangaLegends.Simulation.Match
             }
         }
 
-        // Drake pits cycle through their elements, then hold the elder once a team owns the soul.
+        // Drake pits draw their element (no repeat, then the map element), then hold the elder once a team owns the soul.
         private IReadOnlyList<UnitDefinition> MonstersFor(int camp, CampPlacement placement)
         {
             _single.Clear();
             if (placement.AfterSoul != null && _match.AnySoul) _single.Add(placement.AfterSoul);
-            else if (placement.Rotation.Count > 0) _single.Add(placement.Rotation[SpawnCount[camp] % placement.Rotation.Count]);
+            else if (placement.Rotation.Count > 0) _single.Add(placement.Rotation[ElementRotation.Pick(_match.Seed ^ (ulong)camp, SpawnCount[camp], placement.Rotation.Count, _match.Rules.DrakeElementLocksAfter)]);
             else return placement.Monsters;
             return _single;
         }
