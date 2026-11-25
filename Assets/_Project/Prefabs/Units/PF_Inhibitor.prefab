@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 7458884037002689737}
   - component: {fileID: 300682518612781685}
   - component: {fileID: 2690691508840228860}
+  - component: {fileID: 7616925265294615446}
   m_Layer: 8
   m_Name: PF_Inhibitor
   m_TagString: Untagged
@@ -348,9 +349,29 @@ MonoBehaviour:
   _deadClip: Inhibitor_idle_dead.anm
   _respawnClip: Respawn_Base
   _animator: {fileID: 0}
+  _formStatusId: 
+  _mainModel: {fileID: 0}
+  _formModel: {fileID: 0}
+  _formAnimator: {fileID: 0}
   _attackAnimationSeconds: 1
   _runBlendSpeed: 3.5
   _tintBody: 0
+--- !u!208 &7616925265294615446
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410219718893563632}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.2750001, y: 2, z: 1.2750001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &202013461226062023
 PrefabInstance:
   m_ObjectHideFlags: 0
