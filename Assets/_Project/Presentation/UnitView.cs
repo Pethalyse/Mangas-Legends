@@ -8,6 +8,9 @@ namespace MangaLegends.Presentation
     {
         private static readonly int ColorId = Shader.PropertyToID("_Color");
         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+        private static readonly int SpeedId = Animator.StringToHash("Speed");
+        private static readonly int AttackId = Animator.StringToHash("Attack");
+        private static readonly int AttackSpeedId = Animator.StringToHash("AttackSpeed");
 
         [SerializeField] private Renderer[] _body;
         [SerializeField] private Renderer _teamRing;
@@ -16,6 +19,10 @@ namespace MangaLegends.Presentation
         [SerializeField] private Color _red = new Color(1f, 0.25f, 0.2f);
         [SerializeField] private Color _neutral = new Color(0.45f, 0.8f, 0.3f);
         [SerializeField] private float _attackPunch = 0.15f;
+        [SerializeField] private Animator _animator;
+        [SerializeField, Min(0.01f), Tooltip("Length of the attack clip, so that one clip plays per basic attack.")] private float _attackAnimationSeconds = 1f;
+        [SerializeField, Min(0.1f), Tooltip("Ground speed (m/s) at which the run animation fully plays.")] private float _runBlendSpeed = 3.5f;
+        [SerializeField, Tooltip("Off for textured models: only primitive placeholders take the unit tint.")] private bool _tintBody = true;
 
         private Unit _unit;
         private MaterialPropertyBlock _block;
@@ -23,6 +30,8 @@ namespace MangaLegends.Presentation
         private float _punch;
         private Vector3 _baseScale = Vector3.one;
         private bool _shown = true;
+        private Vector3 _lastPosition;
+        private float _speed;
 
         private void Awake()
         {
@@ -40,13 +49,30 @@ namespace MangaLegends.Presentation
             Color team = _unit.Team == Team.Blue ? _blue : _unit.Team == Team.Red ? _red : _neutral;
             Color body = _unit.Definition.Tint;
             if (!_unit.IsAlive) body *= 0.25f;
-            Paint(_body, body);
+            if (_tintBody) Paint(_body, body);
             if (_teamRing != null)
             {
                 _teamRing.enabled = _unit.IsAlive;
                 Paint(_teamRing, team);
             }
-            AnimateAttack();
+            if (_animator != null) Animate();
+            else AnimateAttack();
+        }
+
+        private void Animate()
+        {
+            Vector3 position = transform.position;
+            Vector3 delta = position - _lastPosition;
+            delta.y = 0f;
+            _lastPosition = position;
+            float measured = Time.deltaTime > 0f ? delta.magnitude / Time.deltaTime : 0f;
+            _speed = Mathf.Lerp(_speed, measured, 1f - Mathf.Exp(-12f * Time.deltaTime));
+            _animator.SetFloat(SpeedId, _unit.IsAlive ? Mathf.Clamp01(_speed / _runBlendSpeed) : 0f);
+            if (_unit.Attack == null || _unit.Attack.LastAttackTick == _lastAttackTick) return;
+            _lastAttackTick = _unit.Attack.LastAttackTick;
+            float attacksPerSecond = Mathf.Max(0.1f, _unit.Stats.Get(Core.Stats.StatType.AttackSpeed));
+            _animator.SetFloat(AttackSpeedId, Mathf.Max(0.5f, _attackAnimationSeconds * attacksPerSecond));
+            _animator.SetTrigger(AttackId);
         }
 
         private void SetVisible(bool visible)
