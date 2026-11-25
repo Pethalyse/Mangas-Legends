@@ -23,13 +23,13 @@
 | Sasuke Uchiha | ❓ | ✅ | — | Mark (électrisation), Téléport |
 | Guts | ❓ | ✅ | — | Bonus selon PV manquants, Reset sur kill |
 | Sung Jin-Woo | ❓ | ✅ | — | Summon contrôlable, AbilitySet ×2 |
-| Mark Evans | Support/Tank | ✅ | 🔧 jouable, simplifié (P, E), modèle 3D (testé en solo le 2026-11-25) | Synergy (allié lié), Mur |
+| Mark Evans | Support/Tank | ✅ | ✅ jouable, modèle 3D (testé en solo le 2026-11-25) | Synergy (allié lié), Mur |
 | Kirito | Top | ✅ | 🔧 jouable, simplifié (R) | Mark ×5, réduction de recharge croisée |
 | Giorno Giovanna | Support | ✅ | ✅ jouable, modèle 3D + stand (testé en solo le 2026-11-25) | Charges, Forme (stand) |
 | Jotaro | Top | ✅ | 🔧 jouable, simplifié (E stand), modèle 3D + stand (testé en solo le 2026-11-25) | Forme (stand), GlobalEffect (arrêt du temps), mur destructible |
 | Law | Support | ✅ | — | Échange de position, téléport allié |
 | Madara | Mage | ✅ | — | Canalisation, recast |
-| Pain | Bot (ADC) | ✅ | 🔧 jouable, simplifié (choix après un kill), modèle 3D de Tendô (testé en solo le 2026-11-25) | 6 AbilitySets, jauge de passif |
+| Pain | Bot (ADC) | ✅ | ✅ jouable, modèle 3D de Tendô (testé en solo le 2026-11-25) | 6 AbilitySets, jauge de passif |
 | Itachi | ❓ | 🟨 | — | |
 | Aizawa | ❓ | 🟨 | — | |
 | Bojji | ❓ | 🟨 | — | |
@@ -77,7 +77,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 
 **Changements du 2026-11-25 (propriétaire)** : Q (Manteau du chaos) vise l'ennemi le plus proche du curseur ; E (Essence de vie) devient une zone autour d'Ainz qui le suit, 3 / 3,5 / 4 / 4,5 / 5 m selon le rang ; Z (Mur de l'infini) = bouclier contre les seuls dégâts magiques qui bloque les contrôles, affiché en violet.
 
-**Correction du 2026-11-25 (propriétaire)** : le Q n'a pas de ciblage spécial. Comme tous les sorts ciblés, il part sur le champion cliqué (lancement normal) ou visé (lancement rapide) ; en lancement normal, un clic au sol prend l'ennemi le plus proche du clic (règle générale, 07 §11).
+**Correction du 2026-11-25 (propriétaire)** : le Q n'a pas de ciblage spécial, il part sur l'ennemi sous la souris (lancement rapide ou normal). Le « Q-clic » dont parlait le propriétaire est l'attaque-déplacement de LoL (07 §11). **Animations** : Ainz ne marche pas, il flotte (`UnitView._floats` : pas d'animation de course, modèle à 0,35 m du sol qui ondule et se penche dans le sens du déplacement) ; l'évènement `aaCreation` de son clip d'attaque, devenu inutile, est retiré.
 
 ### Zoro Roronoa
 - **P — Haki de l'armement** : chaque AA sur un champion donne +1 AD (cumul).
@@ -160,7 +160,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **E — Main céleste** : mur frontal 3 s, +70 % résistance aux compétences qui le touchent. `[14 s]`
 - **R — Main magique** : frappe au sol ; centre : étourdit 2 s, onde : immobilise 2 s. `[90 s]`
 
-**Implémentation (2026-11-25)** : stats PV 640 (+108), mana 310 (+45), AD 56, armure 42 (+4,7), RM 32, VA 0,644, vitesse 3,35 m/s, mêlée. P = lien avec l'allié champion **le plus proche** (12 m, réévalué chaque seconde) : Mark encaisse 10 % des dégâts qu'il subit (avant ses propres résistances). A = cône de 3,5 m et 70°, 70→250 (+60 % AP) magiques, ralentit de 40 % pendant 1 s, coût 50→70. Z = roulade de 4 m vers le point visé, puis ralenti de 30 % pendant 0,8 s (≈ 0,5 s après la sortie), recharge 12→10 s. E = mur visuel de 4 m devant lui pendant 3 s et −70 % de dégâts des compétences subis pendant ce temps, recharge 14→10 s. R = frappe au point visé (6 m) après 0,5 s : onde de 4,5 m, 150/250/350 (+70 % AP) magiques et immobilisation 2 s ; centre de 1,6 m, étourdissement 2 s ; recharge 90/80/70 s. **Simplifié** : l'allié lié n'est pas choisi en début de partie (il faut un écran de choix) et le mur n'arrête pas les projectiles. Modèle : `Mark Evans/Mark Evans.fbx` (ballon masqué), animé par `ProceduralRig`.
+**Implémentation (2026-11-25)** : stats PV 640 (+108), mana 310 (+45), AD 56, armure 42 (+4,7), RM 32, VA 0,644, vitesse 3,35 m/s, mêlée. P = Mark encaisse 10 % des dégâts que subit son allié lié (avant ses propres résistances). L'allié se choisit avec l'objet **Gants de David Evans** (`03-objets.md`), que Mark a dès le début : actif ciblé sur un allié à 10 m, recharge 20 s, un seul allié lié à la fois, lien permanent (gardé à la mort). A = cône de 3,5 m et 70°, 70→250 (+60 % AP) magiques, ralentit de 40 % pendant 1 s, coût 50→70. Z = roulade de 4 m vers le point visé, puis ralenti de 30 % pendant 0,8 s (≈ 0,5 s après la sortie), recharge 12→10 s. E = mur de 4 m vers la direction visée, qui suit Mark quand il marche (sa direction reste celle du lancement) pendant 3 s ; il n'arrête rien, mais les compétences dont la source est devant le mur (cône de 120°) font 70 % de dégâts en moins à Mark ; recharge 14→10 s. R = frappe au point visé (6 m) après 0,5 s : onde de 4,5 m, 150/250/350 (+70 % AP) magiques et immobilisation 2 s ; centre de 1,6 m, étourdissement 2 s ; recharge 90/80/70 s. **Simplifié** : « touche le mur » = la source du sort est devant le mur. Modèle : `Mark Evans/Mark Evans.fbx` (ballon masqué), animé par `ProceduralRig`.
 
 ### Kirito
 - **P** : toutes les 3 attaques, dégâts bonus ; chaque attaque pose une marque.
@@ -209,7 +209,7 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **R** : passif — jauge pleine = changement automatique.
 - **Pas de Z** dans le PDF ❓
 
-**Implémentation (2026-11-25)** : stats PV 600 (+100), mana 350 (+45), AD 60 (+2,8), armure 26, RM 30, VA 0,658, vitesse 3,3 m/s, distance 5,5 m. P = jauge de 100 : +2 par seconde, +5 par attaque de base, +5 par ennemi touché par une compétence, pleine sur un kill ; pleine, Pain passe au pantin suivant et ses recharges sont réinitialisées (la jauge est visible comme un effet à cumuls). A `[5 s]` et E `[7 s]` par pantin : **Tendô** A attire de 3 m une cible à 6 m, 60→200 (+80 % AD bonus) physiques ; E sphère de 3 m au point visé (8 m) qui attire et inflige 4 × 15→55 (+15 %) en 1 s. **Shuradô** A lance-missiles activable : +1,5 m de portée, chaque attaque inflige 10 % de l'AD en zone (2,5 m), 20 de mana puis 8→12 par seconde ; E laser de 9 m sur 1,2 m, 80→260 (+90 %) physiques. **Ningendô** A retire 20 % des PV actuels de la cible (dégâts bruts), qui les récupère 3 s plus tard ; E pousse la cible de 3 m dans une direction aléatoire en 1 s. **Chikushôdô** A chien géant (projectile à tête chercheuse, 8 m), 70→230 (+80 %) physiques ; E passe au pantin suivant. **Gakidô** A absorbe 15→27 % du mana actuel de la cible ; E absorbe la prochaine attaque de base reçue (4 s). **Jigokudô** A silence 1,5 s ; E revient au pantin précédent. Pas de Z ni de R (fidèle au PDF : le R est le changement automatique). **Simplifié** : après un kill, Pain change de pantin tout de suite (pas de choix de rester). Un seul modèle (Tendô) pour les six pantins.
+**Implémentation (2026-11-25)** : stats PV 600 (+100), mana 350 (+45), AD 60 (+2,8), armure 26, RM 30, VA 0,658, vitesse 3,3 m/s, distance 5,5 m. P = jauge de 100 : +2 par seconde, +5 par attaque de base, +5 par ennemi touché par une compétence ; pleine, Pain passe tout de suite au pantin suivant et ses recharges sont réinitialisées (la jauge est visible comme un effet à cumuls). **Après un kill**, la jauge est pleine et Pain choisit : R (Ondes de chakra, disponible dès le niveau 1, sans point de compétence) le fait passer au pantin suivant, sinon il garde son pantin et change automatiquement dès qu'il sort du combat (5 s). A `[5 s]` et E `[7 s]` par pantin : **Tendô** A attire de 3 m une cible à 6 m, 60→200 (+80 % AD bonus) physiques ; E sphère de 3 m au point visé (8 m) qui attire et inflige 4 × 15→55 (+15 %) en 1 s. **Shuradô** A lance-missiles activable : +1,5 m de portée, chaque attaque inflige 10 % de l'AD en zone (2,5 m), 20 de mana puis 8→12 par seconde ; E laser de 9 m sur 1,2 m, 80→260 (+90 %) physiques. **Ningendô** A retire 20 % des PV actuels de la cible (dégâts bruts), qui les récupère 3 s plus tard ; E pousse la cible de 3 m dans une direction aléatoire en 1 s. **Chikushôdô** A chien géant (projectile à tête chercheuse, 8 m), 70→230 (+80 %) physiques ; E passe au pantin suivant. **Gakidô** A absorbe 15→27 % du mana actuel de la cible ; E absorbe la prochaine attaque de base reçue (4 s). **Jigokudô** A silence 1,5 s ; E revient au pantin précédent. Pas de Z (confirmé par le propriétaire). Un seul modèle (Tendô) pour les six pantins.
 
 ## 4. Kits partiels (notes de design)
 

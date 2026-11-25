@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3827949f8e94ddbbce2a761611d34a1, type: 3}
+  m_Name: ITEM_DavidEvansGloves
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ItemDefinition
+  _id: item.david_evans_gloves
+  _displayName: Gants de David Evans
+  _description: "Gants du grand-p\xE8re de Mark. R\xE9serv\xE9s \xE0 Mark Evans,
+    qui les a d\xE8s le d\xE9but."
+  _icon: {fileID: 0}
+  _tier: 2
+  _recipeCost: 0
+  _unique: 1
+  _components: []
+  _stats: []
+  _passives: []
+  _active:
+    _enabled: 1
+    _consumedOnUse: 0
+    _name: Lien du capitaine
+    _description: "Lie Mark \xE0 l'alli\xE9 cibl\xE9 : Mark encaisse 10 % des d\xE9g\xE2ts
+      qu'il subit. Un seul alli\xE9 li\xE9 \xE0 la fois."
+    _cooldownSeconds: 20
+    _targeting:
+      _mode: 2
+      _validTargets: 2
+      _fallback: 0
+      _range:
+        _byRank:
+        - 10
+      _indicatorWidth:
+        _byRank:
+        - 0
+      _indicatorRadius:
+        _byRank:
+        - 0
+    _effects:
+    - rid: 2286801137428857491
+  _championExclusive: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857491
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 3fc1e380f47c72b43b0826445fbd4eec, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0
+        _onePerCaster: 1

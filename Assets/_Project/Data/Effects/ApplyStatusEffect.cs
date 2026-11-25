@@ -18,11 +18,13 @@ namespace MangaLegends.Data.Effects
         [SerializeField, Tooltip("Only applied when the target carries this status with a stack count in the range below.")] private StatusEffectDefinition _requiredStatus;
         [SerializeField, Min(0)] private int _requiredMinStacks;
         [SerializeField, Min(0), Tooltip("0 = no upper bound.")] private int _requiredMaxStacks;
+        [SerializeField, Tooltip("Removed from every other unit that got it from the same caster (one linked ally at a time).")] private bool _onePerCaster;
 
         public EffectTarget Target => _target;
         public StatusEffectDefinition Status => _status;
         public IReadOnlyList<RankedStatModifierData> ModifierOverrides => _modifierOverrides;
         public StatusEffectDefinition RequiredStatus => _requiredStatus;
+        public bool OnePerCaster => _onePerCaster;
 
         public bool AcceptsStacks(int stacks) => stacks >= _requiredMinStacks && (_requiredMaxStacks <= 0 || stacks <= _requiredMaxStacks);
 

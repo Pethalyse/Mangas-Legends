@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.StatusEffectDefinition
   _id: status.mark_bond
   _displayName: Lien de Mark
-  _description: "Mark Evans encaisse une partie des d\xE9g\xE2ts subis."
+  _description: "Mark Evans encaisse 10 % des d\xE9g\xE2ts que subit cet alli\xE9."
   _icon: {fileID: 0}
-  _durationSeconds: 1.5
+  _durationSeconds: 0
   _restrictions: 0
   _stacking: 0
   _maxStacks: 1
@@ -25,17 +25,19 @@ MonoBehaviour:
   _tickIntervalSeconds: 0
   _onTick: []
   _triggers: []
-  _persistsThroughDeath: 0
+  _persistsThroughDeath: 1
   _triggerCooldownSeconds: 0
   _revealRadius: 0
   _onMaxStacks: []
   _rankCount: 1
   _invulnerable: 0
   _abilityDamageReduction: 0
+  _reductionArcDegrees: 0
   _redirectToSource: 0.1
   _taunt: 0
   _blocksNextBasicAttack: 0
   _removedOnTrigger: 0
+  _onOutOfCombat: []
   references:
     version: 2
     RefIds: []

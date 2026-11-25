@@ -80,7 +80,7 @@ namespace MangaLegends.UI
             for (int i = 0; i < items.Count; i++)
             {
                 ItemDefinition item = items[i];
-                if (item.Tier == ItemTier.Consumable && item.RecipeCost <= 0) continue;
+                if (item.IsChampionExclusive || (item.Tier == ItemTier.Consumable && item.RecipeCost <= 0)) continue;
                 int index = i;
                 Image frame = UiFactory.Box(root, item.Id, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(20f + column * (Cell + 8f), -60f - row * (Cell + 30f)), new Vector2(Cell, Cell), new Color(0f, 0f, 0f, 0.6f));
                 frame.gameObject.AddComponent<Button>().onClick.AddListener(() => _services.Commands.RequestBuy(index));

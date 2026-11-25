@@ -31,16 +31,16 @@ MonoBehaviour:
   _hits: 4
   _stopsOnTerrain: 1
   _onHit:
-  - rid: 2286801137428857388
-  - rid: 2286801137428857389
-  - rid: 2286801137428857390
-  - rid: 2286801137428857391
-  - rid: 2286801137428857392
+  - rid: 2286801137428857469
+  - rid: 2286801137428857470
+  - rid: 2286801137428857471
+  - rid: 2286801137428857472
+  - rid: 2286801137428857473
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857388
+    - rid: 2286801137428857469
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
         _stacksOnCaster: 0
         _minStacks: 0
         _consumesStacks: 0
-    - rid: 2286801137428857389
+    - rid: 2286801137428857470
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -77,7 +77,8 @@ MonoBehaviour:
         _requiredStatus: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
         _requiredMinStacks: 2
         _requiredMaxStacks: 0
-    - rid: 2286801137428857390
+        _onePerCaster: 0
+    - rid: 2286801137428857471
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -91,7 +92,8 @@ MonoBehaviour:
         _requiredStatus: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
         _requiredMinStacks: 1
         _requiredMaxStacks: 1
-    - rid: 2286801137428857391
+        _onePerCaster: 0
+    - rid: 2286801137428857472
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -110,7 +112,8 @@ MonoBehaviour:
         _requiredStatus: {fileID: 0}
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
-    - rid: 2286801137428857392
+        _onePerCaster: 0
+    - rid: 2286801137428857473
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 0
@@ -124,3 +127,4 @@ MonoBehaviour:
         _requiredStatus: {fileID: 0}
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
+        _onePerCaster: 0

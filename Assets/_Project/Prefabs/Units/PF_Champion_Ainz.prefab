@@ -304,6 +304,8 @@ MonoBehaviour:
     RawValue: 0
   _DashEnd: {x: 0, y: 0, z: 0}
   _DashSpeed: 0
+  _NextPathTick: 0
+  _RequestedPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &2362664044023006834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e0a27ea8c40b74e8b387b3affc1a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MangaLegends.Simulation::MangaLegends.Simulation.Champions.ChampionController
+  _AttackMoving:
+    RawValue: 0
 --- !u!136 &2161496037152307094
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -486,9 +490,26 @@ MonoBehaviour:
   _red: {r: 1, g: 0.25, b: 0.2, a: 1}
   _neutral: {r: 0.45, g: 0.8, b: 0.3, a: 1}
   _attackPunch: 0.15
+  _blueModel: {fileID: 0}
+  _redModel: {fileID: 0}
+  _deadModel: {fileID: 0}
+  _aliveClip: 
+  _deathClip: 
+  _deadClip: 
+  _respawnClip: 
   _animator: {fileID: 7971215320303137626}
+  _formStatusId: 
+  _mainModel: {fileID: 0}
+  _formModel: {fileID: 0}
+  _formAnimator: {fileID: 0}
+  _companionStatusId: 
+  _companionModel: {fileID: 0}
   _attackAnimationSeconds: 2.3
   _runBlendSpeed: 3.5
+  _floats: 1
+  _floatHeight: 0.35
+  _floatBob: 0.08
+  _floatLean: 10
   _tintBody: 0
 --- !u!1 &7321258506644230896
 GameObject:

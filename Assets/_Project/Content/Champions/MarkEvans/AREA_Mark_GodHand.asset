@@ -38,7 +38,7 @@ MonoBehaviour:
   _intervalSeconds:
     _byRank:
     - 0
-  _followsCaster: 0
+  _followsCaster: 1
   _affects: 0
   _kinds: 
   _onActivate: []

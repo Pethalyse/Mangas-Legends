@@ -39,7 +39,6 @@ namespace MangaLegends.Simulation.Abilities
         public const int NoAbility = -1;
 
         private Unit _unit;
-        private readonly List<Unit> _allies = new List<Unit>();
 
         [Networked, Capacity(SlotCount)] public NetworkArray<NetSlot> Slots => default;
         [Networked] public byte ActiveSet { get; set; }
@@ -118,7 +117,7 @@ namespace MangaLegends.Simulation.Abilities
             get
             {
                 int spent = 0;
-                for (int i = (int)CasterSlot.A; i <= (int)CasterSlot.R; i++) spent += Slots[i].Rank;
+                for (int i = (int)CasterSlot.A; i <= (int)CasterSlot.R; i++) spent += Slots[i].Rank - (StartsLearned((CasterSlot)i) ? 1 : 0);
                 return Mathf.Max(0, _unit.Stats.Level - spent);
             }
         }
@@ -153,7 +152,14 @@ namespace MangaLegends.Simulation.Abilities
             NetSlot data = Slots[(int)slot];
             AbilityDefinition ability = AbilityAt(slot);
             if (ability == null || data.Rank == 0) return false;
+            if (ability.RequiredStatus != null && _unit.Status.StacksOf(ability.RequiredStatus) == 0) return false;
             return ability.ChargesAt(data.Rank) > 1 ? data.Charges > 0 : Runner.Tick >= data.ReadyTick;
+        }
+
+        private bool StartsLearned(CasterSlot slot)
+        {
+            AbilityDefinition ability = AbilityAt(slot);
+            return ability != null && ability.StartsLearned;
         }
 
         public bool TryCast(CasterSlot slot, Vector3 aimPoint, Unit aimTarget)
@@ -382,11 +388,9 @@ namespace MangaLegends.Simulation.Abilities
             if (passive == null || string.IsNullOrEmpty(passive.BehaviourId)) return;
             NetSlot data = Slots[(int)CasterSlot.Passive];
             if (tick < data.ReadyTick || !AbilityBehaviours.CanTriggerPassive(passive.BehaviourId, _unit)) return;
-            Unit target = passive.BehaviourId == AbilityBehaviours.PeriodicNearestAlly ? NearestAllyChampion(passive.Targeting.RangeAt(1)) : _unit;
-            if (target == null) return;
             data.ReadyTick = tick + Mathf.Max(1, TickTime.SecondsToTicks(passive.CooldownAtRank(1), Runner.TickRate));
             Slots.Set((int)CasterSlot.Passive, data);
-            EffectExecutor.Run(passive.OnCast, new EffectContext(_unit, target, target.Position, target.Position, 1, null));
+            EffectExecutor.Run(passive.OnCast, new EffectContext(_unit, _unit, _unit.Position, _unit.Position, 1, null));
         }
 
         // A passive can show it is armed with a status (Luffy's stretched punch), ranked by champion level.
@@ -406,20 +410,6 @@ namespace MangaLegends.Simulation.Abilities
         {
             Match.MapLayout map = _unit.Services.Match != null ? _unit.Services.Match.Map : null;
             return map != null && map.BrushAt(_unit.Position) >= 0;
-        }
-
-        private Unit NearestAllyChampion(float range)
-        {
-            _unit.Services.Units.Query(_unit.Position, range, _unit, TeamFilter.Allies, _allies);
-            Unit best = null;
-            float bestDistance = float.MaxValue;
-            foreach (Unit ally in _allies)
-            {
-                if (!ally.IsChampion || !ally.IsAlive) continue;
-                float distance = UnitRegistry.FlatDistance(_unit.Position, ally.Position);
-                if (distance < bestDistance) { best = ally; bestDistance = distance; }
-            }
-            return best;
         }
 
         public void RaisePassiveTrigger(ItemTrigger trigger, Unit other)
@@ -540,7 +530,7 @@ namespace MangaLegends.Simulation.Abilities
         {
             NetSlot data = Slots[(int)slot];
             data.Ability = ability != null ? (short)_unit.Services.Content.Abilities.IndexOf(ability.Id) : (short)NoAbility;
-            data.Rank = (byte)(ability != null ? Mathf.Min(rank, ability.MaxRank) : 0);
+            data.Rank = (byte)(ability != null ? Mathf.Min(Mathf.Max(rank, ability.StartsLearned ? 1 : 0), ability.MaxRank) : 0);
             data.Charges = (byte)(ability != null && data.Rank > 0 ? ability.ChargesAt(data.Rank) : 0);
             Slots.Set((int)slot, data);
         }

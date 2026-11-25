@@ -56,6 +56,7 @@ namespace MangaLegends.Simulation.Champions
             var items = _unit.Services.Content.Items;
             if (itemIndex < 0 || itemIndex >= items.Count) return false;
             ItemDefinition item = items[itemIndex];
+            if (item.IsChampionExclusive) return false;
             PurchaseQuote quote = Quote(item);
             if (!quote.CanBuy || !_progress.SpendGold(quote.Cost)) return false;
             foreach (int consumed in quote.ConsumedSlots) Items.Set(consumed, 0);
@@ -66,11 +67,21 @@ namespace MangaLegends.Simulation.Champions
             return true;
         }
 
+        public void Grant(ItemDefinition item)
+        {
+            if (!HasStateAuthority || item == null) return;
+            int index = _unit.Services.Content.Items.IndexOf(item.Id);
+            int free = FirstFree();
+            if (index < 0 || free < 0) return;
+            Items.Set(free, (short)(index + 1));
+            Version++;
+        }
+
         public bool TrySell(int slot)
         {
             if (!HasStateAuthority || !CanShop) return false;
             ItemDefinition item = ItemAt(slot);
-            if (item == null) return false;
+            if (item == null || item.IsChampionExclusive) return false;
             Items.Set(slot, 0);
             _progress.AddGold(ItemPricing.SellValue(item, _unit.Services.Rules.SellRatio));
             Version++;

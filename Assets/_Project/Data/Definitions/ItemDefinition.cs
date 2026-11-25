@@ -36,6 +36,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private List<StatModifierData> _stats = new List<StatModifierData>();
         [SerializeField] private List<ItemPassive> _passives = new List<ItemPassive>();
         [SerializeField] private ItemActive _active = new ItemActive();
+        [SerializeField, Tooltip("Not sold in the shop: given to a champion at the start (ChampionDefinition.StartingItems), cannot be sold.")] private bool _championExclusive;
 
         public ItemTier Tier => _tier;
         public int RecipeCost => _recipeCost;
@@ -45,6 +46,7 @@ namespace MangaLegends.Data.Definitions
         public IReadOnlyList<StatModifierData> Stats => _stats;
         public IReadOnlyList<ItemPassive> Passives => _passives;
         public ItemActive Active => _active;
+        public bool IsChampionExclusive => _championExclusive;
         public int TotalCost => ItemPricing.TotalCost(this);
 
         public override void Validate(ValidationReport report)

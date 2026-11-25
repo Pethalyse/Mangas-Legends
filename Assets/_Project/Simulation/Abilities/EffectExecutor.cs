@@ -43,9 +43,13 @@ namespace MangaLegends.Simulation.Abilities
                     foreach (Unit target in Targets(status.Target, context))
                     {
                         if (status.RequiredStatus != null && !status.AcceptsStacks(target.Status.StacksOf(status.RequiredStatus))) continue;
-                        target.Status.Apply(new StatusApplication(status.Status, caster, context.Rank, status.StacksAt(context.Rank), status.DurationSecondsAt(context.Rank), status.ModifierOverrides));
+                        if (status.OnePerCaster) RemoveFromOthers(status.Status, caster, target);
+                        target.Status.Apply(new StatusApplication(status.Status, caster, context.Rank, status.StacksAt(context.Rank), status.DurationSecondsAt(context.Rank), status.ModifierOverrides, context.AimDirection));
                         target.Stats.Refresh();
                     }
+                    break;
+                case RemoveStatusEffect remove when authority:
+                    foreach (Unit target in Targets(remove.Target, context)) target.Status.Remove(remove.Status);
                     break;
                 case CleanseEffect cleanse when authority:
                     foreach (Unit target in Targets(cleanse.Target, context)) target.Status.RemoveCrowdControl();
@@ -198,6 +202,12 @@ namespace MangaLegends.Simulation.Abilities
             if (displace.Kind == DisplacementKind.Knockup) distance = 0f;
             if (displace.Kind == DisplacementKind.Pull && displace.FromImpactPoint) distance = Mathf.Min(distance, UnitRegistry.FlatDistance(target.Position, origin));
             target.Motor.StartDash(target.Position + direction * distance, distance / duration, false);
+        }
+
+        private static void RemoveFromOthers(StatusEffectDefinition status, Unit caster, Unit keep)
+        {
+            foreach (Unit unit in caster.Services.Units.All)
+                if (unit != null && unit != keep) unit.Status.RemoveFromCaster(status, caster.Object.Id);
         }
 
         private static Vector3 RandomDirection(Unit caster, Unit target)

@@ -55,6 +55,8 @@ MonoBehaviour:
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
   _toggleStatus: {fileID: 11400000, guid: a623939aa9e4e1946bfb81e397782b22, type: 2}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
     RefIds: []

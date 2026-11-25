@@ -12,6 +12,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private ChampionTraits _traits;
         [SerializeField] private AbilitySet _defaultAbilities = new AbilitySet();
         [SerializeField] private List<AbilitySet> _alternateAbilitySets = new List<AbilitySet>();
+        [SerializeField, Tooltip("Items in the inventory from the start (champion-exclusive items such as Mark Evans' gloves).")] private List<ItemDefinition> _startingItems = new List<ItemDefinition>();
 
         public ChampionRole Role => _role;
         public ResourceKind Resource => _resource;
@@ -19,6 +20,7 @@ namespace MangaLegends.Data.Definitions
         public bool Has(ChampionTraits trait) => (_traits & trait) == trait;
         public AbilitySet DefaultAbilities => _defaultAbilities;
         public IReadOnlyList<AbilitySet> AlternateAbilitySets => _alternateAbilitySets;
+        public IReadOnlyList<ItemDefinition> StartingItems => _startingItems;
 
         public override void Validate(ValidationReport report)
         {

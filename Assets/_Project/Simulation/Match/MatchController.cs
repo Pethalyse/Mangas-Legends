@@ -338,6 +338,8 @@ namespace MangaLegends.Simulation.Match
             if (slot.Summoner1 >= 0 && slot.Summoner1 < allSpells.Count) spells.Add(allSpells[slot.Summoner1]);
             if (slot.Summoner2 >= 0 && slot.Summoner2 < allSpells.Count) spells.Add(allSpells[slot.Summoner2]);
             unit.Caster?.Setup(definition, spells, Rules.RecallAbility, Rules.TrinketAbility);
+            Inventory inventory = unit.GetComponent<Inventory>();
+            foreach (ItemDefinition item in definition.StartingItems) inventory?.Grant(item);
             GiveHomeguard(unit);
         }
 

@@ -116,3 +116,11 @@ Le jungler achète une fée au départ ; elle accompagne Smite et évolue avec l
 | `item.fairy_great` | Fée de la Grande Fée (fée en bouteille) | bouclier après avoir tué un monstre ou hors combat | compagnon défensif |
 | `item.fairy_tatl` | Taya | Smite et les attaques sur champion brûlent et ralentissent | compagnon offensif |
 
+
+## 6. Objets réservés à un champion ✅
+
+Ni achetés ni vendus : le champion les a dès le début (`ChampionDefinition.StartingItems`, `ItemDefinition.IsChampionExclusive` ; la boutique ne les montre pas).
+
+| Id | Nom | Champion | Effet |
+|---|---|---|---|
+| `item.david_evans_gloves` | Gants de David Evans (Inazuma Eleven) | Mark Evans | Actif « Lien du capitaine » (2026-11-25, demandé par le propriétaire) : cible un allié à 10 m, recharge 20 s ; Mark encaisse ensuite 10 % des dégâts que subit cet allié. Un seul allié lié à la fois (relier un autre allié retire le lien précédent), lien gardé à la mort. Pas de statistiques. |

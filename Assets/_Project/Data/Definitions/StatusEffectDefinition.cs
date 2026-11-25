@@ -29,10 +29,12 @@ namespace MangaLegends.Data.Definitions
         [Header("Special")]
         [SerializeField, Tooltip("The unit takes no damage.")] private bool _invulnerable;
         [SerializeField, Range(0f, 1f), Tooltip("Share of ability damage (not basic attacks) ignored.")] private float _abilityDamageReduction;
+        [SerializeField, Range(0f, 360f), Tooltip("0 = from every side; otherwise only for damage whose source stands within this arc around the direction the status was cast towards (Mark Evans' wall).")] private float _reductionArcDegrees;
         [SerializeField, Range(0f, 1f), Tooltip("Share of the damage taken by the unit that its source takes instead (link).")] private float _redirectToSource;
         [SerializeField, Tooltip("The unit can only attack the source of the status.")] private bool _taunt;
         [SerializeField, Tooltip("The next basic attack taken is ignored and removes the status.")] private bool _blocksNextBasicAttack;
         [SerializeField, Tooltip("Removed once one of its triggers has run (empowered next attack).")] private bool _removedOnTrigger;
+        [SerializeReference, TypeSelector, Tooltip("Run when the unit is out of combat; the status is then removed.")] private List<EffectDefinition> _onOutOfCombat = new List<EffectDefinition>();
 
         public float DurationSeconds => _durationSeconds;
         public StatusRestriction Restrictions => _restrictions;
@@ -53,6 +55,8 @@ namespace MangaLegends.Data.Definitions
         public bool Taunt => _taunt;
         public bool BlocksNextBasicAttack => _blocksNextBasicAttack;
         public bool RemovedOnTrigger => _removedOnTrigger;
+        public float ReductionArcDegrees => _reductionArcDegrees;
+        public IReadOnlyList<EffectDefinition> OnOutOfCombat => _onOutOfCombat;
 
         public StatusEffectSpec ToSpec(int runtimeId, int tickRate) => new StatusEffectSpec(
             runtimeId,

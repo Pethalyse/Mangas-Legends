@@ -43,13 +43,13 @@ MonoBehaviour:
   _kinds: 
   _onActivate: []
   _onInterval:
-  - rid: 2286801137428857403
-  - rid: 2286801137428857404
+  - rid: 2286801137428857487
+  - rid: 2286801137428857488
   _visualPrefab: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857403
+    - rid: 2286801137428857487
       type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _kind: 1
@@ -60,7 +60,7 @@ MonoBehaviour:
           _byRank:
           - 0.25
         _fromImpactPoint: 1
-    - rid: 2286801137428857404
+    - rid: 2286801137428857488
       type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 2

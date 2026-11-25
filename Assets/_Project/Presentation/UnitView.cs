@@ -36,6 +36,10 @@ namespace MangaLegends.Presentation
         [SerializeField] private GameObject _companionModel;
         [SerializeField, Min(0.01f), Tooltip("Length of the attack clip, so that one clip plays per basic attack.")] private float _attackAnimationSeconds = 1f;
         [SerializeField, Min(0.1f), Tooltip("Ground speed (m/s) at which the run animation fully plays.")] private float _runBlendSpeed = 3.5f;
+        [SerializeField, Tooltip("Floats instead of walking (Ainz): no run animation, the model hovers and leans into its movement.")] private bool _floats;
+        [SerializeField, Min(0f)] private float _floatHeight = 0.35f;
+        [SerializeField, Min(0f)] private float _floatBob = 0.08f;
+        [SerializeField, Range(0f, 30f)] private float _floatLean = 10f;
         [SerializeField, Tooltip("Off for textured models: only primitive placeholders take the unit tint.")] private bool _tintBody = true;
 
         private Unit _unit;
@@ -43,6 +47,8 @@ namespace MangaLegends.Presentation
         private int _lastAttackTick;
         private float _punch;
         private Vector3 _baseScale = Vector3.one;
+        private Vector3 _basePosition;
+        private Quaternion _baseRotation = Quaternion.identity;
         private bool _shown = true;
         private Vector3 _lastPosition;
         private float _speed;
@@ -51,7 +57,12 @@ namespace MangaLegends.Presentation
         {
             _unit = GetComponent<Unit>();
             _block = new MaterialPropertyBlock();
-            if (_model != null) _baseScale = _model.localScale;
+            if (_model != null)
+            {
+                _baseScale = _model.localScale;
+                _basePosition = _model.localPosition;
+                _baseRotation = _model.localRotation;
+            }
         }
 
         private void Update()
@@ -84,7 +95,8 @@ namespace MangaLegends.Presentation
             _lastPosition = position;
             float measured = Time.deltaTime > 0f ? delta.magnitude / Time.deltaTime : 0f;
             _speed = Mathf.Lerp(_speed, measured, 1f - Mathf.Exp(-12f * Time.deltaTime));
-            ActiveAnimator.SetFloat(SpeedId, _unit.IsAlive ? Mathf.Clamp01(_speed / _runBlendSpeed) : 0f);
+            ActiveAnimator.SetFloat(SpeedId, _unit.IsAlive && !_floats ? Mathf.Clamp01(_speed / _runBlendSpeed) : 0f);
+            if (_floats) Float();
             if (_unit.Attack == null || _unit.Attack.LastAttackTick == _lastAttackTick) return;
             _lastAttackTick = _unit.Attack.LastAttackTick;
             float attacksPerSecond = Mathf.Max(0.1f, _unit.Stats.Get(Core.Stats.StatType.AttackSpeed));
@@ -96,6 +108,18 @@ namespace MangaLegends.Presentation
         private StatusEffectDefinition _formStatus;
 
         private Animator ActiveAnimator => _inForm && _formAnimator != null ? _formAnimator : _animator;
+
+        private float _floatLeanCurrent;
+
+        private void Float()
+        {
+            if (_model == null) return;
+            float moving = _unit.IsAlive ? Mathf.Clamp01(_speed / _runBlendSpeed) : 0f;
+            _floatLeanCurrent = Mathf.Lerp(_floatLeanCurrent, moving * _floatLean, 1f - Mathf.Exp(-6f * Time.deltaTime));
+            float bob = _unit.IsAlive ? Mathf.Sin(Time.time * 2f) * _floatBob : 0f;
+            _model.localPosition = _basePosition + Vector3.up * ((_unit.IsAlive ? _floatHeight : 0f) + bob);
+            _model.localRotation = Quaternion.AngleAxis(_floatLeanCurrent, Vector3.right) * _baseRotation;
+        }
 
         private bool _companionShown;
         private StatusEffectDefinition _companionStatus;

@@ -46,15 +46,17 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857407
+  - rid: 2286801137428857492
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
   _toggleStatus: {fileID: 0}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857407
+    - rid: 2286801137428857492
       type: {class: LaunchProjectileEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _projectile: {fileID: 11400000, guid: 09737bb82f9ba874995c4512f0b2042a, type: 2}

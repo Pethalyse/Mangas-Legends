@@ -83,3 +83,4 @@ MonoBehaviour:
     _z: {fileID: 11400000, guid: dcd7f49cce4bd0c478c6aa5346c73843, type: 2}
     _e: {fileID: 11400000, guid: ab0e49dbe251fbd4aa43cb09b5b74749, type: 2}
     _r: {fileID: 11400000, guid: 6ab6923c10cbbd645b817e7399512bd0, type: 2}
+  _startingItems: []

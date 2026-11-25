@@ -16,7 +16,6 @@ namespace MangaLegends.Simulation.Abilities
         public const string OnKill = "on_kill";
         public const string OnDamageTaken = "on_damage_taken";
         public const string Periodic = "periodic";
-        public const string PeriodicNearestAlly = "periodic_nearest_ally";
         public const string WhileInBrush = "while_in_brush";
 
         public static void OnExecuted(string behaviourId, Unit caster, Unit target, Vector3 aimPoint)
@@ -27,7 +26,7 @@ namespace MangaLegends.Simulation.Abilities
 
         public static bool CanTriggerPassive(string behaviourId, Unit unit)
         {
-            if (behaviourId == Periodic || behaviourId == PeriodicNearestAlly) return true;
+            if (behaviourId == Periodic) return true;
             if (behaviourId != PeriodicOutOfCombat) return false;
             return !unit.Health.IsInCombat(unit.Services.Rules.OutOfCombatSeconds);
         }

@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.mark.god_hand
   _displayName: "Main c\xE9leste"
-  _description: "Mur devant lui pendant 3 s ; les comp\xE9tences qui le touchent
-    lui font 70 % de d\xE9g\xE2ts en moins."
+  _description: "Mur vers la direction vis\xE9e qui le suit pendant 3 s ; il n'arr\xEAte
+    rien, mais les comp\xE9tences qui le touchent font 70 % de d\xE9g\xE2ts en moins
+    \xE0 Mark."
   _icon: {fileID: 0}
   _maxRank: 5
   _castMode: 0
@@ -51,21 +52,23 @@ MonoBehaviour:
       _byRank:
       - 0
   _onCast:
-  - rid: 2286801137428857382
-  - rid: 2286801137428857383
+  - rid: 2286801137428857463
+  - rid: 2286801137428857464
   _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
   _toggleStatus: {fileID: 0}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
     RefIds:
-    - rid: 2286801137428857382
+    - rid: 2286801137428857463
       type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _area: {fileID: 11400000, guid: b09b6a8f02407d34e91f54f37085316a, type: 2}
         _atAimPoint: 0
-    - rid: 2286801137428857383
+    - rid: 2286801137428857464
       type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
       data:
         _target: 1
@@ -79,3 +82,4 @@ MonoBehaviour:
         _requiredStatus: {fileID: 0}
         _requiredMinStacks: 0
         _requiredMaxStacks: 0
+        _onePerCaster: 0

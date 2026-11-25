@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
   _id: ability.mark.captain
   _displayName: Capitaine
-  _description: "Li\xE9 \xE0 l'alli\xE9 le plus proche, Mark encaisse 10 % des d\xE9g\xE2ts
-    qu'il subit."
+  _description: "Mark encaisse 10 % des d\xE9g\xE2ts que subit l'alli\xE9 qu'il a
+    li\xE9 avec les Gants de David Evans."
   _icon: {fileID: 0}
   _maxRank: 1
   _castMode: 5
   _cooldownSeconds:
-  - 1
+  - 0
   _cost:
   - 0
   _costPerSecond:
@@ -35,37 +35,24 @@ MonoBehaviour:
     _byRank: 01000000
   _targeting:
     _mode: 0
-    _validTargets: 2
+    _validTargets: 1
     _fallback: 0
     _range:
       _byRank:
-      - 12
+      - 0
     _indicatorWidth:
       _byRank:
       - 0
     _indicatorRadius:
       _byRank:
       - 0
-  _onCast:
-  - rid: 2286801137428857381
-  _behaviourId: periodic_nearest_ally
+  _onCast: []
+  _behaviourId: 
   _readyStatus: {fileID: 0}
   _readyStatusBaseStacks: 0
   _toggleStatus: {fileID: 0}
+  _requiredStatus: {fileID: 0}
+  _startsLearned: 0
   references:
     version: 2
-    RefIds:
-    - rid: 2286801137428857381
-      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
-      data:
-        _target: 0
-        _status: {fileID: 11400000, guid: 3fc1e380f47c72b43b0826445fbd4eec, type: 2}
-        _stacks:
-          _byRank: 01000000
-        _durationOverrideSeconds:
-          _byRank:
-          - 0
-        _modifierOverrides: []
-        _requiredStatus: {fileID: 0}
-        _requiredMinStacks: 0
-        _requiredMaxStacks: 0
+    RefIds: []

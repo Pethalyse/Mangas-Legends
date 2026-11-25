@@ -1,6 +1,8 @@
 using Fusion;
+using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Abilities;
 using MangaLegends.Simulation.Input;
+using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
 
@@ -9,10 +11,11 @@ namespace MangaLegends.Simulation.Champions
     [RequireComponent(typeof(Unit), typeof(ChampionProgress), typeof(Inventory))]
     public sealed class ChampionController : NetworkBehaviour, IUnitBrain
     {
-        private const float AttackMoveSearchRadius = 4f;
 
         private Unit _unit;
         private Inventory _inventory;
+
+        [Networked] public NetworkBool AttackMoving { get; set; }
 
         private void Awake()
         {
@@ -55,6 +58,7 @@ namespace MangaLegends.Simulation.Champions
         {
             if (input.Has(InputButton.Stop))
             {
+                AttackMoving = false;
                 _unit.Motor.Stop();
                 _unit.Attack.ClearTarget();
                 _unit.Caster.CancelPending();
@@ -63,15 +67,27 @@ namespace MangaLegends.Simulation.Champions
 
             if (input.Has(InputButton.AttackMove))
             {
-                Unit closest = _unit.Services.Units.Closest(input.MovePoint, AttackMoveSearchRadius, u => _unit.IsEnemyOf(u) && u.IsTargetable && !u.IsInvulnerable && u.Kind != MangaLegends.Data.Definitions.UnitKind.Ward);
-                if (closest != null)
+                Unit attackMoveTarget = AttackMoveTarget(input.MovePoint);
+                if (attackMoveTarget != null)
                 {
-                    BeginAttack(closest);
+                    AttackMoving = false;
+                    BeginAttack(attackMoveTarget);
                     return;
                 }
+                if (_unit.Motor.IsForcedMovement) return;
+                _unit.Caster.CancelChannel();
+                _unit.Attack.ClearTarget();
+                _unit.Motor.MoveTo(input.MovePoint);
+                AttackMoving = true;
+                return;
             }
 
-            if (!input.Has(InputButton.Move) && !input.Has(InputButton.AttackMove)) return;
+            if (!input.Has(InputButton.Move))
+            {
+                ContinueAttackMove();
+                return;
+            }
+            AttackMoving = false;
             if (_unit.TryResolve(input.MoveTarget, out Unit target) && _unit.IsEnemyOf(target) && target.IsAlive && target.IsTargetable)
             {
                 BeginAttack(target);
@@ -82,6 +98,39 @@ namespace MangaLegends.Simulation.Champions
             _unit.Attack.ClearTarget();
             _unit.Motor.MoveTo(input.MovePoint);
         }
+
+        // LoL attack-move: the enemy near the click, else the one in attack range closest to the click,
+        // else walk to the click and attack the first enemy that comes into range.
+        private Unit AttackMoveTarget(Vector3 point)
+        {
+            Unit nearClick = _unit.Services.Units.Closest(point, _unit.Services.Rules.AttackMoveRadius, IsAttackMoveTarget);
+            if (nearClick != null) return nearClick;
+            Unit best = null;
+            float bestDistance = float.MaxValue;
+            foreach (Unit unit in _unit.Services.Units.All)
+            {
+                if (unit == null || !IsAttackMoveTarget(unit) || !_unit.Attack.IsInRange(unit)) continue;
+                float distance = UnitRegistry.FlatDistance(unit.Position, point);
+                if (distance < bestDistance) { best = unit; bestDistance = distance; }
+            }
+            return best;
+        }
+
+        private void ContinueAttackMove()
+        {
+            if (!AttackMoving) return;
+            if (_unit.Attack.HasTarget) return;
+            if (!_unit.Motor.IsMoving)
+            {
+                AttackMoving = false;
+                return;
+            }
+            Unit closest = _unit.Services.Units.Closest(_unit.Position, _unit.Attack.Range + _unit.Radius + 1f, u => IsAttackMoveTarget(u) && _unit.Attack.IsInRange(u));
+            if (closest != null) BeginAttack(closest);
+        }
+
+        private bool IsAttackMoveTarget(Unit unit) =>
+            unit.IsAlive && _unit.IsEnemyOf(unit) && unit.IsTargetable && !unit.IsInvulnerable && unit.Kind != UnitKind.Ward;
 
         private void BeginAttack(Unit target)
         {

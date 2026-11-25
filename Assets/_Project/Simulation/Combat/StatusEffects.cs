@@ -22,14 +22,16 @@ namespace MangaLegends.Simulation.Combat
         public int TriggerReadyTick;
         public byte Stat0, Kind0, Stat1, Kind1, Stat2, Kind2;
         public float Value0, Value1, Value2;
+        public float DirX, DirZ;
 
         public bool IsActive => Stacks > 0;
     }
 
     public readonly struct StatusApplication
     {
-        public StatusApplication(StatusEffectDefinition definition, Unit source, int rank, int stacks, float durationSeconds, IReadOnlyList<RankedStatModifierData> overrides)
+        public StatusApplication(StatusEffectDefinition definition, Unit source, int rank, int stacks, float durationSeconds, IReadOnlyList<RankedStatModifierData> overrides, UnityEngine.Vector3 direction = default)
         {
+            Direction = direction;
             Definition = definition;
             Source = source;
             Rank = rank;
@@ -44,6 +46,7 @@ namespace MangaLegends.Simulation.Combat
         public int Stacks { get; }
         public float DurationSeconds { get; }
         public IReadOnlyList<RankedStatModifierData> Overrides { get; }
+        public UnityEngine.Vector3 Direction { get; }
     }
 
     public sealed class StatusEffects : NetworkBehaviour, IStatModifierSource
@@ -77,6 +80,7 @@ namespace MangaLegends.Simulation.Combat
                     continue;
                 }
                 if (HasStateAuthority && status.NextPulseTick > 0 && status.NextPulseTick <= tick) Pulse(i, status, tick);
+                if (HasStateAuthority) EndOutOfCombat(i);
             }
         }
 
@@ -227,18 +231,46 @@ namespace MangaLegends.Simulation.Combat
             }
         }
 
-        public float AbilityDamageReduction
+        public float AbilityDamageReductionFrom(Unit source)
         {
-            get
+            float best = 0f;
+            for (int i = 0; i < Active.Length; i++)
             {
-                float best = 0f;
-                for (int i = 0; i < Active.Length; i++)
-                {
-                    StatusEffectDefinition definition = DefinitionAt(i);
-                    if (definition != null && definition.AbilityDamageReduction > best) best = definition.AbilityDamageReduction;
-                }
-                return best;
+                StatusEffectDefinition definition = DefinitionAt(i);
+                if (definition == null || definition.AbilityDamageReduction <= best || !Faces(i, definition, source)) continue;
+                best = definition.AbilityDamageReduction;
             }
+            return best;
+        }
+
+        // A directional reduction (a wall) only counts damage whose source stands in front of it.
+        private bool Faces(int slot, StatusEffectDefinition definition, Unit source)
+        {
+            if (definition.ReductionArcDegrees <= 0f) return true;
+            if (source == null) return false;
+            UnityEngine.Vector3 facing = new UnityEngine.Vector3(Active[slot].DirX, 0f, Active[slot].DirZ);
+            UnityEngine.Vector3 towardSource = source.Position - _unit.Position;
+            towardSource.y = 0f;
+            if (facing.sqrMagnitude < 0.0001f || towardSource.sqrMagnitude < 0.0001f) return true;
+            return UnityEngine.Vector3.Angle(facing, towardSource) <= definition.ReductionArcDegrees * 0.5f;
+        }
+
+        private void EndOutOfCombat(int slot)
+        {
+            StatusEffectDefinition definition = DefinitionAt(slot);
+            if (definition == null || definition.OnOutOfCombat.Count == 0 || _unit.Health.IsInCombat(_unit.Services.Rules.OutOfCombatSeconds)) return;
+            NetStatus status = Active[slot];
+            Clear(slot);
+            _unit.TryResolve(status.Source, out Unit source);
+            EffectExecutor.Run(definition.OnOutOfCombat, EffectContext.ForTarget(source != null ? source : _unit, _unit, status.Rank).AsProc());
+        }
+
+        public void RemoveFromCaster(StatusEffectDefinition definition, NetworkId caster)
+        {
+            if (!HasStateAuthority || definition == null || _unit == null) return;
+            int index = _unit.Services.Content.StatusEffects.IndexOf(definition.Id);
+            for (int i = 0; i < Active.Length; i++)
+                if (Active[i].IsActive && Active[i].Definition == index && Active[i].Source == caster) Clear(i);
         }
 
         public bool TryGetTaunt(out NetworkId source) => TryFind(d => d.Taunt, out source, out _);
@@ -320,6 +352,8 @@ namespace MangaLegends.Simulation.Combat
 
         private static void WriteOverrides(ref NetStatus status, in StatusApplication application)
         {
+            status.DirX = application.Direction.x;
+            status.DirZ = application.Direction.z;
             status.OverrideCount = 0;
             if (application.Overrides == null) return;
             for (int i = 0; i < application.Overrides.Count && i < 3; i++)

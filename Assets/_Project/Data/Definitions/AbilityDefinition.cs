@@ -24,6 +24,8 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Tooltip("Passive only: status kept on the champion while the passive is ready; its stacks are this base plus the champion level.")] private StatusEffectDefinition _readyStatus;
         [SerializeField, Min(0)] private int _readyStatusBaseStacks;
         [SerializeField, Tooltip("Toggle only: status kept on the caster while the ability is on; Cost per second is paid while it lasts.")] private StatusEffectDefinition _toggleStatus;
+        [SerializeField, Tooltip("Castable only while the caster has this status.")] private StatusEffectDefinition _requiredStatus;
+        [SerializeField, Tooltip("Rank 1 from the start, without a skill point (Pain's R).")] private bool _startsLearned;
 
         public int MaxRank => _maxRank;
         public CastMode CastMode => _castMode;
@@ -36,6 +38,8 @@ namespace MangaLegends.Data.Definitions
         public StatusEffectDefinition ReadyStatus => _readyStatus;
         public int ReadyStatusBaseStacks => _readyStatusBaseStacks;
         public StatusEffectDefinition ToggleStatus => _toggleStatus;
+        public StatusEffectDefinition RequiredStatus => _requiredStatus;
+        public bool StartsLearned => _startsLearned;
 
         public float CooldownAtRank(int rank) => RankValues.At(_cooldownSeconds, rank);
         public float CostAtRank(int rank) => RankValues.At(_cost, rank);

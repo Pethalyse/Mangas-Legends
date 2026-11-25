@@ -74,35 +74,36 @@ MonoBehaviour:
     _a: {fileID: 11400000, guid: ef0661242117810468ab9f957e6a2535, type: 2}
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: c9efa3078c3af8144b49f55009ffb595, type: 2}
-    _r: {fileID: 0}
+    _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
   _alternateAbilitySets:
   - _name: "Shurad\xF4"
     _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
     _a: {fileID: 11400000, guid: 5c645d97dbd446146809fbb2ffbd9a09, type: 2}
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: d2f1fba5660ec4a42bde52d0f483ec29, type: 2}
-    _r: {fileID: 0}
+    _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
   - _name: "Ningend\xF4"
     _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
     _a: {fileID: 11400000, guid: 2071c37ab7db7f14cabbed8f17b96281, type: 2}
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: 31b65bb5ed0bba74cb395a2ab22baaf5, type: 2}
-    _r: {fileID: 0}
+    _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
   - _name: "Chikush\xF4d\xF4"
     _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
     _a: {fileID: 11400000, guid: fc025abec39dc4041ab4e5b50bdca337, type: 2}
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: 1832cfd770ed5b74d942515e8edc47e3, type: 2}
-    _r: {fileID: 0}
+    _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
   - _name: "Gakid\xF4"
     _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
     _a: {fileID: 11400000, guid: dcc7984e4fbb24840a8494c0c1a7ded2, type: 2}
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: fa64167ac396d184aaf82cb032dc80ad, type: 2}
-    _r: {fileID: 0}
+    _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
   - _name: "Jigokud\xF4"
     _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
     _a: {fileID: 11400000, guid: f3828d8e33d88b04cb7192e40cc71ad4, type: 2}
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: 6aabf4058565698428651e5c6a6e6924, type: 2}
-    _r: {fileID: 0}
+    _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
+  _startingItems: []

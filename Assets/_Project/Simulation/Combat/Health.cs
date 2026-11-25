@@ -142,7 +142,7 @@ namespace MangaLegends.Simulation.Combat
                 amount *= _unit.Services.Rules.MinionDamageToChampionsRatio;
             bool basicAttack = (info.Flags & DamageFlags.AutoAttack) != 0;
             if (basicAttack && _unit.Status.TryConsumeAttackBlock()) return DamageResult.None;
-            if (!basicAttack) amount *= 1f - _unit.Status.AbilityDamageReduction;
+            if (!basicAttack) amount *= 1f - _unit.Status.AbilityDamageReductionFrom(info.Source);
             amount = ShareWithLink(info, amount);
 
             LoadShields();
