@@ -3,6 +3,30 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Visée LoL, options, passifs, Luffy, Kirito, brouillard de guerre
+
+**Fait** (branche `feat/aim-indicators-controls`, empilée sur `feat/step-5-simulation`) :
+- **Visée comme dans LoL** : modes *normal* (touche = indicateur, clic gauche lance, clic droit ou Échap annule), *rapide avec indicateur* (maintenir, relâcher) et *rapide*, réglables touche par touche ; Alt + touche lance sur soi ; l'attaque-déplacement suit le même réglage. Indicateurs au sol : cercle de portée, ligne ou éventail des projectiles, cône, cercle au curseur borné à la portée, rouge si le sort n'est pas prêt.
+- **Page Options** (menu principal, ou Échap en partie) : réassignation de toutes les touches (une touche déjà prise passe à l'action libérée, comme LoL), mode de lancement par touche, boutons « tout en … », réinitialisation. Sauvegarde locale. Le HUD affiche les touches réelles selon la disposition du clavier (AZERTY : A Z E R, objets sur & é " ( - è).
+- **Actifs d'objets** sur 1, 2, 3, 5, 6, 7 ; **passifs d'objets** et déclencheurs de combat (`CombatTriggers`) ; actif du Sceptre de la lune relié.
+- **Zoro** : passif Haki de l'armement. **Totoro** : ralentissement et brûlure sur attaque. **Luffy** (Jungle) et **Kirito** (Top) jouables en données.
+- **Sbires et monstres** qui s'écartent les uns des autres (côté hôte).
+- **Brouillard de guerre** côté client (rayons de vision LoL arrondis ; Wado Ichimonji +2 m).
+
+**Testé dans l'éditeur (solo, piloté par la CLI)** : indicateurs (cercle de portée, marqueur de Flash, ligne de l'ultime d'Ainz), page Options, touches AZERTY du HUD ; Haki de Zoro (+1 AD par coup) ; brûlure de Totoro sur un sbire ; Kirito (marques, 3e coup, Starburst Stream à 5 marques = 413 dégâts, marques consommées) ; Luffy (Gatling : 8 coups en 2 s, Luffy immobile ; Gear) ; sbires sans empilement ; brouillard (6 ennemis visibles sur 36, camps masqués). 0 erreur en console, 53 tests verts, validation du contenu OK.
+
+**Décisions** : défaut des modes = normal partout (comme le client LoL) ; Haki de Zoro plafonné à 30 cumuls et perdu à la mort ; rôle Top pour Kirito ; ADR-0007 §8 (réglages locaux, forme des indicateurs déduite des effets) et §9 (brouillard côté client). Valeurs de Luffy, Kirito, Totoro, Sceptre : 02, 03, 07.
+
+**Corrigé** : le point 7 de l'ADR-0007 avait été effacé par une substitution ratée, rétabli. `DataCheck` recompile (bouchons `Mathf`, `TooltipAttribute`).
+
+**Docs mis à jour** : architecture (§12, §15), plan (étapes 7 et 9, après la refonte), champions, objets, règles §7.4, ADR-0007.
+
+**À vérifier par l'humain** : au vrai clavier et à la souris, les trois modes de lancement, la réassignation d'une touche (cliquer, appuyer, vérifier le HUD), Alt + touche ; partie en ligne à deux.
+
+**Prochaine étape** : Zodd (renfort des sbires proches et rappel accéléré), âmes de drake et Shenron, Ogrest et larves, montée en puissance des objectifs épiques ; *Demon slash* de Zoro ; zones de terrain (eau de Luffy, zone de Naruto : à définir avec le propriétaire) ; buissons ; carte définitive ; suppression de `Legacy/` (sur accord).
+
+**Bloquants** : aucun.
+
 ## 2026-11-25 — Étapes 5 à 10 : le jeu tourne en solo
 
 **Fait** : assemblies `Simulation`, `Input`, `Networking`, `Presentation`, `UI` (ajoutées au weaving Fusion). Simulation complète (unités, stats, PV et boucliers, statuts, NavMesh prédit, attaques, compétences, projectiles, zones, canalisation, sorts d'invocateur, rappel, XP, or, inventaire, primes, vagues, tours, structures protégées, inhibiteurs, jungle, victoire). Entrées (`PlayerInputCollector`), lancement réseau (`GameLauncher` : héberger, rejoindre par code, solo). Présentation (caméra, vues d'unités, projectiles, zones, attaques). UI en code : menu, salon, HUD, boutique, tableau des scores, barres de vie, dégâts flottants, fin de partie. Contenu : 9 monstres de jungle et 4 bonus, prefabs (unités, runner, slot joueur), scènes `MainMenu` et `Match` (carte de test symétrique de 160 m, 3 voies, rivière, murs, 30 structures, 16 camps, NavMesh).

@@ -14,7 +14,9 @@ Les étapes 5 à 10 du plan ont été écrites d'un bloc pour obtenir une partie
 4. **Un composant `Unit` orchestre** les autres (`Stats`, `Status`, `Health`, `Resource`, cerveau, `Caster`, `Attack`, `Motor`) dans un ordre fixe à chaque tick ; ces composants n'ont pas leur propre `FixedUpdateNetwork`.
 5. **État hôte non répliqué** : la file des corps à retirer (`MatchController`) est une liste C# côté hôte, l'hôte ne resimulant jamais.
 6. **Interface construite en code** (UGUI, police intégrée) plutôt qu'en prefabs.
-. **Réglages des touches locaux** : touches et mode de lancement de chaque touche sauvegardés dans les `PlayerPrefs` du poste (comme les réglages du client LoL), pas dans un profil en ligne. La forme des indicateurs de visée est déduite des effets du sort ; les champs d'indicateur de `TargetingData` ne servent qu'à la corriger.
+7. **Carte de test** : sol plat, voies, rivière et murs de jungle en primitives ; placements dans `MapLayout`.
+8. **Réglages des touches locaux** : touches et mode de lancement de chaque touche sauvegardés dans les `PlayerPrefs` du poste (comme les réglages du client LoL), pas dans un profil en ligne. La forme des indicateurs de visée est déduite des effets du sort ; les champs d'indicateur de `TargetingData` ne servent qu'à la corriger.
+9. **Brouillard de guerre côté client** : chaque poste calcule ce que voit son équipe (rayon `VisionRange` des unités alliées vivantes ; structures toujours visibles) et masque le reste (corps, barres de vie, projectiles, zones, survol et ciblage à la souris). Le serveur n'en tient pas compte : un client modifié pourrait tout voir, risque accepté entre amis. Pas encore de buissons ni de murs qui bloquent la vue.
 
 ## Alternatives écartées
 - Implémenter dès maintenant hitboxes et compensation de latence : coûteux, invisible à moins de 80 ms, à reprendre si les tests en ligne le justifient.
