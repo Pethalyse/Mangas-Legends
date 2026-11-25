@@ -3,6 +3,22 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Étape 1 : Unity 6 LTS et Fusion 2
+
+**Fait** : projet migré en Unity 6000.3.26f1 ; Input System 1.20, AI Navigation 2.0, Multiplayer Play Mode 2.0, Test Framework 1.6 ; Photon Fusion 2.1.4 importé, App ID renseigné. Paquet `com.unity.pipeline` ajouté : Claude Code pilote désormais l'éditeur ouvert avec la CLI `unity` (console, compilation, tests, menus, assets). Vérifications du guide de reprise §1 faites : 0 erreur ni avertissement en console, 53 tests EditMode verts dans Unity, aucun `.meta` de `Assets/_Project` régénéré, *Validate* s'exécute (« No ContentRegistry asset found », attendu).
+
+**Corrigé** :
+- `Assets/AssetsStore/TextMesh Pro/Examples & Extras` supprimé : 21 erreurs de compilation avec le TextMesh Pro intégré à Unity UI 2.0, aucune référence dans le projet. Polices et ressources de l'ancien TMP conservées.
+- `ItemPricing.SellValue` : `1150 × 0.7f` donnait 804 sous Mono et 805 sous .NET ; calcul en `decimal`, identique partout.
+- `Tools/CoreTests/Tests` et `DataCheck` n'existaient que sur la machine d'origine (le `.gitignore` excluait `*.csproj`) : projets recréés, exception `!/Tools/**/*.csproj` ajoutée. `RollForward` pour tourner avec un SDK plus récent que .NET 8.
+- Éditeur bloqué sur « Opening project... » (lancé hors du Hub) : fermé et relancé depuis le Hub.
+
+**Docs mis à jour** : plan (étape 1 cochée + note), CLAUDE.md (commandes CLI Unity, SDK .NET), guide de reprise.
+
+**Prochaine étape** : guide de reprise §2, création des assets de l'étape 4 dans l'éditeur (règles, registre, objets, statuts, unités, Ainz, sorts d'invocateur), puis étape 5.
+
+**Bloquants** : aucun. Reste de l'étape 1 : inventaire des prefabs et animations récupérables.
+
 ## 2026-11-24 — Correction des rôles
 
 **Fait** : le rôle « Tireur » n'existe pas ; les rôles sont Top, Jungle, Mid, Bot, Support (le champion du Bot est l'ADC). GDD §4.2, fiche de Pain et enum `ChampionRole` (`Marksman` → `Bot`) corrigés.

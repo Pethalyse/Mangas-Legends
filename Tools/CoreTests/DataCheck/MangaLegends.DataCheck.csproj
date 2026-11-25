@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <DefineConstants>$(DefineConstants);UNITY_EDITOR</DefineConstants>
+    <NoWarn>$(NoWarn);CS0649</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../../../Assets/_Project/Core/**/*.cs" />
+    <Compile Include="../../../Assets/_Project/Data/**/*.cs" />
+    <Compile Include="../../../Assets/_Project/Editor/**/*.cs" />
+    <Compile Include="../UnityStubs/*.cs" />
+  </ItemGroup>
+
+</Project>

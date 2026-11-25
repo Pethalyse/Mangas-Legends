@@ -13,8 +13,9 @@ namespace MangaLegends.Core.Economy
             return total;
         }
 
+        // decimal: in float, 1150 * 0.7f floors to 804 on Mono but 805 on .NET.
         public static int SellValue(IItemRecipe item, float sellRatio) =>
-            (int)Math.Floor(TotalCost(item) * sellRatio);
+            (int)Math.Floor(TotalCost(item) * (decimal)sellRatio);
 
         public static PurchaseQuote Quote(IItemRecipe item, IReadOnlyList<IItemRecipe> inventory, int maxSlots, int gold)
         {

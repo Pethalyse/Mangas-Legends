@@ -59,8 +59,9 @@ Une tâche n'est **pas terminée** tant que les docs ne reflètent pas le code. 
 
 ## Commandes utiles
 
-- Tests du Core sans Unity : `dotnet test Tools/CoreTests/Tests` (nécessite le SDK .NET 8). À lancer après toute modification de `Assets/_Project/Core` ou de ses tests.
+- Tests du Core sans Unity : `dotnet test Tools/CoreTests/Tests` (SDK .NET 8 ou plus récent, `RollForward` activé). À lancer après toute modification de `Assets/_Project/Core` ou de ses tests.
 - Compilation de Data et Editor sans Unity : `dotnet build Tools/CoreTests/DataCheck` (bouchons d'API dans `Tools/CoreTests/UnityStubs`, à compléter si besoin). Avec Unity disponible, la compilation de l'éditeur fait foi.
 - Validation du contenu : menu *MangaLegends → Content → Validate*, ou `-batchmode -executeMethod MangaLegends.Editor.ContentTools.ValidateBatch`.
 - Tout nouveau fichier ou dossier sous `Assets/` doit avoir son `.meta` (GUID unique) : le générer si Unity n'est pas disponible.
+- Piloter l'éditeur ouvert (paquet `com.unity.pipeline`) : CLI `unity` ; `unity status` (éditeur connecté), `unity recompile --project-path <projet>`, `unity command console status`, `unity command test run --mode editor`, `unity command editor invoke_menu "MangaLegends/Content/Validate"`. Passer `--project-path` si plusieurs éditeurs sont ouverts. `unity test` exige que l'éditeur soit fermé.
 - Build serveur headless : à compléter à l'étape 5.

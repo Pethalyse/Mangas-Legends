@@ -81,9 +81,9 @@ Conséquence : on ne refactore pas l'ancien code fichier par fichier, on **recon
 ### Étape 1 — Unity 6 LTS et SDK réseau
 Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-1-unity6-fusion.md).
 - [x] Retirer `visualscripting`, `collab-proxy`, `ide.vscode` de `Packages/manifest.json`.
-- [ ] Migrer vers la dernière Unity 6 LTS *(humain, dans l'éditeur)*.
-- [ ] Installer Input System, AI Navigation, Multiplayer Play Mode, mettre à jour Test Framework *(humain)*.
-- [ ] Créer l'app Photon Fusion 2, importer le SDK, renseigner l'App ID *(humain)*.
+- [x] Migrer vers la dernière Unity 6 LTS (6000.3.26f1).
+- [x] Installer Input System 1.20, AI Navigation 2.0, Multiplayer Play Mode 2.0, Test Framework 1.6.
+- [x] Créer l'app Photon Fusion 2, importer le SDK (2.1.4), renseigner l'App ID (`Assets/Photon/Fusion/Resources/PhotonAppSettings.asset`).
 - [x] Inventorier les objets (`Resources/Items`) → [03-objets.md §4](03-objets.md).
 - [ ] Inventorier prefabs et animations récupérables (à faire une fois le projet ouvert en Unity 6).
 
@@ -141,6 +141,8 @@ Champions du premier jalon (GDD §10) : Luffy, Zoro, Naruto, Kirito ; brouillard
 ## 4. Notes d'avancement
 
 _Claude Code ajoute ici, par étape terminée : date, PR, ce qui a changé, ce qui reste._
+
+- 2026-11-25 (étape 1) : Unity 6000.3.26f1, Input System, AI Navigation, Multiplayer Play Mode, Fusion 2.1.4 et App ID. Paquet `com.unity.pipeline` ajouté pour piloter l'éditeur depuis la CLI `unity`. Exemples de l'ancien TextMesh Pro supprimés (ne compilaient plus avec le TMP intégré à Unity UI 2.0). Console sans erreur, 53 tests EditMode verts dans Unity. Corrigé : `ItemPricing.SellValue` donnait 804 au lieu de 805 sous Mono (arrondi float), calcul passé en `decimal`. Les projets `Tools/CoreTests/Tests` et `DataCheck` n'avaient jamais été commités (règle `*.csproj` du `.gitignore`) : recréés et suivis. Reste : inventaire des prefabs et animations.
 
 - 2026-11-24 (PR #4) : complément de l'étape 4. `GameRulesConfig` gagne les règles de structures (bonus des tours en début de partie, réapparition de l'inhibiteur) et le remplacement siège → méga sbire, avec une validation. Valeurs à 0 en attendant l'équilibrage.
 - 2026-11-24 (PR #4) : toutes les valeurs chiffrées des compétences, projectiles, zones et effets passent en `RankedFloat` / `RankedInt` ; validation des rangs des projectiles et zones depuis la compétence (corrige une fausse erreur sur les dégâts par rang d'un projectile).

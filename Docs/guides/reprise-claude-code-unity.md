@@ -13,7 +13,7 @@
 | 1 | Étape 1 faite par l'humain ? (Unity 6 LTS, Input System, AI Navigation, Multiplayer Play Mode, Fusion 2) | sinon, la guider avec `Docs/guides/etape-1-unity6-fusion.md` |
 | 2 | Console après import | **0 erreur de compilation** ; des « Missing Script » dans les anciennes scènes et prefabs sont normaux |
 | 3 | Assemblies `MangaLegends.Core`, `.Data`, `.Editor`, `.Tests.EditMode` | visibles, sans avertissement d'asmdef |
-| 4 | *Test Runner → EditMode → Run All* | tous verts (53 au 2026-11-24) |
+| 4 | *Test Runner → EditMode → Run All* | tous verts (53 au 2026-11-25, vérifié dans Unity 6000.3.26f1) |
 | 5 | Les `.meta` sous `Assets/_Project` | Unity ne les a pas régénérés (GUID inchangés dans `git status`) |
 | 6 | Menu *MangaLegends → Content → Validate* | s'exécute (« No ContentRegistry asset found » tant que l'étape 2 n'est pas faite) |
 | 7 | Inspecteur d'un `AbilityDefinition` | la liste *On Cast* affiche un menu déroulant pour choisir le type d'effet (`TypeSelectorDrawer`) |
