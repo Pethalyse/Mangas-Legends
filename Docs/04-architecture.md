@@ -243,7 +243,9 @@ Structures (GDD §6.1) : chaque tour, inhibiteur et Cœur placé sur la carte r�
 ## 12. UI et entrées
 
 - HUD lié au champion local via un `LocalPlayerContext` fourni au démarrage ; vues sans règles, abonnées aux événements.
-- Input System, un asset `MangaControls.inputactions` (cartes `Gameplay`, `UI`), remappage sauvegardé. `PlayerInputCollector` remplit `PlayerInput` dans le callback `OnInput` de Fusion. Aucun autre script ne lit les entrées.
+- Input System, un asset `MangaControls.inputactions` (carte `Gameplay`), remappage sauvegardé dans les `PlayerPrefs` par `ControlSettings` (avec le mode de lancement de chaque touche). `PlayerInputCollector` remplit `PlayerInput` dans le callback `OnInput` de Fusion. Aucun autre script ne lit les entrées ; la page Options ne fait que lancer `PerformInteractiveRebinding`.
+- **Lancement comme dans LoL** (réglable par touche) : *normal* (la touche affiche l'indicateur, clic gauche lance, clic droit ou Échap annule ; une compétence à cible unitaire attend un clic sur une cible valide), *rapide avec indicateur* (maintenir pour viser, relâcher pour lancer), *rapide* (lance au curseur à l'appui). Les compétences sans visée (soi, aucune) partent toujours à l'appui ; Alt + touche lance sur soi une compétence qui accepte un allié. L'attaque-déplacement suit le même réglage (cercle de portée d'attaque, puis clic). Valeurs par défaut : normal partout, comme le client LoL.
+- Le collecteur expose l'état de visée dans `LocalView` (`IsAiming`, `AimButton`) ; `AimIndicator` (présentation) le dessine : cercle de portée, puis la forme lue dans les effets du sort (`AimShape` : ligne de projectile et éventail, cône ou rectangle de zone, cercle au curseur borné à la portée, trajectoire de ruée), rouge si le sort n'est pas prêt. `TargetingData.IndicatorWidth/Radius` remplacent la forme déduite si renseignés. `AimSource` (Simulation) donne, pour une touche, le ciblage, les effets, le rang et la disponibilité, compétence ou actif d'objet.
 
 ## 13. Tests et outils
 
@@ -267,11 +269,11 @@ Structures (GDD §6.1) : chaque tour, inhibiteur et Cœur placé sur la carte r�
 
 | Assembly | Contenu principal |
 |---|---|
-| `Simulation` | `Units/` (`Unit`, `UnitStats`, `Team`), `Combat/` (`Health`, `ResourcePool`, `StatusEffects`, `AutoAttack`), `Movement/UnitMotor`, `Abilities/` (`AbilityCaster`, `ProjectileLauncher`, `AreaSpawner`, `EffectExecutor`, `EffectContext`, `AbilityBehaviours`), `Champions/` (`ChampionController`, `ChampionProgress`, `Inventory`), `Match/` (`MatchController`, `MatchRewards`, `WaveDirector`, `JungleDirector`, `PlayerSlot`, `MapLayout`), `AI/` (`MinionBrain`, `TowerBrain`, `MonsterBrain`, `TargetSelection`), `Services/` (`MatchServices`, `UnitRegistry`, `LocalCommands`, `LocalView`), `Input/PlayerInput` |
-| `Input` | `PlayerInputCollector`, `MangaControls.inputactions` |
+| `Simulation` | `Units/` (`Unit`, `UnitStats`, `Team`), `Combat/` (`Health`, `ResourcePool`, `StatusEffects`, `AutoAttack`), `Movement/UnitMotor`, `Abilities/` (`AbilityCaster`, `ProjectileLauncher`, `AreaSpawner`, `EffectExecutor`, `EffectContext`, `AbilityBehaviours`, `AimSource`), `Champions/` (`ChampionController`, `ChampionProgress`, `Inventory`), `Match/` (`MatchController`, `MatchRewards`, `WaveDirector`, `JungleDirector`, `PlayerSlot`, `MapLayout`), `AI/` (`MinionBrain`, `TowerBrain`, `MonsterBrain`, `TargetSelection`), `Services/` (`MatchServices`, `UnitRegistry`, `LocalCommands`, `LocalView`), `Input/PlayerInput` |
+| `Input` | `PlayerInputCollector`, `ControlSettings` (touches et modes de lancement), `MangaControls.inputactions` |
 | `Networking` | `GameLauncher` (hôte, rejoindre par code, solo, quitter) |
-| `Presentation` | `MatchView`, `CameraRig`, `UnitView`, `AbilityVisuals` |
-| `UI` | `UiFactory`, `MainMenuScreen`, `MatchScreen` (+ `LobbyPanel`, `HudPanel`, `ShopPanel`, `ScoreboardPanel`, `WorldOverlay`) |
+| `Presentation` | `MatchView`, `CameraRig`, `UnitView`, `AbilityVisuals`, `AimIndicator`, `AimShape` |
+| `UI` | `UiFactory`, `MainMenuScreen`, `MatchScreen` (+ `LobbyPanel`, `HudPanel`, `ShopPanel`, `ScoreboardPanel`, `WorldOverlay`, `SettingsPanel`) |
 
 Contenu : `Assets/_Project/Content/` (données), `Prefabs/` (`PF_Runner`, `PF_PlayerSlot`, `Units/PF_*`), `Scenes/` (`MainMenu`, `Match`), `Art/` (matériaux, NavMesh).
 

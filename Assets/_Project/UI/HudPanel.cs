@@ -1,3 +1,4 @@
+using System;
 using MangaLegends.Core.Stats;
 using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Abilities;
@@ -14,7 +15,8 @@ namespace MangaLegends.UI
     public sealed class HudPanel
     {
         private static readonly CasterSlot[] SlotOrder = { CasterSlot.Passive, CasterSlot.A, CasterSlot.Z, CasterSlot.E, CasterSlot.R, CasterSlot.Summoner1, CasterSlot.Summoner2, CasterSlot.Recall };
-        private static readonly string[] Keys = { "P", "A", "Z", "E", "R", "D", "F", "B" };
+        private static readonly string[] KeyActions = { "", "AbilityA", "AbilityZ", "AbilityE", "AbilityR", "Summoner1", "Summoner2", "Recall" };
+        private static readonly string[] ItemActions = { "Item1", "Item2", "Item3", "Item4", "Item5", "Item6" };
 
         private readonly GameObject _root;
         private readonly Image _health;
@@ -31,6 +33,8 @@ namespace MangaLegends.UI
         private readonly GameObject _channelRoot;
         private readonly SlotView[] _slots = new SlotView[SlotOrder.Length];
         private readonly Image[] _items = new Image[Inventory.Capacity];
+        private readonly Text[] _itemKeys = new Text[ItemActions.Length];
+        private readonly Image[] _itemCooldowns = new Image[ItemActions.Length];
         private MatchServices _services;
 
         public HudPanel(Transform canvas)
@@ -39,7 +43,7 @@ namespace MangaLegends.UI
             _root = root.gameObject;
             UiFactory.Image(root, "Background", UiFactory.Panel);
 
-            for (int i = 0; i < SlotOrder.Length; i++) _slots[i] = new SlotView(root, i, Keys[i], this);
+            for (int i = 0; i < SlotOrder.Length; i++) _slots[i] = new SlotView(root, i, i == 0 ? "P" : "", this);
 
             UiFactory.Bar(root, "Health", new Vector2(0f, 0f), Vector2.zero, new Vector2(140f, 40f), new Vector2(620f, 26f), UiFactory.Health, out _health);
             _healthText = UiFactory.Text(_health.transform.parent, "Value", "", 18, TextAnchor.MiddleCenter, Color.white);
@@ -60,6 +64,12 @@ namespace MangaLegends.UI
                 _items[i] = UiFactory.Image(item.transform, "Icon", Color.white);
                 _items[i].rectTransform.offsetMin = new Vector2(4f, 4f);
                 _items[i].rectTransform.offsetMax = new Vector2(-4f, -4f);
+                if (i < ItemActions.Length)
+                {
+                    _itemCooldowns[i] = UiFactory.Image(item.transform, "Cooldown", new Color(0f, 0f, 0f, 0.7f));
+                    _itemKeys[i] = UiFactory.Text(item.transform, "Key", "", 14, TextAnchor.LowerRight, UiFactory.Accent);
+                    _itemKeys[i].rectTransform.offsetMax = new Vector2(-3f, 0f);
+                }
                 if (i >= 6) item.gameObject.SetActive(false);
             }
 
@@ -81,6 +91,12 @@ namespace MangaLegends.UI
         public MatchServices Services => _services;
 
         public void Bind(MatchServices services) => _services = services;
+
+        public void SetKeyLabels(Func<string, string> labelOf)
+        {
+            for (int i = 1; i < _slots.Length; i++) _slots[i].SetKey(labelOf(KeyActions[i]));
+            for (int i = 0; i < _itemKeys.Length; i++) _itemKeys[i].text = labelOf(ItemActions[i]);
+        }
 
         public void Refresh(MatchController match, Unit champion)
         {
@@ -114,6 +130,13 @@ namespace MangaLegends.UI
                 ItemDefinition item = inventory.ItemAt(i);
                 _items[i].enabled = item != null;
                 if (item != null) _items[i].sprite = item.Icon;
+                if (i >= _itemCooldowns.Length) continue;
+                float cooldown = item != null && item.Active.Enabled && item.Active.CooldownSeconds > 0f ? inventory.ActiveCooldownRemaining(i) / item.Active.CooldownSeconds : 0f;
+                RectTransform shade = _itemCooldowns[i].rectTransform;
+                shade.anchorMin = Vector2.zero;
+                shade.anchorMax = new Vector2(1f, Mathf.Clamp01(cooldown));
+                shade.offsetMin = Vector2.zero;
+                shade.offsetMax = Vector2.zero;
             }
 
             AbilityCaster caster = champion.Caster;
@@ -131,6 +154,7 @@ namespace MangaLegends.UI
             private readonly Image _cooldown;
             private readonly Text _timer;
             private readonly Text _rank;
+            private readonly Text _key;
             private readonly GameObject _levelUp;
             private readonly int _slotIndex;
             private readonly HudPanel _hud;
@@ -146,14 +170,16 @@ namespace MangaLegends.UI
                 _icon = UiFactory.Image(frame.transform, "Icon", Color.white);
                 _cooldown = UiFactory.Image(frame.transform, "Cooldown", new Color(0f, 0f, 0f, 0.7f));
                 _timer = UiFactory.Text(frame.transform, "Timer", "", small ? 20 : 28, TextAnchor.MiddleCenter, Color.white);
-                Text label = UiFactory.Text(frame.transform, "Key", key, 16, TextAnchor.LowerRight, UiFactory.Accent);
-                label.rectTransform.offsetMax = new Vector2(-3f, 0f);
+                _key = UiFactory.Text(frame.transform, "Key", key, 16, TextAnchor.LowerRight, UiFactory.Accent);
+                _key.rectTransform.offsetMax = new Vector2(-3f, 0f);
                 _rank = UiFactory.Text(frame.transform, "Rank", "", 16, TextAnchor.UpperLeft, Color.white);
                 _rank.rectTransform.offsetMin = new Vector2(3f, 0f);
                 Button plus = UiFactory.Button(frame.transform, "LevelUp", "+", () => _hud.Services?.Commands.RequestLevelUp((int)SlotOrder[_slotIndex]), 26);
                 UiFactory.Place(plus, new Vector2(0.5f, 1f), new Vector2(0.5f, 0f), new Vector2(0f, 4f), new Vector2(36f, 30f));
                 _levelUp = plus.gameObject;
             }
+
+            public void SetKey(string key) => _key.text = key;
 
             public void Refresh(Unit champion, CasterSlot slot)
             {

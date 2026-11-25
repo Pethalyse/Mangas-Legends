@@ -95,6 +95,12 @@ namespace MangaLegends.Simulation.Champions
             Cast(input, InputButton.Summoner1, CasterSlot.Summoner1);
             Cast(input, InputButton.Summoner2, CasterSlot.Summoner2);
             Cast(input, InputButton.Recall, CasterSlot.Recall);
+            for (InputButton button = InputButton.Item1; button <= InputButton.Item6; button++)
+            {
+                if (!input.Has(button)) continue;
+                _unit.TryResolve(input.AimTarget, out Unit aimTarget);
+                _inventory.TryUseActive(AimSource.ItemSlotOf(button), input.AimPoint, aimTarget);
+            }
         }
 
         private void Cast(in PlayerInput input, InputButton button, CasterSlot slot)

@@ -878,6 +878,7 @@ GameObject:
   - component: {fileID: 386591618}
   - component: {fileID: 386591617}
   - component: {fileID: 386591616}
+  - component: {fileID: 386591621}
   m_Layer: 0
   m_Name: View
   m_TagString: Untagged
@@ -965,6 +966,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &386591621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386591615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c48cc10eb8e614784532d2cbe8d9f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MangaLegends.Presentation::MangaLegends.Presentation.AimIndicator
+  _view: {fileID: 386591619}
+  _material: {fileID: 2100000, guid: a8dbeaa22fced3f4b8563eec10b72f56, type: 2}
+  _rangeColor: {r: 1, g: 1, b: 1, a: 0.55}
+  _shapeColor: {r: 0.45, g: 0.8, b: 1, a: 0.28}
+  _edgeColor: {r: 0.6, g: 0.9, b: 1, a: 0.8}
+  _unavailableColor: {r: 1, g: 0.35, b: 0.3, a: 0.3}
+  _targetColor: {r: 1, g: 0.85, b: 0.3, a: 0.9}
+  _lineThickness: 0.08
 --- !u!1 &396558931
 GameObject:
   m_ObjectHideFlags: 0

@@ -43,6 +43,14 @@ namespace UnityEngine
         public float x, y, width, height;
     }
 
+    public static class Mathf
+    {
+        public static float Max(float a, float b) => a > b ? a : b;
+        public static float Min(float a, float b) => a < b ? a : b;
+        public static int Max(int a, int b) => a > b ? a : b;
+        public static int Min(int a, int b) => a < b ? a : b;
+    }
+
     public struct Color
     {
         public Color(float r, float g, float b, float a = 1f) { this.r = r; this.g = g; this.b = b; this.a = a; }

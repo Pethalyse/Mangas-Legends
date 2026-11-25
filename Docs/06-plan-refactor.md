@@ -121,14 +121,14 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 
 ### Étape 7 — Compétences
 - [x] `AbilityCaster`, `AbilitySet`, ciblages, effets génériques, tampon de projectiles, zones, canalisation, charges, sorts d'invocateur, rappel.
-- [ ] Indicateurs de visée (présentation).
+- [x] Indicateurs de visée (`AimIndicator`) et modes de lancement LoL (normal, rapide avec indicateur, rapide), lancer sur soi (Alt), touches réassignables (page Options).
 - [x] **Ainz** complet, uniquement en données (passif par `BehaviourId`).
 
 ### Étape 8 — Sbires, tours, jungle
 - [x] `MinionBrain`, vagues pilotées par `WaveDirector`, tours (`TowerBrain`, aggro sur harcèlement, dégâts croissants), structures protégées, inhibiteurs qui réapparaissent, méga sbires, monstres (`JungleDirector`, `MonsterBrain`, 9 monstres dont 2 épiques). Valeurs en données.
 
 ### Étape 9 — Économie et objets
-- [x] Or (`ChampionProgress`), `Inventory`, achat et vente via l'input validés par l'autorité, recettes, UI boutique. Reste : passifs et actifs des objets.
+- [x] Or (`ChampionProgress`), `Inventory`, achat et vente via l'input validés par l'autorité, recettes, UI boutique. Actifs des objets (touches 1, 2, 3, 5, 6, 7, recharge par emplacement). Reste : passifs des objets.
 
 ### Étape 10 — Flux de partie
 - [x] `MainMenu → Match (salon, partie, fin)`, `MatchController`, victoire, horloge (ADR-0007 : salon et sélection dans la scène de match).

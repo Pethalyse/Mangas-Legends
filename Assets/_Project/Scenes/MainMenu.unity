@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MangaLegends.UI::MangaLegends.UI.MainMenuScreen
   _launcher: {fileID: 386591617}
+  _controls: {fileID: -944628639613478452, guid: 385ac85b101d1de499fc3e1cd6974de4, type: 3}
 --- !u!114 &386591617
 MonoBehaviour:
   m_ObjectHideFlags: 0

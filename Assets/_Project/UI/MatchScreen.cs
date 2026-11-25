@@ -1,3 +1,4 @@
+using MangaLegends.Input;
 using MangaLegends.Networking;
 using MangaLegends.Presentation;
 using MangaLegends.Simulation.Services;
@@ -16,6 +17,8 @@ namespace MangaLegends.UI
         private ScoreboardPanel _scoreboard;
         private WorldOverlay _overlay;
         private Text _waiting;
+        private SettingsPanel _settings;
+        private ControlSettings _controlSettings;
 
         private void Start()
         {
@@ -34,6 +37,7 @@ namespace MangaLegends.UI
             MatchServices services = _view.Services;
             _waiting.gameObject.SetActive(services == null || services.Match == null);
             if (services == null || services.Match == null) return;
+            BindSettings(services);
             _lobby.Bind(services);
             _hud.Bind(services);
             _shop.Bind(services);
@@ -43,5 +47,28 @@ namespace MangaLegends.UI
             _scoreboard.Refresh(services, services.Match);
             _overlay.Refresh(services);
         }
+
+        private void OnDestroy()
+        {
+            _settings?.Dispose();
+            if (_controlSettings != null) _controlSettings.Changed -= RefreshKeys;
+        }
+
+        private void BindSettings(MatchServices services)
+        {
+            if (_settings == null)
+            {
+                PlayerInputCollector collector = _view.Runner.GetComponent<PlayerInputCollector>();
+                if (collector == null || collector.Settings == null) return;
+                _controlSettings = collector.Settings;
+                _settings = new SettingsPanel(transform, _controlSettings, () => GameLauncher.Leave(_view.Runner));
+                _controlSettings.Changed += RefreshKeys;
+                RefreshKeys();
+            }
+            if (services.View.TakeMenuToggle()) _settings.Toggle();
+            services.View.MenuOpen = _settings.IsOpen;
+        }
+
+        private void RefreshKeys() => _hud.SetKeyLabels(_controlSettings.KeyLabel);
     }
 }

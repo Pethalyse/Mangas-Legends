@@ -1,3 +1,4 @@
+using MangaLegends.Input;
 using MangaLegends.Networking;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,17 +8,19 @@ namespace MangaLegends.UI
     public sealed class MainMenuScreen : MonoBehaviour
     {
         [SerializeField] private GameLauncher _launcher;
+        [SerializeField] private UnityEngine.InputSystem.InputActionAsset _controls;
 
         private InputField _name;
         private InputField _code;
         private Text _status;
         private Button[] _buttons;
+        private SettingsPanel _settings;
 
         private void Start()
         {
             Canvas canvas = UiFactory.Canvas(transform, "MainMenu", 0);
             UiFactory.Image(canvas.transform, "Background", new Color(0.04f, 0.05f, 0.08f));
-            Image panel = UiFactory.Box(canvas.transform, "Panel", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(720f, 620f), UiFactory.Panel);
+            Image panel = UiFactory.Box(canvas.transform, "Panel", new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(720f, 690f), UiFactory.Panel);
             Transform root = panel.transform;
 
             Text title = UiFactory.Text(root, "Title", "MANGA LEGENDS", 64, TextAnchor.MiddleCenter, UiFactory.Accent);
@@ -30,8 +33,10 @@ namespace MangaLegends.UI
             {
                 MenuButton(root, "Héberger", () => Run(() => _launcher.Host(_code.text)), -340f),
                 MenuButton(root, "Rejoindre", () => Run(() => _launcher.Join(_code.text)), -410f),
-                MenuButton(root, "Entraînement (solo)", () => Run(_launcher.Solo), -480f)
+                MenuButton(root, "Entraînement (solo)", () => Run(_launcher.Solo), -480f),
+                MenuButton(root, "Options", () => _settings?.Show(), -550f)
             };
+            if (_controls != null) _settings = new SettingsPanel(transform, new ControlSettings(_controls), null);
 
             _status = UiFactory.Text(root, "Status", "", 22, TextAnchor.MiddleCenter, new Color(1f, 0.6f, 0.5f));
             UiFactory.Place(_status, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 20f), new Vector2(680f, 40f));
@@ -41,6 +46,7 @@ namespace MangaLegends.UI
         private void OnDestroy()
         {
             if (_launcher != null) _launcher.StateChanged -= Refresh;
+            _settings?.Dispose();
         }
 
         private InputField Field(Transform root, string label, string value, float y)
