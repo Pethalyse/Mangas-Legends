@@ -1,0 +1,14 @@
+{
+    "name": "MangaLegends.Networking",
+    "rootNamespace": "MangaLegends.Networking",
+    "references": ["MangaLegends.Core", "MangaLegends.Data", "MangaLegends.Simulation", "MangaLegends.Input", "Fusion.Unity"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,14 @@
+{
+    "name": "MangaLegends.UI",
+    "rootNamespace": "MangaLegends.UI",
+    "references": ["MangaLegends.Core", "MangaLegends.Data", "MangaLegends.Simulation", "MangaLegends.Presentation", "MangaLegends.Networking", "Fusion.Unity", "Unity.InputSystem", "UnityEngine.UI"],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

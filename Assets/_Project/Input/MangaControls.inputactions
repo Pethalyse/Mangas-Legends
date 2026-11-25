@@ -1,0 +1,50 @@
+{
+    "name": "MangaControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "6f1b8a0e-3c51-4d0a-9a3e-0b6f5c2d1a01",
+            "actions": [
+                { "name": "Point", "type": "PassThrough", "id": "a1f3c9d2-0001-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Vector2", "processors": "", "interactions": "", "initialStateCheck": true },
+                { "name": "Move", "type": "Button", "id": "a1f3c9d2-0002-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Select", "type": "Button", "id": "a1f3c9d2-0003-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "AttackMove", "type": "Button", "id": "a1f3c9d2-0004-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Stop", "type": "Button", "id": "a1f3c9d2-0005-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "AbilityA", "type": "Button", "id": "a1f3c9d2-0006-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "AbilityZ", "type": "Button", "id": "a1f3c9d2-0007-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "AbilityE", "type": "Button", "id": "a1f3c9d2-0008-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "AbilityR", "type": "Button", "id": "a1f3c9d2-0009-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Summoner1", "type": "Button", "id": "a1f3c9d2-0010-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Summoner2", "type": "Button", "id": "a1f3c9d2-0011-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Recall", "type": "Button", "id": "a1f3c9d2-0012-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "LevelUpModifier", "type": "Button", "id": "a1f3c9d2-0013-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Shop", "type": "Button", "id": "a1f3c9d2-0014-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Scoreboard", "type": "Button", "id": "a1f3c9d2-0015-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "CameraLock", "type": "Button", "id": "a1f3c9d2-0016-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "CameraCenter", "type": "Button", "id": "a1f3c9d2-0017-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false },
+                { "name": "Zoom", "type": "PassThrough", "id": "a1f3c9d2-0018-4b6e-8d2a-7c1f0e9b3a01", "expectedControlType": "Vector2", "processors": "", "interactions": "", "initialStateCheck": false }
+            ],
+            "bindings": [
+                { "name": "", "id": "b2e4d0a1-0001-4c7f-9e3b-8d2a1f0c4b01", "path": "<Pointer>/position", "interactions": "", "processors": "", "groups": "", "action": "Point", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0002-4c7f-9e3b-8d2a1f0c4b01", "path": "<Mouse>/rightButton", "interactions": "", "processors": "", "groups": "", "action": "Move", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0003-4c7f-9e3b-8d2a1f0c4b01", "path": "<Mouse>/leftButton", "interactions": "", "processors": "", "groups": "", "action": "Select", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0004-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/a", "interactions": "", "processors": "", "groups": "", "action": "AttackMove", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0005-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/s", "interactions": "", "processors": "", "groups": "", "action": "Stop", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0006-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/q", "interactions": "", "processors": "", "groups": "", "action": "AbilityA", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0007-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/w", "interactions": "", "processors": "", "groups": "", "action": "AbilityZ", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0008-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/e", "interactions": "", "processors": "", "groups": "", "action": "AbilityE", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0009-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/r", "interactions": "", "processors": "", "groups": "", "action": "AbilityR", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0010-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/d", "interactions": "", "processors": "", "groups": "", "action": "Summoner1", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0011-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/f", "interactions": "", "processors": "", "groups": "", "action": "Summoner2", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0012-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/b", "interactions": "", "processors": "", "groups": "", "action": "Recall", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0013-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/ctrl", "interactions": "", "processors": "", "groups": "", "action": "LevelUpModifier", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0014-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/p", "interactions": "", "processors": "", "groups": "", "action": "Shop", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0015-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/tab", "interactions": "", "processors": "", "groups": "", "action": "Scoreboard", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0016-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/y", "interactions": "", "processors": "", "groups": "", "action": "CameraLock", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0017-4c7f-9e3b-8d2a1f0c4b01", "path": "<Keyboard>/space", "interactions": "", "processors": "", "groups": "", "action": "CameraCenter", "isComposite": false, "isPartOfComposite": false },
+                { "name": "", "id": "b2e4d0a1-0018-4c7f-9e3b-8d2a1f0c4b01", "path": "<Mouse>/scroll", "interactions": "", "processors": "", "groups": "", "action": "Zoom", "isComposite": false, "isPartOfComposite": false }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

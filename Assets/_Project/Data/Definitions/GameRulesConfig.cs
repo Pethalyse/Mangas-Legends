@@ -46,6 +46,12 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _assistWindowSeconds = 10f;
         [SerializeField, Min(0f)] private float _shopRadius = 8f;
 
+        [Header("Jungle")]
+        [SerializeField, Min(0f)] private float _monsterKillHealBase = 90f;
+        [SerializeField, Min(0f)] private float _monsterKillHealPerLevel = 20f;
+        [SerializeField, Min(0f)] private float _monsterKillHealMax = 250f;
+        [SerializeField, Min(0f)] private float _monsterLeashResetSeconds = 4f;
+
         [Header("Base")]
         [SerializeField, Min(0f)] private float _fountainRadius = 8f;
         [SerializeField, Range(0f, 1f)] private float _fountainRegenPerSecond = 0.1f;
@@ -100,6 +106,8 @@ namespace MangaLegends.Data.Definitions
         public float AssistGoldShare => _assistGoldShare;
         public float AssistWindowSeconds => _assistWindowSeconds;
         public float ShopRadius => _shopRadius;
+        public float MonsterLeashResetSeconds => _monsterLeashResetSeconds;
+        public float MonsterKillHeal(int level) => Mathf.Min(_monsterKillHealMax, _monsterKillHealBase + _monsterKillHealPerLevel * Mathf.Max(0, level - 1));
         public float FountainRadius => _fountainRadius;
         public float FountainRegenPerSecond => _fountainRegenPerSecond;
         public AbilityDefinition RecallAbility => _recallAbility;

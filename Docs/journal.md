@@ -3,6 +3,16 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Étapes 5 à 10 : simulation, réseau, présentation (en cours)
+
+**Fait** : assemblies `Simulation`, `Input`, `Networking`, `Presentation`, `UI` créées et ajoutées au weaving Fusion. Simulation : `Unit` (orchestre les composants dans un ordre fixe), `UnitStats`, `Health` (boucliers, historique des coups, mort), `ResourcePool`, `StatusEffects` (tableau réseau, modificateurs par rang), `UnitMotor` (chemin NavMesh en état réseau, dashs), `AutoAttack` (attaques à distance, critiques côté autorité), `AbilityCaster` + `ProjectileLauncher` + `AreaSpawner` + `EffectExecutor`, champion (`ChampionController`, `ChampionProgress`, `Inventory`), partie (`MatchController`, `MatchRewards`, `WaveDirector`, `JungleDirector`, `PlayerSlot`, `MapLayout`), IA (sbires, tours, monstres). Input : `PlayerInputCollector`, `MangaControls.inputactions`. Networking : `GameLauncher` (hôte, rejoindre, solo). Présentation : caméra, vues d'unités, visuels des projectiles, zones et attaques. UI : menu principal, salon, HUD. Data : `MonsterDefinition`, règles de jungle. Tout compile dans Unity.
+
+**Pas encore fait** : `MatchScreen` (assemble salon, HUD, boutique, tableau des scores, barres de vie, dégâts flottants, fin de partie), boutique et tableau des scores, prefabs des unités (`Unit` + `NetworkObject` + `NetworkTransform` + collider), prefab du runner (`MatchServices`, `PlayerInputCollector`, `NetworkSceneManagerDefault`), scènes `MainMenu` et `Match` (carte de test, NavMesh, `MapLayout`, `MatchController`), monstres de jungle en données, ADR des simplifications (impacts sans compensation de latence, salon dans la scène de match), mise à jour de l'architecture. **Rien n'a été lancé en jeu** : aucun test en mode Play.
+
+**Prochaine étape** : écrire `MatchScreen`, créer prefabs et scènes via `script eval`, tester une partie solo puis hôte + client (Multiplayer Play Mode).
+
+**Bloquants** : aucun technique ; limite d'utilisation atteinte pendant la session.
+
 ## 2026-11-25 — Étape 1 : Unity 6 LTS et Fusion 2
 
 **Fait** : projet migré en Unity 6000.3.26f1 ; Input System 1.20, AI Navigation 2.0, Multiplayer Play Mode 2.0, Test Framework 1.6 ; Photon Fusion 2.1.4 importé, App ID renseigné. Paquet `com.unity.pipeline` ajouté : Claude Code pilote désormais l'éditeur ouvert avec la CLI `unity` (console, compilation, tests, menus, assets). Vérifications du guide de reprise §1 faites : 0 erreur ni avertissement en console, 53 tests EditMode verts dans Unity, aucun `.meta` de `Assets/_Project` régénéré, *Validate* s'exécute (« No ContentRegistry asset found », attendu).

@@ -21,6 +21,10 @@ namespace MangaLegends.Data.Definitions
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onTick = new List<EffectDefinition>();
 
         public float DurationSeconds => _durationSeconds;
+        public StatusRestriction Restrictions => _restrictions;
+        public StackingRule Stacking => _stacking;
+        public int MaxStacks => _maxStacks;
+        public bool IsCrowdControl => _isCrowdControl;
         public IReadOnlyList<StatModifierData> ModifiersPerStack => _modifiersPerStack;
         public float TickIntervalSeconds => _tickIntervalSeconds;
         public IReadOnlyList<EffectDefinition> OnTick => _onTick;
