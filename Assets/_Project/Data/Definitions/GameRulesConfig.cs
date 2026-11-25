@@ -22,6 +22,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Range(0f, 1f)] private float _inCombatRegenRatio = 0.25f;
         [SerializeField, Range(0f, 1f)] private float _minionDamageToChampionsRatio = 0.6f;
         [SerializeField, Min(0f)] private float _maxAttackSpeed = 2.5f;
+        [SerializeField, Min(0f), Tooltip("Normal cast of a unit-targeted spell: a click on the ground takes the valid unit closest to the click within this radius (LoL targeting forgiveness).")] private float _targetForgivenessRadius = 4f;
 
         [Header("Terrain")]
         [SerializeField, Range(0f, 0.2f), Tooltip("Share of max health lost per second by a Devil Fruit user standing in the river.")] private float _devilFruitWaterDrain = 0.015f;
@@ -102,6 +103,7 @@ namespace MangaLegends.Data.Definitions
         public float InCombatRegenRatio => _inCombatRegenRatio;
         public float MinionDamageToChampionsRatio => _minionDamageToChampionsRatio;
         public float MaxAttackSpeed => _maxAttackSpeed;
+        public float TargetForgivenessRadius => _targetForgivenessRadius;
         public float DevilFruitWaterDrain => _devilFruitWaterDrain;
         public StatusEffectDefinition HomeguardFor(float elapsedSeconds) => elapsedSeconds >= _homeguardLateAfterSeconds ? _homeguardLate : _homeguardEarly;
         public StatusEffectDefinition HomeguardEarly => _homeguardEarly;

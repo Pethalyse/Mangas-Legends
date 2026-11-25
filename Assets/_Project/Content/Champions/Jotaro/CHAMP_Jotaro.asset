@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a67e8de616430c8f6f15cf43826684, type: 3}
+  m_Name: CHAMP_Jotaro
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ChampionDefinition
+  _id: champion.jotaro
+  _displayName: Jotaro Kujo
+  _description: "H\xE9ros de Stardust Crusaders (JoJo's Bizarre Adventure), porteur
+    de Star Platinum."
+  _icon: {fileID: 0}
+  _kind: 0
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 650
+      _growthPerLevel: 105
+    - _stat: 1
+      _base: 1.8
+      _growthPerLevel: 0.18
+    - _stat: 2
+      _base: 300
+      _growthPerLevel: 40
+    - _stat: 3
+      _base: 1.4
+      _growthPerLevel: 0.1
+    - _stat: 4
+      _base: 64
+      _growthPerLevel: 3.5
+    - _stat: 6
+      _base: 36
+      _growthPerLevel: 4.8
+    - _stat: 7
+      _base: 32
+      _growthPerLevel: 2.05
+    - _stat: 8
+      _base: 0.65
+      _growthPerLevel: 0.025
+    - _stat: 9
+      _base: 3.45
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 1.75
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 15
+      _growthPerLevel: 0
+  _prefab: {fileID: 6298360075311980653, guid: 6239763c8e006404f8c9d3e0716c666a, type: 3}
+  _goldBounty: 0
+  _experienceBounty: 0
+  _collisionRadius: 0.55
+  _tint: {r: 0.2, g: 0.25, b: 0.45, a: 1}
+  _attackProjectileSpeed: 0
+  _attackWindup: 0.3
+  _stealthed: 0
+  _revealsStealth: 0
+  _oneDamagePerHit: 0
+  _role: 1
+  _resource: 0
+  _traits: 0
+  _defaultAbilities:
+    _name: Default
+    _passive: {fileID: 11400000, guid: 41cfe575744e3f942b49f755f4098580, type: 2}
+    _a: {fileID: 11400000, guid: 267b2c724c6a7574ca34822dc0a2c77a, type: 2}
+    _z: {fileID: 11400000, guid: b9d08011476293749b32b8ce9e8833ad, type: 2}
+    _e: {fileID: 11400000, guid: 9ce1860da2e4d4d49a34a811ac7dcf3a, type: 2}
+    _r: {fileID: 11400000, guid: 6ab6923c10cbbd645b817e7399512bd0, type: 2}
+  _alternateAbilitySets:
+  - _name: Star Platinum
+    _passive: {fileID: 11400000, guid: 41cfe575744e3f942b49f755f4098580, type: 2}
+    _a: {fileID: 11400000, guid: 4bb651bbc0f91194cb477dc033b5f6ea, type: 2}
+    _z: {fileID: 11400000, guid: dcd7f49cce4bd0c478c6aa5346c73843, type: 2}
+    _e: {fileID: 11400000, guid: ab0e49dbe251fbd4aa43cb09b5b74749, type: 2}
+    _r: {fileID: 11400000, guid: 6ab6923c10cbbd645b817e7399512bd0, type: 2}

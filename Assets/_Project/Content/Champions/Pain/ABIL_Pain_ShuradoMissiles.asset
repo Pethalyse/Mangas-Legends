@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Pain_ShuradoMissiles
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.pain.shurado_missiles
+  _displayName: "Lance-missiles (Shurad\xF4)"
+  _description: "Activable : port\xE9e d'attaque accrue, les attaques infligent 10
+    % de l'AD en zone ; co\xFBte du mana chaque seconde."
+  _icon: {fileID: 0}
+  _maxRank: 5
+  _castMode: 3
+  _cooldownSeconds:
+  - 5
+  _cost:
+  - 20
+  _costPerSecond:
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 1
+    _validTargets: 1
+    _fallback: 0
+    _range:
+      _byRank:
+      - 0
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast: []
+  _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 11400000, guid: a623939aa9e4e1946bfb81e397782b22, type: 2}
+  references:
+    version: 2
+    RefIds: []

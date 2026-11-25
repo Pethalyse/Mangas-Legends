@@ -3,6 +3,26 @@
 > Une entrée par session de travail, la plus récente en haut. Format :
 > `## AAAA-MM-JJ — <titre>` puis **Fait**, **Décisions**, **Docs mis à jour**, **Prochaine étape**, **Bloquants**.
 
+## 2026-11-25 — Mark Evans, Giorno, Jotaro et Pain jouables ; ciblage des sorts à la LoL
+
+**Fait** :
+- **Ciblage** (correction du propriétaire) : le Q d'Ainz n'a plus de ciblage spécial. Pour tous les sorts ciblés sur une unité : unité sous le curseur en lancement rapide ; en lancement normal, clic sur l'unité ou, au sol, l'unité valide la plus proche du clic (rayon de 4 m, `GameRulesConfig.TargetForgivenessRadius`, « targeting forgiveness » du wiki LoL).
+- **4 champions** dont les modèles étaient dans le dépôt, en données (kits et valeurs dans `02-champions.md`) : **Mark Evans** (lien, poing explosif, roulade, main céleste, main magique), **Giorno** (régénération en buisson, 3 fleurs dorées dégâts → immobilisation → étourdissement, transfert de vie activable, vitesse d'attaque alliée, Gold Experience 10 s), **Jotaro** (prochaine attaque renforcée, garde, provocation, The World : temps arrêté 3 s ; Star Platinum : Star Finger, invulnérabilité, passage dans un mur), **Pain** (jauge, six pantins avec chacun A et E).
+- Mécaniques génériques ajoutées : invulnérabilité, réduction des dégâts des compétences, lien de dégâts, provocation, annulation de la prochaine attaque, statut consommé au déclenchement, sorts activables avec coût par seconde, cycle de jeux de compétences, conditions de cumuls, passifs périodiques, au plus proche allié, en buisson, vol de mana, coût en PV, réinitialisation de l'attaque, attraction vers une zone, poussée aléatoire, stand affiché à côté du champion.
+- Prefabs : modèles redressés et mis à l'échelle, ballon de Mark masqué, Gold Experience et Star Platinum en compagnons.
+
+**Testé dans l'éditeur (solo, mannequins ennemis)** : les 4 kits un par un (lien 270/30 sur 300, −70 % sous la main céleste, étourdissement au centre et immobilisation dans l'onde ; fleurs : ralentissement puis immobilisation ; transfert de vie actif puis coupé, gratuit avec le stand, silence du R, poussée de 3 m ; provocation, temps arrêté puis rendu, 0 dégât sous l'invulnérabilité ; jauge de Pain qui change de pantin, missiles coupés au changement, vol de 20 % rendu après 3 s, vol de mana, attaque absorbée, silence, retour au pantin précédent). Contenu valide, 96 tests Core verts, 0 erreur de compilation. Seule erreur en console : l'ancien évènement d'animation `aaCreation` d'Ainz sans récepteur (déjà là avant).
+
+**Décisions (Claude)** : Jotaro au Top ; jauge de Pain +2/s, +5 par attaque, +5 par ennemi touché par une compétence, pleine sur un kill ; valeurs des quatre kits d'après des champions LoL comparables (Braum et Alistar, Janna et Milio, Sett, Jhin).
+
+**Simplifications** (questions ajoutées au GDD §10) : l'allié lié de Mark est le plus proche (pas encore de choix) ; Pain change de pantin tout de suite après un kill ; Pain n'a ni Z ni R (comme dans le PDF) ; le mur de Mark n'arrête pas les projectiles ; le passage de Star Platinum ne sert qu'à Jotaro.
+
+**Docs mis à jour** : `02-champions.md`, `04-architecture.md` §15, `07-regles-de-jeu.md` §11, `01-gdd.md` §10.
+
+**Prochaine étape** : test en ligne à deux (ciblage au clic à vérifier à la souris), modèles des pantins de Pain, Naruto (fichier `.brres` à remplacer).
+
+**Bloquants** : aucun.
+
 ## 2026-11-25 — Retours du propriétaire : carte exacte, IA des sbires, mort, modèles
 
 **Fait** :

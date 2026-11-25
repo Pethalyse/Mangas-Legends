@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6236aa462b0247af83266903f99527a0, type: 3}
+  m_Name: STATUS_Pain_Missiles
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.StatusEffectDefinition
+  _id: status.pain_missiles
+  _displayName: Lance-missiles
+  _description: "Port\xE9e accrue, attaques qui explosent en zone."
+  _icon: {fileID: 0}
+  _durationSeconds: 0
+  _restrictions: 0
+  _stacking: 0
+  _maxStacks: 1
+  _isCrowdControl: 0
+  _modifiersPerStack:
+  - _stat: 10
+    _kind: 0
+    _value: 1.5
+  _tickIntervalSeconds: 0
+  _onTick: []
+  _triggers:
+  - _trigger: 0
+    _otherKinds: 
+    _effects:
+    - rid: 2286801137428857358
+  _persistsThroughDeath: 0
+  _triggerCooldownSeconds: 0
+  _revealRadius: 0
+  _onMaxStacks: []
+  _rankCount: 1
+  _invulnerable: 0
+  _abilityDamageReduction: 0
+  _redirectToSource: 0
+  _taunt: 0
+  _blocksNextBasicAttack: 0
+  _removedOnTrigger: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857358
+      type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _area: {fileID: 11400000, guid: 71098607589eb5c4dad8be312f4faf80, type: 2}
+        _atAimPoint: 1

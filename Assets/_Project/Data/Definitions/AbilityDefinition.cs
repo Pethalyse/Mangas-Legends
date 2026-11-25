@@ -23,6 +23,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private string _behaviourId;
         [SerializeField, Tooltip("Passive only: status kept on the champion while the passive is ready; its stacks are this base plus the champion level.")] private StatusEffectDefinition _readyStatus;
         [SerializeField, Min(0)] private int _readyStatusBaseStacks;
+        [SerializeField, Tooltip("Toggle only: status kept on the caster while the ability is on; Cost per second is paid while it lasts.")] private StatusEffectDefinition _toggleStatus;
 
         public int MaxRank => _maxRank;
         public CastMode CastMode => _castMode;
@@ -34,6 +35,7 @@ namespace MangaLegends.Data.Definitions
         public string BehaviourId => _behaviourId;
         public StatusEffectDefinition ReadyStatus => _readyStatus;
         public int ReadyStatusBaseStacks => _readyStatusBaseStacks;
+        public StatusEffectDefinition ToggleStatus => _toggleStatus;
 
         public float CooldownAtRank(int rank) => RankValues.At(_cooldownSeconds, rank);
         public float CostAtRank(int rank) => RankValues.At(_cost, rank);
@@ -49,7 +51,8 @@ namespace MangaLegends.Data.Definitions
             _channelSeconds.Validate(Id, "Channel time", _maxRank, report);
             _charges.Validate(Id, "Charges", _maxRank, report);
             _targeting.Validate(Id, _maxRank, report);
-            if (_castMode != CastMode.Passive && _onCast.Count == 0 && string.IsNullOrEmpty(_behaviourId))
+            if (_castMode == CastMode.Toggle && _toggleStatus == null) report.Error(Id, "A toggle ability needs a toggle status.");
+            if (_castMode != CastMode.Passive && _castMode != CastMode.Toggle && _onCast.Count == 0 && string.IsNullOrEmpty(_behaviourId))
                 report.Warning(Id, "Ability has no effect and no custom behaviour.");
             foreach (EffectDefinition effect in _onCast)
             {

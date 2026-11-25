@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Pain_TendoSphere
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.pain.tendo_sphere
+  _displayName: "Chibaku Tensei (Tend\xF4)"
+  _description: "Sph\xE8re au sol qui attire les ennemis et leur inflige des d\xE9g\xE2ts
+    physiques pendant 1 s."
+  _icon: {fileID: 0}
+  _maxRank: 5
+  _castMode: 0
+  _cooldownSeconds:
+  - 7
+  _cost:
+  - 60
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 3
+    _validTargets: 4
+    _fallback: 0
+    _range:
+      _byRank:
+      - 8
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857409
+  _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857409
+      type: {class: CreateAreaEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _area: {fileID: 11400000, guid: 56f3daf1f22dc7c47ae5717f7223d78e, type: 2}
+        _atAimPoint: 1

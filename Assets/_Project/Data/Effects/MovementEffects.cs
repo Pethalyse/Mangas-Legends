@@ -18,7 +18,8 @@ namespace MangaLegends.Data.Effects
     {
         Knockback,
         Pull,
-        Knockup
+        Knockup,
+        Random
     }
 
     [Serializable]
@@ -48,10 +49,12 @@ namespace MangaLegends.Data.Effects
         [SerializeField] private DisplacementKind _kind = DisplacementKind.Knockback;
         [SerializeField] private RankedFloat _distance = new RankedFloat(2f);
         [SerializeField] private RankedFloat _durationSeconds = new RankedFloat(0.5f);
+        [SerializeField, Tooltip("Push or pull from the impact point (an area centre) instead of the caster.")] private bool _fromImpactPoint;
 
         public DisplacementKind Kind => _kind;
         public float DistanceAt(int rank) => _distance.At(rank);
         public float DurationSecondsAt(int rank) => _durationSeconds.At(rank);
+        public bool FromImpactPoint => _fromImpactPoint;
 
         public override void Validate(string ownerId, int maxRank, ValidationReport report)
         {

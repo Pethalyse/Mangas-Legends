@@ -32,6 +32,8 @@ namespace MangaLegends.Presentation
         [SerializeField] private GameObject _mainModel;
         [SerializeField] private GameObject _formModel;
         [SerializeField] private Animator _formAnimator;
+        [SerializeField, Tooltip("Optional companion (a stand): shown beside the unit while a status with this id is on it.")] private string _companionStatusId;
+        [SerializeField] private GameObject _companionModel;
         [SerializeField, Min(0.01f), Tooltip("Length of the attack clip, so that one clip plays per basic attack.")] private float _attackAnimationSeconds = 1f;
         [SerializeField, Min(0.1f), Tooltip("Ground speed (m/s) at which the run animation fully plays.")] private float _runBlendSpeed = 3.5f;
         [SerializeField, Tooltip("Off for textured models: only primitive placeholders take the unit tint.")] private bool _tintBody = true;
@@ -57,6 +59,7 @@ namespace MangaLegends.Presentation
             if (_unit.Object == null || _unit.Definition == null) return;
             ShowTeamModel();
             ShowForm();
+            ShowCompanion();
             bool visible = _unit.Services == null || _unit.Services.View.Vision.IsVisible(_unit);
             SetVisible(visible);
             if (!visible) return;
@@ -94,22 +97,41 @@ namespace MangaLegends.Presentation
 
         private Animator ActiveAnimator => _inForm && _formAnimator != null ? _formAnimator : _animator;
 
+        private bool _companionShown;
+        private StatusEffectDefinition _companionStatus;
+
         private void ShowForm()
         {
-            if (string.IsNullOrEmpty(_formStatusId) || _formModel == null || _unit.Services == null) return;
-            if (_formStatus == null)
-            {
-                var statuses = _unit.Services.Content.StatusEffects;
-                int index = statuses.IndexOf(_formStatusId);
-                if (index < 0) return;
-                _formStatus = statuses[index];
-            }
-            bool form = _unit.IsAlive && _unit.Status.StacksOf(_formStatus) > 0;
-            if (form == _inForm) return;
+            if (_formModel == null || !HasStatus(_formStatusId, ref _formStatus, out bool form) || form == _inForm) return;
             _inForm = form;
             if (_mainModel != null) _mainModel.SetActive(!form);
             _formModel.SetActive(form);
             Smoke();
+        }
+
+        private void ShowCompanion()
+        {
+            if (_companionModel == null || !HasStatus(_companionStatusId, ref _companionStatus, out bool shown)) return;
+            shown &= _shown;
+            if (shown == _companionShown) return;
+            _companionShown = shown;
+            _companionModel.SetActive(shown);
+            if (shown) Smoke();
+        }
+
+        private bool HasStatus(string statusId, ref StatusEffectDefinition status, out bool active)
+        {
+            active = false;
+            if (string.IsNullOrEmpty(statusId) || _unit.Services == null) return false;
+            if (status == null)
+            {
+                var statuses = _unit.Services.Content.StatusEffects;
+                int index = statuses.IndexOf(statusId);
+                if (index < 0) return false;
+                status = statuses[index];
+            }
+            active = _unit.IsAlive && _unit.Status.StacksOf(status) > 0;
+            return true;
         }
 
         private void Smoke()

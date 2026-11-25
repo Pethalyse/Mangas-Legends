@@ -214,6 +214,70 @@ namespace MangaLegends.Simulation.Combat
             }
         }
 
+        public bool IsInvulnerable
+        {
+            get
+            {
+                for (int i = 0; i < Active.Length; i++)
+                {
+                    StatusEffectDefinition definition = DefinitionAt(i);
+                    if (definition != null && definition.Invulnerable) return true;
+                }
+                return false;
+            }
+        }
+
+        public float AbilityDamageReduction
+        {
+            get
+            {
+                float best = 0f;
+                for (int i = 0; i < Active.Length; i++)
+                {
+                    StatusEffectDefinition definition = DefinitionAt(i);
+                    if (definition != null && definition.AbilityDamageReduction > best) best = definition.AbilityDamageReduction;
+                }
+                return best;
+            }
+        }
+
+        public bool TryGetTaunt(out NetworkId source) => TryFind(d => d.Taunt, out source, out _);
+
+        public bool TryGetRedirect(out NetworkId source, out float ratio)
+        {
+            ratio = 0f;
+            if (!TryFind(d => d.RedirectToSource > 0f, out source, out int slot)) return false;
+            ratio = DefinitionAt(slot).RedirectToSource;
+            return true;
+        }
+
+        public bool TryConsumeAttackBlock()
+        {
+            if (!HasStateAuthority || !TryFind(d => d.BlocksNextBasicAttack, out _, out int slot)) return false;
+            Clear(slot);
+            return true;
+        }
+
+        public void RemoveAt(int slot)
+        {
+            if (HasStateAuthority && Active[slot].IsActive) Clear(slot);
+        }
+
+        private bool TryFind(System.Predicate<StatusEffectDefinition> match, out NetworkId source, out int slot)
+        {
+            for (int i = 0; i < Active.Length; i++)
+            {
+                StatusEffectDefinition definition = DefinitionAt(i);
+                if (definition == null || !match(definition)) continue;
+                source = Active[i].Source;
+                slot = i;
+                return true;
+            }
+            source = default;
+            slot = -1;
+            return false;
+        }
+
         private bool IsRestricted(StatusRestriction restriction)
         {
             for (int i = 0; i < Active.Length; i++)

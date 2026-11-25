@@ -111,7 +111,7 @@ namespace MangaLegends.Simulation.Units
                 Resource?.Simulate();
                 if (IsAlive && HasStateAuthority && IsChampion) CombatTriggers.Raise(this, ItemTrigger.Periodic, this);
             }
-            if (IsAlive && _brain != null)
+            if (IsAlive && _brain != null && !FollowTaunt())
             {
                 ProfilerMarker marker = IsChampion ? ChampionBrainMarker : Kind == UnitKind.Minion ? BrainMarker : Kind == UnitKind.Tower ? TowerBrainMarker : MonsterBrainMarker;
                 using (marker.Auto()) _brain.Think();
@@ -119,6 +119,15 @@ namespace MangaLegends.Simulation.Units
             using (CasterMarker.Auto()) Caster?.Simulate();
             using (AttackMarker.Auto()) Attack?.Simulate();
             using (MotorMarker.Auto()) Motor?.Simulate();
+        }
+
+        // A taunted unit ignores its brain and attacks the taunter.
+        private bool FollowTaunt()
+        {
+            if (!Status.TryGetTaunt(out NetworkId id) || !TryResolve(id, out Unit taunter) || !taunter.IsAlive || !IsEnemyOf(taunter)) return false;
+            Caster?.CancelChannel();
+            Attack?.SetTarget(taunter);
+            return true;
         }
 
         public bool IsInvulnerable

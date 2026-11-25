@@ -48,6 +48,9 @@ namespace MangaLegends.Simulation.Combat
                     if (triggered.OtherKinds.Count > 0 && (other == null || !triggered.Accepts(other.Kind))) continue;
                     if (!status.TryStartTriggerCooldown(slot, definition.TriggerCooldownSeconds)) break;
                     Run(triggered.Effects, owner, other, status.Active[slot].Rank);
+                    if (!definition.RemovedOnTrigger) continue;
+                    status.RemoveAt(slot);
+                    break;
                 }
             }
         }

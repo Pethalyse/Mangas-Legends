@@ -28,13 +28,15 @@ namespace MangaLegends.Data.Definitions
 
         public bool Accepts(UnitKind kind) => _otherKinds == null || _otherKinds.Count == 0 || _otherKinds.Contains(kind);
 
-        public void Validate(string ownerId, ValidationReport report)
+        public void Validate(string ownerId, ValidationReport report) => Validate(ownerId, 1, report);
+
+        public void Validate(string ownerId, int rankCount, ValidationReport report)
         {
             if (_effects.Count == 0) report.Warning(ownerId, $"Trigger {_trigger} has no effect.");
             foreach (EffectDefinition effect in _effects)
             {
                 if (effect == null) report.Error(ownerId, "A triggered effect entry is empty.");
-                else effect.Validate(ownerId, 1, report);
+                else effect.Validate(ownerId, rankCount, report);
             }
         }
     }

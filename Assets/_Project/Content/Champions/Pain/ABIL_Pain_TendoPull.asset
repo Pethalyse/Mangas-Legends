@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Pain_TendoPull
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.pain.tendo_pull
+  _displayName: "Bansho Ten'in (Tend\xF4)"
+  _description: "Attire un ennemi vers lui et lui inflige des d\xE9g\xE2ts physiques."
+  _icon: {fileID: 0}
+  _maxRank: 5
+  _castMode: 0
+  _cooldownSeconds:
+  - 5
+  _cost:
+  - 45
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 2
+    _validTargets: 12
+    _fallback: 0
+    _range:
+      _byRank:
+      - 6
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857397
+  - rid: 2286801137428857398
+  _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857397
+      type: {class: DisplaceEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _kind: 1
+        _distance:
+          _byRank:
+          - 3
+        _durationSeconds:
+          _byRank:
+          - 0.25
+        _fromImpactPoint: 0
+    - rid: 2286801137428857398
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 0
+        _amount:
+          _baseByRank:
+          - 60
+          - 95
+          - 130
+          - 165
+          - 200
+          _ratios:
+          - _source: 1
+            _stat: 4
+            _ratioByRank:
+            - 0.8
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0

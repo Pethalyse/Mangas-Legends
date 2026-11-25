@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc063c8ef10c47d19f763b23c22f8563, type: 3}
+  m_Name: PROJ_Jotaro_StarFinger
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ProjectileDefinition
+  _id: projectile.jotaro.star_finger
+  _displayName: projectile.jotaro.star_finger
+  _description: 
+  _icon: {fileID: 0}
+  _speed:
+    _byRank:
+    - 30
+  _maxDistance:
+    _byRank:
+    - 6
+  _radius:
+    _byRank:
+    - 0.4
+  _homing: 0
+  _maxHits:
+    _byRank: 03000000
+  _hits: 4
+  _stopsOnTerrain: 1
+  _onHit:
+  - rid: 2286801137428857371
+  - rid: 2286801137428857372
+  _visualPrefab: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857371
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 0
+        _amount:
+          _baseByRank:
+          - 60
+          - 95
+          - 130
+          - 165
+          - 200
+          _ratios:
+          - _source: 1
+            _stat: 4
+            _ratioByRank:
+            - 0.7
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0
+    - rid: 2286801137428857372
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 87f34f525013fa94aa970ee9a6871c20, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 1.5
+        _modifierOverrides:
+        - _stat: 9
+          _kind: 2
+          _value:
+            _byRank:
+            - -0.3
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0

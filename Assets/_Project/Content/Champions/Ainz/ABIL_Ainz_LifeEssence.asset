@@ -49,7 +49,6 @@ MonoBehaviour:
     _indicatorRadius:
       _byRank:
       - 2.5
-    _snapToNearestTarget: 0
   _onCast:
   - rid: 2286801137428857049
   _behaviourId: 

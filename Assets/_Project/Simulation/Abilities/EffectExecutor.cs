@@ -6,6 +6,7 @@ using MangaLegends.Core.Stats;
 using MangaLegends.Data.Definitions;
 using MangaLegends.Data.Effects;
 using MangaLegends.Simulation.Combat;
+using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
 
@@ -41,6 +42,7 @@ namespace MangaLegends.Simulation.Abilities
                 case ApplyStatusEffect status when authority:
                     foreach (Unit target in Targets(status.Target, context))
                     {
+                        if (status.RequiredStatus != null && !status.AcceptsStacks(target.Status.StacksOf(status.RequiredStatus))) continue;
                         target.Status.Apply(new StatusApplication(status.Status, caster, context.Rank, status.StacksAt(context.Rank), status.DurationSecondsAt(context.Rank), status.ModifierOverrides));
                         target.Stats.Refresh();
                     }
@@ -68,7 +70,8 @@ namespace MangaLegends.Simulation.Abilities
                         caster.Caster.Areas.Spawn(area.Area, context.Rank, area.AtAimPoint ? context.AimPoint : context.ImpactPoint, context.AimDirection);
                     break;
                 case SwapAbilitySetEffect swap:
-                    caster.Caster?.SwapSet(swap.AlternateSetIndex + 1, swap.DurationSecondsAt(context.Rank), swap.ResetCooldowns);
+                    if (swap.Step != 0) caster.Caster?.StepSet(swap.Step, swap.ResetCooldowns);
+                    else caster.Caster?.SwapSet(swap.AlternateSetIndex + 1, swap.DurationSecondsAt(context.Rank), swap.ResetCooldowns);
                     break;
                 case ReduceCooldownEffect reduce:
                     caster.Caster?.ReduceCooldown((CasterSlot)(int)reduce.Slot, reduce.RemainingFractionAt(context.Rank));
@@ -81,6 +84,15 @@ namespace MangaLegends.Simulation.Abilities
                     break;
                 case SummonEffect summon when authority:
                     caster.Services.Match?.SpawnSummon(caster, summon.Unit, summon.CountAt(context.Rank), summon.DurationSecondsAt(context.Rank), context.AimPoint);
+                    break;
+                case DrainResourceEffect drain when authority:
+                    Drain(drain, context);
+                    break;
+                case PayHealthEffect pay when authority:
+                    caster.Health.SetCurrent(Mathf.Max(1f, caster.Health.Current - pay.Amount.Evaluate(context.Rank, Scaling(caster, caster, 0))));
+                    break;
+                case ResetAttackEffect _:
+                    caster.Attack?.ResetTimer();
                     break;
             }
         }
@@ -141,7 +153,7 @@ namespace MangaLegends.Simulation.Abilities
 
         private static void Heal(HealEffect heal, in EffectContext context, Unit target)
         {
-            if (context.Caster.IsEnemyOf(target)) return;
+            if (context.Caster.IsEnemyOf(target) && !heal.AnyTeam) return;
             float amount = heal.Amount.Evaluate(context.Rank, Scaling(context.Caster, target, 0));
             if (heal.Pool == HealedPool.Resource) target.Resource?.Restore(amount);
             else target.Health.Heal(amount, context.Caster);
@@ -175,14 +187,34 @@ namespace MangaLegends.Simulation.Abilities
         private static void Displace(DisplaceEffect displace, in EffectContext context, Unit target)
         {
             if (target.Motor == null || !context.Caster.IsEnemyOf(target) || target.IsStructure) return;
-            Vector3 away = target.Position - context.Caster.Position;
+            Vector3 origin = displace.FromImpactPoint ? context.ImpactPoint : context.Caster.Position;
+            Vector3 away = target.Position - origin;
             away.y = 0f;
             away = away.sqrMagnitude > 0.0001f ? away.normalized : context.Caster.transform.forward;
+            if (displace.Kind == DisplacementKind.Random) away = RandomDirection(context.Caster, target);
             float distance = displace.DistanceAt(context.Rank);
             float duration = Mathf.Max(0.05f, displace.DurationSecondsAt(context.Rank));
             Vector3 direction = displace.Kind == DisplacementKind.Pull ? -away : away;
             if (displace.Kind == DisplacementKind.Knockup) distance = 0f;
+            if (displace.Kind == DisplacementKind.Pull && displace.FromImpactPoint) distance = Mathf.Min(distance, UnitRegistry.FlatDistance(target.Position, origin));
             target.Motor.StartDash(target.Position + direction * distance, distance / duration, false);
+        }
+
+        private static Vector3 RandomDirection(Unit caster, Unit target)
+        {
+            DeterministicRandom random = DeterministicRandom.ForTick(caster.Services.Match != null ? caster.Services.Match.Seed : 0UL, caster.Tick, (int)target.SortKey);
+            float angle = random.NextFloat() * 360f;
+            return Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward;
+        }
+
+        private static void Drain(DrainResourceEffect drain, in EffectContext context)
+        {
+            Unit target = context.Target;
+            if (target == null || target.Resource == null || !target.Resource.UsesResource || !context.Caster.IsEnemyOf(target)) return;
+            float amount = target.Resource.Current * drain.CurrentRatioAt(context.Rank);
+            if (amount <= 0f) return;
+            target.Resource.Spend(amount);
+            context.Caster.Resource?.Restore(amount);
         }
 
         private static void Teleport(TeleportEffect teleport, in EffectContext context)

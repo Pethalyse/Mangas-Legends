@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a67e8de616430c8f6f15cf43826684, type: 3}
+  m_Name: CHAMP_Pain
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ChampionDefinition
+  _id: champion.pain
+  _displayName: Pain
+  _description: Chef de l'Akatsuki (Naruto), qui combat avec les Six Chemins.
+  _icon: {fileID: 0}
+  _kind: 0
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 600
+      _growthPerLevel: 100
+    - _stat: 1
+      _base: 0.75
+      _growthPerLevel: 0.11
+    - _stat: 2
+      _base: 350
+      _growthPerLevel: 45
+    - _stat: 3
+      _base: 1.4
+      _growthPerLevel: 0.1
+    - _stat: 4
+      _base: 60
+      _growthPerLevel: 2.8
+    - _stat: 6
+      _base: 26
+      _growthPerLevel: 4.4
+    - _stat: 7
+      _base: 30
+      _growthPerLevel: 1.3
+    - _stat: 8
+      _base: 0.658
+      _growthPerLevel: 0.022
+    - _stat: 9
+      _base: 3.3
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 5.5
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 12
+      _growthPerLevel: 0
+  _prefab: {fileID: 6298360075311980653, guid: 5681e5cd3fc65714996bd05167486ef3, type: 3}
+  _goldBounty: 0
+  _experienceBounty: 0
+  _collisionRadius: 0.5
+  _tint: {r: 0.95, g: 0.5, b: 0.2, a: 1}
+  _attackProjectileSpeed: 20
+  _attackWindup: 0.3
+  _stealthed: 0
+  _revealsStealth: 0
+  _oneDamagePerHit: 0
+  _role: 4
+  _resource: 0
+  _traits: 0
+  _defaultAbilities:
+    _name: "Tend\xF4"
+    _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
+    _a: {fileID: 11400000, guid: ef0661242117810468ab9f957e6a2535, type: 2}
+    _z: {fileID: 0}
+    _e: {fileID: 11400000, guid: c9efa3078c3af8144b49f55009ffb595, type: 2}
+    _r: {fileID: 0}
+  _alternateAbilitySets:
+  - _name: "Shurad\xF4"
+    _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
+    _a: {fileID: 11400000, guid: 5c645d97dbd446146809fbb2ffbd9a09, type: 2}
+    _z: {fileID: 0}
+    _e: {fileID: 11400000, guid: d2f1fba5660ec4a42bde52d0f483ec29, type: 2}
+    _r: {fileID: 0}
+  - _name: "Ningend\xF4"
+    _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
+    _a: {fileID: 11400000, guid: 2071c37ab7db7f14cabbed8f17b96281, type: 2}
+    _z: {fileID: 0}
+    _e: {fileID: 11400000, guid: 31b65bb5ed0bba74cb395a2ab22baaf5, type: 2}
+    _r: {fileID: 0}
+  - _name: "Chikush\xF4d\xF4"
+    _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
+    _a: {fileID: 11400000, guid: fc025abec39dc4041ab4e5b50bdca337, type: 2}
+    _z: {fileID: 0}
+    _e: {fileID: 11400000, guid: 1832cfd770ed5b74d942515e8edc47e3, type: 2}
+    _r: {fileID: 0}
+  - _name: "Gakid\xF4"
+    _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
+    _a: {fileID: 11400000, guid: dcc7984e4fbb24840a8494c0c1a7ded2, type: 2}
+    _z: {fileID: 0}
+    _e: {fileID: 11400000, guid: fa64167ac396d184aaf82cb032dc80ad, type: 2}
+    _r: {fileID: 0}
+  - _name: "Jigokud\xF4"
+    _passive: {fileID: 11400000, guid: fae074bf1225b12488dfa3f66d1d4203, type: 2}
+    _a: {fileID: 11400000, guid: f3828d8e33d88b04cb7192e40cc71ad4, type: 2}
+    _z: {fileID: 0}
+    _e: {fileID: 11400000, guid: 6aabf4058565698428651e5c6a6e6924, type: 2}
+    _r: {fileID: 0}

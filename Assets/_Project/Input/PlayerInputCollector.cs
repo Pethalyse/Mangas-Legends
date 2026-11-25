@@ -16,12 +16,12 @@ namespace MangaLegends.Input
 {
     // The only place that reads devices: fills PlayerInput for Fusion and the local view state for camera and UI.
     // Cast keys follow the LoL flows: normal (key shows the indicator, left click casts), quick with indicator
-    // (hold to aim, release casts) and quick (cast on press).
+    // (hold to aim, release casts) and quick (cast on press). A unit-targeted spell takes the unit under the cursor;
+    // in normal cast, a click on the ground takes the valid unit closest to the click (targeting forgiveness).
     public sealed class PlayerInputCollector : MonoBehaviour, INetworkRunnerCallbacks
     {
         private const float MoveRepeatSeconds = 0.15f;
         private const float RaycastDistance = 500f;
-        private const float SnapRadius = 8f;
 
         private static readonly InputButton[] CastButtons =
         {
@@ -214,7 +214,7 @@ namespace MangaLegends.Input
 
         private void UpdateAiming(LocalView view)
         {
-            view.AimTarget = _aiming && _aimButton != InputButton.AttackMove ? TargetFor(_aimButton, view) : null;
+            view.AimTarget = _aiming && _aimButton != InputButton.AttackMove ? TargetFor(_aimButton, view, _aimMode == AimMode.Normal) : null;
             if (!_aiming) return;
             if (view.LocalChampion == null || !view.LocalChampion.IsAlive)
             {
@@ -233,7 +233,7 @@ namespace MangaLegends.Input
             if (!release && !click) return;
             if (isAttackMove) FireAttackMove(view);
             else if (click && !release && NeedsUnderCursorTarget(view)) return;
-            else Fire(_aimButton, view, false);
+            else Fire(_aimButton, view, false, click && !release);
             StopAiming(view);
         }
 
@@ -241,7 +241,7 @@ namespace MangaLegends.Input
         {
             AimSource source = AimSource.For(view.LocalChampion, _aimButton);
             if (source.Targeting.Mode != TargetingMode.Unit) return false;
-            Unit hovered = TargetFor(_aimButton, view);
+            Unit hovered = TargetFor(_aimButton, view, true);
             return hovered == null || !TeamRules.Matches(source.Targeting.ValidTargets, view.LocalChampion, hovered);
         }
 
@@ -260,22 +260,23 @@ namespace MangaLegends.Input
             view.IsAiming = false;
         }
 
-        private void Fire(InputButton button, LocalView view, bool onSelf)
+        private void Fire(InputButton button, LocalView view, bool onSelf, bool forgiving = false)
         {
             _pending.Set(button, true);
             _hasAim = true;
             _aimPoint = view.PointerWorld;
-            Unit target = onSelf ? view.LocalChampion : TargetFor(button, view);
+            Unit target = onSelf ? view.LocalChampion : TargetFor(button, view, forgiving);
             _aimTarget = target != null && target.Object != null ? target.Object.Id : default;
         }
 
-        // Some unit-targeted spells take the valid unit closest to the cursor, so the click does not need to be on the unit.
-        private Unit TargetFor(InputButton button, LocalView view)
+        private Unit TargetFor(InputButton button, LocalView view, bool forgiving)
         {
             AimSource source = AimSource.For(view.LocalChampion, button);
-            if (!source.IsValid || source.Targeting.Mode != TargetingMode.Unit || !source.Targeting.SnapToNearestTarget) return view.HoveredUnit;
+            Unit hovered = view.HoveredUnit;
+            if (!forgiving || !source.IsValid || source.Targeting.Mode != TargetingMode.Unit) return hovered;
+            if (hovered != null && TeamRules.Matches(source.Targeting.ValidTargets, view.LocalChampion, hovered)) return hovered;
             Unit best = null;
-            float bestDistance = SnapRadius;
+            float bestDistance = _services.Rules.TargetForgivenessRadius;
             foreach (Unit unit in _services.Units.All)
             {
                 if (unit == null || unit.Object == null || !unit.IsAlive || !unit.IsTargetable || !view.Vision.IsVisible(unit)) continue;
@@ -283,7 +284,7 @@ namespace MangaLegends.Input
                 float distance = UnitRegistry.FlatDistance(unit.Position, view.PointerWorld);
                 if (distance < bestDistance) { best = unit; bestDistance = distance; }
             }
-            return best != null ? best : view.HoveredUnit;
+            return best != null ? best : hovered;
         }
 
         private void FireAttackMove(LocalView view)

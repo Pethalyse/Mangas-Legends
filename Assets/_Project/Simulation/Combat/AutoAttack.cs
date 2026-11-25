@@ -100,6 +100,11 @@ namespace MangaLegends.Simulation.Combat
             NextAttackTick = tick + period;
         }
 
+        public void ResetTimer()
+        {
+            if (WindupTick == 0) NextAttackTick = Runner.Tick;
+        }
+
         private void Chase(Unit target)
         {
             if (_unit.Motor == null || !_unit.Status.CanMove) return;

@@ -39,6 +39,7 @@ namespace MangaLegends.Simulation.Abilities
         public const int NoAbility = -1;
 
         private Unit _unit;
+        private readonly List<Unit> _allies = new List<Unit>();
 
         [Networked, Capacity(SlotCount)] public NetworkArray<NetSlot> Slots => default;
         [Networked] public byte ActiveSet { get; set; }
@@ -167,6 +168,8 @@ namespace MangaLegends.Simulation.Abilities
             float cost = ability.CostAtRank(rank);
             if (_unit.Resource != null && !_unit.Resource.CanAfford(cost)) return false;
 
+            if (ability.CastMode == CastMode.Toggle) return Toggle(slot, ability, rank, cost);
+
             TargetingData targeting = ability.Targeting;
             float range = targeting.RangeAt(rank);
             Unit target = null;
@@ -241,11 +244,19 @@ namespace MangaLegends.Simulation.Abilities
             }
         }
 
+        public void StepSet(int step, bool resetCooldowns)
+        {
+            if (!(_unit.Definition is ChampionDefinition champion)) return;
+            int count = 1 + champion.AlternateAbilitySets.Count;
+            SwapSet(((ActiveSet + step) % count + count) % count, 0f, resetCooldowns);
+        }
+
         public void Simulate()
         {
             int tick = Runner.Tick;
             if (SetEndTick > 0 && tick >= SetEndTick && ActiveSet > 0) SwapSet(0, 0f, false);
             RechargeCharges(tick);
+            PayToggles();
             if (HasStateAuthority && TrinketOverrideEndTick > 0 && tick >= TrinketOverrideEndTick) RestoreTrinket();
             SyncTrinketRank();
             if (_unit.IsAlive)
@@ -256,6 +267,35 @@ namespace MangaLegends.Simulation.Abilities
             }
             Projectiles.Simulate();
             Areas.Simulate();
+        }
+
+        private bool Toggle(CasterSlot slot, AbilityDefinition ability, int rank, float cost)
+        {
+            StatusEffectDefinition status = ability.ToggleStatus;
+            if (status == null) return false;
+            if (_unit.Status.StacksOf(status) > 0)
+            {
+                _unit.Status.Remove(status);
+                return true;
+            }
+            Commit(slot, ability, rank, cost);
+            _unit.Status.Apply(new Combat.StatusApplication(status, _unit, rank, 1, 0f, null));
+            Execute(ability, rank, null, _unit.Position);
+            return true;
+        }
+
+        // Toggles pay their cost per second while on and switch off when it can no longer be paid.
+        private void PayToggles()
+        {
+            if (!HasStateAuthority || _unit.Resource == null) return;
+            for (int i = (int)CasterSlot.A; i <= (int)CasterSlot.R; i++)
+            {
+                AbilityDefinition ability = AbilityAt((CasterSlot)i);
+                if (ability == null || ability.CastMode != CastMode.Toggle || ability.ToggleStatus == null || _unit.Status.StacksOf(ability.ToggleStatus) == 0) continue;
+                float cost = ability.CostPerSecondAtRank(Mathf.Max(1, RankOf((CasterSlot)i))) * Runner.DeltaTime;
+                if (_unit.Resource.CanAfford(cost)) _unit.Resource.Spend(cost);
+                else _unit.Status.Remove(ability.ToggleStatus);
+            }
         }
 
         private void Execute(AbilityDefinition ability, int rank, Unit target, Vector3 aimPoint)
@@ -342,9 +382,11 @@ namespace MangaLegends.Simulation.Abilities
             if (passive == null || string.IsNullOrEmpty(passive.BehaviourId)) return;
             NetSlot data = Slots[(int)CasterSlot.Passive];
             if (tick < data.ReadyTick || !AbilityBehaviours.CanTriggerPassive(passive.BehaviourId, _unit)) return;
+            Unit target = passive.BehaviourId == AbilityBehaviours.PeriodicNearestAlly ? NearestAllyChampion(passive.Targeting.RangeAt(1)) : _unit;
+            if (target == null) return;
             data.ReadyTick = tick + Mathf.Max(1, TickTime.SecondsToTicks(passive.CooldownAtRank(1), Runner.TickRate));
             Slots.Set((int)CasterSlot.Passive, data);
-            EffectExecutor.Run(passive.OnCast, new EffectContext(_unit, _unit, _unit.Position, _unit.Position, 1, null));
+            EffectExecutor.Run(passive.OnCast, new EffectContext(_unit, target, target.Position, target.Position, 1, null));
         }
 
         // A passive can show it is armed with a status (Luffy's stretched punch), ranked by champion level.
@@ -352,12 +394,32 @@ namespace MangaLegends.Simulation.Abilities
         {
             StatusEffectDefinition ready = passive != null ? passive.ReadyStatus : null;
             if (ready == null) return;
-            bool armed = tick >= Slots[(int)CasterSlot.Passive].ReadyTick;
+            bool armed = passive.BehaviourId == AbilityBehaviours.WhileInBrush ? IsInBrush() : tick >= Slots[(int)CasterSlot.Passive].ReadyTick;
             int stacks = _unit.Status.StacksOf(ready);
             int wanted = armed ? Mathf.Min(ready.MaxStacks, passive.ReadyStatusBaseStacks + _unit.Stats.Level) : 0;
             if (stacks == wanted) return;
             if (stacks > 0) _unit.Status.Remove(ready);
             if (wanted > 0) _unit.Status.Apply(new Combat.StatusApplication(ready, _unit, 1, wanted, 0f, null));
+        }
+
+        private bool IsInBrush()
+        {
+            Match.MapLayout map = _unit.Services.Match != null ? _unit.Services.Match.Map : null;
+            return map != null && map.BrushAt(_unit.Position) >= 0;
+        }
+
+        private Unit NearestAllyChampion(float range)
+        {
+            _unit.Services.Units.Query(_unit.Position, range, _unit, TeamFilter.Allies, _allies);
+            Unit best = null;
+            float bestDistance = float.MaxValue;
+            foreach (Unit ally in _allies)
+            {
+                if (!ally.IsChampion || !ally.IsAlive) continue;
+                float distance = UnitRegistry.FlatDistance(_unit.Position, ally.Position);
+                if (distance < bestDistance) { best = ally; bestDistance = distance; }
+            }
+            return best;
         }
 
         public void RaisePassiveTrigger(ItemTrigger trigger, Unit other)
@@ -462,8 +524,16 @@ namespace MangaLegends.Simulation.Abilities
             {
                 CasterSlot casterSlot = (CasterSlot)(int)slot;
                 NetSlot data = Slots[(int)casterSlot];
+                StopLeavingToggle(AbilityAt(casterSlot), set.Get(slot));
                 SetSlotAbility(casterSlot, set.Get(slot), keepRanks ? data.Rank : 0);
             }
+        }
+
+        private void StopLeavingToggle(AbilityDefinition leaving, AbilityDefinition coming)
+        {
+            StatusEffectDefinition status = leaving != null && leaving.CastMode == CastMode.Toggle ? leaving.ToggleStatus : null;
+            if (status == null || coming != null && coming.ToggleStatus == status) return;
+            _unit.Status.Remove(status);
         }
 
         private void SetSlotAbility(CasterSlot slot, AbilityDefinition ability, int rank)

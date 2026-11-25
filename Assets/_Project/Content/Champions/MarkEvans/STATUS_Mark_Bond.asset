@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6236aa462b0247af83266903f99527a0, type: 3}
+  m_Name: STATUS_Mark_Bond
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.StatusEffectDefinition
+  _id: status.mark_bond
+  _displayName: Lien de Mark
+  _description: "Mark Evans encaisse une partie des d\xE9g\xE2ts subis."
+  _icon: {fileID: 0}
+  _durationSeconds: 1.5
+  _restrictions: 0
+  _stacking: 0
+  _maxStacks: 1
+  _isCrowdControl: 0
+  _modifiersPerStack: []
+  _tickIntervalSeconds: 0
+  _onTick: []
+  _triggers: []
+  _persistsThroughDeath: 0
+  _triggerCooldownSeconds: 0
+  _revealRadius: 0
+  _onMaxStacks: []
+  _rankCount: 1
+  _invulnerable: 0
+  _abilityDamageReduction: 0
+  _redirectToSource: 0.1
+  _taunt: 0
+  _blocksNextBasicAttack: 0
+  _removedOnTrigger: 0
+  references:
+    version: 2
+    RefIds: []

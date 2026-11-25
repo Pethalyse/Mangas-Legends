@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Pain_SixPaths
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.pain.six_paths
+  _displayName: Six Chemins de Pain
+  _description: "Jauge qui se remplit avec le temps, les attaques et les comp\xE9tences
+    qui touchent (pleine sur un kill). Pleine : Pain passe au pantin suivant (Tend\xF4,
+    Shurad\xF4, Ningend\xF4, Chikush\xF4d\xF4, Gakid\xF4, Jigokud\xF4) et ses recharges
+    sont r\xE9initialis\xE9es. Pas de Z ; le R est ce changement automatique."
+  _icon: {fileID: 0}
+  _maxRank: 1
+  _castMode: 5
+  _cooldownSeconds:
+  - 1
+  _cost:
+  - 0
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 0
+    _validTargets: 1
+    _fallback: 0
+    _range:
+      _byRank:
+      - 0
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857384
+  _behaviourId: periodic
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857384
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 1
+        _status: {fileID: 11400000, guid: 7236864d003425d419e5b3d642763a41, type: 2}
+        _stacks:
+          _byRank: 02000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0

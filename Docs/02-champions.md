@@ -23,13 +23,13 @@
 | Sasuke Uchiha | ❓ | ✅ | — | Mark (électrisation), Téléport |
 | Guts | ❓ | ✅ | — | Bonus selon PV manquants, Reset sur kill |
 | Sung Jin-Woo | ❓ | ✅ | — | Summon contrôlable, AbilitySet ×2 |
-| Mark Evans | Support/Tank | ✅ | — | Synergy (allié lié), Mur |
+| Mark Evans | Support/Tank | ✅ | 🔧 jouable, simplifié (P, E), modèle 3D (testé en solo le 2026-11-25) | Synergy (allié lié), Mur |
 | Kirito | Top | ✅ | 🔧 jouable, simplifié (R) | Mark ×5, réduction de recharge croisée |
-| Giorno Giovanna | Support | ✅ | — | Charges, Forme (stand) |
-| Jotaro | ❓ | ✅ | — | Forme (stand), GlobalEffect (arrêt du temps), mur destructible |
+| Giorno Giovanna | Support | ✅ | ✅ jouable, modèle 3D + stand (testé en solo le 2026-11-25) | Charges, Forme (stand) |
+| Jotaro | Top | ✅ | 🔧 jouable, simplifié (E stand), modèle 3D + stand (testé en solo le 2026-11-25) | Forme (stand), GlobalEffect (arrêt du temps), mur destructible |
 | Law | Support | ✅ | — | Échange de position, téléport allié |
 | Madara | Mage | ✅ | — | Canalisation, recast |
-| Pain | Bot (ADC) | ✅ | — | 6 AbilitySets, jauge de passif |
+| Pain | Bot (ADC) | ✅ | 🔧 jouable, simplifié (choix après un kill), modèle 3D de Tendô (testé en solo le 2026-11-25) | 6 AbilitySets, jauge de passif |
 | Itachi | ❓ | 🟨 | — | |
 | Aizawa | ❓ | 🟨 | — | |
 | Bojji | ❓ | 🟨 | — | |
@@ -76,6 +76,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 **Modèle (2026-11-25)** : modèle 3D texturé déjà présent dans le dépôt (`Assets/Sprites/Origines/ainz_ooal_gown___fbx_3d_model_by_azureberylblue_dewaw2c`, modèle de fan d'azureberylblue sur DeviantArt), rig Biped importé en Humanoid ; animations reprises de l'ancien projet (`Idle`, `Running`, attaque d'Ainz) dans `Art/Animations/ANIM_Champion_Humanoid.controller`. L'autre modèle (`Sprites/Origines/ainzOoalGown.fbx`, sans squelette ni textures) n'est plus utilisé. Aucun modèle pour les autres champions dans le dépôt.
 
 **Changements du 2026-11-25 (propriétaire)** : Q (Manteau du chaos) vise l'ennemi le plus proche du curseur ; E (Essence de vie) devient une zone autour d'Ainz qui le suit, 3 / 3,5 / 4 / 4,5 / 5 m selon le rang ; Z (Mur de l'infini) = bouclier contre les seuls dégâts magiques qui bloque les contrôles, affiché en violet.
+
+**Correction du 2026-11-25 (propriétaire)** : le Q n'a pas de ciblage spécial. Comme tous les sorts ciblés, il part sur le champion cliqué (lancement normal) ou visé (lancement rapide) ; en lancement normal, un clic au sol prend l'ennemi le plus proche du clic (règle générale, 07 §11).
 
 ### Zoro Roronoa
 - **P — Haki de l'armement** : chaque AA sur un champion donne +1 AD (cumul).
@@ -158,6 +160,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **E — Main céleste** : mur frontal 3 s, +70 % résistance aux compétences qui le touchent. `[14 s]`
 - **R — Main magique** : frappe au sol ; centre : étourdit 2 s, onde : immobilise 2 s. `[90 s]`
 
+**Implémentation (2026-11-25)** : stats PV 640 (+108), mana 310 (+45), AD 56, armure 42 (+4,7), RM 32, VA 0,644, vitesse 3,35 m/s, mêlée. P = lien avec l'allié champion **le plus proche** (12 m, réévalué chaque seconde) : Mark encaisse 10 % des dégâts qu'il subit (avant ses propres résistances). A = cône de 3,5 m et 70°, 70→250 (+60 % AP) magiques, ralentit de 40 % pendant 1 s, coût 50→70. Z = roulade de 4 m vers le point visé, puis ralenti de 30 % pendant 0,8 s (≈ 0,5 s après la sortie), recharge 12→10 s. E = mur visuel de 4 m devant lui pendant 3 s et −70 % de dégâts des compétences subis pendant ce temps, recharge 14→10 s. R = frappe au point visé (6 m) après 0,5 s : onde de 4,5 m, 150/250/350 (+70 % AP) magiques et immobilisation 2 s ; centre de 1,6 m, étourdissement 2 s ; recharge 90/80/70 s. **Simplifié** : l'allié lié n'est pas choisi en début de partie (il faut un écran de choix) et le mur n'arrête pas les projectiles. Modèle : `Mark Evans/Mark Evans.fbx` (ballon masqué), animé par `ProceduralRig`.
+
 ### Kirito
 - **P** : toutes les 3 attaques, dégâts bonus ; chaque attaque pose une marque.
 - **A — Attaque circulaire** : coup circulaire, bonus contre hémorragie ; si touche, recharge de E divisée par 2. `[7 s]`
@@ -174,12 +178,16 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **E** : +vitesse d'attaque d'un allié `[10 s]` ; stand : repousse les ennemis proches.
 - **R** : invoque le stand 10 s et silence 3 s en zone. `[180 s]`
 
+**Implémentation (2026-11-25)** : stats PV 560 (+104), mana 400 (+40), AD 52, armure 26, RM 30, VA 0,625, vitesse 3,3 m/s, distance 5,25 m. P = dans un buisson, +0,5 PV/s par cumul, cumuls = 4 + niveau (2,5 PV/s au niveau 1, 11 PV/s au niveau 18). A = 3 charges (7 s chacune), fleur de 9 m, 50→150 (+40 % AP) magiques, ralentit de 30 % pendant 2 s et marque la cible 2 s ; 2e fleur sur une cible marquée : immobilise 1,5 s ; 3e : étourdit 1,5 s. Z = sort activable : toutes les 0,5 s, soigne les alliés à 3,5 m de 8→24 (+4 % AP) et coûte 6→18 PV à Giorno ; 30 de mana à l'activation puis 12→20 mana par seconde. E = +25→45 % de vitesse d'attaque pendant 4 s sur un allié (ou lui-même) à 7 m. R = Gold Experience pendant 10 s et silence 3 s sur les ennemis à 4,5 m, recharge 180/160/140 s. **Avec Gold Experience** (jeu de compétences alternatif) : fleurs à zone de touche de 1,2 m au lieu de 0,5 m, Z sans mana, E repousse de 3 m les ennemis à 3 m. Le stand apparaît derrière lui (`UnitView` : compagnon). Les charges de fleurs sont pleines au changement de forme.
+
 ### Jotaro
 - **P** : possède un stand ; vision augmentée.
 - **A** : renforce la prochaine AA, reset d'AA `[4 s]` ; stand : projectile ? AD + ralentissement.
 - **Z** : +résistances 4 s `[18 s]` ; stand : invulnérable 2 s.
 - **E** : provoque les ennemis proches `[12 s]` ; stand : ouvre temporairement un passage dans un mur.
 - **R** : invoque le stand 13 s et **arrête le temps 3 s** : lui seul peut bouger, sans compétences. `[180 s]`
+
+**Implémentation (2026-11-25, rôle Top choisi par Claude)** : stats PV 650 (+105), mana 300, AD 64 (+3,5), armure 36 (+4,8), RM 32, VA 0,65, vitesse 3,45 m/s, mêlée, **vision 15 m** au lieu de 12 (passif). A = réinitialise l'attaque ; la prochaine attaque de base dans les 5 s inflige 20→120 (+40 % AD bonus) physiques en plus. Z = +15→43 d'armure et de RM pendant 4 s, recharge 18→14 s. E = provoque les ennemis à 3,5 m pendant 1→1,6 s (ils n'attaquent que Jotaro et ne lancent pas de sort). R = Star Platinum pendant 13 s et **temps arrêté 3 s** sur toutes les autres unités de la carte, alliées comprises (ni déplacement, ni attaque, ni sort) ; Jotaro peut seulement se déplacer ; recharge 180/160/140 s. Déséquilibré exprès : non bloqué par les boucliers anti-contrôle, non purifiable. **Avec Star Platinum** : A = Star Finger, doigt de 6 m qui traverse 3 cibles, 60→200 (+70 % AD bonus) physiques, ralentit de 30 % pendant 1,5 s ; Z = insensible aux dégâts pendant 2 s ; E = Jotaro traverse le mur (ruée de 4 m qui passe les murs). **Simplifié** : le E du stand ne creuse pas de passage pour les autres.
 
 ### Law — Support
 - **P** : perd des PV dans l'eau ; augmente la régénération des alliés proches.
@@ -200,6 +208,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **A** `[5 s]` et **E** `[7 s]` dépendent du pantin : attraction, lance-missiles (zone 10 %, coût continu en mana par seconde ✅, `CostPerSecond`), vol de 20 % des PV actuels rendus 3 s après, chien qui fonce tout droit (attaque en ligne non contrôlée, le chien est visuel), vol de mana, silence 1.5 s / sphère d'attraction, laser, déplacement forcé aléatoire, changement de pantin libre (suivant / précédent), absorption de la prochaine attaque.
 - **R** : passif — jauge pleine = changement automatique.
 - **Pas de Z** dans le PDF ❓
+
+**Implémentation (2026-11-25)** : stats PV 600 (+100), mana 350 (+45), AD 60 (+2,8), armure 26, RM 30, VA 0,658, vitesse 3,3 m/s, distance 5,5 m. P = jauge de 100 : +2 par seconde, +5 par attaque de base, +5 par ennemi touché par une compétence, pleine sur un kill ; pleine, Pain passe au pantin suivant et ses recharges sont réinitialisées (la jauge est visible comme un effet à cumuls). A `[5 s]` et E `[7 s]` par pantin : **Tendô** A attire de 3 m une cible à 6 m, 60→200 (+80 % AD bonus) physiques ; E sphère de 3 m au point visé (8 m) qui attire et inflige 4 × 15→55 (+15 %) en 1 s. **Shuradô** A lance-missiles activable : +1,5 m de portée, chaque attaque inflige 10 % de l'AD en zone (2,5 m), 20 de mana puis 8→12 par seconde ; E laser de 9 m sur 1,2 m, 80→260 (+90 %) physiques. **Ningendô** A retire 20 % des PV actuels de la cible (dégâts bruts), qui les récupère 3 s plus tard ; E pousse la cible de 3 m dans une direction aléatoire en 1 s. **Chikushôdô** A chien géant (projectile à tête chercheuse, 8 m), 70→230 (+80 %) physiques ; E passe au pantin suivant. **Gakidô** A absorbe 15→27 % du mana actuel de la cible ; E absorbe la prochaine attaque de base reçue (4 s). **Jigokudô** A silence 1,5 s ; E revient au pantin précédent. Pas de Z ni de R (fidèle au PDF : le R est le changement automatique). **Simplifié** : après un kill, Pain change de pantin tout de suite (pas de choix de rester). Un seul modèle (Tendô) pour les six pantins.
 
 ## 4. Kits partiels (notes de design)
 

@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Pain_NingendoSoul
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.pain.ningendo_soul
+  _displayName: "Arrachage d'\xE2me (Ningend\xF4)"
+  _description: "Retire 20 % des PV actuels de la cible pendant 3 s, puis elle les
+    r\xE9cup\xE8re."
+  _icon: {fileID: 0}
+  _maxRank: 5
+  _castMode: 0
+  _cooldownSeconds:
+  - 5
+  _cost:
+  - 50
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 2
+    _validTargets: 12
+    _fallback: 0
+    _range:
+      _byRank:
+      - 5.5
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857401
+  - rid: 2286801137428857402
+  _behaviourId: 
+  _readyStatus: {fileID: 0}
+  _readyStatusBaseStacks: 0
+  _toggleStatus: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857401
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 2
+        _amount:
+          _baseByRank:
+          - 0
+          _ratios:
+          - _source: 5
+            _stat: 0
+            _ratioByRank:
+            - 0.2
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0
+    - rid: 2286801137428857402
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: f0caa3e8d2f550d43b26ed074972a105, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0

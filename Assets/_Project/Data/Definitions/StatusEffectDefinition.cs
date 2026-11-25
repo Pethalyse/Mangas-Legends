@@ -26,6 +26,14 @@ namespace MangaLegends.Data.Definitions
         [SerializeReference, TypeSelector, Tooltip("Run when the status reaches its max stacks; the status is then removed.")] private List<EffectDefinition> _onMaxStacks = new List<EffectDefinition>();
         [SerializeField, Min(1), Tooltip("Ranks used by ranked values in tick effects: a status takes the rank of the ability that applies it.")] private int _rankCount = 1;
 
+        [Header("Special")]
+        [SerializeField, Tooltip("The unit takes no damage.")] private bool _invulnerable;
+        [SerializeField, Range(0f, 1f), Tooltip("Share of ability damage (not basic attacks) ignored.")] private float _abilityDamageReduction;
+        [SerializeField, Range(0f, 1f), Tooltip("Share of the damage taken by the unit that its source takes instead (link).")] private float _redirectToSource;
+        [SerializeField, Tooltip("The unit can only attack the source of the status.")] private bool _taunt;
+        [SerializeField, Tooltip("The next basic attack taken is ignored and removes the status.")] private bool _blocksNextBasicAttack;
+        [SerializeField, Tooltip("Removed once one of its triggers has run (empowered next attack).")] private bool _removedOnTrigger;
+
         public float DurationSeconds => _durationSeconds;
         public StatusRestriction Restrictions => _restrictions;
         public StackingRule Stacking => _stacking;
@@ -39,6 +47,12 @@ namespace MangaLegends.Data.Definitions
         public float TriggerCooldownSeconds => _triggerCooldownSeconds;
         public float RevealRadius => _revealRadius;
         public IReadOnlyList<EffectDefinition> OnMaxStacks => _onMaxStacks;
+        public bool Invulnerable => _invulnerable;
+        public float AbilityDamageReduction => _abilityDamageReduction;
+        public float RedirectToSource => _redirectToSource;
+        public bool Taunt => _taunt;
+        public bool BlocksNextBasicAttack => _blocksNextBasicAttack;
+        public bool RemovedOnTrigger => _removedOnTrigger;
 
         public StatusEffectSpec ToSpec(int runtimeId, int tickRate) => new StatusEffectSpec(
             runtimeId,
@@ -52,7 +66,7 @@ namespace MangaLegends.Data.Definitions
         {
             base.Validate(report);
             if (_onTick.Count > 0 && _tickIntervalSeconds <= 0f) report.Error(Id, "Tick effects need a tick interval.");
-            foreach (TriggeredEffect trigger in _triggers) trigger?.Validate(Id, report);
+            foreach (TriggeredEffect trigger in _triggers) trigger?.Validate(Id, _rankCount, report);
             foreach (EffectDefinition effect in _onTick)
             {
                 if (effect == null) report.Error(Id, "An effect entry is empty.");

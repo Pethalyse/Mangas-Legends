@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc063c8ef10c47d19f763b23c22f8563, type: 3}
+  m_Name: PROJ_Giorno_GoldenFlower
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ProjectileDefinition
+  _id: projectile.giorno.golden_flower
+  _displayName: projectile.giorno.golden_flower
+  _description: 
+  _icon: {fileID: 0}
+  _speed:
+    _byRank:
+    - 18
+  _maxDistance:
+    _byRank:
+    - 9
+  _radius:
+    _byRank:
+    - 0.5
+  _homing: 0
+  _maxHits:
+    _byRank: 01000000
+  _hits: 4
+  _stopsOnTerrain: 1
+  _onHit:
+  - rid: 2286801137428857388
+  - rid: 2286801137428857389
+  - rid: 2286801137428857390
+  - rid: 2286801137428857391
+  - rid: 2286801137428857392
+  _visualPrefab: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857388
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 1
+        _amount:
+          _baseByRank:
+          - 50
+          - 75
+          - 100
+          - 125
+          - 150
+          _ratios:
+          - _source: 0
+            _stat: 5
+            _ratioByRank:
+            - 0.4
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 0}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 0
+    - rid: 2286801137428857389
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: c2e1bdf2dc22e9d41b4227bd10847774, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 1.5
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
+        _requiredMinStacks: 2
+        _requiredMaxStacks: 0
+    - rid: 2286801137428857390
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 4a0e8cea37c679f4d9112f3c233820a1, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 1.5
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
+        _requiredMinStacks: 1
+        _requiredMaxStacks: 1
+    - rid: 2286801137428857391
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 87f34f525013fa94aa970ee9a6871c20, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 2
+        _modifierOverrides:
+        - _stat: 9
+          _kind: 2
+          _value:
+            _byRank:
+            - -0.3
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0
+    - rid: 2286801137428857392
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: f1682a39341ce98448ded81efc3e13f6, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []
+        _requiredStatus: {fileID: 0}
+        _requiredMinStacks: 0
+        _requiredMaxStacks: 0

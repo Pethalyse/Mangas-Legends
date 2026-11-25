@@ -193,3 +193,6 @@ Chaque monstre a une compétence que Rimuru peut absorber avec son R (voir [02-c
 9. ~~Équivalents manga~~ Réglé : Pitou, Pufu, Youpi, Magicarpe (§7.1), objets système dans [03-objets.md §5](03-objets.md). Compétences absorbables par Rimuru validées (§7.1).
 10. ~~Buffs des drakes~~ Réglé (07 §7.3).
 8. Premier jalon jouable : quels champions ? Proposition : Luffy, Zoro, Naruto, Ainz, Kirito (kits complets, mécaniques variées sans les cas les plus complexes).
+11. **Mark Evans, allié lié** : le PDF le fait choisir en début de partie. En attendant un écran de choix, le lien va à l'allié champion le plus proche (12 m). Proposition : un choix dans le salon, après la sélection des champions, ou un clic droit sur un allié avec une touche (comme un sort ciblé allié, une fois par partie).
+12. **Pain, rester sur un pantin après un kill** : le PDF laisse le choix. Aujourd'hui, le changement est immédiat. Propositions : une fenêtre de 3 s où appuyer sur R garde le pantin, ou le R devient « garder ce pantin » tant que la jauge est pleine.
+13. **Pain sans Z** : le PDF n'en donne pas. À confirmer, ou proposer un Z commun aux six pantins (par exemple Shinra Tensei : repousse autour de lui).

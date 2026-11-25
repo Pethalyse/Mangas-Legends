@@ -67,10 +67,12 @@ namespace MangaLegends.Data.Effects
     public sealed class SwapAbilitySetEffect : EffectDefinition
     {
         [SerializeField, Min(-1)] private int _alternateSetIndex;
+        [SerializeField, Range(-1, 1), Tooltip("-1 / +1: previous / next set in the cycle default, alternates (the index is then ignored).")] private int _step;
         [SerializeField] private bool _resetCooldowns;
         [SerializeField] private RankedFloat _durationSeconds = new RankedFloat(0f);
 
         public int AlternateSetIndex => _alternateSetIndex;
+        public int Step => _step;
         public bool ResetCooldowns => _resetCooldowns;
         public float DurationSecondsAt(int rank) => _durationSeconds.At(rank);
 

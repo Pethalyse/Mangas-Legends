@@ -15,10 +15,16 @@ namespace MangaLegends.Data.Effects
         [SerializeField] private RankedInt _stacks = new RankedInt(1);
         [SerializeField] private RankedFloat _durationOverrideSeconds = new RankedFloat(0f);
         [SerializeField] private List<RankedStatModifierData> _modifierOverrides = new List<RankedStatModifierData>();
+        [SerializeField, Tooltip("Only applied when the target carries this status with a stack count in the range below.")] private StatusEffectDefinition _requiredStatus;
+        [SerializeField, Min(0)] private int _requiredMinStacks;
+        [SerializeField, Min(0), Tooltip("0 = no upper bound.")] private int _requiredMaxStacks;
 
         public EffectTarget Target => _target;
         public StatusEffectDefinition Status => _status;
         public IReadOnlyList<RankedStatModifierData> ModifierOverrides => _modifierOverrides;
+        public StatusEffectDefinition RequiredStatus => _requiredStatus;
+
+        public bool AcceptsStacks(int stacks) => stacks >= _requiredMinStacks && (_requiredMaxStacks <= 0 || stacks <= _requiredMaxStacks);
 
         public int StacksAt(int rank) => Math.Max(1, _stacks.At(rank));
 

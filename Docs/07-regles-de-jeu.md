@@ -190,6 +190,7 @@ Chaque rôle a une quête qui se remplit en jouant sur sa voie ✅ :
 - Critique : 200 % ✅.
 - Compétences à coût continu : le coût est prélevé chaque seconde. La compétence s'arrête quand la ressource ne suffit plus 🔁 (comportement standard des compétences activables).
 - Hors combat après 5 s sans dégâts subis ni infligés 🔁 (`OutOfCombatSeconds`).
+- **Sorts ciblés sur une unité** ✅ (précisé par le propriétaire le 2026-11-25) : en lancement rapide, le sort part sur l'unité sous le curseur ; en lancement normal (touche puis clic gauche), un clic sur une unité la vise, un clic au sol vise l'unité valide la plus proche du clic (« targeting forgiveness » de LoL, rayon `GameRulesConfig.TargetForgivenessRadius`, 4 m). Vaut pour tous les sorts ciblés, sans réglage par compétence.
 
 ## 12. Ce qui reste à demander
 
@@ -204,3 +205,4 @@ Seules les questions propres à MangaLegends restent ouvertes :
 - Sorts d'invocateur : https://wiki.leagueoflegends.com/en-us/Summoner_spell
 - Objectifs : https://www.nerfplz.com/2026/08/every-summoners-rift-objective.html
 - Résumés : https://senseos.gg/guides/league-of-legends/coming-back-to-league-in-2026/ , https://patched.gg/games/league-of-legends/patch-261-notes
+- Ciblage (targeting forgiveness, lancement normal) : https://wiki.leagueoflegends.com/en-us/Targeting , https://wiki.leagueoflegends.com/en-us/Hotkeys

@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Giorno_GoldExperience
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.giorno.gold_experience
+  _displayName: Gold Experience
+  _description: "Poss\xE8de un stand. R\xE9g\xE9n\xE8re davantage de PV dans les
+    buissons (selon le niveau)."
+  _icon: {fileID: 0}
+  _maxRank: 1
+  _castMode: 5
+  _cooldownSeconds:
+  - 0
+  _cost:
+  - 0
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 0
+    _validTargets: 1
+    _fallback: 0
+    _range:
+      _byRank:
+      - 0
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast: []
+  _behaviourId: while_in_brush
+  _readyStatus: {fileID: 11400000, guid: dba332c602b805d49a0ebfe6b723c4ef, type: 2}
+  _readyStatusBaseStacks: 4
+  _toggleStatus: {fileID: 0}
+  references:
+    version: 2
+    RefIds: []

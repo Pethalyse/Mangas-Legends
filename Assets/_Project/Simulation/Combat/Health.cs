@@ -134,12 +134,16 @@ namespace MangaLegends.Simulation.Combat
 
         public DamageResult ApplyDamage(in DamageInfo info)
         {
-            if (!HasStateAuthority || IsDead || _unit.IsInvulnerable || info.Amount <= 0f) return DamageResult.None;
+            if (!HasStateAuthority || IsDead || _unit.IsInvulnerable || _unit.Status.IsInvulnerable || info.Amount <= 0f) return DamageResult.None;
             if (_unit.Definition != null && _unit.Definition.OneDamagePerHit) return TakeOneHit(info);
 
             float amount = info.Amount;
             if (info.Source != null && info.Source.Kind == Data.Definitions.UnitKind.Minion && (_unit.IsChampion || _unit.IsStructure))
                 amount *= _unit.Services.Rules.MinionDamageToChampionsRatio;
+            bool basicAttack = (info.Flags & DamageFlags.AutoAttack) != 0;
+            if (basicAttack && _unit.Status.TryConsumeAttackBlock()) return DamageResult.None;
+            if (!basicAttack) amount *= 1f - _unit.Status.AbilityDamageReduction;
+            amount = ShareWithLink(info, amount);
 
             LoadShields();
             DamageRequest request = new DamageRequest(amount, info.Type, info.Flags);
@@ -223,6 +227,16 @@ namespace MangaLegends.Simulation.Combat
             if (!HasStateAuthority || IsDead) return;
             Current = 0f;
             Kill(null);
+        }
+
+        // A linked unit (Mark Evans and his ally) takes part of the damage instead; procs are not shared, so links never chain.
+        private float ShareWithLink(in DamageInfo info, float amount)
+        {
+            if ((info.Flags & DamageFlags.Proc) != 0 || !_unit.Status.TryGetRedirect(out NetworkId id, out float ratio)) return amount;
+            if (!_unit.TryResolve(id, out Unit holder) || holder == _unit || !holder.IsAlive) return amount;
+            float shared = amount * ratio;
+            holder.Health.ApplyDamage(new DamageInfo(info.Source, shared, info.Type, info.Flags | DamageFlags.Proc));
+            return amount - shared;
         }
 
         private DamageResult TakeOneHit(in DamageInfo info)
