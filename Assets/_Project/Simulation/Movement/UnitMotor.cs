@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Fusion;
 using MangaLegends.Core.Stats;
+using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +14,10 @@ namespace MangaLegends.Simulation.Movement
         private const int MaxCorners = 16;
         private const float CornerReachedDistance = 0.05f;
         private const float NavMeshSampleDistance = 4f;
+        private const float SeparationShare = 0.5f;
+        private const float SeparationMaxStepRatio = 1.5f;
+
+        private readonly List<Unit> _neighbours = new List<Unit>();
 
         private NavMeshPath _path;
         private Unit _unit;
@@ -51,8 +57,34 @@ namespace MangaLegends.Simulation.Movement
                 SimulateDash();
                 return;
             }
-            if (!IsMoving || !_unit.Status.CanMove) return;
-            Advance(Speed * Runner.DeltaTime);
+            if (IsMoving && _unit.Status.CanMove) Advance(Speed * Runner.DeltaTime);
+            if (HasStateAuthority && (_unit.Kind == UnitKind.Minion || _unit.IsMonster)) Separate();
+        }
+
+        // Host-only soft collision for units that are never predicted: minions and monsters stop stacking on one spot.
+        private void Separate()
+        {
+            Vector3 position = transform.position;
+            float radius = _unit.Radius;
+            _unit.Services.Units.Query(position, radius * 2f + 1f, _unit, TeamFilter.Self | TeamFilter.Allies | TeamFilter.Enemies | TeamFilter.Neutral, _neighbours);
+            Vector3 push = Vector3.zero;
+            foreach (Unit other in _neighbours)
+            {
+                if (other == _unit) continue;
+                Vector3 away = position - other.Position;
+                away.y = 0f;
+                float distance = away.magnitude;
+                float overlap = radius + other.Radius - distance;
+                if (overlap <= 0f) continue;
+                float share = other.IsChampion || other.IsStructure ? 1f : SeparationShare;
+                Vector3 direction = distance > 0.0001f ? away / distance : Quaternion.Euler(0f, (_unit.SortKey % 360u), 0f) * Vector3.forward;
+                push += direction * (overlap * share);
+            }
+            if (push.sqrMagnitude < 0.000001f) return;
+            push = Vector3.ClampMagnitude(push, Mathf.Max(0.05f, Speed) * Runner.DeltaTime * SeparationMaxStepRatio);
+            Vector3 target = position + push;
+            if (NavMesh.Raycast(position, target, out NavMeshHit wall, NavMesh.AllAreas)) target = wall.position;
+            Place(target);
         }
 
         public bool MoveTo(Vector3 point, float stopDistance = 0f)
