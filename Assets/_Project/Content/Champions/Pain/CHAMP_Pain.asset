@@ -106,5 +106,6 @@ MonoBehaviour:
     _z: {fileID: 0}
     _e: {fileID: 11400000, guid: 6aabf4058565698428651e5c6a6e6924, type: 2}
     _r: {fileID: 11400000, guid: f1374ab6e271dab4dbf7403055fefab1, type: 2}
+  _resourceBarStatus: {fileID: 11400000, guid: 7236864d003425d419e5b3d642763a41, type: 2}
   _setChangeLockSeconds: 5
   _startingItems: []

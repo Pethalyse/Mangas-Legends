@@ -16,7 +16,7 @@ namespace MangaLegends.UI
     public sealed class HudPanel
     {
         private const int BuffSlots = 10;
-        private const int RankPips = 5;
+        private const int RankPips = 9;
 
         private static readonly CasterSlot[] SlotOrder = { CasterSlot.Passive, CasterSlot.A, CasterSlot.Z, CasterSlot.E, CasterSlot.R, CasterSlot.Summoner1, CasterSlot.Summoner2, CasterSlot.Recall, CasterSlot.Trinket };
         private static readonly string[] KeyActions = { "", "AbilityA", "AbilityZ", "AbilityE", "AbilityR", "Summoner1", "Summoner2", "Recall", "Trinket" };
@@ -51,6 +51,12 @@ namespace MangaLegends.UI
         private readonly Image[] _items = new Image[Inventory.Capacity];
         private readonly Text[] _itemKeys = new Text[ItemActions.Length];
         private readonly Image[] _itemCooldowns = new Image[ItemActions.Length];
+        private readonly Outline[] _itemBorders = new Outline[ItemActions.Length];
+        private readonly string[] _keyLabels = new string[SlotOrder.Length];
+        private readonly string[] _itemKeyLabels = new string[ItemActions.Length];
+        private readonly TooltipPanel _tooltip;
+        private int _hoverSlot = -1;
+        private int _hoverItem = -1;
         private readonly BuffView[] _buffs = new BuffView[BuffSlots];
         private MatchServices _services;
 
@@ -88,6 +94,7 @@ namespace MangaLegends.UI
                 int slot = i;
                 Image item = UiFactory.Box(items, "Item" + i, new Vector2(0f, 1f), new Vector2(0f, 1f), new Vector2(10f + (i % 3) * 62f, -10f - (i / 3) * 62f), new Vector2(58f, 58f), new Color(0f, 0f, 0f, 0.6f));
                 item.gameObject.AddComponent<Button>().onClick.AddListener(() => _services?.Commands.RequestSell(slot));
+                UiFactory.Hover(item, () => _hoverItem = slot, () => { if (_hoverItem == slot) _hoverItem = -1; });
                 _items[i] = UiFactory.Image(item.transform, "Icon", Color.white);
                 _items[i].rectTransform.offsetMin = new Vector2(3f, 3f);
                 _items[i].rectTransform.offsetMax = new Vector2(-3f, -3f);
@@ -96,6 +103,7 @@ namespace MangaLegends.UI
                     _itemCooldowns[i] = UiFactory.Image(item.transform, "Cooldown", new Color(0f, 0f, 0f, 0.7f));
                     _itemKeys[i] = UiFactory.Text(item.transform, "Key", "", 13, TextAnchor.LowerRight, Gold);
                     _itemKeys[i].rectTransform.offsetMax = new Vector2(-3f, 0f);
+                    _itemBorders[i] = UiFactory.Border(item, new Color(0.95f, 0.75f, 0.3f), 3f);
                 }
                 else item.gameObject.SetActive(false);
             }
@@ -119,6 +127,13 @@ namespace MangaLegends.UI
 
             UiFactory.Bar(root, "Channel", new Vector2(0.5f, 1f), new Vector2(0.5f, 0f), new Vector2(90f, 110f), new Vector2(360f, 18f), UiFactory.Accent, out _channel);
             _channelRoot = _channel.transform.parent.gameObject;
+            _tooltip = new TooltipPanel(canvas);
+        }
+
+        public void HoverSlot(int index, bool on)
+        {
+            if (on) _hoverSlot = index;
+            else if (_hoverSlot == index) _hoverSlot = -1;
         }
 
         public MatchServices Services => _services;
@@ -127,8 +142,8 @@ namespace MangaLegends.UI
 
         public void SetKeyLabels(Func<string, string> labelOf)
         {
-            for (int i = 1; i < _slots.Length; i++) _slots[i].SetKey(labelOf(KeyActions[i]));
-            for (int i = 0; i < _itemKeys.Length; i++) _itemKeys[i].text = labelOf(ItemActions[i]);
+            for (int i = 1; i < _slots.Length; i++) _slots[i].SetKey(_keyLabels[i] = labelOf(KeyActions[i]));
+            for (int i = 0; i < _itemKeys.Length; i++) _itemKeys[i].text = _itemKeyLabels[i] = labelOf(ItemActions[i]);
         }
 
         public void Refresh(MatchController match, Unit champion)
@@ -136,20 +151,17 @@ namespace MangaLegends.UI
             bool visible = match != null && match.Phase == MatchPhase.Playing && champion != null;
             _root.SetActive(visible);
             _itemsRoot.SetActive(visible);
-            if (!visible) return;
+            if (!visible)
+            {
+                _tooltip.Hide();
+                return;
+            }
 
             Health health = champion.Health;
             UiFactory.SetFill(_health, health.Ratio);
             _healthText.text = $"{Mathf.CeilToInt(health.Current)} / {Mathf.CeilToInt(health.Max)}" + (health.ShieldTotal > 0f ? $"  (+{Mathf.CeilToInt(health.ShieldTotal)})" : "");
             _healthRegen.text = $"+{champion.Stats.Get(StatType.HealthRegen):0.0}";
-            bool usesMana = champion.Resource != null && champion.Resource.UsesResource;
-            _mana.transform.parent.gameObject.SetActive(usesMana);
-            if (usesMana)
-            {
-                UiFactory.SetFill(_mana, champion.Resource.Ratio);
-                _manaText.text = $"{Mathf.FloorToInt(champion.Resource.Current)} / {Mathf.FloorToInt(champion.Resource.Max)}";
-                _manaRegen.text = $"+{champion.Stats.Get(StatType.ManaRegen):0.0}";
-            }
+            RefreshResource(champion);
 
             ChampionProgress progress = champion.GetComponent<ChampionProgress>();
             _portrait.text = champion.Definition.DisplayName;
@@ -162,6 +174,7 @@ namespace MangaLegends.UI
             for (int i = 0; i < _slots.Length; i++) _slots[i].Refresh(champion, SlotOrder[i]);
             RefreshItems(champion);
             RefreshBuffs(champion);
+            RefreshTooltip(champion);
 
             AbilityCaster caster = champion.Caster;
             _channelRoot.SetActive(caster.IsChanneling);
@@ -170,6 +183,49 @@ namespace MangaLegends.UI
                 float total = Mathf.Max(1, caster.ChannelEndTick - caster.ChannelStartTick);
                 UiFactory.SetFill(_channel, (champion.Runner.Tick - caster.ChannelStartTick) / total);
             }
+        }
+
+        // Mana, or for champions without mana the gauge their data names (Pain's body gauge), or nothing.
+        private void RefreshResource(Unit champion)
+        {
+            bool usesMana = champion.Resource != null && champion.Resource.UsesResource;
+            StatusEffectDefinition gauge = champion.Definition is ChampionDefinition definition ? definition.ResourceBarStatus : null;
+            _mana.transform.parent.gameObject.SetActive(usesMana || gauge != null);
+            if (usesMana)
+            {
+                _mana.color = UiFactory.Mana;
+                UiFactory.SetFill(_mana, champion.Resource.Ratio);
+                _manaText.text = $"{Mathf.FloorToInt(champion.Resource.Current)} / {Mathf.FloorToInt(champion.Resource.Max)}";
+                _manaRegen.text = $"+{champion.Stats.Get(StatType.ManaRegen):0.0}";
+            }
+            else if (gauge != null)
+            {
+                int stacks = champion.Status.StacksOf(gauge);
+                _mana.color = new Color(0.95f, 0.55f, 0.15f);
+                UiFactory.SetFill(_mana, stacks / (float)Mathf.Max(1, gauge.MaxStacks));
+                _manaText.text = $"{stacks} / {gauge.MaxStacks}";
+                _manaRegen.text = "";
+            }
+        }
+
+        private void RefreshTooltip(Unit champion)
+        {
+            LocalView view = _services != null ? _services.View : null;
+            bool detailed = view != null && view.TooltipDetailHeld;
+            TooltipText.Content? content = null;
+            if (_hoverSlot >= 0)
+            {
+                AbilityDefinition ability = champion.Caster.AbilityAt(SlotOrder[_hoverSlot]);
+                if (ability != null) content = TooltipText.Ability(ability, champion.Caster.RankOf(SlotOrder[_hoverSlot]), champion, _keyLabels[_hoverSlot], detailed);
+            }
+            else if (_hoverItem >= 0)
+            {
+                ItemDefinition item = champion.GetComponent<Inventory>().ItemAt(_hoverItem);
+                if (item != null) content = TooltipText.Item(item, champion, _hoverItem < _itemKeyLabels.Length ? _itemKeyLabels[_hoverItem] : "", detailed);
+            }
+            if (view != null) view.HoverRange = content.HasValue ? content.Value.Range : 0f;
+            if (content.HasValue) _tooltip.Show(content.Value, detailed);
+            else _tooltip.Hide();
         }
 
         private static string Format(StatType stat, float value)
@@ -200,6 +256,7 @@ namespace MangaLegends.UI
                 }
                 if (i >= _itemCooldowns.Length) continue;
                 float cooldown = item != null && item.Active.Enabled && item.Active.CooldownSeconds > 0f ? inventory.ActiveCooldownRemaining(i) / item.Active.CooldownSeconds : 0f;
+                _itemBorders[i].enabled = item != null && item.Active.Enabled;
                 Fill(_itemCooldowns[i].rectTransform, cooldown);
             }
         }
@@ -265,7 +322,7 @@ namespace MangaLegends.UI
                 _label.text = definition.Icon != null ? "" : name.Length > 3 ? name.Substring(0, 3) : name;
                 _sweep.gameObject.SetActive(remaining >= 0f);
                 if (remaining >= 0f) _sweep.fillAmount = 1f - Mathf.Clamp01(remaining / _total);
-                _stacks.text = stacks > 1 ? stacks.ToString() : "";
+                _stacks.text = definition.StackDecaySeconds <= 0f && (stacks > 1 || definition.MaxStacks > 1) ? stacks.ToString() : "";
             }
 
             public void Hide()
@@ -285,6 +342,9 @@ namespace MangaLegends.UI
             private readonly GameObject _levelUp;
             private readonly int _slotIndex;
             private readonly HudPanel _hud;
+            private readonly Text _charges;
+            private readonly Outline _lit;
+            private readonly float _size;
 
             public SlotView(Transform parent, int index, HudPanel hud)
             {
@@ -305,10 +365,15 @@ namespace MangaLegends.UI
                 _key.rectTransform.offsetMax = new Vector2(-3f, 0f);
 
                 bool ranked = slot >= CasterSlot.A && slot <= CasterSlot.R;
+                _size = size;
                 _pips = new Image[ranked ? RankPips : 0];
-                float pipWidth = (size - 8f) / RankPips;
                 for (int i = 0; i < _pips.Length; i++)
-                    _pips[i] = UiFactory.Box(frame.transform, "Rank" + i, Vector2.zero, new Vector2(0f, 1f), new Vector2(4f + i * pipWidth, -3f), new Vector2(pipWidth - 2f, 5f), new Color(1f, 1f, 1f, 0.15f));
+                    _pips[i] = UiFactory.Box(frame.transform, "Rank" + i, Vector2.zero, new Vector2(0f, 1f), Vector2.zero, new Vector2(4f, 5f), new Color(1f, 1f, 1f, 0.15f));
+                _charges = UiFactory.Text(frame.transform, "Charges", "", 16, TextAnchor.UpperLeft, Color.white);
+                _charges.rectTransform.offsetMin = new Vector2(4f, 0f);
+                _lit = UiFactory.Border(frame, new Color(1f, 0.85f, 0.35f), 3f);
+                _lit.enabled = false;
+                UiFactory.Hover(frame, () => _hud.HoverSlot(_slotIndex, true), () => _hud.HoverSlot(_slotIndex, false));
 
                 Button plus = UiFactory.Button(frame.transform, "LevelUp", "+", () => _hud.Services?.Commands.RequestLevelUp((int)SlotOrder[_slotIndex]), 24);
                 UiFactory.Place(plus, new Vector2(0.5f, 1f), new Vector2(0.5f, 0f), new Vector2(0f, 4f), new Vector2(34f, 28f));
@@ -328,19 +393,42 @@ namespace MangaLegends.UI
                     _icon.color = ability.Icon != null ? Color.white : new Color(0.4f, 0.4f, 0.5f);
                 }
                 int rank = caster.RankOf(slot);
-                bool learned = rank > 0 || slot == CasterSlot.Passive;
+                if (slot == CasterSlot.Passive)
+                {
+                    RefreshPassive(caster, ability != null);
+                    return;
+                }
+                bool learned = rank > 0;
                 float remaining = caster.CooldownRemaining(slot);
                 float total = Mathf.Max(0.01f, caster.CooldownTotal(slot));
                 bool cooling = learned && !caster.IsReady(slot) && remaining > 0f;
                 Fill(_cooldown.rectTransform, !learned ? 1f : cooling ? remaining / total : 0f);
                 _timer.text = cooling && remaining > 0f ? Mathf.CeilToInt(remaining).ToString() : "";
+                int maxCharges = ability != null && rank > 0 ? ability.ChargesAt(rank) : 1;
+                _charges.text = maxCharges > 1 ? caster.Slots[(int)slot].Charges.ToString() : "";
                 int maxRank = ability != null ? Mathf.Min(RankPips, ability.MaxRank) : 0;
+                float pipWidth = maxRank > 0 ? (_size - 8f) / maxRank : 0f;
                 for (int i = 0; i < _pips.Length; i++)
                 {
                     _pips[i].gameObject.SetActive(i < maxRank);
+                    if (i >= maxRank) continue;
+                    _pips[i].rectTransform.anchoredPosition = new Vector2(4f + i * pipWidth, -3f);
+                    _pips[i].rectTransform.sizeDelta = new Vector2(pipWidth - 2f, 5f);
                     _pips[i].color = i < rank ? Gold : new Color(1f, 1f, 1f, 0.15f);
                 }
                 _levelUp.SetActive(caster.CanLevelUp(slot));
+            }
+
+            // The passive glows while it is active and otherwise counts down to the moment it will be.
+            private void RefreshPassive(AbilityCaster caster, bool hasPassive)
+            {
+                bool ready = caster.PassiveTimer(out float remaining, out float total);
+                _lit.enabled = hasPassive && ready;
+                bool counting = !ready && remaining > 0f && total > 0f;
+                Fill(_cooldown.rectTransform, counting ? remaining / total : 0f);
+                _timer.text = counting ? Mathf.CeilToInt(remaining).ToString() : "";
+                _charges.text = "";
+                _levelUp.SetActive(false);
             }
         }
     }

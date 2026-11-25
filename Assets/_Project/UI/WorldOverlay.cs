@@ -21,6 +21,7 @@ namespace MangaLegends.UI
         private readonly GameObject _levelBox;
         private readonly Text _level;
         private readonly Text _name;
+        private readonly Text _marks;
 
         public BarView(Transform parent)
         {
@@ -44,6 +45,12 @@ namespace MangaLegends.UI
             _name.rectTransform.offsetMin = new Vector2(-40f, 2f);
             _name.rectTransform.offsetMax = new Vector2(40f, 22f);
             _name.gameObject.AddComponent<Outline>().effectColor = new Color(0f, 0f, 0f, 0.9f);
+            _marks = UiFactory.Text(_root, "Marks", "", 18, TextAnchor.LowerRight, new Color(1f, 0.85f, 0.35f));
+            _marks.rectTransform.anchorMin = new Vector2(1f, 1f);
+            _marks.rectTransform.anchorMax = new Vector2(1f, 1f);
+            _marks.rectTransform.offsetMin = new Vector2(-90f, 2f);
+            _marks.rectTransform.offsetMax = new Vector2(30f, 24f);
+            _marks.gameObject.AddComponent<Outline>().effectColor = new Color(0f, 0f, 0f, 0.9f);
         }
 
         public void Show(Unit unit, Vector3 screen, Color color)
@@ -65,16 +72,20 @@ namespace MangaLegends.UI
             Segment(_shield, ref from, any, total);
             Segment(_physicalShield, ref from, physical, total);
             Segment(_magicShield, ref from, magic, total);
-            bool mana = champion && unit.Resource != null && unit.Resource.UsesResource;
+            _marks.text = Marks(unit);
+            Data.Definitions.StatusEffectDefinition gauge = unit.Definition is Data.Definitions.ChampionDefinition definition ? definition.ResourceBarStatus : null;
+            bool usesMana = champion && unit.Resource != null && unit.Resource.UsesResource;
+            bool mana = usesMana || champion && gauge != null;
             _manaBack.SetActive(mana);
             if (mana)
             {
+                _mana.color = usesMana ? UiFactory.Mana : new Color(0.95f, 0.55f, 0.15f);
                 RectTransform back = (RectTransform)_manaBack.transform;
                 back.anchorMin = new Vector2(0f, 0f);
                 back.anchorMax = new Vector2(1f, 0f);
                 back.offsetMin = new Vector2(0f, -6f);
                 back.offsetMax = new Vector2(0f, 0f);
-                Span(_mana.rectTransform, 0f, unit.Resource.Ratio);
+                Span(_mana.rectTransform, 0f, usesMana ? unit.Resource.Ratio : unit.Status.StacksOf(gauge) / (float)Mathf.Max(1, gauge.MaxStacks));
             }
             _levelBox.SetActive(champion);
             _name.gameObject.SetActive(champion);
@@ -90,6 +101,20 @@ namespace MangaLegends.UI
             if (amount <= 0f) return;
             Span(image.rectTransform, from / total, (from + amount) / total);
             from += amount;
+        }
+
+        // Stacks that other players must read at a glance (Kirito's marks, Giorno's flowers), shown above the bar.
+        private static string Marks(Unit unit)
+        {
+            string text = "";
+            for (int slot = 0; slot < unit.Status.Active.Length; slot++)
+            {
+                Data.Definitions.StatusEffectDefinition definition = unit.Status.DefinitionAt(slot);
+                if (definition == null || !definition.ShownOverhead) continue;
+                string name = definition.DisplayName ?? "";
+                text += (text.Length > 0 ? "  " : "") + (name.Length > 6 ? name.Substring(0, 6) : name) + " " + unit.Status.Active[slot].Stacks;
+            }
+            return text;
         }
 
         public void Hide() => _root.gameObject.SetActive(false);

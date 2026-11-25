@@ -48,6 +48,7 @@ namespace MangaLegends.Presentation
             _triangles.Clear();
             MatchServices services = _view.Services;
             if (services != null && services.View.IsAiming) Build(services.View);
+            else if (services != null) BuildHoverRange(services.View);
             if (_vertices.Count == 0) return;
 
             _mesh.Clear();
@@ -95,9 +96,10 @@ namespace MangaLegends.Presentation
                     break;
                 case AimShapeKind.Circle:
                     Vector3 center = origin;
-                    if (shape.AtCursor) center = shape.Range > 0f && shape.Range <= _maxRangeRing ? origin + Vector3.ClampMagnitude(toCursor, shape.Range) : cursor;
+                    if (shape.AtCursor) center = !source.Targeting.WalkIntoRange && shape.Range > 0f && shape.Range <= _maxRangeRing ? origin + Vector3.ClampMagnitude(toCursor, shape.Range) : cursor;
                     AddDisc(center, shape.Radius, fill);
                     AddRing(center, shape.Radius, edge);
+                    if (shape.InnerRadius > 0f && shape.InnerRadius < shape.Radius) AddRing(center, shape.InnerRadius, edge);
                     break;
             }
 
@@ -108,6 +110,16 @@ namespace MangaLegends.Presentation
                 at.y = Height;
                 AddRing(at, hovered.Radius + 0.25f, _targetColor);
             }
+        }
+
+        // Hovering a spell or an item in the HUD shows its range around the champion.
+        private void BuildHoverRange(LocalView view)
+        {
+            Unit champion = view.LocalChampion;
+            if (view.HoverRange <= 0f || champion == null || champion.Object == null || !champion.IsAlive) return;
+            Vector3 origin = champion.Position;
+            origin.y = Height;
+            AddRing(origin, view.HoverRange + champion.Radius, _rangeColor);
         }
 
         private static float SpreadOffset(int index, int count, float spread) =>

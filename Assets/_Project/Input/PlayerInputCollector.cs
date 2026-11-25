@@ -106,9 +106,11 @@ namespace MangaLegends.Input
             if (_cancel.WasPressedThisFrame())
             {
                 if (_aiming) StopAiming(view);
+                else if (view.ShopOpen) view.ToggleShop();
                 else view.ToggleMenu();
             }
-            if (view.MenuOpen)
+            view.TooltipDetailHeld = Keyboard.current != null && Keyboard.current.shiftKey.isPressed;
+            if (view.MenuOpen || IsTyping())
             {
                 StopAiming(view);
                 return;
@@ -136,6 +138,7 @@ namespace MangaLegends.Input
                 _pending.Set(InputButton.Stop, true);
             }
             CollectAttackMove(view);
+            if (!_aiming && _select.WasPressedThisFrame() && !view.PointerOverUi) view.SelectedUnit = view.HoveredUnit;
             foreach (InputButton button in CastButtons) CollectCast(button, view);
             UpdateAiming(view);
         }
@@ -158,6 +161,14 @@ namespace MangaLegends.Input
             _pending = default;
             _hasAim = false;
             _levelUpSlot = -1;
+        }
+
+        // Typing in a text field (shop search, player name) must not cast spells.
+        private static bool IsTyping()
+        {
+            GameObject selected = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
+            UnityEngine.UI.InputField field = selected != null ? selected.GetComponent<UnityEngine.UI.InputField>() : null;
+            return field != null && field.isFocused;
         }
 
         private void CollectMove(LocalView view)

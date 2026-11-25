@@ -52,6 +52,7 @@ MonoBehaviour:
   _taunt: 0
   _blocksNextBasicAttack: 0
   _removedOnTrigger: 0
+  _shownOverhead: 0
   _onOutOfCombat: []
   _onExpire: []
   _contactRadius: 0

@@ -20,6 +20,7 @@ namespace MangaLegends.UI
         private AnnouncementPanel _announcements;
         private DeathRecapPanel _deathRecap;
         private WorldOverlay _overlay;
+        private TargetFramePanel _targetFrame;
         private Text _waiting;
         private SettingsPanel _settings;
         private ControlSettings _controlSettings;
@@ -30,6 +31,7 @@ namespace MangaLegends.UI
             _overlay = new WorldOverlay(canvas.transform);
             _hud = new HudPanel(canvas.transform);
             _teamBar = new TeamBarPanel(canvas.transform);
+            _targetFrame = new TargetFramePanel(canvas.transform);
             _minimap = new MinimapPanel(canvas.transform, _view);
             _announcements = new AnnouncementPanel(canvas.transform);
             _deathRecap = new DeathRecapPanel(canvas.transform);
@@ -58,6 +60,7 @@ namespace MangaLegends.UI
             _shop.Refresh(services.Match.Phase == Simulation.Match.MatchPhase.Playing ? _view.LocalChampion : null);
             _scoreboard.Refresh(services, services.Match);
             _overlay.Refresh(services);
+            _targetFrame.Refresh(services.View);
         }
 
         private void OnDestroy()

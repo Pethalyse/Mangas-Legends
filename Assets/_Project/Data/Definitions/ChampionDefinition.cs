@@ -12,6 +12,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private ChampionTraits _traits;
         [SerializeField] private AbilitySet _defaultAbilities = new AbilitySet();
         [SerializeField] private List<AbilitySet> _alternateAbilitySets = new List<AbilitySet>();
+        [SerializeField, Tooltip("Champions without mana: status whose stacks fill the bar under the health bar (Pain's body gauge).")] private StatusEffectDefinition _resourceBarStatus;
         [SerializeField, Min(0f), Tooltip("Minimum time between two ability set changes by step (Pain's bodies); shown as the passive cooldown.")] private float _setChangeLockSeconds;
         [SerializeField, Tooltip("Items in the inventory from the start (champion-exclusive items such as Mark Evans' gloves).")] private List<ItemDefinition> _startingItems = new List<ItemDefinition>();
 
@@ -22,6 +23,7 @@ namespace MangaLegends.Data.Definitions
         public AbilitySet DefaultAbilities => _defaultAbilities;
         public IReadOnlyList<AbilitySet> AlternateAbilitySets => _alternateAbilitySets;
         public float SetChangeLockSeconds => _setChangeLockSeconds;
+        public StatusEffectDefinition ResourceBarStatus => _resourceBarStatus;
         public IReadOnlyList<ItemDefinition> StartingItems => _startingItems;
 
         public override void Validate(ValidationReport report)

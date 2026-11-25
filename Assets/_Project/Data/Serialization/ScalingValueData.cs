@@ -17,6 +17,14 @@ namespace MangaLegends.Data.Serialization
 
         public IReadOnlyList<float> BaseByRank => _baseByRank;
 
+        public IEnumerable<ScalingRatio> Ratios
+        {
+            get
+            {
+                foreach (ScalingRatioData ratio in _ratios) yield return ratio.ToRatio();
+            }
+        }
+
         public float Evaluate(int rank, in ScalingContext context) => ToScalingValue().Evaluate(rank, context);
 
         public ScalingValue ToScalingValue()

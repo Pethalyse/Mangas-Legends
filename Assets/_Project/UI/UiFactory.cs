@@ -138,6 +138,26 @@ namespace MangaLegends.UI
             return field;
         }
 
+        public static void Hover(Component component, Action enter, Action exit)
+        {
+            EventTrigger trigger = component.gameObject.GetComponent<EventTrigger>() ?? component.gameObject.AddComponent<EventTrigger>();
+            var onEnter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+            onEnter.callback.AddListener(_ => enter());
+            var onExit = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+            onExit.callback.AddListener(_ => exit());
+            trigger.triggers.Add(onEnter);
+            trigger.triggers.Add(onExit);
+        }
+
+        // Thin coloured frame drawn over a slot (gold border of items with an active, lit passive).
+        public static Outline Border(Graphic graphic, Color color, float width)
+        {
+            Outline outline = graphic.gameObject.AddComponent<Outline>();
+            outline.effectColor = color;
+            outline.effectDistance = new Vector2(width, -width);
+            return outline;
+        }
+
         public static void Place(Component component, Vector2 anchor, Vector2 pivot, Vector2 position, Vector2 size)
         {
             RectTransform rect = (RectTransform)component.transform;

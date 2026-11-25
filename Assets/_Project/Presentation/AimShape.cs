@@ -1,6 +1,7 @@
 using MangaLegends.Data.Definitions;
 using MangaLegends.Data.Effects;
 using MangaLegends.Simulation.Abilities;
+using UnityEngine;
 
 namespace MangaLegends.Presentation
 {
@@ -27,6 +28,7 @@ namespace MangaLegends.Presentation
         public int Count;
         public float Spread;
         public bool AtCursor;
+        public float InnerRadius;
 
         public static AimShape Describe(in AimSource source, float casterRadius)
         {
@@ -38,7 +40,12 @@ namespace MangaLegends.Presentation
             if (source.Effects != null)
                 foreach (EffectDefinition effect in source.Effects)
                 {
-                    if (found) break;
+                    if (found)
+                    {
+                        if (effect is CreateAreaEffect second && second.Area != null && second.Area.Shape == AreaShape.Circle && shape.Kind == AimShapeKind.Circle)
+                            shape.InnerRadius = Mathf.Min(shape.Radius, second.Area.RadiusAt(rank));
+                        continue;
+                    }
                     switch (effect)
                     {
                         case LaunchProjectileEffect launch when launch.Projectile != null:

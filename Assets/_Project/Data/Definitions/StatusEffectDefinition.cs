@@ -35,6 +35,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Tooltip("The unit can only attack the source of the status.")] private bool _taunt;
         [SerializeField, Tooltip("The next basic attack taken is ignored and removes the status.")] private bool _blocksNextBasicAttack;
         [SerializeField, Tooltip("Removed once one of its triggers has run (empowered next attack).")] private bool _removedOnTrigger;
+        [SerializeField, Tooltip("Its stacks are shown above the unit's health bar, for everyone (Kirito's marks).")] private bool _shownOverhead;
         [SerializeReference, TypeSelector, Tooltip("Run when the unit is out of combat; the status is then removed.")] private List<EffectDefinition> _onOutOfCombat = new List<EffectDefinition>();
         [SerializeReference, TypeSelector, Tooltip("Run when the status runs out (not when removed early).")] private List<EffectDefinition> _onExpire = new List<EffectDefinition>();
         [SerializeField, Min(0f), Tooltip("While active, the first enemy within this distance triggers On Contact and ends the status.")] private float _contactRadius;
@@ -60,6 +61,7 @@ namespace MangaLegends.Data.Definitions
         public bool Taunt => _taunt;
         public bool BlocksNextBasicAttack => _blocksNextBasicAttack;
         public bool RemovedOnTrigger => _removedOnTrigger;
+        public bool ShownOverhead => _shownOverhead;
         public float ReductionArcDegrees => _reductionArcDegrees;
         public IReadOnlyList<EffectDefinition> OnOutOfCombat => _onOutOfCombat;
         public IReadOnlyList<EffectDefinition> OnExpire => _onExpire;

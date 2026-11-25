@@ -26,6 +26,10 @@ namespace MangaLegends.Simulation.Services
         public bool MenuOpen { get; set; }
         public TeamVision Vision { get; } = new TeamVision();
         public Vector3? CameraFocusRequest { get; set; }
+        public bool TooltipDetailHeld { get; set; }
+        public float HoverRange { get; set; }
+        public Unit SelectedUnit { get; set; }
+        public bool ShopOpen { get; set; }
 
         public void ToggleShop() => _shopToggles++;
         public void ToggleCameraLock() => _cameraLockToggles++;
