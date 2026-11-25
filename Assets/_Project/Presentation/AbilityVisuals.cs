@@ -57,7 +57,7 @@ namespace MangaLegends.Presentation
             for (int i = 0; i < launcher.Projectiles.Length; i++)
             {
                 NetProjectile projectile = launcher.Projectiles[i];
-                if (!projectile.Active) continue;
+                if (!projectile.Active || !unit.Services.View.Vision.IsPointVisible(projectile.Position)) continue;
                 ProjectileDefinition definition = launcher.DefinitionOf(projectile);
                 float size = definition != null ? definition.RadiusAt(projectile.Rank) * 2f : 0.5f;
                 Show(_projectiles.Next(_material, transform), projectile.Position, Vector3.one * size, color);
@@ -70,7 +70,7 @@ namespace MangaLegends.Presentation
             for (int i = 0; i < spawner.Areas.Length; i++)
             {
                 NetArea area = spawner.Areas[i];
-                if (!area.Active) continue;
+                if (!area.Active || !unit.Services.View.Vision.IsPointVisible(area.Position)) continue;
                 AreaDefinition definition = spawner.DefinitionOf(area);
                 if (definition == null) continue;
                 float diameter = definition.RadiusAt(area.Rank) * 2f;
@@ -91,6 +91,7 @@ namespace MangaLegends.Presentation
                 float duration = Mathf.Max(1, shot.HitTick - shot.FireTick);
                 float t = Mathf.Clamp01((tick - shot.FireTick) / duration);
                 Vector3 position = Vector3.Lerp(unit.Position + Vector3.up, target.Position + Vector3.up, t);
+                if (!unit.Services.View.Vision.IsPointVisible(position)) continue;
                 Show(_shots.Next(_material, transform), position, Vector3.one * 0.3f, color);
             }
         }

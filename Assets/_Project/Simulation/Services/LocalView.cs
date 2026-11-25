@@ -23,6 +23,7 @@ namespace MangaLegends.Simulation.Services
         public bool IsAiming { get; set; }
         public InputButton AimButton { get; set; }
         public bool MenuOpen { get; set; }
+        public TeamVision Vision { get; } = new TeamVision();
 
         public void ToggleShop() => _shopToggles++;
         public void ToggleCameraLock() => _cameraLockToggles++;

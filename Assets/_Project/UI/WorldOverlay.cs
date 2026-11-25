@@ -33,7 +33,7 @@ namespace MangaLegends.UI
                 {
                     if (unit == null || unit.Object == null || unit.Definition == null) continue;
                     CollectHits(unit);
-                    if (!unit.IsAlive) continue;
+                    if (!unit.IsAlive || !services.View.Vision.IsVisible(unit)) continue;
                     Vector3 screen = camera.WorldToScreenPoint(unit.Position + Vector3.up * (unit.IsStructure ? 4f : 2.4f));
                     if (screen.z <= 0f) continue;
                     DrawBar(used++, unit, screen, services.View.LocalChampion);

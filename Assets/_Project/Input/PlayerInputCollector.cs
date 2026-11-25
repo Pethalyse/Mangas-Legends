@@ -282,7 +282,7 @@ namespace MangaLegends.Input
             for (int i = 0; i < count; i++)
             {
                 Unit unit = _hits[i].collider.GetComponentInParent<Unit>();
-                if (unit == null || unit.Object == null || !unit.IsAlive || _hits[i].distance >= best) continue;
+                if (unit == null || unit.Object == null || !unit.IsAlive || !view.Vision.IsVisible(unit) || _hits[i].distance >= best) continue;
                 best = _hits[i].distance;
                 view.HoveredUnit = unit;
             }

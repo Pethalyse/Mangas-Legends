@@ -33,6 +33,9 @@ MonoBehaviour:
   - _stat: 9
     _kind: 1
     _value: 0.1
+  - _stat: 20
+    _kind: 0
+    _value: 2
   _passives: []
   _active:
     _enabled: 0

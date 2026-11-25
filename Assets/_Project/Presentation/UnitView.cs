@@ -22,6 +22,7 @@ namespace MangaLegends.Presentation
         private int _lastAttackTick;
         private float _punch;
         private Vector3 _baseScale = Vector3.one;
+        private bool _shown = true;
 
         private void Awake()
         {
@@ -33,6 +34,9 @@ namespace MangaLegends.Presentation
         private void Update()
         {
             if (_unit.Object == null || _unit.Definition == null) return;
+            bool visible = _unit.Services == null || _unit.Services.View.Vision.IsVisible(_unit);
+            SetVisible(visible);
+            if (!visible) return;
             Color team = _unit.Team == Team.Blue ? _blue : _unit.Team == Team.Red ? _red : _neutral;
             Color body = _unit.Definition.Tint;
             if (!_unit.IsAlive) body *= 0.25f;
@@ -43,6 +47,16 @@ namespace MangaLegends.Presentation
                 Paint(_teamRing, team);
             }
             AnimateAttack();
+        }
+
+        private void SetVisible(bool visible)
+        {
+            if (visible == _shown) return;
+            _shown = visible;
+            if (_body != null)
+                foreach (Renderer renderer in _body)
+                    if (renderer != null) renderer.enabled = visible;
+            if (_teamRing != null) _teamRing.enabled = visible;
         }
 
         private void AnimateAttack()

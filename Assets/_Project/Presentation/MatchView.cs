@@ -26,6 +26,7 @@ namespace MangaLegends.Presentation
             services.View.Camera = _camera;
             if (LocalChampion == null || LocalChampion.Object == null) LocalChampion = FindLocalChampion(services);
             services.View.LocalChampion = LocalChampion;
+            services.View.Vision.Update(LocalChampion != null ? LocalChampion.Team : Team.None, services.Units.All);
         }
 
         private static Unit FindLocalChampion(MatchServices services)

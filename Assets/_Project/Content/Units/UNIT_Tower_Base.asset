@@ -41,7 +41,7 @@ MonoBehaviour:
       _base: 2
       _growthPerLevel: 0
     - _stat: 20
-      _base: 11
+      _base: 13.5
       _growthPerLevel: 0
   _prefab: {fileID: 1466718186140019555, guid: ee4d66f366ce0c44f8f2a55e80f36b1f, type: 3}
   _goldBounty: 375
