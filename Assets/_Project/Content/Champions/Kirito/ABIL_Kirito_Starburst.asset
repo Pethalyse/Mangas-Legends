@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Kirito_Starburst
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.kirito.starburst_stream
+  _displayName: Starburst Stream
+  _description: "Encha\xEEnement sur la cible : ignore 25 % de son armure ; d\xE9g\xE2ts
+    bonus par marque, marques consomm\xE9es."
+  _icon: {fileID: 0}
+  _maxRank: 3
+  _castMode: 0
+  _cooldownSeconds:
+  - 65
+  - 60
+  - 55
+  _cost:
+  - 100
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 2
+    _validTargets: 12
+    _fallback: 0
+    _range:
+      _byRank:
+      - 2.5
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857151
+  - rid: 2286801137428857152
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857151
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 03f5f8b06c18bf84ab1fd5741aa454ba, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 3
+        _modifierOverrides:
+        - _stat: 6
+          _kind: 2
+          _value:
+            _byRank:
+            - -0.25
+    - rid: 2286801137428857152
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 0
+        _amount:
+          _baseByRank:
+          - 100
+          - 175
+          - 250
+          _ratios:
+          - _source: 1
+            _stat: 4
+            _ratioByRank:
+            - 1
+          - _source: 6
+            _stat: 4
+            _ratioByRank:
+            - 40
+            - 60
+            - 80
+        _canCrit: 0
+        _appliesOnHitEffects: 0
+        _stacksFrom: {fileID: 11400000, guid: e48202b975528884fb6252d25b51f40d, type: 2}
+        _stacksOnCaster: 0
+        _minStacks: 0
+        _consumesStacks: 1

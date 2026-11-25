@@ -20,6 +20,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField, Min(0f)] private float _tickIntervalSeconds;
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onTick = new List<EffectDefinition>();
         [SerializeField] private List<TriggeredEffect> _triggers = new List<TriggeredEffect>();
+        [SerializeField, Min(1), Tooltip("Ranks used by ranked values in tick effects: a status takes the rank of the ability that applies it.")] private int _rankCount = 1;
 
         public float DurationSeconds => _durationSeconds;
         public StatusRestriction Restrictions => _restrictions;
@@ -47,7 +48,7 @@ namespace MangaLegends.Data.Definitions
             foreach (EffectDefinition effect in _onTick)
             {
                 if (effect == null) report.Error(Id, "An effect entry is empty.");
-                else effect.Validate(Id, 1, report);
+                else effect.Validate(Id, _rankCount, report);
             }
         }
     }

@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a67e8de616430c8f6f15cf43826684, type: 3}
+  m_Name: CHAMP_Luffy
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.ChampionDefinition
+  _id: champion.luffy
+  _displayName: Luffy
+  _description: Capitaine au chapeau de paille.
+  _icon: {fileID: 0}
+  _kind: 0
+  _stats:
+    _entries:
+    - _stat: 0
+      _base: 640
+      _growthPerLevel: 104
+    - _stat: 1
+      _base: 1.6
+      _growthPerLevel: 0.15
+    - _stat: 2
+      _base: 300
+      _growthPerLevel: 30
+    - _stat: 3
+      _base: 1.4
+      _growthPerLevel: 0.12
+    - _stat: 4
+      _base: 62
+      _growthPerLevel: 3.5
+    - _stat: 6
+      _base: 40
+      _growthPerLevel: 4.8
+    - _stat: 7
+      _base: 32
+      _growthPerLevel: 1.5
+    - _stat: 8
+      _base: 0.65
+      _growthPerLevel: 0.01625
+    - _stat: 9
+      _base: 3.45
+      _growthPerLevel: 0
+    - _stat: 10
+      _base: 1.75
+      _growthPerLevel: 0
+    - _stat: 12
+      _base: 2
+      _growthPerLevel: 0
+    - _stat: 20
+      _base: 12
+      _growthPerLevel: 0
+  _prefab: {fileID: 6298360075311980653, guid: d1ee09ec9c35b2145aa6b5a1b0e0596f, type: 3}
+  _goldBounty: 0
+  _experienceBounty: 0
+  _collisionRadius: 0.5
+  _tint: {r: 0.85, g: 0.2, b: 0.2, a: 1}
+  _attackProjectileSpeed: 0
+  _attackWindup: 0.3
+  _role: 2
+  _resource: 0
+  _defaultAbilities:
+    _name: Default
+    _passive: {fileID: 11400000, guid: f815faddfe22106488d6bcf8c9771f65, type: 2}
+    _a: {fileID: 11400000, guid: 2b19e1a78e3365b4d9b9a8e1e8489266, type: 2}
+    _z: {fileID: 11400000, guid: f69151f0e6cc1e14d8b978e2b0e3f7aa, type: 2}
+    _e: {fileID: 11400000, guid: 603a248a5891ea54997738fe3aefaaa5, type: 2}
+    _r: {fileID: 11400000, guid: 6dc09cf56b29b014d9747499fc092cd5, type: 2}
+  _alternateAbilitySets: []

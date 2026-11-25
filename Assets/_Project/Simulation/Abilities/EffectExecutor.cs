@@ -40,7 +40,10 @@ namespace MangaLegends.Simulation.Abilities
                     break;
                 case ApplyStatusEffect status when authority:
                     foreach (Unit target in Targets(status.Target, context))
+                    {
                         target.Status.Apply(new StatusApplication(status.Status, caster, context.Rank, status.StacksAt(context.Rank), status.DurationSecondsAt(context.Rank), status.ModifierOverrides));
+                        target.Stats.Refresh();
+                    }
                     break;
                 case CleanseEffect cleanse when authority:
                     foreach (Unit target in Targets(cleanse.Target, context)) target.Status.RemoveCrowdControl();
@@ -66,6 +69,9 @@ namespace MangaLegends.Simulation.Abilities
                     break;
                 case SwapAbilitySetEffect swap:
                     caster.Caster?.SwapSet(swap.AlternateSetIndex + 1, swap.DurationSecondsAt(context.Rank), swap.ResetCooldowns);
+                    break;
+                case ReduceCooldownEffect reduce:
+                    caster.Caster?.ReduceCooldown((CasterSlot)(int)reduce.Slot, reduce.RemainingFractionAt(context.Rank));
                     break;
                 case SummonEffect summon when authority:
                     caster.Services.Match?.SpawnSummon(caster, summon.Unit, summon.CountAt(context.Rank), summon.DurationSecondsAt(context.Rank), context.AimPoint);
@@ -96,7 +102,11 @@ namespace MangaLegends.Simulation.Abilities
         {
             Unit caster = context.Caster;
             if (!caster.IsEnemyOf(target)) return;
-            float amount = damage.Amount.Evaluate(context.Rank, Scaling(caster, target, 0));
+            Unit stackHolder = damage.StacksOnCaster ? caster : target;
+            int stacks = damage.StacksFrom != null ? stackHolder.Status.StacksOf(damage.StacksFrom) : 0;
+            if (stacks < damage.MinStacks) return;
+            if (damage.ConsumesStacks && damage.StacksFrom != null) stackHolder.Status.Remove(damage.StacksFrom);
+            float amount = damage.Amount.Evaluate(context.Rank, Scaling(caster, target, stacks));
             DamageFlags flags = context.IsProc ? DamageFlags.Proc : DamageFlags.Ability;
             if (damage.CanCrit)
             {

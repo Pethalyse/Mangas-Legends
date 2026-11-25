@@ -208,6 +208,15 @@ namespace MangaLegends.Simulation.Abilities
 
         public void CancelPending() => PendingSlot = -1;
 
+        public void ReduceCooldown(CasterSlot slot, float remainingFraction)
+        {
+            NetSlot data = Slots[(int)slot];
+            int remaining = data.ReadyTick - Runner.Tick;
+            if (remaining <= 0) return;
+            data.ReadyTick = Runner.Tick + Mathf.CeilToInt(remaining * Mathf.Clamp01(remainingFraction));
+            Slots.Set((int)slot, data);
+        }
+
         public void SwapSet(int setIndex, float durationSeconds, bool resetCooldowns)
         {
             if (!(_unit.Definition is ChampionDefinition champion)) return;

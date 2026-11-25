@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9ce820915e4865814bf71c6e7a10cc, type: 3}
+  m_Name: ABIL_Luffy_Gatling
+  m_EditorClassIdentifier: MangaLegends.Data::MangaLegends.Data.Definitions.AbilityDefinition
+  _id: ability.luffy.gatling
+  _displayName: Gomu Gomu no Gatling
+  _description: Rafale de coups sur la cible pendant 2 s (8 coups) ; Luffy reste
+    sur place.
+  _icon: {fileID: 0}
+  _maxRank: 5
+  _castMode: 0
+  _cooldownSeconds:
+  - 12
+  - 11.5
+  - 11
+  - 10.5
+  - 10
+  _cost:
+  - 60
+  _costPerSecond:
+  - 0
+  _castTimeSeconds:
+    _byRank:
+    - 0
+  _channelSeconds:
+    _byRank:
+    - 0
+  _charges:
+    _byRank: 01000000
+  _targeting:
+    _mode: 2
+    _validTargets: 12
+    _fallback: 0
+    _range:
+      _byRank:
+      - 3.5
+    _indicatorWidth:
+      _byRank:
+      - 0
+    _indicatorRadius:
+      _byRank:
+      - 0
+  _onCast:
+  - rid: 2286801137428857140
+  - rid: 2286801137428857141
+  _behaviourId: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 2286801137428857140
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: b8c8949080180d2489c39cea30942d7c, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []
+    - rid: 2286801137428857141
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 1
+        _status: {fileID: 11400000, guid: 852b4c818086d8841b540aa2e8cbb5d0, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []

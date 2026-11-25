@@ -138,6 +138,14 @@ namespace MangaLegends.Simulation.Combat
             return removed;
         }
 
+        public void Remove(StatusEffectDefinition definition)
+        {
+            if (!HasStateAuthority || definition == null || _unit == null) return;
+            int index = _unit.Services.Content.StatusEffects.IndexOf(definition.Id);
+            for (int i = 0; i < Active.Length; i++)
+                if (Active[i].IsActive && Active[i].Definition == index) Clear(i);
+        }
+
         public void ClearAll()
         {
             for (int i = 0; i < Active.Length; i++)

@@ -12,7 +12,7 @@
 | Champion | Rôle | Design | Code | Systèmes nécessaires |
 |---|---|---|---|---|
 | Ainz Ooal Gown | Support | ✅ | ✅ jouable (testé en solo le 2026-11-25) | Shield, Charges, Zone de soin |
-| Luffy | Jungle | ✅ | — | TerrainZone (eau), AA chargée, Canalisation |
+| Luffy | Jungle | ✅ | 🔧 jouable, simplifié (P eau, Z portée) | TerrainZone (eau), AA chargée, Canalisation |
 | Zoro Roronoa | Top | ✅ | 🔧 jouable, simplifié (A) | Stack, Shield, Dash |
 | Naruto Uzumaki | Mid | ✅ | 🔧 jouable, simplifié (P, A raté) | Dash, Knockback, Zone (clones = visuel) |
 | Gon Freecss | ❓ | ✅ | — | Mark ×3, Synergy (Killua) |
@@ -24,7 +24,7 @@
 | Guts | ❓ | ✅ | — | Bonus selon PV manquants, Reset sur kill |
 | Sung Jin-Woo | ❓ | ✅ | — | Summon contrôlable, AbilitySet ×2 |
 | Mark Evans | Support/Tank | ✅ | — | Synergy (allié lié), Mur |
-| Kirito | ❓ | ✅ | — | Mark ×5, réduction de recharge croisée |
+| Kirito | Top | ✅ | 🔧 jouable, simplifié (R) | Mark ×5, réduction de recharge croisée |
 | Giorno Giovanna | Support | ✅ | — | Charges, Forme (stand) |
 | Jotaro | ❓ | ✅ | — | Forme (stand), GlobalEffect (arrêt du temps), mur destructible |
 | Law | Support | ✅ | — | Échange de position, téléport allié |
@@ -70,6 +70,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **Z — Gatling** : canalise 2 s sur une cible (cible verrouillée), lourds dégâts ; portée qui croît avec l'AD. `[12 s]`
 - **E — Rocket** : s'agrippe à la cible et fonce vers elle. `[10 s]`
 - **R — Gear** : augmente les dégâts des compétences selon l'AD. `[90 s]`
+
+**Implémentation (2026-11-25)** : P = toutes les 20 s, la prochaine attaque de base sur un champion inflige 30 (+30 % AD bonus) et ralentit de 30 % pendant 1,5 s ; « résistance physique accrue » = armure de base 40 (+4,8 par niveau) au lieu de 32–36 ; la perte de PV dans l'eau n'est pas codée (pas encore de zones de terrain). A = poing étiré de 6 m (projectile), 60→180 (+90 % AD bonus), ralentit de 25 % pendant 1,5 s, recharge 8→6 s. Z = 8 coups en 2 s sur la cible (12→36 (+15 % AD bonus) chacun, soit 96→288 (+120 %)), Luffy ne peut pas bouger pendant ce temps, portée 3,5 m (la portée qui croît avec l'AD n'est pas codée), recharge 12→10 s. E = fonce sur la cible jusqu'à 8 m, 50→170 (+60 % AD bonus), recharge 10→8 s. R = 12 s de +20/30/40 % d'AD et +10 % de vitesse, recharge 90/80/70 s.
 
 ### Zoro Roronoa
 - **P — Haki de l'armement** : chaque AA sur un champion donne +1 AD (cumul).
@@ -158,6 +160,8 @@ Format : **Touche — Nom** : effet. `[recharge]`
 - **Z** : dague empoisonnée, hémorragie 4 s. `[18 s]`
 - **E** : petit dash + coup ; si touche, recharge de A divisée par 2. `[8 s]`
 - **R — Starburst Stream** : sur une cible à 5 marques, 5 AA qui ignorent 25 % armure. `[65 s]`
+
+**Implémentation (2026-11-25, rôle Top choisi par Claude)** : P = chaque attaque de base pose une marque (5 au plus, 6 s) et la 3e attaque d'une série (fenêtre de 4 s) inflige 25 (+50 % AD bonus) physiques. A = cercle de 2,5 m autour de Kirito, 50→170 (+80 % AD bonus), +20→60 contre une cible en hémorragie, la recharge restante de E est divisée par 2 si un ennemi est touché, recharge 7→5 s. Z = dague de 8 m, 40→120 (+40 % AD bonus) et hémorragie de 4 s (10→30 (+10 % AD bonus) par seconde), recharge 18→14 s. E = dash de 3 m puis coup de 1,5 m de rayon, 40→140 (+60 % AD bonus), la recharge restante de A est divisée par 2 si un ennemi est touché, recharge 8→6 s. R = cible à 2,5 m : armure réduite de 25 % pendant 3 s puis 100/175/250 (+100 % AD bonus) **+40/60/80 par marque**, marques consommées, recharge 65/60/55 s. Simplifié : le R se lance sans exiger 5 marques (il en tire ses dégâts bonus) et frappe en un seul coup au lieu de 5 attaques.
 
 ### Giorno Giovanna — Support
 - **P** : possède un stand (forme) ; régénération bonus dans les buissons.
