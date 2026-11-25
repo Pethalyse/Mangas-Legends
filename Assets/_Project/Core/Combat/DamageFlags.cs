@@ -10,6 +10,7 @@ namespace MangaLegends.Core.Combat
         Ability = 1 << 1,
         Critical = 1 << 2,
         Periodic = 1 << 3,
-        IgnoreShields = 1 << 4
+        IgnoreShields = 1 << 4,
+        Proc = 1 << 5
     }
 }

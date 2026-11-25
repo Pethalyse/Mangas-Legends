@@ -35,24 +35,36 @@ MonoBehaviour:
     _value: 10
   _passives: []
   _active:
-    _enabled: 0
-    _name: 
-    _description: 
-    _cooldownSeconds: 0
+    _enabled: 1
+    _name: "N\xE9buleuse noire"
+    _description: "126 d\xE9g\xE2ts magiques au champion ennemi cibl\xE9."
+    _cooldownSeconds: 90
     _targeting:
-      _mode: 4
+      _mode: 2
       _validTargets: 4
       _fallback: 0
       _range:
         _byRank:
-        - 0
+        - 6
       _indicatorWidth:
         _byRank:
         - 0
       _indicatorRadius:
         _byRank:
         - 0
-    _effects: []
+    _effects:
+    - rid: 2286801137428857094
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2286801137428857094
+      type: {class: DamageEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _type: 1
+        _amount:
+          _baseByRank:
+          - 126
+          _ratios: []
+        _canCrit: 0
+        _appliesOnHitEffects: 0

@@ -30,6 +30,38 @@ MonoBehaviour:
     _value: 0.1
   _tickIntervalSeconds: 0
   _onTick: []
+  _triggers:
+  - _trigger: 0
+    _effects:
+    - rid: 2286801137428857090
+    - rid: 2286801137428857091
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2286801137428857090
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 87f34f525013fa94aa970ee9a6871c20, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 1
+        _modifierOverrides:
+        - _stat: 9
+          _kind: 2
+          _value:
+            _byRank:
+            - -0.1
+    - rid: 2286801137428857091
+      type: {class: ApplyStatusEffect, ns: MangaLegends.Data.Effects, asm: MangaLegends.Data}
+      data:
+        _target: 0
+        _status: {fileID: 11400000, guid: 2f32634170628764990f875873a7dee7, type: 2}
+        _stacks:
+          _byRank: 01000000
+        _durationOverrideSeconds:
+          _byRank:
+          - 0
+        _modifierOverrides: []

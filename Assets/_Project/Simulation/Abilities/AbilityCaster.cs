@@ -327,6 +327,22 @@ namespace MangaLegends.Simulation.Abilities
             EffectExecutor.Run(passive.OnCast, new EffectContext(_unit, _unit, _unit.Position, _unit.Position, 1, null));
         }
 
+        public void RaisePassiveTrigger(ItemTrigger trigger, Unit other)
+        {
+            AbilityDefinition passive = AbilityAt(CasterSlot.Passive);
+            if (passive == null || !AbilityBehaviours.MatchesTrigger(passive.BehaviourId, trigger, other)) return;
+            NetSlot data = Slots[(int)CasterSlot.Passive];
+            int tick = Runner.Tick;
+            if (tick < data.ReadyTick) return;
+            int cooldown = TickTime.SecondsToTicks(passive.CooldownAtRank(1), Runner.TickRate);
+            if (cooldown > 0)
+            {
+                data.ReadyTick = tick + cooldown;
+                Slots.Set((int)CasterSlot.Passive, data);
+            }
+            Combat.CombatTriggers.Run(passive.OnCast, _unit, other, 1);
+        }
+
         private void RechargeCharges(int tick)
         {
             for (int i = 0; i < SlotCount; i++)

@@ -97,7 +97,7 @@ namespace MangaLegends.Simulation.Abilities
             Unit caster = context.Caster;
             if (!caster.IsEnemyOf(target)) return;
             float amount = damage.Amount.Evaluate(context.Rank, Scaling(caster, target, 0));
-            DamageFlags flags = DamageFlags.Ability;
+            DamageFlags flags = context.IsProc ? DamageFlags.Proc : DamageFlags.Ability;
             if (damage.CanCrit)
             {
                 DeterministicRandom random = DeterministicRandom.ForTick(caster.Services.Match != null ? caster.Services.Match.Seed : 0UL, caster.Tick, (int)target.SortKey);
@@ -107,7 +107,10 @@ namespace MangaLegends.Simulation.Abilities
                     flags |= DamageFlags.Critical;
                 }
             }
-            target.Health.ApplyDamage(new DamageInfo(caster, amount, damage.Type, flags));
+            DamageResult result = target.Health.ApplyDamage(new DamageInfo(caster, amount, damage.Type, flags));
+            if (context.IsProc || result.AfterMitigation <= 0f) return;
+            CombatTriggers.Raise(caster, ItemTrigger.OnAbilityHit, target);
+            if (damage.AppliesOnHitEffects) CombatTriggers.Raise(caster, ItemTrigger.OnHit, target);
         }
 
         private static void Heal(HealEffect heal, in EffectContext context, Unit target)

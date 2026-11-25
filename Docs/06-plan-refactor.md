@@ -128,7 +128,7 @@ Guide pas à pas pour l'humain : [guides/etape-1-unity6-fusion.md](guides/etape-
 - [x] `MinionBrain`, vagues pilotées par `WaveDirector`, tours (`TowerBrain`, aggro sur harcèlement, dégâts croissants), structures protégées, inhibiteurs qui réapparaissent, méga sbires, monstres (`JungleDirector`, `MonsterBrain`, 9 monstres dont 2 épiques). Valeurs en données.
 
 ### Étape 9 — Économie et objets
-- [x] Or (`ChampionProgress`), `Inventory`, achat et vente via l'input validés par l'autorité, recettes, UI boutique. Actifs des objets (touches 1, 2, 3, 5, 6, 7, recharge par emplacement). Reste : passifs des objets.
+- [x] Or (`ChampionProgress`), `Inventory`, achat et vente via l'input validés par l'autorité, recettes, UI boutique. Actifs et passifs des objets (touches 1, 2, 3, 5, 6, 7 ; déclencheurs `CombatTriggers`).
 
 ### Étape 10 — Flux de partie
 - [x] `MainMenu → Match (salon, partie, fin)`, `MatchController`, victoire, horloge (ADR-0007 : salon et sélection dans la scène de match).

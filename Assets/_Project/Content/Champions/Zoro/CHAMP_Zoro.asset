@@ -66,7 +66,7 @@ MonoBehaviour:
   _resource: 0
   _defaultAbilities:
     _name: Default
-    _passive: {fileID: 0}
+    _passive: {fileID: 11400000, guid: 657bbf490d33e23499859099178d33d7, type: 2}
     _a: {fileID: 11400000, guid: bdf047333b2e1d84c910b3991e0c7ebe, type: 2}
     _z: {fileID: 11400000, guid: 19a8d1adc44749d4e84e5a84420f7c87, type: 2}
     _e: {fileID: 11400000, guid: 3e7d6a945d8f5024788bd31d13d87a46, type: 2}

@@ -6,8 +6,9 @@ namespace MangaLegends.Simulation.Abilities
 {
     public readonly struct EffectContext
     {
-        public EffectContext(Unit caster, Unit target, Vector3 aimPoint, Vector3 impactPoint, int rank, IReadOnlyList<Unit> hitUnits)
+        public EffectContext(Unit caster, Unit target, Vector3 aimPoint, Vector3 impactPoint, int rank, IReadOnlyList<Unit> hitUnits, bool isProc = false)
         {
+            IsProc = isProc;
             Caster = caster;
             Target = target;
             AimPoint = aimPoint;
@@ -22,6 +23,7 @@ namespace MangaLegends.Simulation.Abilities
         public Vector3 ImpactPoint { get; }
         public int Rank { get; }
         public IReadOnlyList<Unit> HitUnits { get; }
+        public bool IsProc { get; }
 
         public Vector3 AimDirection
         {
@@ -37,6 +39,8 @@ namespace MangaLegends.Simulation.Abilities
             new EffectContext(caster, target, target != null ? target.Position : caster.Position, target != null ? target.Position : caster.Position, rank, null);
 
         public EffectContext WithHits(Unit target, Vector3 impactPoint, IReadOnlyList<Unit> hits) =>
-            new EffectContext(Caster, target, AimPoint, impactPoint, Rank, hits);
+            new EffectContext(Caster, target, AimPoint, impactPoint, Rank, hits, IsProc);
+
+        public EffectContext AsProc() => new EffectContext(Caster, Target, AimPoint, ImpactPoint, Rank, HitUnits, true);
     }
 }

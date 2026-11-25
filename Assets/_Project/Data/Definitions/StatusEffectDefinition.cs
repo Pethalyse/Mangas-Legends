@@ -19,6 +19,7 @@ namespace MangaLegends.Data.Definitions
         [SerializeField] private List<StatModifierData> _modifiersPerStack = new List<StatModifierData>();
         [SerializeField, Min(0f)] private float _tickIntervalSeconds;
         [SerializeReference, TypeSelector] private List<EffectDefinition> _onTick = new List<EffectDefinition>();
+        [SerializeField] private List<TriggeredEffect> _triggers = new List<TriggeredEffect>();
 
         public float DurationSeconds => _durationSeconds;
         public StatusRestriction Restrictions => _restrictions;
@@ -28,6 +29,7 @@ namespace MangaLegends.Data.Definitions
         public IReadOnlyList<StatModifierData> ModifiersPerStack => _modifiersPerStack;
         public float TickIntervalSeconds => _tickIntervalSeconds;
         public IReadOnlyList<EffectDefinition> OnTick => _onTick;
+        public IReadOnlyList<TriggeredEffect> Triggers => _triggers;
 
         public StatusEffectSpec ToSpec(int runtimeId, int tickRate) => new StatusEffectSpec(
             runtimeId,
@@ -41,6 +43,7 @@ namespace MangaLegends.Data.Definitions
         {
             base.Validate(report);
             if (_onTick.Count > 0 && _tickIntervalSeconds <= 0f) report.Error(Id, "Tick effects need a tick interval.");
+            foreach (TriggeredEffect trigger in _triggers) trigger?.Validate(Id, report);
             foreach (EffectDefinition effect in _onTick)
             {
                 if (effect == null) report.Error(Id, "An effect entry is empty.");

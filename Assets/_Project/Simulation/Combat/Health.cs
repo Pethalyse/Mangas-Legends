@@ -3,6 +3,7 @@ using Fusion;
 using MangaLegends.Core.Combat;
 using MangaLegends.Core.Simulation;
 using MangaLegends.Core.Stats;
+using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
 
@@ -136,6 +137,7 @@ namespace MangaLegends.Simulation.Combat
             Record(info.Source, result.AfterMitigation, info.Type, info.Flags, false);
 
             if (Current <= 0f) Kill(info.Source);
+            else if (result.AfterMitigation > 0f && (info.Flags & DamageFlags.Proc) == 0) CombatTriggers.Raise(_unit, ItemTrigger.OnDamageTaken, info.Source);
             return result;
         }
 
@@ -147,6 +149,7 @@ namespace MangaLegends.Simulation.Combat
             if (applied <= 0f) return 0f;
             Current += applied;
             Record(source, applied, DamageType.True, DamageFlags.None, true);
+            CombatTriggers.Raise(source, ItemTrigger.OnHeal, _unit);
             return applied;
         }
 
@@ -200,6 +203,7 @@ namespace MangaLegends.Simulation.Combat
             _unit.Status.ClearAll();
             Died?.Invoke(_unit, killer);
             _unit.Services.Match?.OnUnitKilled(_unit, killer);
+            CombatTriggers.Raise(killer, ItemTrigger.OnKill, _unit);
         }
 
         private void Record(Unit source, float amount, DamageType type, DamageFlags flags, bool isHeal)

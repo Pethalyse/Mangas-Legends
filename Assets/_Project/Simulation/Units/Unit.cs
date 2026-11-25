@@ -24,6 +24,8 @@ namespace MangaLegends.Simulation.Units
     public sealed class Unit : NetworkBehaviour
     {
         private MatchServices _services;
+
+        internal int TriggerDepth { get; set; }
         private IUnitBrain _brain;
 
         [Networked] public Team Team { get; set; }
@@ -93,6 +95,7 @@ namespace MangaLegends.Simulation.Units
             Status.Simulate();
             Health.Simulate();
             Resource?.Simulate();
+            if (IsAlive && HasStateAuthority && IsChampion) CombatTriggers.Raise(this, ItemTrigger.Periodic, this);
             if (IsAlive) _brain?.Think();
             Caster?.Simulate();
             Attack?.Simulate();

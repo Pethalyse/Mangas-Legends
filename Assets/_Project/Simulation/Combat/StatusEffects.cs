@@ -198,7 +198,7 @@ namespace MangaLegends.Simulation.Combat
             status.NextPulseTick = tick + System.Math.Max(1, TickTime.SecondsToTicks(definition.TickIntervalSeconds, Runner.TickRate));
             Active.Set(slot, status);
             _unit.TryResolve(status.Source, out Unit source);
-            EffectExecutor.Run(definition.OnTick, EffectContext.ForTarget(source != null ? source : _unit, _unit, status.Rank));
+            EffectExecutor.Run(definition.OnTick, EffectContext.ForTarget(source != null ? source : _unit, _unit, status.Rank).AsProc());
         }
 
         private int Find(short definition)

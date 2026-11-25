@@ -6,6 +6,7 @@ using MangaLegends.Data.Definitions;
 using MangaLegends.Core.Simulation;
 using MangaLegends.Data.Serialization;
 using MangaLegends.Simulation.Abilities;
+using MangaLegends.Simulation.Combat;
 using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace MangaLegends.Simulation.Champions
     {
         public const int Capacity = 8;
         private const int SourceBase = 2000;
+        private const int PassivesPerItem = 2;
 
         private readonly List<IItemRecipe> _owned = new List<IItemRecipe>();
         private Unit _unit;
@@ -24,6 +26,7 @@ namespace MangaLegends.Simulation.Champions
         [Networked, Capacity(Capacity)] public NetworkArray<short> Items => default;
         [Networked] public int Version { get; set; }
         [Networked, Capacity(Capacity)] public NetworkArray<int> ActiveReadyTicks => default;
+        [Networked, Capacity(Capacity * PassivesPerItem)] public NetworkArray<int> PassiveReadyTicks => default;
 
         public int ModifierVersion => Version;
         public int SlotCount => _unit != null ? System.Math.Min(Capacity, _unit.Services.Rules.InventorySlots) : 0;
@@ -109,6 +112,34 @@ namespace MangaLegends.Simulation.Champions
             _unit.Motor?.Face(aimPoint);
             EffectExecutor.Run(item.Active.Effects, new EffectContext(_unit, target, aimPoint, _unit.Position, 1, null));
             return true;
+        }
+
+        public void RaiseTriggers(ItemTrigger trigger, Unit other)
+        {
+            int tick = Runner.Tick;
+            for (int slot = 0; slot < SlotCount; slot++)
+            {
+                ItemDefinition item = ItemAt(slot);
+                if (item == null) continue;
+                for (int i = 0; i < item.Passives.Count && i < PassivesPerItem; i++)
+                {
+                    ItemPassive passive = item.Passives[i];
+                    if (passive == null || passive.Trigger != trigger || passive.Effects.Count == 0) continue;
+                    if (trigger == ItemTrigger.Periodic && passive.CooldownSeconds <= 0f) continue;
+                    if (passive.UniqueEffect && HasEarlier(item, slot)) continue;
+                    int index = slot * PassivesPerItem + i;
+                    if (tick < PassiveReadyTicks[index]) continue;
+                    if (passive.CooldownSeconds > 0f) PassiveReadyTicks.Set(index, tick + TickTime.SecondsToTicks(passive.CooldownSeconds, Runner.TickRate));
+                    CombatTriggers.Run(passive.Effects, _unit, other, 1);
+                }
+            }
+        }
+
+        private bool HasEarlier(ItemDefinition item, int slot)
+        {
+            for (int i = 0; i < slot; i++)
+                if (ItemAt(i) == item) return true;
+            return false;
         }
 
         public void CollectModifiers(List<StatModifier> into)

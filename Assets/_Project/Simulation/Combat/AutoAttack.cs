@@ -2,6 +2,7 @@ using Fusion;
 using MangaLegends.Core.Combat;
 using MangaLegends.Core.Simulation;
 using MangaLegends.Core.Stats;
+using MangaLegends.Data.Definitions;
 using MangaLegends.Simulation.Services;
 using MangaLegends.Simulation.Units;
 using UnityEngine;
@@ -148,6 +149,7 @@ namespace MangaLegends.Simulation.Combat
             if (!HasStateAuthority) return;
             DamageFlags flags = DamageFlags.AutoAttack | (critical ? DamageFlags.Critical : DamageFlags.None);
             target.Health.ApplyDamage(new DamageInfo(_unit, damage, DamageType.Physical, flags));
+            CombatTriggers.Raise(_unit, ItemTrigger.OnHit, target);
             float lifeSteal = _unit.Stats.Get(StatType.LifeSteal);
             if (lifeSteal > 0f) _unit.Health.Heal(damage * lifeSteal, _unit);
         }
