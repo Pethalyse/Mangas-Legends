@@ -30,6 +30,7 @@ namespace UnityEngine
     }
     public sealed class MinAttribute : PropertyAttribute { public MinAttribute(float min) { } }
     public sealed class RangeAttribute : PropertyAttribute { public RangeAttribute(float min, float max) { } }
+    public sealed class TooltipAttribute : PropertyAttribute { public TooltipAttribute(string tooltip) { } }
 
     public static class Debug
     {
@@ -49,6 +50,7 @@ namespace UnityEngine
         public static float Min(float a, float b) => a < b ? a : b;
         public static int Max(int a, int b) => a > b ? a : b;
         public static int Min(int a, int b) => a < b ? a : b;
+        public static float Clamp01(float v) => v < 0f ? 0f : v > 1f ? 1f : v;
     }
 
     public struct Color
